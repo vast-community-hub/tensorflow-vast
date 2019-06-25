@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/logos/128x128.png">
+<p align="center">
  <h1 align="center">TensorFlow for VASmalltalk</h1>
   <p align="center">
     This is a TensorFlow wrapper for VASmalltalk
