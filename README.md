@@ -31,7 +31,7 @@ To load the project in a VASmalltalk image, or declare it as a dependency of you
 
 ## Acknowledgments
 
-- [Gerardo Richarte](https://github.com/gerasdf)
+- [gera](https://github.com/gerasdf)
 - Github repository layout was generated with [Ba-St Github-setup project](https://github.com/ba-st/GitHub-setup).
 
 ## Contributing
