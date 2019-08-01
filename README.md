@@ -20,18 +20,27 @@ TensorFlow is a Google open source machine learning library for research and pro
 - The code is licensed under [MIT](LICENSE).
 - The documentation is licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
 
+## Supported platforms and versions
+Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster) and ARM64 (Rock64 and Armbian Buster).
+
+We have only tested on TensorFlow versions 1.13.x and 1.14.x.
+
 ## Installation
 
-- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/)
-- Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c)
-- Ensure tensorflow shared library is in path or reference full path in VAST ini file
-- Add ``[PlatformLibrary Name Mappings]`` entry in `abt.ini` file:
-			TENSORFLOW_LIB=tensorflow
-								or
-			TENSORFLOW_LIB=/absolute/path/to/tensorflow
+- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/).
+- Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
+- Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
+- Add `TENSORFLOW_LIB` key/value under `[PlatformLibrary Name Mappings]` section in `abt.ini` file. Some examples:
+```
+TENSORFLOW_LIB=tensorflow
+TENSORFLOW_LIB=/usr/local/lib/libtensorflow_framework.so.1.14.0
+TENSORFLOW_LIB=/home/mpeck/Instantiations/TensorFlow/libtensorflow-cpu-linux-x86_64-1.14.0/lib/libtensorflow.so.1.14.0
+TENSORFLOW_LIB=c:\Users\mpeck\Documents\Instantiations\tensorflow.dll
+TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.13.1\lib\tensorflow.dll
+```
 - Import and load the `TensorFlow` configuration map from `TensorFlow.dat`.
 - Run SUnit Suite for all `TensorFlow` map.
-- Explore the [documentation](docs/)
+- Explore the [documentation](docs/).
 
 
 ## Running TensorFlow and VASmalltalk on ARM
