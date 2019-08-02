@@ -38,9 +38,16 @@ TENSORFLOW_LIB=/home/mpeck/Instantiations/TensorFlow/libtensorflow-cpu-linux-x86
 TENSORFLOW_LIB=c:\Users\mpeck\Documents\Instantiations\tensorflow.dll
 TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.13.1\lib\tensorflow.dll
 ```
-- Import and load the `TensorFlow` configuration map from `TensorFlow.dat`.
-- Run SUnit Suite for all `TensorFlow` map.
+- Clone this repository.
+- From the configuration map browser, import all versions of the `TensorFlow` map from `envy/TensorFlow.dat`. Then "Load With Required Maps" the latest version of it.
+- Run SUnit Suite for all `TensorFlow` map (right click on the map -> `Test Loaded Applications`). You should see around 260 unit tests and most of them passing.
 - Explore the [documentation](docs/).
+
+
+## Examples
+We will be submitting more and more examples in `TensorFlowExamplesApp`. So far the only working example is `LabelImage` which loads a pre-trained TensorFlow network and use it to recognize objects in images. You can read its class comments for details, instructions and possible uses.
+
+![LabelImage](https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-01-at-10.43.25-pm.png)
 
 
 ## Running TensorFlow and VASmalltalk on ARM
