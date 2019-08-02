@@ -49,6 +49,10 @@ We will be submitting more and more examples in `TensorFlowExamplesApp`. So far 
 
 ![LabelImage](https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-01-at-10.43.25-pm.png)
 
+You can also run a Inception V3 like what is [described here](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/label_image/README.md):
+
+![LabelImage2](https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-02-at-11.12.35-am.png)
+
 
 ## Running TensorFlow and VASmalltalk on ARM
 
