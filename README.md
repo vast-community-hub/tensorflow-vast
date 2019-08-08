@@ -47,7 +47,9 @@ TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.1
 ## Examples
 We will be submitting more and more examples in `TensorFlowExamplesApp`. So far the only working example is `LabelImage` which loads a pre-trained TensorFlow network and use it to recognize objects in images. You can read its class comments for details, instructions and possible uses.
 
-![LabelImage](https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-01-at-10.43.25-pm.png)
+There is also a [full detailed blog post about this example](https://dev.to/martinezpeck/recognizing-objects-in-images-with-tensorflow-and-smalltalk-1nep). 
+
+![LabelImage](https://pbs.twimg.com/media/EBOGuT1XoAAtQi1?format=jpg)
 
 You can also run a Inception V3 like what is [described here](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/label_image/README.md):
 
