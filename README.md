@@ -27,8 +27,9 @@ We have only tested on TensorFlow versions 1.13.x and 1.14.x.
 
 ## Installation
 
-- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/).
+- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
 - Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
+- For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed.
 - Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
 - Add `TENSORFLOW_LIB` key/value under `[PlatformLibrary Name Mappings]` section in `abt.ini` file. Some examples:
 ```
@@ -40,7 +41,8 @@ TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.1
 ```
 - Clone this repository.
 - From the configuration map browser, import all versions of the `TensorFlow` map from `envy/TensorFlow.dat`. Then "Load With Required Maps" the latest version of it.
-- Run SUnit Suite for all `TensorFlow` map (right click on the map -> `Test Loaded Applications`). You should see around 260 unit tests and most of them passing.
+- Run SUnit Suite for all `TensorFlow` map (right click on the map -> `Test Loaded Applications`). You should see around 260 unit tests and most of them passing. As of this writing, VAST 9.2 ECAP 3 + TensorFlow CM 0.45, in Windows 7, achieves 215 tests passing, 3 expected failures, 40 errors and 1 freezes and crashes image (`TestTFBuffer>>#testNewFree`).
+- 
 - Explore the [documentation](docs/).
 
 
