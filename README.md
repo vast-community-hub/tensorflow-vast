@@ -29,7 +29,7 @@ We have only tested on TensorFlow versions 1.13.x and 1.14.x.
 
 ## Installation
 
-- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/) or VASmalltalk >= 9.2. If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
+- Download the [9.2 ECAP 3 or newer from Instantiations](https://www.instantiations.com/ecap/). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
 - Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
 - For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed.
 - Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
