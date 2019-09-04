@@ -23,13 +23,15 @@ TensorFlow is a Google open source machine learning library for research and pro
 
 ## Supported platforms and versions
 
-Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster), ARM64 (Rock64 and Armbian Buster) and ARM64 with GPU support (Nvidia Jetson Nano)
+Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster), ARM64 (Rock64 and Armbian Buster) and ARM64 with GPU support (Nvidia Jetson Nano).
 
-We have only tested on TensorFlow versions 1.13.x and 1.14.x.
+VASmalltalk needed version is 9.2 or above and we have only tested on TensorFlow versions 1.13.x and 1.14.x.
+
+
 
 ## Installation
 
-- Download the [latest ECAP from Instantiations](https://www.instantiations.com/ecap/). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
+- Download the [9.2 ECAP 3 or newer from Instantiations](https://www.instantiations.com/ecap/). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
 - Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
 - For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed.
 - Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
