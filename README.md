@@ -17,11 +17,13 @@
 TensorFlow is a Google open source machine learning library for research and production. And this is a wrapper to be used from a higher level language like VASmalltalk.
 
 ## License
+
 - The code is licensed under [MIT](LICENSE).
 - The documentation is licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Supported platforms and versions
-Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster) and ARM64 (Rock64 and Armbian Buster).
+
+Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster), ARM64 (Rock64 and Armbian Buster) and ARM64 with GPU support (Nvidia Jetson Nano)
 
 We have only tested on TensorFlow versions 1.13.x and 1.14.x.
 
@@ -42,21 +44,24 @@ TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.1
 - Clone this repository.
 - From the configuration map browser, import all versions of the `TensorFlow` map from `envy/TensorFlow.dat`. Then "Load With Required Maps" the latest version of it.
 - Run SUnit Suite for all `TensorFlow` map (right click on the map -> `Test Loaded Applications`). You should see around 260 unit tests and most of them passing. As of this writing, VAST 9.2 ECAP 3 + TensorFlow CM 0.45, in Windows 7, achieves 215 tests passing, 3 expected failures, 40 errors and 1 freezes and crashes image (`TestTFBuffer>>#testNewFree`).
-- 
 - Explore the [documentation](docs/).
 
 
 ## Examples
+
 We will be submitting more and more examples in `TensorFlowExamplesApp`. So far the only working example is `LabelImage` which loads a pre-trained TensorFlow network and use it to recognize objects in images. You can read its class comments for details, instructions and possible uses.
 
-There is also a [full detailed blog post about this example](https://dev.to/martinezpeck/recognizing-objects-in-images-with-tensorflow-and-smalltalk-1nep). 
+There is also a [full detailed blog post about this example](https://dev.to/martinezpeck/recognizing-objects-in-images-with-tensorflow-and-smalltalk-1nep).
 
-![LabelImage](https://pbs.twimg.com/media/EBOGuT1XoAAtQi1?format=jpg)
+<img width="500" alt="LabelImage" src="https://pbs.twimg.com/media/EBOGuT1XoAAtQi1?format=jpg">
 
 You can also run a Inception V3 like what is [described here](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/label_image/README.md):
 
-![LabelImage2](https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-02-at-11.12.35-am.png)
+<img width="500" alt="LabelImage" src="https://marianopeck.files.wordpress.com/2019/08/screen-shot-2019-08-02-at-11.12.35-am.png">
 
+We also have a more advanced Object Detection example with bounding boxes, labels and scores. [This blog post](https://dev.to/martinezpeck/object-detection-with-tensorflow-and-smalltalk-15p7) goes over the glory details of this example:
+
+<img width="500" alt="ObjectDetectionZoo" src="https://i1.wp.com/marianopeck.blog/wp-content/uploads/2019/08/Screen-Shot-2019-08-18-at-12.34.23-PM.png?resize=768%2C519&ssl=1">
 
 ## Running TensorFlow and VASmalltalk on ARM
 
@@ -66,6 +71,14 @@ We have compiled TensorFlow C library for ARM and ARM 64 and have been playing w
 
 Building TensorFlow from scratch on ARM is a bit complicated so we try to document this process on blog posts as we learn. For the moment, you can checkout these:
 
+- [Challenge Accepted: Build TensorFlow C Binding for Raspberry Pi in 2019](https://dev.to/martinezpeck/challenge-accepted-build-tensorflow-c-binding-for-raspberry-pi-in-2019-4f89)
+- [The battle continues: Build TensorFlow C Binding for Raspberry Pi in 2019](https://dev.to/martinezpeck/the-battle-continues-build-tensorflow-c-binding-for-raspberry-pi-in-2019-553j)
+
+## Blog Posts
+
+- [Recognizing objects in images with TensorFlow and Smalltalk](https://dev.to/martinezpeck/recognizing-objects-in-images-with-tensorflow-and-smalltalk-1nep)
+- [Object Detection with TensorFlow and Smalltalk](https://dev.to/martinezpeck/object-detection-with-tensorflow-and-smalltalk-15p7)
+- [TensorFlow — The first week](https://medium.com/mercap-tech-blog/tensorflow-the-first-week-c120762ef7cb)
 - [Challenge Accepted: Build TensorFlow C Binding for Raspberry Pi in 2019](https://dev.to/martinezpeck/challenge-accepted-build-tensorflow-c-binding-for-raspberry-pi-in-2019-4f89)
 - [The battle continues: Build TensorFlow C Binding for Raspberry Pi in 2019](https://dev.to/martinezpeck/the-battle-continues-build-tensorflow-c-binding-for-raspberry-pi-in-2019-553j)
 
