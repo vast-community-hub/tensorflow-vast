@@ -78,6 +78,7 @@ Building TensorFlow from scratch on ARM is a bit complicated so we try to docume
 
 ## Blog Posts
 
+- [Getting Started with Nvidia Jetson Nano, TensorFlow and Smalltalk](https://dev.to/martinezpeck/getting-started-with-nvidia-jetson-nano-tensorflow-and-smalltalk-23mk)
 - [Recognizing objects in images with TensorFlow and Smalltalk](https://dev.to/martinezpeck/recognizing-objects-in-images-with-tensorflow-and-smalltalk-1nep)
 - [Object Detection with TensorFlow and Smalltalk](https://dev.to/martinezpeck/object-detection-with-tensorflow-and-smalltalk-15p7)
 - [TensorFlow — The first week](https://medium.com/mercap-tech-blog/tensorflow-the-first-week-c120762ef7cb)
