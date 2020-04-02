@@ -2,11 +2,9 @@ Extension {
 	#name : 'CgScreen'
 }
 
-{
-	#category : '*TensorFlowVASTApp',
-	#vaCategories : ['CG-Internal'],
-	#vaVisibility : 'private'
-}
+{ #category : '*TensorFlowVASTApp',
+ #vaCategories : ['CG-Internal'],
+  #vaVisibility : 'private' }
 CgScreen >> osGetImageData2: osDrawable x: x y: y width: w height: h pad: pad [
 	"Answer a ByteArray containing the image data of the given area
 of an OSDrawable.  Answer nil if the data could not be copied."

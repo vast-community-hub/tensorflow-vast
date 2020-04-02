@@ -2,43 +2,33 @@ Extension {
 	#name : 'TFOperationDescription'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFOperationDescription class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperationDescription >> add: input [
 	self library description: self add: input
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['inputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['inputs'] }
 TFOperationDescription >> addControlInput: aTFOutputOrInput [
 	^ self library description: self addControlInput: aTFOutputOrInput
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['inputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['inputs'] }
 TFOperationDescription >> addInput: aTFOutputOrInput [
 	^ self library description: self addInput: aTFOutputOrInput
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['inputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['inputs'] }
 TFOperationDescription >> addInputFromOutput: indexInteger of: aTFOperation [
 	| input |
 	input := aTFOperation input: indexInteger.
@@ -46,10 +36,8 @@ TFOperationDescription >> addInputFromOutput: indexInteger of: aTFOperation [
 		ensure: [ input free ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['inputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['inputs'] }
 TFOperationDescription >> addInputs: anArrayOfTFOutput [
 	| inputs |
 	inputs := TFOutputArray externalFromArray: anArrayOfTFOutput.
@@ -59,18 +47,14 @@ TFOperationDescription >> addInputs: anArrayOfTFOutput [
 		size: anArrayOfTFOutput size
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putBoolean: value [
 	self library description: self set: attribute asAsciiZ toBool: value
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putFloat: value [
 	self library
 		description: self
@@ -78,18 +62,14 @@ TFOperationDescription >> at: attribute putFloat: value [
 		toFloat: value asFloat
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putInt: value [
 	self library description: self set: attribute asAsciiZ toInt64: value
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putShape: anIntegerArray [
 	| status value |
 	value := Int64Array externalFromArray: anIntegerArray.
@@ -102,10 +82,8 @@ TFOperationDescription >> at: attribute putShape: anIntegerArray [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putString: aString [
 	| status |
 	status := TFStatus create.
@@ -117,10 +95,8 @@ TFOperationDescription >> at: attribute putString: aString [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putStrings: anArrayOfStrings [
 	| status sizes strings pointers |
 	sizes := anArrayOfStrings collect: [ :str | str size ].
@@ -142,10 +118,8 @@ TFOperationDescription >> at: attribute putStrings: anArrayOfStrings [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putTensor: aTFTensor [
 	| status |
 	status := TFStatus create.
@@ -157,26 +131,20 @@ TFOperationDescription >> at: attribute putTensor: aTFTensor [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putType: value [
 	self library description: self set: attribute asAsciiZ toType: value
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperationDescription >> device: aString [
 	^ self library description: self setDevice: aString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperationDescription >> finish [
 	| answer status |
 	status := TFStatus create.

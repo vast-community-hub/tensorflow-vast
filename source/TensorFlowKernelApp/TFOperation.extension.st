@@ -2,27 +2,21 @@ Extension {
 	#name : 'TFOperation'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFOperation class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> * aTFOperation [
 	^ self binaryOp: 'MatMul' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> *\ aTFOperation [
 	^ self
 		binaryOp: 'MatMul'
@@ -30,58 +24,44 @@ TFOperation >> *\ aTFOperation [
 		described: [ :description | description at: 'transpose_b' putBoolean: true ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> + aTFOperation [
 	^ self binaryOp: 'Add' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> - aTFOperation [
 	^ self binaryOp: 'Sub' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> -= aTFOperation [
 	^ self binaryOp: 'AssignSub' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> > aTFOperation [
 	^ self binaryOp: 'Greater' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> @* aTFOperation [
 	^ self binaryOp: 'Mul' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> @/ aTFOperation [
 	^ self binaryOp: 'Div' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> \* aTFOperation [
 	^ self
 		binaryOp: 'MatMul'
@@ -89,58 +69,44 @@ TFOperation >> \* aTFOperation [
 		described: [ :description | description at: 'transpose_a' putBoolean: true ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> \\ aTFOperation [
 	^ self binaryOp: 'Mod' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> abs [
 	^ self unaryOp: 'Abs'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> alias: nameString [
 	^ self unaryOp: 'Identity' named: nameString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> arcCos [
 	^ self unaryOp: 'Acos'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> arcSin [
 	^ self unaryOp: 'Asin'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> arcTan [
 	^ self unaryOp: 'Atan'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFOperation >> asOperationOn: aTFGraph [
 	graph == aTFGraph
 		ifTrue: [ ^ self ]
@@ -148,10 +114,8 @@ TFOperation >> asOperationOn: aTFGraph [
 		
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> assign: aTFOperation [
 	^ self
 		binaryOp: 'Assign'
@@ -159,10 +123,8 @@ TFOperation >> assign: aTFOperation [
 		named: self name , '_initializer'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> attrMetadata: nameString [
 	| status answer |
 	status := TFStatus create.
@@ -174,10 +136,8 @@ TFOperation >> attrMetadata: nameString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> binaryOp: aString with: aTFOperation [
 	^ self
 		binaryOp: aString
@@ -185,10 +145,8 @@ TFOperation >> binaryOp: aString with: aTFOperation [
 		described: [ :nothing |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> binaryOp: aString with: aTFOperation described: oneArgBlock [
 	| name |
 	name := self nameFor: aString.
@@ -199,10 +157,8 @@ TFOperation >> binaryOp: aString with: aTFOperation described: oneArgBlock [
 		described: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> binaryOp: aString with: aTFOperation named: name [
 	^ self
 		binaryOp: aString
@@ -211,10 +167,8 @@ TFOperation >> binaryOp: aString with: aTFOperation named: name [
 		described: [ :nothing |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> binaryOp: aString with: aTFOperation named: name described: oneArgBlock [
 	^ self
 		op: aString
@@ -226,10 +180,8 @@ TFOperation >> binaryOp: aString with: aTFOperation named: name described: oneAr
 		described: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> boolAt: nameString [
 	| value status |
 	status := TFStatus create.
@@ -243,28 +195,22 @@ TFOperation >> boolAt: nameString [
 	^ value bool8At: 0
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> castTo: typeInteger [
 	^ self
 		unaryOp: 'Cast'
 		described: [ :description | description at: 'DstT' putType: typeInteger ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> cos [
 	^ self unaryOp: 'Cos'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> descent: delta rate: learningRate [
 	^ self
 		op: 'ApplyGradientDescent'
@@ -275,59 +221,45 @@ TFOperation >> descent: delta rate: learningRate [
 				yourself)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> device [
 	^ self library operationDevice: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> exp [
 	^ self unaryOp: 'Exp'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> findMaxOn: aTFOperation [
 	^ self binaryOp: 'ArgMax' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> findMinOn: aTFOperation [
 	^ self binaryOp: 'ArgMin' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> firstInput [
 	^ self input: 0
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialization']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialization'] }
 TFOperation >> firstOutput [
 	output ifNil: [ output := 0 ].
 	^ self output: output
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> floatAt: nameString [
 	| value status |
 	status := TFStatus create.
@@ -341,50 +273,38 @@ TFOperation >> floatAt: nameString [
 	^ value float32At: 0
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> graph [
 	^ graph
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> graph: aTFGraph [
 	graph := aTFGraph
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> identity [
 	^ self unaryOp: 'Identity'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> input: indexInteger [
 	^ TFInput onOperation: self index: indexInteger
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> InputsCount [
 	^ self library operationNumInputs: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> intAt: nameString [
 	| value status |
 	status := TFStatus create.
@@ -398,50 +318,38 @@ TFOperation >> intAt: nameString [
 	^ value uint64At: 0
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> inverse [
 	^ self unaryOp: 'MatrixInverse'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> meanOn: shapeTensorOrOperation [
 	^ self binaryOp: 'Mean' with: shapeTensorOrOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> name [
 	^ self library operationName: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> nameFor: namePrefix [
 	^ graph nameFor: namePrefix
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> negated [
 	^ self unaryOp: 'Neg'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> op: aString withAll: aTFOperationArray [
 	^ self
 		op: aString
@@ -449,10 +357,8 @@ TFOperation >> op: aString withAll: aTFOperationArray [
 		described: [ :nothing |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> op: aString withAll: aTFOperationArray described: oneArgBlock [
 	| name |
 	name := self nameFor: aString.
@@ -463,10 +369,8 @@ TFOperation >> op: aString withAll: aTFOperationArray described: oneArgBlock [
 		described: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> op: aString withAll: aTFOperationArray named: name [
 	^ self
 		op: aString
@@ -475,10 +379,8 @@ TFOperation >> op: aString withAll: aTFOperationArray named: name [
 		described: [ :nothing |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> op: aString withAll: aTFOperationArray named: name described: oneArgBlock [
 	^ graph
 		newOperation: aString
@@ -493,26 +395,20 @@ TFOperation >> op: aString withAll: aTFOperationArray named: name described: one
 			oneArgBlock value: description ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> output: indexInteger [
 	^ TFOutput onOperation: self index: indexInteger
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> outputsCount [
 	^ self library operationNumOutputs: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['printing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['printing'] }
 TFOperation >> printOn: strm [
 	super printOn: strm.
 	self isNull
@@ -524,26 +420,20 @@ TFOperation >> printOn: strm [
 
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> rectified [
 	^ self unaryOp: 'Relu'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> shape [
 	^ self unaryOp: 'Shape'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> shapeAt: nameString [
 	| value status size answer |
 	size := (self attrMetadata: nameString) totalSize.
@@ -560,26 +450,20 @@ TFOperation >> shapeAt: nameString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> sigmoid [
 	^ self unaryOp: 'Sigmoid'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> sin [
 	^ self unaryOp: 'Sin'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> sizeOn: dimensionInteger [
 	^ self shape
 		sliceFrom:
@@ -589,10 +473,8 @@ TFOperation >> sizeOn: dimensionInteger [
 		size: #(1) asInt32Tensor
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops other']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops other'] }
 TFOperation >> sliceFrom: begin size: size [
 	^ self
 		op: 'Slice'
@@ -603,18 +485,14 @@ TFOperation >> sliceFrom: begin size: size [
 				yourself)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> softmax [
 	^ self unaryOp: 'Softmax'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> sparseSoftmaxCrossEntropyWithLogits: aTFOperation [
 	^ self
 		binaryOp: 'SparseSoftmaxCrossEntropyWithLogits'
@@ -622,18 +500,14 @@ TFOperation >> sparseSoftmaxCrossEntropyWithLogits: aTFOperation [
 		named: (self nameFor: 'SparseSoftmaxCrossEntropyWithLogits')
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> squared [
 	^ self @* self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> stringAt: nameString [
 	| metadata value status |
 	metadata := self attrMetadata: nameString.
@@ -649,10 +523,8 @@ TFOperation >> stringAt: nameString [
 	^ (value copyUpTo: 0) asString 
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> stringsAt: nameString [
 	| status pointers sizes spaceRequired storage metadata valuesCount |
 	metadata := self attrMetadata: nameString.
@@ -679,26 +551,20 @@ TFOperation >> stringsAt: nameString [
 			one := (OSPtr address: one) memcpyStringFrom: 0 to: (sizes at: i) - 1]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> sumOn: aTFOperation [
 	^ self binaryOp: 'Sum' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> tan [
 	^ self unaryOp: 'Tan'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> tensorAt: nameString [
 	| value status |
 	status := TFStatus create.
@@ -712,26 +578,20 @@ TFOperation >> tensorAt: nameString [
 	^ TFTensor address: (value pointerAt: 0)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops binary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops binary'] }
 TFOperation >> timesRectifiedGradOf: aTFOperation [
 	^ self binaryOp: 'ReluGrad' with: aTFOperation
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> type [
 	^ self library operationOpType: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['attributes']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
 TFOperation >> typeAt: nameString [
 	| value status |
 	status := TFStatus create.
@@ -745,38 +605,30 @@ TFOperation >> typeAt: nameString [
 	^ value uint64At: 0
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> unaryOp: aString [
 	| name |
 	name := self nameFor: aString.
 	^ self unaryOp: aString named: name
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> unaryOp: aString described: oneArgBlock [
 	| name |
 	name := self nameFor: aString.
 	^ self unaryOp: aString named: name described: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> unaryOp: aString named: name [
 	^ self unaryOp: aString named: name described: [ :description |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['ops unary']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['ops unary'] }
 TFOperation >> unaryOp: aString named: name described: oneArgBlock [
 	^ self
 		op: aString
@@ -787,10 +639,8 @@ TFOperation >> unaryOp: aString named: name described: oneArgBlock [
 		described: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFOperation >> useOutput: anInteger [
 	output := anInteger
 ]

@@ -4,35 +4,27 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFBuffer class >> initializeAfterLoad [
 	"Set layout."
 
 	self members: #(data length data_deallocator) types: #(pointer usize pointer)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFBuffer >> data [
 
 	^OSVoid address: (self pointerAt: #data)
 ]
 
-{
-	#category : 'Memory Management'
-}
+{ #category : 'Memory Management' }
 TFBuffer >> free [
 	self delete.
 	self makeUndefined
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFBuffer >> length [
 
 	^self usizeAt: #length

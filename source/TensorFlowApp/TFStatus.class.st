@@ -4,19 +4,15 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFStatus class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
 ]
 
-{
-	#category : 'Creation'
-}
+{ #category : 'Creation' }
 TFStatus class >> new [
 	"Answer a new status object
 	 
@@ -26,9 +22,7 @@ TFStatus class >> new [
 	^ self persistent
 ]
 
-{
-	#category : 'API'
-}
+{ #category : 'API' }
 TFStatus >> code [
 	"Return the code record in this status
 
@@ -38,9 +32,7 @@ TFStatus >> code [
 	^self library getCode: self
 ]
 
-{
-	#category : 'Memory Management'
-}
+{ #category : 'Memory Management' }
 TFStatus >> free [
 	"Delete a previously created status object."
 
@@ -48,18 +40,14 @@ TFStatus >> free [
 	self makeUndefined
 ]
 
-{
-	#category : 'API'
-}
+{ #category : 'API' }
 TFStatus >> isOk [
 	"Answer true if status code is ok"
 
 	^self code = TF_OK
 ]
 
-{
-	#category : 'API'
-}
+{ #category : 'API' }
 TFStatus >> message [
 	"Answer a <String> to the error message in this status.
 	 Answers empty string if TF_OK status code

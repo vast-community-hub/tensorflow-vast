@@ -4,20 +4,16 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Accessing',
-	#vaVisibility : 'private'
-}
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TFVersion class >> bindingVersion [
 	"1.13.1"
 
 	^16r100D001
 ]
 
-{
-	#category : 'Accessing',
-	#vaVisibility : 'private'
-}
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TFVersion class >> dispatcher [
 	"Answer the dispatcher delgate used for platform function call management
 	 
@@ -27,9 +23,7 @@ TFVersion class >> dispatcher [
 	^TFLibraryDispatcher default
 ]
 
-{
-	#category : 'Instance Creation'
-}
+{ #category : 'Instance Creation' }
 TFVersion class >> fromString: aString [
 	| stream major minor patch |
 	stream := aString readStream.
@@ -39,9 +33,7 @@ TFVersion class >> fromString: aString [
 	^self immediate: (major << 24) + (minor << 12) + patch
 ]
 
-{
-	#category : 'Factory'
-}
+{ #category : 'Factory' }
 TFVersion class >> getBindingVersion [
 	"Answer the binding version of the Smalltalk wrapper
 	 
@@ -51,9 +43,7 @@ TFVersion class >> getBindingVersion [
 	^self immediate: self bindingVersion
 ]
 
-{
-	#category : 'Factory'
-}
+{ #category : 'Factory' }
 TFVersion class >> getLibraryVersion [
 	"Answer the native library version on the client
 	 Make a vm synchronous call
@@ -64,9 +54,7 @@ TFVersion class >> getLibraryVersion [
 	^self fromString: self dispatcher callTF_Version.
 ]
 
-{
-	#category : 'Comparing'
-}
+{ #category : 'Comparing' }
 TFVersion >> < aTFVersion [
 	^self major < aTFVersion major or: [
 		self major = aTFVersion major and: [
@@ -75,39 +63,29 @@ TFVersion >> < aTFVersion [
 					self patch < aTFVersion patch]]]]
 ]
 
-{
-	#category : 'Comparing'
-}
+{ #category : 'Comparing' }
 TFVersion >> <= aTFVersion [
 	^ (self < aTFVersion) or: [self = aTFVersion]
 ]
 
-{
-	#category : 'Comparing'
-}
+{ #category : 'Comparing' }
 TFVersion >> = aTFVersion [
 	^self major = aTFVersion major and: [
 		self minor = aTFVersion minor and: [
 			self patch = aTFVersion patch]]
 ]
 
-{
-	#category : 'Comparing'
-}
+{ #category : 'Comparing' }
 TFVersion >> > aTFVersion [
 	^ (self <= aTFVersion) not
 ]
 
-{
-	#category : 'Comparing'
-}
+{ #category : 'Comparing' }
 TFVersion >> >= aTFVersion [
 	^ (self < aTFVersion) not
 ]
 
-{
-	#category : 'Version Number'
-}
+{ #category : 'Version Number' }
 TFVersion >> major [
 	"Answer the major element of the version
 	 
@@ -117,9 +95,7 @@ TFVersion >> major [
 	^self value >> 24
 ]
 
-{
-	#category : 'Version Number'
-}
+{ #category : 'Version Number' }
 TFVersion >> minor [
 	"Answer the major element of the version
 	 
@@ -129,9 +105,7 @@ TFVersion >> minor [
 	^(self value >> 12) bitAnd: 16rFFF
 ]
 
-{
-	#category : 'Version Number'
-}
+{ #category : 'Version Number' }
 TFVersion >> patch [
 	"Answer the major element of the version
 	 
@@ -141,9 +115,7 @@ TFVersion >> patch [
 	^self value bitAnd: 16rFFF
 ]
 
-{
-	#category : 'Printing'
-}
+{ #category : 'Printing' }
 TFVersion >> printOn: aStream [
 	"Print the full version information on @aStream
 	 

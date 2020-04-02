@@ -4,18 +4,14 @@ Class {
 	#category : 'TensorFlowKernelApp'
 }
 
-{
-	#category : 'Not categorized'
-}
+{ #category : 'Not categorized' }
 TFOutputArray class >> fields [
 	"self initialize"
 
 	^ #(#(template 'TFOutput'))
 ]
 
-{
-	#category : 'Not categorized'
-}
+{ #category : 'Not categorized' }
 TFOutputArray class >> initializeAfterLoad [
 	"Set layout."
 
@@ -23,9 +19,7 @@ TFOutputArray class >> initializeAfterLoad [
 
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 TFOutputArray >> at: anInteger [
 	| size |
 	size := self class fixedSize.
@@ -34,9 +28,7 @@ TFOutputArray >> at: anInteger [
 		type: TFOutput 
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 TFOutputArray >> at: anInteger put: aTFOutput [
 	| size |
 	size := self class fixedSize.

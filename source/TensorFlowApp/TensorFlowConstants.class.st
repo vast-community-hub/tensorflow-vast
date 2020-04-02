@@ -57,9 +57,7 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Initializing'
-}
+{ #category : 'Initializing' }
 TensorFlowConstants class >> initialize [
 	TF_FLOAT := 1.
 	TF_DOUBLE := 2.

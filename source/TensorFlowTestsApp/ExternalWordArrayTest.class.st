@@ -7,17 +7,13 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ExternalWordArrayTest class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testArray: anExternalWordArraySubclass sampleElement: anObject [
 	| array size |
 	size := 4.
@@ -27,9 +23,7 @@ ExternalWordArrayTest >> testArray: anExternalWordArraySubclass sampleElement: a
 	1 to: size do: [ :index | self assert: ((array at: index) isKindOf: anObject class) ]
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testArrayAtPutFor: anExternalWordArraySubclass elementSample: anObject [
 	| array size one |
 	size := 4.
@@ -48,9 +42,7 @@ ExternalWordArrayTest >> testArrayAtPutFor: anExternalWordArraySubclass elementS
 		self assert: (array at: index) equals: one ]
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testExternalFromArrayOperation [
 	| op1 op2 array |
 	op1 := TFOperation externalNew.
@@ -63,9 +55,7 @@ ExternalWordArrayTest >> testExternalFromArrayOperation [
 	op2 free.
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testExternalFromArrayOutput [
 	| o1 o2 array |
 	o1 := TFOutput new index: 16r40302010.
@@ -75,9 +65,7 @@ ExternalWordArrayTest >> testExternalFromArrayOutput [
 	self assert: (array at: 2) index = o2 index
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testExternalFromArrayTensor [
 	| t1 t2 array |
 	t1 := TFTensor fromInt64: 16r8070605040302010.
@@ -88,9 +76,7 @@ ExternalWordArrayTest >> testExternalFromArrayTensor [
 	self assert: (array at: 2) address = t2 address
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testOperationArrayAtPut [
 	| graph sample |
 	graph := TFGraph create.
@@ -98,16 +84,12 @@ ExternalWordArrayTest >> testOperationArrayAtPut [
 	self testArrayAtPutFor: TFOperationPtrArray elementSample: sample
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testOperationArrayElementsOfRightClass [
 	^ self testArray: TFOperationPtrArray sampleElement: TFOperation new
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testOutputArrayAtPut [
 	| array size one other operation |
 	size := 4.
@@ -136,9 +118,7 @@ ExternalWordArrayTest >> testOutputArrayAtPut [
 	one free.
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testOutputArrayElementsAreAliases [
 	| array size one other |
 	size := 4.
@@ -162,9 +142,7 @@ ExternalWordArrayTest >> testOutputArrayElementsAreAliases [
 		self assert: other index = 77222244 ]
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testOutputArrayElementsOfRightClass [
 	| array size |
 	size := 4.
@@ -173,34 +151,26 @@ ExternalWordArrayTest >> testOutputArrayElementsOfRightClass [
 	1 to: size do: [ :index | self assert: ((array at: index) isKindOf: TFOutput) ]
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testTensorArrayAtPut [
 	| sample |
 	sample := TFTensor fromInt64: 16r12341234.
 	self testArrayAtPutFor: TFTensorPtrArray elementSample: sample
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testTensorArrayElementsOfRightClass [
 	^ self testArray: TFTensorPtrArray sampleElement: TFTensor new
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testUIn64ArrayfromArray [
 	self testUIn64ArrayfromArray: #(1).
 	self
 		testUIn64ArrayfromArray: #(16r12345678 2 16r76543210 4 16rDEADBEAF 6 16rFFFFFFFF)
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testUIn64ArrayfromArray: template [
 	| array |
 	array := Int64Array externalFromArray: template.
@@ -208,9 +178,7 @@ ExternalWordArrayTest >> testUIn64ArrayfromArray: template [
 		self assert: (template at: index) = (array at: index) ].
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testUInt64ArrayAtPut [
 	self testArrayAtPutFor: Int64Array elementSample: 12345.
 	self testArrayAtPutFor: Int64Array elementSample: 16rFE00FE00.
@@ -220,9 +188,7 @@ ExternalWordArrayTest >> testUInt64ArrayAtPut [
 		elementSample: 16r-7E00FE00FE00FE00
 ]
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 ExternalWordArrayTest >> testUInt64ArrayElementsOfRightClass [
 	^ self testArray: Int64Array sampleElement: 1234
 ]

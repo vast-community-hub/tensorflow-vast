@@ -10,9 +10,7 @@ Class {
 	#category : 'TensorFlowExamplesApp'
 }
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ObjectDetectionImageResults class >> from: graphResults [
 
 	^self new
@@ -20,9 +18,7 @@ ObjectDetectionImageResults class >> from: graphResults [
 		yourself
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ObjectDetectionImageResults class >> new [
 	"Answer a new, initialized instance"
 
@@ -31,51 +27,37 @@ ObjectDetectionImageResults class >> new [
 		yourself
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> boxes [
 	^boxes
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> boxes: anObject [
 	boxes := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> classes [
 	^classes
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> classes: anObject [
 	classes := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> count [
 	^count
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> count: anObject [
 	count := anObject
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 ObjectDetectionImageResults >> initializeFrom: graphResults [
 
 	count := graphResults first asNumbers first asInteger.
@@ -84,16 +66,12 @@ ObjectDetectionImageResults >> initializeFrom: graphResults [
 	classes := graphResults fourth asNumbers first first: count
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> scores [
 	^scores
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageResults >> scores: anObject [
 	scores := anObject
 ]

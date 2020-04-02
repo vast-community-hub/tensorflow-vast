@@ -70,9 +70,7 @@ Class {
 	#category : 'TensorFlowExamplesApp'
 }
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 ObjectDetectionZoo >> colorToArray: aColor [
 	^Array 
 		with: aColor red // 16r100
@@ -80,9 +78,7 @@ ObjectDetectionZoo >> colorToArray: aColor [
 		with: aColor blue // 16r100
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 ObjectDetectionZoo >> imageToArray: image [
 
 	| answer |
@@ -96,9 +92,7 @@ ObjectDetectionZoo >> imageToArray: image [
 	^answer
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 ObjectDetectionZoo >> initialize [
 	"Be careful because imageSize depends on the proto buffer used,
 	so you must check its documentation for a correct size"
@@ -111,9 +105,7 @@ ObjectDetectionZoo >> initialize [
 
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 ObjectDetectionZoo >> openPictureWithBoundingBoxesAndLabel [
 
 	| labels |
@@ -136,9 +128,7 @@ ObjectDetectionZoo >> openPictureWithBoundingBoxesAndLabel [
 			displayImageInWindow]
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 ObjectDetectionZoo >> predict [
 	" see https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
 	 Specially run_inference_for_single_image()
@@ -159,9 +149,7 @@ ObjectDetectionZoo >> predict [
 	^results
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 ObjectDetectionZoo >> prepareImageInput [
 
 	| images |
@@ -188,9 +176,7 @@ ObjectDetectionZoo >> prepareImageInput [
 
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 ObjectDetectionZoo >> readLabels [
 
 	| labelsDict |

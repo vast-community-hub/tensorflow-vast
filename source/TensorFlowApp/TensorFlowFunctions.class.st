@@ -180,9 +180,7 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Initializing'
-}
+{ #category : 'Initializing' }
 TensorFlowFunctions class >> initialize [
 	TF_Version := PlatformFunction fromArray: #('C' 'TF_Version' nil 'TENSORFLOW_LIB' #() #pointer ).
 	TF_DataTypeSize := PlatformFunction fromArray: #('C' 'TF_DataTypeSize' nil 'TENSORFLOW_LIB' #(#uint32 ) #pointer ).

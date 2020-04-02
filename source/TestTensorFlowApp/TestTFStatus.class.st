@@ -4,9 +4,7 @@ Class {
 	#category : 'TestTensorFlowApp'
 }
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFStatus >> testAccessors [
 
 	| status |
@@ -19,9 +17,7 @@ TestTFStatus >> testAccessors [
 	status free.
 ]
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFStatus >> testNewFree [
 
 	| status |

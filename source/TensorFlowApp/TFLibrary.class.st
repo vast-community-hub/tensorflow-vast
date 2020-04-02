@@ -4,19 +4,15 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFLibrary class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
 ]
 
-{
-	#category : 'Factory'
-}
+{ #category : 'Factory' }
 TFLibrary class >> loadLibrary: libraryFilename status: status [
 	"Load the library specified by library_filename and register the ops and
 	 kernels present in that library.

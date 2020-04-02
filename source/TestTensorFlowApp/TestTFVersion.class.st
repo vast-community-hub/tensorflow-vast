@@ -4,9 +4,7 @@ Class {
 	#category : 'TestTensorFlowApp'
 }
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFVersion >> testEqual [
 	| v1 v2 |
 	v1 := TFVersion fromString: '1.2.3'.
@@ -15,9 +13,7 @@ TestTFVersion >> testEqual [
 
 ]
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFVersion >> testGreaterThanOrEqual [
 	| v1 v2 |
 	v1 := TFVersion fromString: '1.2.3'.
@@ -49,9 +45,7 @@ TestTFVersion >> testGreaterThanOrEqual [
 
 ]
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFVersion >> testLessThan [
 	| v1 v2 |
 	v1 := TFVersion fromString: '1.2.3'.
@@ -79,9 +73,7 @@ TestTFVersion >> testLessThan [
 
 ]
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFVersion >> testVersion [
 	
 	| libVersion bindingVersion expected |

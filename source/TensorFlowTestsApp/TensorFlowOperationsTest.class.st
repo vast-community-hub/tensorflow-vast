@@ -7,9 +7,7 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> assert: integers sizeOn: dimension is: expected [
 	| graph session const result size |
 	graph := TFGraph create.
@@ -20,9 +18,7 @@ TensorFlowOperationsTest >> assert: integers sizeOn: dimension is: expected [
 	self assert: expected equals: result asNumbers
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> assertSlice: integers from: begin size: size is: expected [
 	| graph session const result slice |
 	graph := TFGraph create.
@@ -35,18 +31,14 @@ TensorFlowOperationsTest >> assertSlice: integers from: begin size: size is: exp
 	self assert: expected equals: result asNumbers
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 TensorFlowOperationsTest >> expectedFailures [
 	^ #(
 		testOperationMatMulABTransposed
 	)
 ]
 
-{
-	#category : 'private'
-}
+{ #category : 'private' }
 TensorFlowOperationsTest >> percentile: percent from: collection [
 	| position sorted |
 	position := (collection size * percent) ceiling.
@@ -54,16 +46,12 @@ TensorFlowOperationsTest >> percentile: percent from: collection [
 	^ sorted at: position
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 TensorFlowOperationsTest >> setUp [
 	library := TensorFlowCAPI current
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testGraphTruncatedNormal [
 	| graph session result random values std theoreticalDecile expected |
 	graph := TFGraph create.
@@ -90,9 +78,7 @@ TensorFlowOperationsTest >> testGraphTruncatedNormal [
 			self assert: (observed - e) abs < 0.2 ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testGraphTruncatedNormalStddev [
 	| graph session result random values sigma twoSigma std theoreticalDecile expected |
 	graph := TFGraph create.
@@ -125,9 +111,7 @@ TensorFlowOperationsTest >> testGraphTruncatedNormalStddev [
 			self assert: (observed - e) abs < 0.2 ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testGraphUnnamedConst [
 	| graph session result const |
 	graph := TFGraph create.
@@ -138,9 +122,7 @@ TensorFlowOperationsTest >> testGraphUnnamedConst [
 	self assert: result allFloats equals: #(1 2 3 4)
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testGraphVariableFromTruncatedNormalStddev [
 	| graph session result1 result2 var random values1 values2 init sigma std twoSigma |
 	graph := TFGraph create.
@@ -166,9 +148,7 @@ TensorFlowOperationsTest >> testGraphVariableFromTruncatedNormalStddev [
 	self assert: values1 equals: values2
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testGraphZeros [
 	| graph session result zeros values |
 	graph := TFGraph create.
@@ -182,9 +162,7 @@ TensorFlowOperationsTest >> testGraphZeros [
 	self assert: 0 equals: values max
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationAbs [
 	| graph template session const result output |
 	template := TFTensor fromFloats: #(#(-1.1 1.2) #(-2.1 -2.2)).
@@ -198,9 +176,7 @@ TensorFlowOperationsTest >> testOperationAbs [
 	output free
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationAcos [
 	| graph template session const result output intput |
 	template := #(1.1 0.2 2.34 0.717273).
@@ -217,9 +193,7 @@ TensorFlowOperationsTest >> testOperationAcos [
 	output free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationArgMax [
 	| graph a session const result output0 output1 axis0 axis1 |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2) #(3.1 0.2)).
@@ -242,9 +216,7 @@ TensorFlowOperationsTest >> testOperationArgMax [
 		do: [ :r :t | self assert: r equals: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationArgMin [
 	| graph a session const result output0 output1 axis0 axis1 |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2) #(3.1 0.2)).
@@ -267,9 +239,7 @@ TensorFlowOperationsTest >> testOperationArgMin [
 		do: [ :r :t | self assert: r equals: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationArgMinTwoOutputs [
 	| graph a session const results first second output0 output1 axis0 axis1 |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2) #(3.1 0.2)).
@@ -296,9 +266,7 @@ TensorFlowOperationsTest >> testOperationArgMinTwoOutputs [
 		do: [ :r :t | self assert: r equals: t ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationAsin [
 	| graph template session const result output intput |
 	template := #(1.1 0.2 -1.34 0.717273).
@@ -315,9 +283,7 @@ TensorFlowOperationsTest >> testOperationAsin [
 	output free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationAssignSub [
 	| graph var output pi result session |
 	graph := TFGraph create.
@@ -330,9 +296,7 @@ TensorFlowOperationsTest >> testOperationAssignSub [
 	self assert: 1 - Float pi closeTo: result allFloats first
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationAtan [
 	| graph template session const result output intput |
 	template := #(1.1 0.2 -1.34 0.717273).
@@ -349,9 +313,7 @@ TensorFlowOperationsTest >> testOperationAtan [
 	output free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationCastTo [
 	| graph template cast input result |
 	template := #(#(1.1 1.2) #(2.1 2.2)).
@@ -362,9 +324,7 @@ TensorFlowOperationsTest >> testOperationCastTo [
 	self assert: template truncated equals: result asNumbers
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationCos [
 	| graph template session const result output intput |
 	template := #(0.1 0.0 -0.94 0.717273).
@@ -381,9 +341,7 @@ TensorFlowOperationsTest >> testOperationCos [
 	output free
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> testOperationDescentRate [
 	| graph var output pi result session rate |
 	graph := TFGraph create.
@@ -397,9 +355,7 @@ TensorFlowOperationsTest >> testOperationDescentRate [
 	self assert: 1 - (Float pi * 0.7) closeTo: result allFloats first
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> testOperationDescentRateConstants [
 	| graph var output pi result session rate |
 	graph := TFGraph create.
@@ -413,9 +369,7 @@ TensorFlowOperationsTest >> testOperationDescentRateConstants [
 	self assert: 1 - (Float pi * 0.7) closeTo: result allFloats first
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationDiv [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -433,9 +387,7 @@ TensorFlowOperationsTest >> testOperationDiv [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationDivScalar [
 	| graph a b session constA constB result div template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -453,9 +405,7 @@ TensorFlowOperationsTest >> testOperationDivScalar [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationExp [
 	| graph inputs template session const result output |
 	template := #(-1.1 1.2).
@@ -472,9 +422,7 @@ TensorFlowOperationsTest >> testOperationExp [
 	output free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationGreater [
 	| graph a b session constA constB result template comparisons |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(3.14 2.2)).
@@ -492,9 +440,7 @@ TensorFlowOperationsTest >> testOperationGreater [
 		do: [ :r :t | self assert: r equals: t ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationIAlias [
 	| graph template const result same1 same2 |
 	graph := TFGraph create.
@@ -511,9 +457,7 @@ TensorFlowOperationsTest >> testOperationIAlias [
 	self assert: #(1 2 3 4 5 6) equals: result allFloats
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationIdentity [
 	| graph template const result same |
 	graph := TFGraph create.
@@ -526,9 +470,7 @@ TensorFlowOperationsTest >> testOperationIdentity [
 	self assert: #(1 2 3 4 5 6) equals: result allFloats
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMul [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -551,9 +493,7 @@ TensorFlowOperationsTest >> testOperationMatMul [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMul1x1 [
 	| graph a b session constA constB output result |
 	a := #(#(1.1)) asFloatTensor.
@@ -567,9 +507,7 @@ TensorFlowOperationsTest >> testOperationMatMul1x1 [
 	self assert: 1.1 * 3.14 closeTo: result allFloats first
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMul1x1Wrong [
 	| graph a b session constA constB output |
 	a := #(1.1) asFloatTensor.
@@ -582,9 +520,7 @@ TensorFlowOperationsTest >> testOperationMatMul1x1Wrong [
 		raiseError: 'INVALID_ARGUMENT: Shape must be rank 2 but is rank 1 for'.
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMulABTransposed [
 "	This method doesn't compile because /*/ is not a valid binary selector in VAST
 	| graph a b session constA constB result output template |
@@ -611,9 +547,7 @@ TensorFlowOperationsTest >> testOperationMatMulABTransposed [
 	^ self error: 'The source for this method failed to compile'
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMulATransposed [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -636,9 +570,7 @@ TensorFlowOperationsTest >> testOperationMatMulATransposed [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMulBTransposed [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -661,9 +593,7 @@ TensorFlowOperationsTest >> testOperationMatMulBTransposed [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMatMulWrongType [
 	| graph a b constA constB |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -677,9 +607,7 @@ TensorFlowOperationsTest >> testOperationMatMulWrongType [
 			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''MatMul_2'' using Op'
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationMatrixInverse [
 	| graph template session const result identity inverse |
 	template := TFTensor fromFloats: #(#(-1.1 1.2) #(-2.1 -2.2)).
@@ -696,9 +624,7 @@ TensorFlowOperationsTest >> testOperationMatrixInverse [
 	identity free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMeanOn [
 	| graph a session mean0 mean01 mean1 results meanNone |
 	graph := TFGraph create.
@@ -728,9 +654,7 @@ TensorFlowOperationsTest >> testOperationMeanOn [
 		closeTo: results fourth allFloats
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMinus [
 	| graph a b session constA constB result sum template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -748,9 +672,7 @@ TensorFlowOperationsTest >> testOperationMinus [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMod [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(10.0 11.0) #(12.0 13.0)).
@@ -768,9 +690,7 @@ TensorFlowOperationsTest >> testOperationMod [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMul [
 	| graph a b session constA constB result output template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -788,9 +708,7 @@ TensorFlowOperationsTest >> testOperationMul [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationMulScalar [
 	| graph a b session constA constB result mul template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -806,9 +724,7 @@ TensorFlowOperationsTest >> testOperationMulScalar [
 	self assertAll: result allFloats closeTo: template
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationNegated [
 	| graph template session const result negated |
 	template := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -822,9 +738,7 @@ TensorFlowOperationsTest >> testOperationNegated [
 	negated free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationPlus [
 	| graph a b session constA constB result sum template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -842,9 +756,7 @@ TensorFlowOperationsTest >> testOperationPlus [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationPlusNegated [
 	| graph a b session constA constB result sum template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -862,9 +774,7 @@ TensorFlowOperationsTest >> testOperationPlusNegated [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationPlusNegatedNegated [
 	| graph a b session constA constB result sum template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -882,9 +792,7 @@ TensorFlowOperationsTest >> testOperationPlusNegatedNegated [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationPlusNegatedNegatedPlus [
 	| graph a b session constA constB result sum template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -906,9 +814,7 @@ TensorFlowOperationsTest >> testOperationPlusNegatedNegatedPlus [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationRelu [
 	| graph template session const result output |
 	template := #(#(-1.1 1.2) #(-2.1 2.2) #(0 -0)) asFloatTensor.
@@ -923,9 +829,7 @@ TensorFlowOperationsTest >> testOperationRelu [
 		equals: (template allFloats collect: [ :each | each max: 0 ])
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationReluGrad [
 	| graph template session result previousGradient rectifiedGrad expected previousGradientTemplate |
 	template := #(#(-1.1 1.2) #(-2.1 2.2) #(0 -0)) asFloatTensor.
@@ -942,9 +846,7 @@ TensorFlowOperationsTest >> testOperationReluGrad [
 	self assert: result allFloats equals: expected
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationShape [
 	| graph template session const result shape |
 	template := TFTensor
@@ -963,9 +865,7 @@ TensorFlowOperationsTest >> testOperationShape [
 	self assert: #(1 1 2 1 3) equals: result asNumbers
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationSigmoid [
 	| graph inputs template session const result output transformed |
 	template := #(-1.1 1.2 0 4).
@@ -984,9 +884,7 @@ TensorFlowOperationsTest >> testOperationSigmoid [
 	output free
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationSin [
 	| graph template session const result output intput |
 	template := #(0.1 0.0 -0.94 0.717273).
@@ -1003,9 +901,7 @@ TensorFlowOperationsTest >> testOperationSin [
 	output free
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> testOperationSizeOn [
 	| t3x1x4 |
 	t3x1x4 := #(#(#(1 2 3 0)) #(#(4 5 6 0)) #(#(7 8 9 0))).	"shape: (3 1 3)"
@@ -1015,9 +911,7 @@ TensorFlowOperationsTest >> testOperationSizeOn [
 	self assert: t3x1x4 sizeOn: 2 is: #(4)
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> testOperationSlice [
 	| m3x3 |
 	m3x3 := #(#(#(1 2 3)) #(#(4 5 6)) #(#(7 8 9))).	"shape: (3 1 3)"
@@ -1058,9 +952,7 @@ TensorFlowOperationsTest >> testOperationSlice [
 		is: #(#(#(5 6)) #(#(8 9)))
 ]
 
-{
-	#category : 'other operations'
-}
+{ #category : 'other operations' }
 TensorFlowOperationsTest >> testOperationSliceSimple [
 	| graph session const result slice |
 	graph := TFGraph create.
@@ -1071,9 +963,7 @@ TensorFlowOperationsTest >> testOperationSliceSimple [
 	self assert: #(1) equals: result asNumbers
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogits [
 	| graph label prediction results session xentropy gradient lastVector loss |
 	graph := TFGraph create.
@@ -1102,9 +992,7 @@ TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogits [
 	lastVector allButLast do: [ :x | self assert: x > 0 ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogitsUseOutput [
 	| graph label prediction results session xentropy gradient lastVector loss |
 	graph := TFGraph create.
@@ -1133,9 +1021,7 @@ TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogitsUseO
 	lastVector allButLast do: [ :x | self assert: x > 0 ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationSquared [
 	| graph template session const result output |
 	template := TFTensor fromFloats: #(#(-1.1 1.2) #(-2.1 -2.2)).
@@ -1151,9 +1037,7 @@ TensorFlowOperationsTest >> testOperationSquared [
 	output free
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationSub [
 	| graph a b session constA constB result sub template |
 	a := TFTensor fromFloats: #(#(1.1 1.2) #(2.1 2.2)).
@@ -1171,9 +1055,7 @@ TensorFlowOperationsTest >> testOperationSub [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationSum [
 	| graph a session const result output0 output1 axis0 axis1 template sumOn1 sumOn0 |
 	template := #(#(1.1 1.2) #(2.1 2.2) #(3.1 0.2)).
@@ -1199,9 +1081,7 @@ TensorFlowOperationsTest >> testOperationSum [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'binary operations'
-}
+{ #category : 'binary operations' }
 TensorFlowOperationsTest >> testOperationSumOnOutputs [
 	| graph a session const results first second output0 output1 axis0 axis1 template sumOn1 sumOn0 |
 	template := #(#(1.1 1.2) #(2.1 2.2) #(3.1 0.2)).
@@ -1233,9 +1113,7 @@ TensorFlowOperationsTest >> testOperationSumOnOutputs [
 		do: [ :r :t | self assert: r closeTo: t ]
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testOperationTan [
 	| graph template session const result output intput |
 	template := #(0.1 0.0 -0.94 0.717273).
@@ -1252,9 +1130,7 @@ TensorFlowOperationsTest >> testOperationTan [
 	output free
 ]
 
-{
-	#category : 'unary operations'
-}
+{ #category : 'unary operations' }
 TensorFlowOperationsTest >> testSoftmax [
 	| graph template session const result output denominator |
 	template := TFTensor

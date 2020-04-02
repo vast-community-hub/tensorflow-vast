@@ -2,10 +2,8 @@ Extension {
 	#name : 'TFTensor'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> array: values type: type into: anExternalAddressOrByteArray [
 	| size index setter |
 	size := self sizeForType: type.
@@ -21,10 +19,8 @@ TFTensor class >> array: values type: type into: anExternalAddressOrByteArray [
 			index := index + 1 ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> elementsOf: aMultidimensionalTensor [
 	| answer |
 	answer := (Array new: (self sizeOf: aMultidimensionalTensor))
@@ -35,126 +31,96 @@ TFTensor class >> elementsOf: aMultidimensionalTensor [
 	^ answer contents
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> elementsOf: tensorArray do: oneArgBlock [
 	^ (tensorArray isCollection and: [ tensorArray isString not ])
 		ifTrue: [ tensorArray do: [ :each | self elementsOf: each do: oneArgBlock ] ]
 		ifFalse: [ oneArgBlock value: tensorArray ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromBooleans: values [
 	^ self fromNumbers: values type: self typeBoolean
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromBools: values shape: shape [
 	^ self fromNumbers: values type: self typeBoolean shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromDoubles: values [
 	^ self fromNumbers: values type: self typeDouble
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromDoubles: values shape: shape [
 	^ self fromNumbers: values type: self typeDouble shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromFloats: values [
 	^ self fromNumbers: values type: self typeFloat
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromFloats: values shape: shape [
 	^ self fromNumbers: values type: self typeFloat shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt32: value [
 	^ self fromInt32s: value
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt32s: values [
 	^ self fromNumbers: values type: self typeInt32
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt32s: values shape: shape [
 	^ self fromNumbers: values type: self typeInt32 shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt64: value [
 	^ self fromInt64s: value
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt64s: values [
 	^ self fromNumbers: values type: self typeInt64
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromInt64s: values shape: shape [
 	^ self fromNumbers: values type: self typeInt64 shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromNumbers: values type: type [
 	| shape |
 	shape := self shapeOf: values.
 	^ self fromNumbers: values type: type shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromNumbers: values type: type shape: shape [
 	| answer size count |
 	size := self sizeOf: values.
@@ -166,10 +132,8 @@ TFTensor class >> fromNumbers: values type: type shape: shape [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromString: aString [
 	| answer bytesize |
 	bytesize := TensorFlowCAPI current stringEncodedSize: aString.
@@ -182,10 +146,8 @@ TFTensor class >> fromString: aString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromStringArray: aStringArray [
 	^ self
 		fromStrings: aStringArray
@@ -195,10 +157,8 @@ TFTensor class >> fromStringArray: aStringArray [
 				yourself)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromStringArray: aStringArray shape: shape [
 	| answer sizes offsets offsetSize bytesize |
 	sizes := aStringArray collect: [ :each | self sizeOfString: each ].
@@ -222,30 +182,24 @@ TFTensor class >> fromStringArray: aStringArray shape: shape [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromStrings: aStringArray [
 	^ self
 		fromStrings: aStringArray
 		shape: (TFTensor shapeOf: aStringArray) allButLast
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> fromStrings: strings shape: shape [
 	| flatten |
 	flatten := self elementsOf: strings.
 	^ self fromStringArray: flatten shape: shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> getterBlockFor: type [
 	TFTensor typeInt32 = type
 		ifTrue: [ ^ [ :data :offset | data int32At: offset-1 ] ].
@@ -264,10 +218,8 @@ TFTensor class >> getterBlockFor: type [
 	
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> int64Array: values into: anExternalAddressOrByteArray [
 	self
 		array: values
@@ -275,37 +227,29 @@ TFTensor class >> int64Array: values into: anExternalAddressOrByteArray [
 		into: anExternalAddressOrByteArray
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> pi [
 	^ Float pi asTensor
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> rankOf: aMultidimensionalTensor [
 	^ aMultidimensionalTensor isCollection
 		ifTrue: [ 1 + (self rankOf: aMultidimensionalTensor first) ]
 		ifFalse: [ 0 ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> setterBlockFor: type [
 	TFTensor typeInt32 = type
 		ifTrue: [ ^ [ :data :offset :value | data int32At: offset-1 put: value ] ].
@@ -322,10 +266,8 @@ TFTensor class >> setterBlockFor: type [
 	^ self shouldBeImplemented
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> shapeOf: aMultidimensionalTensor [
 	^ aMultidimensionalTensor isCollection
 		ifTrue: [ aMultidimensionalTensor isEmpty
@@ -336,10 +278,8 @@ TFTensor class >> shapeOf: aMultidimensionalTensor [
 		ifFalse: [ #() ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> sizeForType: anInteger [
 	self typeFloat = anInteger
 		ifTrue: [ ^ 4 ].
@@ -390,10 +330,8 @@ TFTensor class >> sizeForType: anInteger [
 	^ self shouldBeImplemented
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> sizeOf: aMultidimensionalTensor [
 	^ aMultidimensionalTensor isCollection
 		ifTrue: [ aMultidimensionalTensor isEmpty
@@ -403,18 +341,14 @@ TFTensor class >> sizeOf: aMultidimensionalTensor [
 		
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['utils']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['utils'] }
 TFTensor class >> sizeOfString: aString [
 	^ TensorFlowCAPI current stringEncodedSize: aString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> type: anInteger shape: anIntegerArray [
 	" I understand dimenssions are:
 		#()		-> Scalar
@@ -432,10 +366,8 @@ TFTensor class >> type: anInteger shape: anIntegerArray [
 	^ self type: anInteger shape: anIntegerArray bytesize: bytesize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFTensor class >> type: anInteger shape: anIntegerArray bytesize: bytesizeInteger [
 	" I understand dimenssions are:
 		#()		-> Scalar
@@ -456,202 +388,152 @@ TFTensor class >> type: anInteger shape: anIntegerArray bytesize: bytesizeIntege
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeBFloat16 [
 	^ 14
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeBoolean [
 	^ 10
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeComplex128 [
 	^ 18
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeComplex64 [
 	^ 8
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeDouble [
 	^ 2
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeFloat [
 	^ 1
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeHalf [
 	^ 19
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeInt16 [
 	^ 5
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeInt32 [
 	^ 3
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeInt64 [
 	^ 9
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeInt8 [
 	^ 6
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeQInt16 [
 	^ 15
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeQInt32 [
 	^ 13
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeQInt8 [
 	^ 11
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeQUInt16 [
 	^ 16
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeQUInt8 [
 	^ 12
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeResource [
 	^ 20
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeString [
 	^ 7
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeUInt16 [
 	^ 17
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['types']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
 TFTensor class >> typeUInt8 [
 	^ 4
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> allElements [
 	^ self asStream contents
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> allFloats [
 	^ self allElements
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> allInt32s [
 	^ self allElements
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> allInt64s [
 	^ self allElements
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> allStrings [
 	| total answer bytes data |
 	total := self size.
@@ -666,10 +548,8 @@ TFTensor >> allStrings [
 	^ answer contents
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> arrayFromStream: strm shape: shape [
 	^ shape isEmpty
 		ifTrue: [ strm next ]
@@ -684,26 +564,20 @@ TFTensor >> arrayFromStream: strm shape: shape [
 							answer nextPut: next ] ] ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> asNumbers [
 	^ self arrayFromStream: self asStream shape: self shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> asOperationOn: aTFGraph [
 	^ aTFGraph const: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> asStream [
 	| answer |
 	answer := ReadWriteStream on: (Array new: self size).
@@ -711,35 +585,27 @@ TFTensor >> asStream [
 	^ answer reset
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['converting']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['converting'] }
 TFTensor >> asTensor [
 
 	^ self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['release'] }
 TFTensor >> basicDelete [
 	self library deleteTensor: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> byteSize [
 	^ self library tensorByteSize: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['iterating']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['iterating'] }
 TFTensor >> dataAndOffsetsCollect: twoArgsBlock thenDo: oneArgBlock [
 	| data elementSize |
 	elementSize := self elementSize.
@@ -750,50 +616,38 @@ TFTensor >> dataAndOffsetsCollect: twoArgsBlock thenDo: oneArgBlock [
 		oneArgBlock value: value ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> dataBytes [
 	^ self data byteArrayAt: 0 size: self byteSize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['iterating']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['iterating'] }
 TFTensor >> elementsDo: oneArgBlock [
 	self dataAndOffsetsCollect: self getterBlock thenDo: oneArgBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> elementSize [
 	^ self class sizeForType: self type
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['iterating']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['iterating'] }
 TFTensor >> getterBlock [
 	^ self class getterBlockFor: self type
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> rank [
 	^ self library tensorRank: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> shape [
 	| answer count |
 	count := self rank.
@@ -802,18 +656,14 @@ TFTensor >> shape [
 	^ answer contents
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> size [
 	^ self shape inject: 1 into: [ :prev :next | prev * next ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFTensor >> sizeOn: dimension [
 	^ self library tensor: self sizeOn: dimension
 ]

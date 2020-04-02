@@ -4,17 +4,13 @@ Class {
 	#category : 'TensorFlowKernelApp'
 }
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowKernelApp class >> failedRemove [
 
 	self loaded
 ]
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowKernelApp class >> loaded [
 	"Send #initializeOnLoad to every class defined in this subapplication that implements it."
 
@@ -22,17 +18,13 @@ TensorFlowKernelApp class >> loaded [
 		(aClass class includesSelector: #initializeOnLoad) ifTrue: [ aClass initializeOnLoad ] ]
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 TensorFlowKernelApp class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowKernelApp class >> removing [
 	"Send #unload to every class defined in this subapplication that implements it."
 

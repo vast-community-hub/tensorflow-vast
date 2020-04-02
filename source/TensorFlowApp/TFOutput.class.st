@@ -4,10 +4,8 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFOutput class >> initializeAfterLoad [
 	"Set layout."
 

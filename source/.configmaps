@@ -1,0 +1,24 @@
+[
+	{
+		#applications : [
+			'TensorFlowApp' : '0.4.19',
+			'TensorFlowExamplesApp' : '1.28',
+			'TensorFlowKernelApp' : '0.24',
+			'TensorFlowTestsApp' : '0.33',
+			'TensorFlowVASTApp' : '1.0',
+			'TestTensorFlowApp' : '0.17'
+		],
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					'z.ST: SUnit' : 'V 9.2.0  [437]',
+					'ENVY/Image Examples' : 'V 9.1.0  [453]'
+				]
+			}
+		],
+		#name : 'TensorFlow',
+		#versionName : '0.64',
+		#comment : ''
+	}
+]

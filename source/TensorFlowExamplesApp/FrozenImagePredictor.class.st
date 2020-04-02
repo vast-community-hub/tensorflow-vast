@@ -15,9 +15,7 @@ Class {
 	#category : 'TensorFlowExamplesApp'
 }
 
-{
-	#category : 'Not categorized'
-}
+{ #category : 'Not categorized' }
 FrozenImagePredictor class >> new [
 	"Answer an instance of the receiver."
 
@@ -26,17 +24,13 @@ FrozenImagePredictor class >> new [
 		yourself
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> addImageFile: aFilename [
 
 	imageFiles add: aFilename
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 FrozenImagePredictor >> colorToArray: aColor [
 	^Array 
 		with: aColor red
@@ -44,41 +38,31 @@ FrozenImagePredictor >> colorToArray: aColor [
 		with: aColor blue
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> graphFile [
 
 	^graphFile
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> graphFile: anObject [
 
 	graphFile := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> imageFiles [
 
 	^imageFiles
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> imageFiles: anObject [
 
 	imageFiles := anObject
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 FrozenImagePredictor >> images [
 
 	^self imageFiles collect: [:each | | scaledImage |
@@ -87,34 +71,26 @@ FrozenImagePredictor >> images [
 		scaledImage]
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> imageSize [
 
 	^imageSize
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> imageSize: anPoint [
 
 
 	imageSize := anPoint
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 FrozenImagePredictor >> imageToArray: image [
 
 	self subclassResponsibility
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 FrozenImagePredictor >> initialize [
 	"Be careful because imageSize depends on the proto buffer used,
 	so you must check its documentation for a correct size"
@@ -126,65 +102,49 @@ FrozenImagePredictor >> initialize [
 
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> inputMean [
 
 	^inputMean
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> inputMean: anObject [
 
 	inputMean := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> inputStddev [
 
 	^inputStddev
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> inputStddev: anObject [
 
 	inputStddev := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> labelsFile [
 
 	^labelsFile
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 FrozenImagePredictor >> labelsFile: anObject [
 
 	labelsFile := anObject
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 FrozenImagePredictor >> predict [
 
 	self subclassResponsibility
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 FrozenImagePredictor >> prepareImageInput [
 
 	| scaledImages |
@@ -198,25 +158,19 @@ FrozenImagePredictor >> prepareImageInput [
 
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 FrozenImagePredictor >> prepareSession [
 
 	graph := TFGraph fromFileNamed: graphFile
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 FrozenImagePredictor >> readLabels [
 
 	self subclassResponsibility
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 FrozenImagePredictor >> scaledImages [
 
 	^self imageFiles collect: [:each | | scaledImage |

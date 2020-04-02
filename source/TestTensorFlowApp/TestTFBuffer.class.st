@@ -4,9 +4,7 @@ Class {
 	#category : 'TestTensorFlowApp'
 }
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFBuffer >> testNewFree [
 
 	| buffer |
@@ -18,9 +16,7 @@ TestTFBuffer >> testNewFree [
 	self assert: buffer isUndefined
 ]
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFBuffer >> testNewFromFree [
 
 	| buffer |

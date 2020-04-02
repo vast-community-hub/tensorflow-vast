@@ -4,19 +4,15 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFTensor class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFTensor >> data [
 	"Answers the size of the underlying data in bytes.
 	 
@@ -26,9 +22,7 @@ TFTensor >> data [
 	^OSPtr address: (self dispatcher callTF_TensorDataWith: self)
 ]
 
-{
-	#category : 'Memory Management'
-}
+{ #category : 'Memory Management' }
 TFTensor >> free [
 	"Destroy a Tensor"
 
@@ -36,9 +30,7 @@ TFTensor >> free [
 	self makeUndefined
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFTensor >> numBytes [
 	"Answers the size of the underlying data in bytes.
 	 
@@ -48,9 +40,7 @@ TFTensor >> numBytes [
 	^self dispatcher callTF_TensorByteSizeWith: self
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFTensor >> numDims [
 	"Answers the number of dimensions that the tensor has.
 	 
@@ -60,9 +50,7 @@ TFTensor >> numDims [
 	^self dispatcher callTF_NumDimsWith: self
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFTensor >> type [
 	"Answers the type of a tensor element.
 	 

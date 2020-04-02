@@ -7,16 +7,12 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPISlowTests >> mulGraphTwoInputsInt64ConstTensorDeleted [
 	^ TensorFlowCAPITest new mulGraphTwoInputsInt64ConstTensorDeleted
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPISlowTests >> testDeviceListFinalizationReleasesExternalMemory [
 
 	| tries total addrs session graph |
@@ -38,9 +34,7 @@ TensorFlowCAPISlowTests >> testDeviceListFinalizationReleasesExternalMemory [
 	self assert: addrs size < total
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPISlowTests >> testGraphFinalizationReleasesExternalMemory [
 	" WeakArray restartFinalizationProcess "
 
@@ -61,9 +55,7 @@ TensorFlowCAPISlowTests >> testGraphFinalizationReleasesExternalMemory [
 	self assert: handles size < total
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPISlowTests >> testRunGraphMulTwoInputsConstTensorDeleted [
 	| graph inputs inputValues mul output session results |
 	graph := self mulGraphTwoInputsInt64ConstTensorDeleted.
@@ -94,16 +86,12 @@ TensorFlowCAPISlowTests >> testRunGraphMulTwoInputsConstTensorDeleted [
 	results first delete
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPISlowTests >> testRunGraphMulTwoInputsConstTensorDeletedManyTimes [
 	20 timesRepeat: [ self testRunGraphMulTwoInputsConstTensorDeleted ]
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPISlowTests >> testSessionFinalizationReleasesExternalMemory [
 	" WeakArray restartFinalizationProcess "
 
@@ -125,9 +113,7 @@ TensorFlowCAPISlowTests >> testSessionFinalizationReleasesExternalMemory [
 	self assert: handles size < total
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPISlowTests >> testSessionOptionFinalizationReleasesExternalMemory [
 	" WeakArray restartFinalizationProcess "
 
@@ -148,9 +134,7 @@ TensorFlowCAPISlowTests >> testSessionOptionFinalizationReleasesExternalMemory [
 	self assert: handles size < total
 ]
 
-{
-	#category : 'testing status'
-}
+{ #category : 'testing status' }
 TensorFlowCAPISlowTests >> testStatusFinalizationReleasesExternalMemory [
 	" WeakArray restartFinalizationProcess "
 
@@ -163,9 +147,7 @@ TensorFlowCAPISlowTests >> testStatusFinalizationReleasesExternalMemory [
 	self assert: handles asSet size < count
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPISlowTests >> testTensorFinalizationReleasesExternalMemory [
 	" WeakArray restartFinalizationProcess "
 

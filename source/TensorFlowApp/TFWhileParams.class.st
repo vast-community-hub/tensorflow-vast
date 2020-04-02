@@ -4,10 +4,8 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFWhileParams class >> initializeAfterLoad [
 	"Set an opaque layout."
 
@@ -16,65 +14,49 @@ TFWhileParams class >> initializeAfterLoad [
 		types:  #(#int32 #pointer #pointer #TFOutput #pointer #pointer #pointer #pointer)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> bodyGraph [
 
 	^TFGraph address: (self pointerAt: #body_graph)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> bodyInputs [
 
 	^TFOutput address: (self pointerAt: #body_inputs)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> bodyOutputs [
 
 	^TFOutput address: (self pointerAt: #body_outputs)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> condGraph [
 
 	^TFGraph address: (self pointerAt: #cond_graph)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> condInputs [
 
 	^TFOutput address: (self pointerAt: #cond_inputs)
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> condOutput [
 
 	^self structAt: #cond_output type: TFOutput
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> name [
 
 	^(OSStringZ address: (self pointerAt: #name)) asString 
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TFWhileParams >> ninputs [
 
 	^self int32At: #ninputs

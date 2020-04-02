@@ -4,9 +4,7 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'testing'
-}
+{ #category : 'testing' }
 TFOutputTest >> testOperation [
 	| op output |
 	op := TFGraph create const: 1.2 asTensor.

@@ -4,19 +4,15 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFSessionOptions class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
 ]
 
-{
-	#category : 'Creation'
-}
+{ #category : 'Creation' }
 TFSessionOptions class >> new [
 	"Answer a new session options
 	 
@@ -30,9 +26,7 @@ TFSessionOptions class >> new [
 	^result
 ]
 
-{
-	#category : 'API'
-}
+{ #category : 'API' }
 TFSessionOptions >> config: aByteObject [
 	"Set the config in TF_SessionOptions.options.
 	 config should be a serialized tensorflow.ConfigProto proto.
@@ -57,18 +51,14 @@ TFSessionOptions >> config: aByteObject [
 
 ]
 
-{
-	#category : 'Memory Management'
-}
+{ #category : 'Memory Management' }
 TFSessionOptions >> free [
 	"Free session options memory"
 	self delete.
 	self makeUndefined
 ]
 
-{
-	#category : 'API'
-}
+{ #category : 'API' }
 TFSessionOptions >> target: aString [
 	"Set the target in TF_SessionOptions.options.
 	 target can be empty, a single entry, or a comma separated list of entries.

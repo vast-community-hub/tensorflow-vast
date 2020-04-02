@@ -2,10 +2,8 @@ Extension {
 	#name : 'TFBuffer'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['field definition']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['field definition'] }
 TFBuffer class >> fields [
 	"self initialize.
 	self defineFields"
@@ -13,10 +11,8 @@ TFBuffer class >> fields [
 	^ #(#(data 'void*') #(length 'ulonglong') #(deallocator 'void*'))
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFBuffer class >> fromFileNamed: aString [
 	| fileContents |
 	
@@ -25,10 +21,8 @@ TFBuffer class >> fromFileNamed: aString [
 	^ self fromString: fileContents
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFBuffer class >> fromString: aString [
 	| answer |
 	answer := TensorFlowCAPI current
@@ -37,10 +31,8 @@ TFBuffer class >> fromString: aString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFBuffer class >> new [
 	"Answer a new buffer
 	 
@@ -54,18 +46,14 @@ TFBuffer class >> new [
 	^result
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['release'] }
 TFBuffer >> basicDelete [
 	^ self library deleteBuffer: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFBuffer >> data: anObject [
 "The following source failed to compile (all double quotes have been doubled):
 	""This method was automatically generated. See TFBuffer class>>fields.""
@@ -76,18 +64,14 @@ TFBuffer >> data: anObject [
 	^ self halt: 'The source for this method failed to compile'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFBuffer >> dataBytes [
 	^ self data byteArrayAt: 0 size: self length
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFBuffer >> deallocator [
 "The following source failed to compile (all double quotes have been doubled):
 	""This method was automatically generated. See TFBuffer class>>fields.""
@@ -100,10 +84,8 @@ TFBuffer >> deallocator [
 	^ self halt: 'The source for this method failed to compile'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFBuffer >> deallocator: anObject [
 "The following source failed to compile (all double quotes have been doubled):
 	""This method was automatically generated. See TFBuffer class>>fields.""
@@ -114,10 +96,8 @@ TFBuffer >> deallocator: anObject [
 	^ self halt: 'The source for this method failed to compile'
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFBuffer >> length: anObject [
 "The following source failed to compile (all double quotes have been doubled):
 	""This method was automatically generated. See TFBuffer class>>fields.""

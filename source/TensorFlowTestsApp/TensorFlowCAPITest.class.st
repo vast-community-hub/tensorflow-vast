@@ -7,9 +7,7 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> addGraphTwoInputsInt64 [
 	| graph in1 in2 |
 	graph := TFGraph create.
@@ -23,18 +21,14 @@ TensorFlowCAPITest >> addGraphTwoInputsInt64 [
 	^ graph
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertElementsOf: tensorArray are: allElementsArray [
 	self
 		assert: allElementsArray
 		equals: (TFTensor elementsOf: tensorArray)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertRankOf: aMultidimensionalTensor is: anInteger [
 	| rank |
 	rank := TFTensor rankOf: aMultidimensionalTensor.
@@ -45,9 +39,7 @@ TensorFlowCAPITest >> assertRankOf: aMultidimensionalTensor is: anInteger [
 				, anInteger printString
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertShapeOf: aMultidimensionalTensor is: anArray [
 	| shape |
 	shape := TFTensor shapeOf: aMultidimensionalTensor.
@@ -58,9 +50,7 @@ TensorFlowCAPITest >> assertShapeOf: aMultidimensionalTensor is: anArray [
 				, anArray printString
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertSizeOf: aMultidimensionalTensor is: anInteger [
 	| size |
 	size := TFTensor sizeOf: aMultidimensionalTensor.
@@ -71,25 +61,19 @@ TensorFlowCAPITest >> assertSizeOf: aMultidimensionalTensor is: anInteger [
 				, anInteger printString
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertTensor: aTFTensor elementsEquals: tensorArray [
 	self assert: aTFTensor allElements equals: tensorArray
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> assertTensor: aTFTensor streamEquals: tensorArray [
 	| strm |
 	strm := aTFTensor asStream.
 	tensorArray do: [ :each | self assert: each equals: strm next ]
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> assertTensorFromStrings: strings shape: shape [
 	| tensor |
 	tensor := TFTensor fromStrings: strings shape: shape.
@@ -97,9 +81,7 @@ TensorFlowCAPITest >> assertTensorFromStrings: strings shape: shape [
 	self assert: strings equals: tensor allStrings
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> asStringGraphType: type [
 	| graph in |
 	graph := TFGraph create.
@@ -110,9 +92,7 @@ TensorFlowCAPITest >> asStringGraphType: type [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> concatGraphInputList [
 	| graph in1 in2 concat dimension dimensionValue inputs |
 	graph := TFGraph create.
@@ -132,9 +112,7 @@ TensorFlowCAPITest >> concatGraphInputList [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> concatGraphInputListNoSizeNoType [
 	| graph in1 in2 concat dimension dimensionValue inputs |
 	graph := TFGraph create.
@@ -152,9 +130,7 @@ TensorFlowCAPITest >> concatGraphInputListNoSizeNoType [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> concatGraphInputListWrongSize [
 	| graph in1 in2 concat dimension dimensionValue inputs |
 	graph := TFGraph create.
@@ -173,9 +149,7 @@ TensorFlowCAPITest >> concatGraphInputListWrongSize [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> concatGraphInputListWrongType [
 	| graph in1 in2 concat dimension dimensionValue inputs |
 	graph := TFGraph create.
@@ -194,9 +168,7 @@ TensorFlowCAPITest >> concatGraphInputListWrongType [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constant2x2FloatGraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -208,16 +180,12 @@ TensorFlowCAPITest >> constant2x2FloatGraphDef [
 		asString
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constant2x2FloatGraphFromDef [
 	^ TFGraph fromString: self constant2x2FloatGraphDef
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantFloatGraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -229,16 +197,12 @@ TensorFlowCAPITest >> constantFloatGraphDef [
 		asString
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantFloatGraphFromDef [
 	^ TFGraph fromString: self constantFloatGraphDef
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantInt32GraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -250,16 +214,12 @@ TensorFlowCAPITest >> constantInt32GraphDef [
 		asString
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantInt32GraphFromDef [
 	^ TFGraph fromString: self constantInt32GraphDef
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantInt64Graph [
 	| graph operation constant |
 	graph := TFGraph create.
@@ -271,9 +231,7 @@ TensorFlowCAPITest >> constantInt64Graph [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantInt64GraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -289,16 +247,12 @@ TensorFlowCAPITest >> constantInt64GraphDef [
 	"
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> constantInt64GraphFromDef [
 	^ TFGraph fromString: self constantInt64GraphDef
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> decodeCSVGraphDefaults: anArrayOfTFTensors [
 	| graph records defaults |
 	graph := TFGraph create.
@@ -319,16 +273,12 @@ TensorFlowCAPITest >> decodeCSVGraphDefaults: anArrayOfTFTensors [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> emptyGraph [
 	^ TFGraph fromString: self emptyGraphDef
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> emptyGraphDef [
 	" This GraphDef corresponds to an Empty Graph (no operations), saved as ProtoBuf "
 
@@ -336,9 +286,7 @@ TensorFlowCAPITest >> emptyGraphDef [
 		asString
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 TensorFlowCAPITest >> expectedFailures [
 	^ #(
 		testGraphDeletionDoesntBreakOperations
@@ -347,9 +295,7 @@ TensorFlowCAPITest >> expectedFailures [
 	)
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> floatAsStringGraph [
 	| graph const |
 	graph := self constantFloatGraphFromDef.
@@ -360,9 +306,7 @@ TensorFlowCAPITest >> floatAsStringGraph [
 	^ graph
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> get2x2FloatFromGraphDef [
 	| graph session const result |
 	graph := self constant2x2FloatGraphFromDef.
@@ -372,9 +316,7 @@ TensorFlowCAPITest >> get2x2FloatFromGraphDef [
 	^ result
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> mulGraphOneInputInt64 [
 	| graph constant const in |
 	graph := TFGraph create.
@@ -389,9 +331,7 @@ TensorFlowCAPITest >> mulGraphOneInputInt64 [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> mulGraphTwoInputsInt64 [
 	| graph constant const in1 in2 mul1 |
 	graph := TFGraph create.
@@ -412,9 +352,7 @@ TensorFlowCAPITest >> mulGraphTwoInputsInt64 [
 	^ graph
 ]
 
-{
-	#category : 'graphs'
-}
+{ #category : 'graphs' }
 TensorFlowCAPITest >> mulGraphTwoInputsInt64ConstTensorDeleted [
 	| graph constant const in1 in2 mul1 |
 	graph := TFGraph create.
@@ -438,9 +376,7 @@ TensorFlowCAPITest >> mulGraphTwoInputsInt64ConstTensorDeleted [
 	^ graph
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> runFloatAsStringGraph [
 	| session graph output result |
 	graph := self floatAsStringGraph.
@@ -451,16 +387,12 @@ TensorFlowCAPITest >> runFloatAsStringGraph [
 	^ result
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 TensorFlowCAPITest >> setUp [
 	library := TensorFlowCAPI current
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> tesCloseSessionTwiceNoCrash [
 	| graph session |
 	graph := TFGraph create.
@@ -473,9 +405,7 @@ TensorFlowCAPITest >> tesCloseSessionTwiceNoCrash [
 	self assert: session isNull
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAddControlInput [
 	| graph in op result |
 	graph := TFGraph create.
@@ -492,9 +422,7 @@ TensorFlowCAPITest >> testAddControlInput [
 	self assert: 12345678 * 12345678 equals: result allInt64s first
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAllInitializers [
 	| graph pisTensor initializers |
 	graph := TFGraph create.
@@ -509,9 +437,7 @@ TensorFlowCAPITest >> testAllInitializers [
 	self assert: 'var3_initializer' equals: initializers third name
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testAllOperations [
 	| graph pisTensor operations names |
 	graph := TFGraph create.
@@ -527,9 +453,7 @@ TensorFlowCAPITest >> testAllOperations [
 		do: [ :name :op | self assert: name equals: op name ]
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAllVariables [
 	| graph pisTensor var1 vars var2 var3 |
 	graph := TFGraph create.
@@ -544,9 +468,7 @@ TensorFlowCAPITest >> testAllVariables [
 	self assert: vars third = var3
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testArrayFromStream [
 	| t template array |
 	t := 1.0 asTensor.
@@ -563,9 +485,7 @@ TensorFlowCAPITest >> testArrayFromStream [
 		equals: array
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsBooleanTensor [
 	self testAsBooleanTensor: true shape: #().
 	self testAsBooleanTensor: #(true false true false) shape: #(4).
@@ -574,9 +494,7 @@ TensorFlowCAPITest >> testAsBooleanTensor [
 		shape: #(2 4)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsBooleanTensor: tensorArray shape: shapeArray [
 	| tensor index bools |
 	tensor := tensorArray asBooleanTensor.
@@ -590,9 +508,7 @@ TensorFlowCAPITest >> testAsBooleanTensor: tensorArray shape: shapeArray [
 			index := index + 1 ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsFloatTensor [
 	self testAsFloatTensor: 1 shape: #().
 	self testAsFloatTensor: #(1 2 3 4) shape: #(4).
@@ -601,9 +517,7 @@ TensorFlowCAPITest >> testAsFloatTensor [
 		shape: #(2 4)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsFloatTensor: tensorArray shape: shapeArray [
 	| tensor index floats |
 	tensor := tensorArray asFloatTensor.
@@ -617,9 +531,7 @@ TensorFlowCAPITest >> testAsFloatTensor: tensorArray shape: shapeArray [
 	self assert: tensor shape equals: shapeArray
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsInt32Tensor [
 	self testAsInt32Tensor: 1 shape: #().
 	self testAsInt32Tensor: #(1 2 3 4) shape: #(4).
@@ -628,9 +540,7 @@ TensorFlowCAPITest >> testAsInt32Tensor [
 		shape: #(2 4)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsInt32Tensor: tensorArray shape: shapeArray [
 	| tensor index ints |
 	tensor := tensorArray asInt32Tensor.
@@ -644,9 +554,7 @@ TensorFlowCAPITest >> testAsInt32Tensor: tensorArray shape: shapeArray [
 			index := index + 1 ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsInt64Tensor [
 	self testAsInt64Tensor: 1 shape: #().
 	self testAsInt64Tensor: #(1 2 3 4) shape: #(4).
@@ -655,9 +563,7 @@ TensorFlowCAPITest >> testAsInt64Tensor [
 		shape: #(2 4)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsInt64Tensor: tensorArray shape: shapeArray [
 	| tensor index ints |
 	tensor := tensorArray asInt64Tensor.
@@ -671,9 +577,7 @@ TensorFlowCAPITest >> testAsInt64Tensor: tensorArray shape: shapeArray [
 			index := index + 1 ]
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAsStringGraphRunOn: tensor [
 	| graph session in out result |
 	graph := self asStringGraphType: tensor type.
@@ -689,9 +593,7 @@ TensorFlowCAPITest >> testAsStringGraphRunOn: tensor [
 	^ result
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetBoolFalse [
 	" See https://www.tensorflow.org/api_docs/cc/struct/tensorflow/ops/as-string/attrs "
 	| graph in op |
@@ -703,9 +605,7 @@ TensorFlowCAPITest >> testAttrGetBoolFalse [
 	self assert: (op boolAt: 'scientific') equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetBoolTrue [
 	" see https://www.tensorflow.org/api_docs/cc/struct/tensorflow/ops/gather/attrs "
 	| graph in op |
@@ -721,9 +621,7 @@ TensorFlowCAPITest >> testAttrGetBoolTrue [
 	self assert: (op boolAt: 'validate_indices') equals: true
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetFloat [
 	| graph in op |
 	graph := TFGraph create.
@@ -736,9 +634,7 @@ TensorFlowCAPITest >> testAttrGetFloat [
 	self assert: (op floatAt: 'max') equals: 6.0
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetInt [
 	| op graph |
 	graph := self concatGraphInputList.
@@ -747,9 +643,7 @@ TensorFlowCAPITest >> testAttrGetInt [
 	graph delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetShape [
 	| graph op |
 	graph := TFGraph create.
@@ -757,9 +651,7 @@ TensorFlowCAPITest >> testAttrGetShape [
 	self assert: (op shapeAt: 'shape') equals: #(1 2 3)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetString [
 	| graph in op |
 	graph := TFGraph create.
@@ -771,9 +663,7 @@ TensorFlowCAPITest >> testAttrGetString [
 	self assert: (op stringAt: 'fill') equals: ''
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetStringNotEmpty [
 	| graph in op |
 	graph := TFGraph create.
@@ -788,9 +678,7 @@ TensorFlowCAPITest >> testAttrGetStringNotEmpty [
 	self assert: (op stringAt: 'fill') equals: 'hola'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetStrings [
 	| graph template in op strings |
 	graph := TFGraph create.
@@ -806,9 +694,7 @@ TensorFlowCAPITest >> testAttrGetStrings [
 	self assert: template equals: strings
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetTensor [
 	| op graph tensor |
 	graph := self constantInt64Graph.
@@ -820,9 +706,7 @@ TensorFlowCAPITest >> testAttrGetTensor [
 	graph delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrGetType [
 	| op graph |
 	graph := self concatGraphInputList.
@@ -831,9 +715,7 @@ TensorFlowCAPITest >> testAttrGetType [
 	graph delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetBoolFalse [
 	| graph in op |
 	graph := TFGraph create.
@@ -849,9 +731,7 @@ TensorFlowCAPITest >> testAttrSetBoolFalse [
 	self assert: (op boolAt: 'validate_indices') equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetBoolTrue [
 	| graph in op |
 	graph := TFGraph create.
@@ -864,9 +744,7 @@ TensorFlowCAPITest >> testAttrSetBoolTrue [
 	self assert: (op boolAt: 'scientific') equals: true
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetFloat [
 	| graph in op min max |
 	min := -1234.5678e10.
@@ -884,9 +762,7 @@ TensorFlowCAPITest >> testAttrSetFloat [
 	self assert: (op floatAt: 'max') closeTo: max
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShape [
 	self testAttrSetShape: #().
 	self testAttrSetShape: #(16r1234567890ABCDEF).
@@ -894,9 +770,7 @@ TensorFlowCAPITest >> testAttrSetShape [
 	self testAttrSetShape: (1 to: 10) asArray
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShape: anIntegerArray [
 	| graph op |
 	graph := TFGraph create.
@@ -909,9 +783,7 @@ TensorFlowCAPITest >> testAttrSetShape: anIntegerArray [
 	self assert: (op shapeAt: 'shape') equals: anIntegerArray
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShapeTooLarge [
 	" This test crashes VAST b437 with TensorFlow 1.14.0"
 
@@ -919,9 +791,7 @@ TensorFlowCAPITest >> testAttrSetShapeTooLarge [
 	self testAttrSetShape: (1 to: 200) asArray
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShapeTooLargeTruncated [
 	| graph op shape status size |
 	
@@ -944,9 +814,7 @@ TensorFlowCAPITest >> testAttrSetShapeTooLargeTruncated [
 	self assert: (op shapeAt: 'shape') equals: (1 to: size) asArray.
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetString [
 	self testAttrSetString: '1'.
 	self testAttrSetString: '12'.
@@ -957,9 +825,7 @@ TensorFlowCAPITest >> testAttrSetString [
 	self testAttrSetString: ((ByteArray new: 100) atAllPut: 65) asString
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetString: aString [
 	| graph in op copy |
 	graph := TFGraph create.
@@ -975,18 +841,14 @@ TensorFlowCAPITest >> testAttrSetString: aString [
 	self assert: (op stringAt: 'fill') equals: aString
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetStrings [
 	self testAttrSetStrings: #('file://./TFDebug.log').
 	self
 		testAttrSetStrings: #('file://./TFDebug.log' 'file://./TFDebug.2.log')
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetStrings: aAnArrayOfStrings [
 	| graph template in op |
 	graph := TFGraph create.
@@ -1003,9 +865,7 @@ TensorFlowCAPITest >> testAttrSetStrings: aAnArrayOfStrings [
 	(TFSession on: graph) runOutput: (op output: 0)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetStringsInvalid [
 	| graph template in notAList |
 	graph := TFGraph create.
@@ -1023,9 +883,7 @@ TensorFlowCAPITest >> testAttrSetStringsInvalid [
 		raiseError: notAList
 ]
 
-{
-	#category : 'testing buffer'
-}
+{ #category : 'testing buffer' }
 TensorFlowCAPITest >> testBufferDataBytes [
 	| buffer string data |
 	string := ' hola manola'.
@@ -1035,9 +893,7 @@ TensorFlowCAPITest >> testBufferDataBytes [
 	buffer delete
 ]
 
-{
-	#category : 'testing buffer'
-}
+{ #category : 'testing buffer' }
 TensorFlowCAPITest >> testBufferNoNeedExternalize [
 	| buffer string data |
 	string := ' hola manola'.
@@ -1049,9 +905,7 @@ TensorFlowCAPITest >> testBufferNoNeedExternalize [
 	buffer delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testCloseSession [
 	| graph session |
 	graph := TFGraph create.
@@ -1063,9 +917,7 @@ TensorFlowCAPITest >> testCloseSession [
 	self assert: session isNull
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testConcatGraphInputList [
 	| wrongSize wrongType |
 	wrongSize := 'INVALID_ARGUMENT: Inconsistent values for attr ''N'' 2 vs. 0 while building NodeDef ''concat'' using Op<name=Concat; signature=concat_dim:int32, values:N*T -> output:T; attr=N:int,min=2; attr=T:type>'.
@@ -1080,18 +932,14 @@ TensorFlowCAPITest >> testConcatGraphInputList [
 		raiseError: wrongType
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testCreateGraphAddTwoInputs [
 	| graph |
 	graph := self addGraphTwoInputsInt64.
 	graph delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testCreateGraphMulOneInput [
 	| graph input mul |
 	graph := self mulGraphOneInputInt64.
@@ -1102,9 +950,7 @@ TensorFlowCAPITest >> testCreateGraphMulOneInput [
 	graph delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testDecodeCSVGraphCreate [
 	| defaults |
 	defaults := (Array new: 4)
@@ -1116,9 +962,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphCreate [
 	self decodeCSVGraphDefaults: defaults
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testDecodeCSVGraphRunCSV: csvLines [
 	| defaults graph output records session results values |
 	defaults := (Array new: 4)
@@ -1156,9 +1000,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunCSV: csvLines [
 	^ (1 to: 4) collect: [ :i | (results at: i) allInt64s ]
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testDecodeCSVGraphRunManyLines [
 	| cols |
 	cols := self
@@ -1173,9 +1015,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunManyLines [
 	self assert: cols fourth equals: #(4 44 444 4444)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testDecodeCSVGraphRunOneLine [
 	| cols |
 	cols := self
@@ -1186,9 +1026,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunOneLine [
 	self assert: cols fourth equals: #(44444444)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testDescriptionDevice [
 	| graph in op expected |
 	graph := TFGraph create.
@@ -1207,9 +1045,7 @@ TensorFlowCAPITest >> testDescriptionDevice [
 		raiseError: expected
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testDeviceListAt [
 	| graph session devices device |
 	graph := TFGraph create.
@@ -1221,9 +1057,7 @@ TensorFlowCAPITest >> testDeviceListAt [
 	self assert: device memory > 16r100000.
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testDeviceListCount [
 	| graph session devices |
 	graph := TFGraph create.
@@ -1233,9 +1067,7 @@ TensorFlowCAPITest >> testDeviceListCount [
 
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testDeviceListCreation [
 	| graph session devices |
 	graph := TFGraph create.
@@ -1248,9 +1080,7 @@ TensorFlowCAPITest >> testDeviceListCreation [
 
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testDeviceListNames [
 	| graph session devices list |
 	graph := TFGraph create.
@@ -1261,9 +1091,7 @@ TensorFlowCAPITest >> testDeviceListNames [
 	self assert: (list first endsWith: 'CPU:0').
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testDeviceListTypeAt [
 	| graph session devices type |
 	graph := TFGraph create.
@@ -1273,9 +1101,7 @@ TensorFlowCAPITest >> testDeviceListTypeAt [
 	self assert: type equals: 'CPU'
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testElementsOf: tensorArray sum: aNumber [
 	| sum |
 	sum := 0.
@@ -1283,9 +1109,7 @@ TensorFlowCAPITest >> testElementsOf: tensorArray sum: aNumber [
 	self assert: sum equals: aNumber
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testElementsOfTensorDoIteratesAll [
 	self testElementsOf: -13123213 sum: -13123213.
 	self testElementsOf: #(123 123 123 123) sum: 123 * 4.
@@ -1301,9 +1125,7 @@ TensorFlowCAPITest >> testElementsOfTensorDoIteratesAll [
 		sum: 9 * 10 / 2 + (100 * 9)
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testExternalizeString [
 	| original copy |
 	original := 'hola manola'.
@@ -1314,16 +1136,12 @@ TensorFlowCAPITest >> testExternalizeString [
 	copy free
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testFloatAsStringGraphCreate [
 	self floatAsStringGraph
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testFloatAsStringGraphRun [
 	| result str expected |
 	expected := '0.420000'.
@@ -1340,9 +1158,7 @@ TensorFlowCAPITest >> testFloatAsStringGraphRun [
 	result delete
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testGet2x2FloatFromGraphDef [
 	| templates consts |
 	templates := #(-1.1 -2.1 -1.2 -2.2).
@@ -1352,9 +1168,7 @@ TensorFlowCAPITest >> testGet2x2FloatFromGraphDef [
 		do: [ :temp :const | self assert: temp closeTo: const ]
 ]
 
-{
-	#category : 'testing library'
-}
+{ #category : 'testing library' }
 TensorFlowCAPITest >> testGetAllOps [
 	| ops |
 	ops := library getAllOps.
@@ -1362,9 +1176,7 @@ TensorFlowCAPITest >> testGetAllOps [
 	ops delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataBoolean [
 	| graph in op template metadata |
 	template := '1234567890abc'.
@@ -1381,9 +1193,7 @@ TensorFlowCAPITest >> testGetAttrMetadataBoolean [
 	self assert: metadata isList equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataFloat [
 	| graph in op metadata |
 	graph := TFGraph create.
@@ -1397,9 +1207,7 @@ TensorFlowCAPITest >> testGetAttrMetadataFloat [
 	self assert: metadata isList equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataInt [
 	| graph in op template metadata |
 	template := '1234567890abc'.
@@ -1416,9 +1224,7 @@ TensorFlowCAPITest >> testGetAttrMetadataInt [
 	self assert: metadata isList equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataShape [
 	| graph op template metadata |
 	template := #(1 2 3 4 5).
@@ -1435,9 +1241,7 @@ TensorFlowCAPITest >> testGetAttrMetadataShape [
 	self assert: metadata totalSize equals: template size
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataString [
 	| graph in op template metadata |
 	template := '1234567890abc'.
@@ -1456,9 +1260,7 @@ TensorFlowCAPITest >> testGetAttrMetadataString [
 	self assert: metadata totalSize equals: template size
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataTensor [
 	| graph op template metadata |
 	template := #(1 2 3 4 5).
@@ -1469,9 +1271,7 @@ TensorFlowCAPITest >> testGetAttrMetadataTensor [
 	self assert: metadata isList equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataType [
 	| graph op template metadata |
 	template := #(1 2 3 4 5).
@@ -1487,9 +1287,7 @@ TensorFlowCAPITest >> testGetAttrMetadataType [
 	self assert: metadata isList equals: false
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetOperationOnConstantGraph [
 	| graph op |
 	graph := self constantFloatGraphFromDef.
@@ -1500,9 +1298,7 @@ TensorFlowCAPITest >> testGetOperationOnConstantGraph [
 	self assert: op outputsCount equals: 1
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetOperationOnEmptyGraph [
 	| graph |
 	graph := self emptyGraph.
@@ -1511,9 +1307,7 @@ TensorFlowCAPITest >> testGetOperationOnEmptyGraph [
 		raiseError: 'Operation not found'
 ]
 
-{
-	#category : 'testing gradients'
-}
+{ #category : 'testing gradients' }
 TensorFlowCAPITest >> testGradientSimple [
 	| graph x y dy grad |
 	graph := TFGraph fromBlock: [:input |
@@ -1530,9 +1324,7 @@ TensorFlowCAPITest >> testGradientSimple [
 	self assert: grad first asNumbers equals: 3.0.
 ]
 
-{
-	#category : 'testing gradients'
-}
+{ #category : 'testing gradients' }
 TensorFlowCAPITest >> testGradientTwoInputs [
 	| graph x1 x2 y dy grad |
 	graph := TFGraph fromBlock: [:input1 :input2 |
@@ -1568,9 +1360,7 @@ TensorFlowCAPITest >> testGradientTwoInputs [
 	self assert: grad second asNumbers equals: 3.0.
 ]
 
-{
-	#category : 'testing gradients'
-}
+{ #category : 'testing gradients' }
 TensorFlowCAPITest >> testGradientTwoInputsTwoOutputs [
 	| graph x1 x2 y1 y2 dy grad |
 	graph := TFGraph fromBlock: [:input1 :input2 |
@@ -1610,9 +1400,7 @@ TensorFlowCAPITest >> testGradientTwoInputsTwoOutputs [
 	graph writeDefToFileNamed: 'grad.pb'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGraph: aTFGraph outputType: anInteger [
 	| operation output |
 	operation := aTFGraph operationNamed: 'a'.
@@ -1621,9 +1409,7 @@ TensorFlowCAPITest >> testGraph: aTFGraph outputType: anInteger [
 	output free
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGraphCreationConst [
 	| graph operation |
 	graph := self constantInt64Graph.
@@ -1634,9 +1420,7 @@ TensorFlowCAPITest >> testGraphCreationConst [
 	self assert: operation outputsCount equals: 1
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphDefinition [
 	| definition operations |
 	definition := self mulGraphTwoInputsInt64 definition.
@@ -1646,9 +1430,7 @@ TensorFlowCAPITest >> testGraphDefinition [
 	self assert: operations second name equals: 'in2'
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphDeletionDoesntBreakOperations [
 	| graph in1 in2 add |
 	self
@@ -1675,9 +1457,7 @@ TensorFlowCAPITest >> testGraphDeletionDoesntBreakOperations [
 	self assert: add name equals: 'add'
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphDeletionDoesntBreakSessions [
 	| graph inputs inputValues add output session results |
 	graph := self addGraphTwoInputsInt64.
@@ -1707,9 +1487,7 @@ TensorFlowCAPITest >> testGraphDeletionDoesntBreakSessions [
 	results first delete
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockIdentity [
 	| graph output inputs results |
 	graph := TFGraph fromBlock: [ :a | a ].
@@ -1729,9 +1507,7 @@ TensorFlowCAPITest >> testGraphFromBlockIdentity [
 	self assert: results first allFloats first closeTo: 3.1415
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockIdentityInstance [
 	| graph output inputs results |
 	graph := TFGraph create.
@@ -1750,9 +1526,7 @@ TensorFlowCAPITest >> testGraphFromBlockIdentityInstance [
 	self assert: results first allFloats first closeTo: 3.1415
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockSimple [
 	| graph output inputs results |
 	graph := TFGraph fromBlock: [ :a :b | a + b ].
@@ -1773,9 +1547,7 @@ TensorFlowCAPITest >> testGraphFromBlockSimple [
 	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockSimpleInstance [
 	| graph output inputs results |
 	graph := TFGraph create.
@@ -1796,9 +1568,7 @@ TensorFlowCAPITest >> testGraphFromBlockSimpleInstance [
 	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockSimpler [
 	| graph output inputs results |
 	graph := TFGraph fromBlock: [ :a :b | a + b ].
@@ -1812,9 +1582,7 @@ TensorFlowCAPITest >> testGraphFromBlockSimpler [
 	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphFromBlockSimplerer [
 	| graph output inputs results |
 	graph := TFGraph fromBlock: [ :a :b |
@@ -1829,9 +1597,7 @@ TensorFlowCAPITest >> testGraphFromBlockSimplerer [
 	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphNotFinalizedWhenHeldByOperations [
 	| graph in1 in2 add |
 	graph := self addGraphTwoInputsInt64.
@@ -1854,9 +1620,7 @@ TensorFlowCAPITest >> testGraphNotFinalizedWhenHeldByOperations [
 	self assert: add name equals: 'add'
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphOperationAt [
 	| graph operation context |
 	graph := self mulGraphTwoInputsInt64.
@@ -1880,18 +1644,14 @@ TensorFlowCAPITest >> testGraphOperationAt [
 	self assert: operation isNull
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphOperationsCount [
 	| graph |
 	graph := self mulGraphTwoInputsInt64.
 	self assert: graph operationsCount equals: 5
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphOperationsDo [
 	| graph operations |
 	graph := self mulGraphTwoInputsInt64.
@@ -1905,9 +1665,7 @@ TensorFlowCAPITest >> testGraphOperationsDo [
 	self assert: (operations at: 5) equals: 'mul2'
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphOperationsSelect [
 	| operations |
 	operations := self mulGraphTwoInputsInt64 allInputs.
@@ -1916,9 +1674,7 @@ TensorFlowCAPITest >> testGraphOperationsSelect [
 	self assert: operations second name equals: 'in2'
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphOperationsSelectEmpty [
 	| graph operations |
 	graph := self mulGraphTwoInputsInt64.
@@ -1926,9 +1682,7 @@ TensorFlowCAPITest >> testGraphOperationsSelectEmpty [
 	self assert: operations size equals: 0
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphRunInputsOutputs [
 	| graph output result input |
 	graph := TFGraph create.
@@ -1952,9 +1706,7 @@ TensorFlowCAPITest >> testGraphRunInputsOutputs [
 	self assert: Float pi * 7.23 closeTo: result first asNumbers
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphRunOutput [
 	| graph output result |
 	graph := TFGraph create.
@@ -1963,9 +1715,7 @@ TensorFlowCAPITest >> testGraphRunOutput [
 	self assert: Float pi closeTo: result asNumbers
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testGraphRunOutputs [
 	| graph output1 output2 results |
 	graph := TFGraph create.
@@ -1981,9 +1731,7 @@ TensorFlowCAPITest >> testGraphRunOutputs [
 	self assert: Float pi / 2 closeTo: results second asNumbers
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testImportBad [
 	| graph buffer |
 	graph := TFGraph create.
@@ -1994,9 +1742,7 @@ TensorFlowCAPITest >> testImportBad [
 	buffer delete
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testImportConstantGraph [
 	self
 		shouldnt: [ self constantFloatGraphFromDef.
@@ -2005,9 +1751,7 @@ TensorFlowCAPITest >> testImportConstantGraph [
 		raise: Error
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testImportEmpty [
 	self emptyGraph.
 	self assert: true
@@ -2016,9 +1760,7 @@ TensorFlowCAPITest >> testImportEmpty [
 	 and it only shows a very generic message, so, this is our approach"
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testInitializeOn [
 	| graph session |
 	graph := TFGraph create.
@@ -2026,9 +1768,7 @@ TensorFlowCAPITest >> testInitializeOn [
 	self shouldnt: [ graph initializeOn: session ] raise: Error
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testInt64AsStringGraph [
 	| result tensor |
 	tensor := TFTensor fromInt64: 101010101.
@@ -2037,9 +1777,7 @@ TensorFlowCAPITest >> testInt64AsStringGraph [
 	result delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testInt64rrayAsStringGraph [
 	| result tensor strings template |
 	template := #(101010101 -123321 1 2 3 4).
@@ -2051,9 +1789,7 @@ TensorFlowCAPITest >> testInt64rrayAsStringGraph [
 	result delete
 ]
 
-{
-	#category : 'testing buffer'
-}
+{ #category : 'testing buffer' }
 TensorFlowCAPITest >> testNewBufferFromFileNamed [
 	| buffer string data temporaryFile |
 	string := ' hola manola'.
@@ -2071,9 +1807,7 @@ TensorFlowCAPITest >> testNewBufferFromFileNamed [
 	self assert: buffer isNull
 ]
 
-{
-	#category : 'testing buffer'
-}
+{ #category : 'testing buffer' }
 TensorFlowCAPITest >> testNewBufferFromString [
 	| buffer string data |
 	string := ' hola manola'.
@@ -2088,9 +1822,7 @@ TensorFlowCAPITest >> testNewBufferFromString [
 	
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testNewGraph [
 	| graph |
 	graph := TFGraph create.
@@ -2099,9 +1831,7 @@ TensorFlowCAPITest >> testNewGraph [
 	self assert: graph isNull
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testNewImportGraphDefOptions [
 	| options |
 	options := TFImportGraphDefOptions create.
@@ -2110,9 +1840,7 @@ TensorFlowCAPITest >> testNewImportGraphDefOptions [
 	self assert: options isNull
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewOperationDescription [
 	| graph description |
 	graph := TFGraph create.
@@ -2126,9 +1854,7 @@ TensorFlowCAPITest >> testNewOperationDescription [
 		description: 'This should have complained of missing attributes'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewOperationMul [
 	| graph operation a b |
 	graph := TFGraph create.
@@ -2150,9 +1876,7 @@ TensorFlowCAPITest >> testNewOperationMul [
 	self assert: operation outputsCount equals: 1
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewOperationPlaceholder [
 	| graph operation |
 	graph := TFGraph create.
@@ -2172,9 +1896,7 @@ TensorFlowCAPITest >> testNewOperationPlaceholder [
 	self assert: operation outputsCount equals: 1
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewOperationPlaceholderNoType [
 	| graph noType |
 	noType := 'INVALID_ARGUMENT: NodeDef missing attr ''dtype'' from Op'.
@@ -2185,9 +1907,7 @@ TensorFlowCAPITest >> testNewOperationPlaceholderNoType [
 		raiseError: noType
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testNewSession [
 	| graph session |
 	graph := TFGraph create.
@@ -2198,9 +1918,7 @@ TensorFlowCAPITest >> testNewSession [
 	self assert: session isNull
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testNewSessionOptions [
 	| options |
 	options := TFSessionOptions create.
@@ -2209,9 +1927,7 @@ TensorFlowCAPITest >> testNewSessionOptions [
 	self assert: options isNull
 ]
 
-{
-	#category : 'testing status'
-}
+{ #category : 'testing status' }
 TensorFlowCAPITest >> testNewStatus [
 	| status |
 	status := TFStatus create.
@@ -2221,9 +1937,7 @@ TensorFlowCAPITest >> testNewStatus [
 	self assert: status isNull
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableForTensor [
 	| graph var assign result session pisTensor pis |
 	graph := TFGraph create.
@@ -2243,9 +1957,7 @@ TensorFlowCAPITest >> testNewVariableForTensor [
 	self assert: result allFloats equals: pisTensor allFloats
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableInitialization [
 	| graph var assign pi result session |
 	graph := TFGraph create.
@@ -2264,9 +1976,7 @@ TensorFlowCAPITest >> testNewVariableInitialization [
 	self assert: result allFloats first closeTo: 3.14
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableInitializationNodeNotRun [
 	| graph var pi lastError |
 	graph := TFGraph create.
@@ -2284,9 +1994,7 @@ TensorFlowCAPITest >> testNewVariableInitializationNodeNotRun [
 		raiseError: 'Attempting to use uninitialized value var'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableInitialValue [
 	| graph var assign result session pisTensor |
 	graph := TFGraph create.
@@ -2299,9 +2007,7 @@ TensorFlowCAPITest >> testNewVariableInitialValue [
 	self assert: result allFloats equals: pisTensor allFloats
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableInitialValueAutomaticInitialization [
 	| graph var result session pisTensor |
 	graph := TFGraph create.
@@ -2313,9 +2019,7 @@ TensorFlowCAPITest >> testNewVariableInitialValueAutomaticInitialization [
 	self assert: result allFloats equals: pisTensor allFloats
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableNoAttributes [
 	| graph error |
 	graph := TFGraph create.
@@ -2325,9 +2029,7 @@ TensorFlowCAPITest >> testNewVariableNoAttributes [
 		raiseError: error
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableNoInitialization [
 	| graph var expectedError lastError |
 	graph := TFGraph create.
@@ -2337,9 +2039,7 @@ TensorFlowCAPITest >> testNewVariableNoInitialization [
 		raiseError: 'Attempting to use uninitialized value var'.
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationAsOperationDifferentGraph [
 	| const graph1 graph2 |
 	graph1 := TFGraph create.
@@ -2350,9 +2050,7 @@ TensorFlowCAPITest >> testOperationAsOperationDifferentGraph [
 		raiseError: 'Can''t move an operation to another Graph'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationAsOperationOk [
 	| const1 const2 graph |
 	graph := TFGraph create.
@@ -2361,9 +2059,7 @@ TensorFlowCAPITest >> testOperationAsOperationOk [
 	self assert: const1 == const2
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationEquals [
 	| graph in1 |
 	graph := TFGraph create.
@@ -2372,36 +2068,28 @@ TensorFlowCAPITest >> testOperationEquals [
 	self deny: in1 = 'in1'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationOutputTypeFloat [
 	^ self
 		testGraph: self constantFloatGraphFromDef
 		outputType: TFTensor typeFloat
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationOutputTypeInt32 [
 	^ self
 		testGraph: self constantInt32GraphFromDef
 		outputType: TFTensor typeInt32
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testOperationOutputTypeInt64 [
 	^ self
 		testGraph: self constantInt64GraphFromDef
 		outputType: TFTensor typeInt64
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testOutputDims [
 	| graph operation output |
 	graph := self constantInt64GraphFromDef.
@@ -2411,9 +2099,7 @@ TensorFlowCAPITest >> testOutputDims [
 	output free
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testPlaceholderType: type [
 	| graph var session result tensor abs |
 	graph := TFGraph create.
@@ -2432,18 +2118,14 @@ TensorFlowCAPITest >> testPlaceholderType: type [
 	result delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testPlaceholderTypes [
 	self testPlaceholderType: TFTensor typeInt64.
 	self testPlaceholderType: TFTensor typeInt32.
 	self testPlaceholderType: TFTensor typeFloat
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testPrintOn [
 	| graph printString |
 	graph := self addGraphTwoInputsInt64.
@@ -2455,9 +2137,7 @@ TensorFlowCAPITest >> testPrintOn [
 	self assert: (printString  endsWith: '''Add'' ''add''')
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testRankOfOutput [
 	| graph template const rank |
 	graph := TFGraph create.
@@ -2468,9 +2148,7 @@ TensorFlowCAPITest >> testRankOfOutput [
 	self assert: template shape size equals: rank
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testRanks [
 	self assertRankOf: -13123213 is: 0.
 	self assertRankOf: #(123 123 123 123) is: 1.
@@ -2480,9 +2158,7 @@ TensorFlowCAPITest >> testRanks [
 		is: 3
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testRunGraphAddTwoInputs [
 	| graph inputs inputValues add output session results |
 	graph := self addGraphTwoInputsInt64.
@@ -2510,9 +2186,7 @@ TensorFlowCAPITest >> testRunGraphAddTwoInputs [
 	results first delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testRunGraphMulOneInput [
 	| graph input inputValue result mul output session |
 	graph := self mulGraphOneInputInt64.
@@ -2537,9 +2211,7 @@ TensorFlowCAPITest >> testRunGraphMulOneInput [
 	graph delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testRunGraphMulTwoInputs [
 	| graph inputs inputValues mul output session results |
 	graph := self mulGraphTwoInputsInt64.
@@ -2567,9 +2239,7 @@ TensorFlowCAPITest >> testRunGraphMulTwoInputs [
 	results first delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testRunGraphMulTwoInputsRunInputsOutputs [
 	| graph inputs inputValues mul output session results |
 	graph := self mulGraphTwoInputsInt64.
@@ -2599,9 +2269,7 @@ TensorFlowCAPITest >> testRunGraphMulTwoInputsRunInputsOutputs [
 	results first delete
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testRunOperationArray [
 	| graph operation session |
 	graph := self constantFloatGraphFromDef.
@@ -2613,9 +2281,7 @@ TensorFlowCAPITest >> testRunOperationArray [
 	graph delete
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testSessionDeletionDoesntDeleteGraphs [
 	| session graph allocatedObjects |
 	graph := TFGraph create.
@@ -2634,9 +2300,7 @@ TensorFlowCAPITest >> testSessionDeletionDoesntDeleteGraphs [
 			'The FFI call would crash if the graph was released by deleting the session'
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testSessionDevices [
 	| graph session devices |
 	graph := TFGraph create.
@@ -2646,9 +2310,7 @@ TensorFlowCAPITest >> testSessionDevices [
 	self assert: (devices first name endsWith: 'CPU:0')
 ]
 
-{
-	#category : 'testing device list'
-}
+{ #category : 'testing device list' }
 TensorFlowCAPITest >> testSessionDevicesNames [
 	| graph session list |
 	graph := TFGraph create.
@@ -2657,9 +2319,7 @@ TensorFlowCAPITest >> testSessionDevicesNames [
 	self assert: session devices first name equals: list first
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionOnEmptyGraph [
 	| session |
 	session := TFSession on: self emptyGraph.
@@ -2669,25 +2329,19 @@ TensorFlowCAPITest >> testSessionOnEmptyGraph [
 			'INVALID_ARGUMENT: Must specify at least one target to fetch or execute.'
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testSessionOptionsFromProtoBufEmpty [
 	TFSessionOptions fromProtoBuf: ''
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testSessionOptionsFromProtoBufInvalid [
 	self
 		should: [ TFSessionOptions fromProtoBuf: '.' ]
 		raiseError: 'INVALID_ARGUMENT: Unparseable ConfigProto'
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testSessionOptionsFromProtoBufValid [
 	"
 	In [241]: tf.ConfigProto(allow_soft_placement=True, log_device_placement=True).SerializeToString()
@@ -2699,9 +2353,7 @@ TensorFlowCAPITest >> testSessionOptionsFromProtoBufValid [
 	TFSessionOptions fromProtoBuf: config
 ]
 
-{
-	#category : 'testing options'
-}
+{ #category : 'testing options' }
 TensorFlowCAPITest >> testSessionOptionsSetTarget [
 	| options |
 	options := library newSessionOptions.
@@ -2711,16 +2363,12 @@ TensorFlowCAPITest >> testSessionOptionsSetTarget [
 	self assert: options isNull
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionRunOutput [
 	^ self testSessionRunOutputOnGraph: self constantInt64GraphFromDef
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionRunOutputOnGraph: graph [
 	| operation session output tensor |
 	session := TFSession on: graph.
@@ -2736,9 +2384,7 @@ TensorFlowCAPITest >> testSessionRunOutputOnGraph: graph [
 	graph delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionRunTarget [
 	| graph operation session |
 	graph := self constantFloatGraphFromDef.
@@ -2748,17 +2394,13 @@ TensorFlowCAPITest >> testSessionRunTarget [
 	graph delete
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionRunTargetOutput [
 	^ self
 		testSessionRunTargetOutputOnGraph: self constantInt64GraphFromDef
 ]
 
-{
-	#category : 'testing session'
-}
+{ #category : 'testing session' }
 TensorFlowCAPITest >> testSessionRunTargetOutputOnGraph: graph [
 	| operation session output tensor |
 	session := TFSession on: graph.
@@ -2772,9 +2414,7 @@ TensorFlowCAPITest >> testSessionRunTargetOutputOnGraph: graph [
 	graph delete
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testShape [
 	self assertShapeOf: -13123213 is: #().
 	self assertShapeOf: #(123 123 123 123) is: #(4).
@@ -2786,9 +2426,7 @@ TensorFlowCAPITest >> testShape [
 		is: #(3 3 1)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testShapeOfInput [
 	| graph template const shape same |
 	graph := TFGraph create.
@@ -2800,9 +2438,7 @@ TensorFlowCAPITest >> testShapeOfInput [
 	self assert: template shape equals: shape
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testShapeOfOutput [
 	| graph template const shape |
 	graph := TFGraph create.
@@ -2813,9 +2449,7 @@ TensorFlowCAPITest >> testShapeOfOutput [
 	self assert: template shape equals: shape
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testShapeOfOutputSet [
 	| graph var shape output |
 	graph := TFGraph create.
@@ -2834,9 +2468,7 @@ TensorFlowCAPITest >> testShapeOfOutputSet [
 	self assert: shape equals: #(3 3 -1)
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testShapeOfOutputSetInvalid [
 	| graph template const output |
 	graph := TFGraph create.
@@ -2850,9 +2482,7 @@ TensorFlowCAPITest >> testShapeOfOutputSetInvalid [
 			'INVALID_ARGUMENT: Dimension 0 in both shapes must be equal, but are 2 and 1'
 ]
 
-{
-	#category : 'testing operation'
-}
+{ #category : 'testing operation' }
 TensorFlowCAPITest >> testShapeOfOutputSetInvalidRank [
 	| graph template const output |
 	graph := TFGraph create.
@@ -2865,9 +2495,7 @@ TensorFlowCAPITest >> testShapeOfOutputSetInvalidRank [
 		raiseError: 'INVALID_ARGUMENT: Shapes must be equal rank, but are 3 and 4'
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testSizes [
 	self assertSizeOf: -13123213 is: 1.
 	self assertSizeOf: #(123 123 123 123) is: 4.
@@ -2879,9 +2507,7 @@ TensorFlowCAPITest >> testSizes [
 		is: 3 * 3 * 1
 ]
 
-{
-	#category : 'testing status'
-}
+{ #category : 'testing status' }
 TensorFlowCAPITest >> testStatusCodes [
 	| status msg |
 	status := TFStatus create.
@@ -2894,9 +2520,7 @@ TensorFlowCAPITest >> testStatusCodes [
 	self should: [ status check ] raiseError: 'CANCELLED: ' , msg
 ]
 
-{
-	#category : 'testing status'
-}
+{ #category : 'testing status' }
 TensorFlowCAPITest >> testStatusGetMessage [
 	| status message |
 	status := TFStatus create.
@@ -2908,9 +2532,7 @@ TensorFlowCAPITest >> testStatusGetMessage [
 	self assert: message equals: 'Something is very seven'
 ]
 
-{
-	#category : 'testing status'
-}
+{ #category : 'testing status' }
 TensorFlowCAPITest >> testStatusSetGetCode [
 	| status code |
 	status := TFStatus create.
@@ -2922,9 +2544,7 @@ TensorFlowCAPITest >> testStatusSetGetCode [
 	self assert: code equals: 2
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testStringAsTensor [
 	| tensor template |
 	template := 'hola manola'.
@@ -2933,9 +2553,7 @@ TensorFlowCAPITest >> testStringAsTensor [
 	self assert: tensor dataBytes allButFirst asString equals: template
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testStringDecode [
 	| size string encoded decoded status |
 	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
@@ -2956,9 +2574,7 @@ TensorFlowCAPITest >> testStringDecode [
 	self assert: decoded equals: string
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testStringEncode [
 	| size string encoded encodedSize |
 	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
@@ -2973,9 +2589,7 @@ TensorFlowCAPITest >> testStringEncode [
 		equals: string
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testStringEncodeExternal [
 	| size string encoded encodedSize status |
 	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
@@ -2997,9 +2611,7 @@ TensorFlowCAPITest >> testStringEncodeExternal [
 		equals: string
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testStringSize [
 	self assert: (library primStringEncodedSize: 0) equals: 0 + 1.
 	self assert: (library primStringEncodedSize: 127) equals: 127 + 1.
@@ -3022,9 +2634,7 @@ TensorFlowCAPITest >> testStringSize [
 		equals: 128 + 2
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAllElements [
 	self
 		assertTensor: -13123213 asInt32Tensor
@@ -3043,9 +2653,7 @@ TensorFlowCAPITest >> testTensorAllElements [
 			#(1.0 100.0 2.0 100.0 3.0 100.0 4.0 100.0 5.0 100.0 6.0 100.0 7.0 100.0 8.0 100.0 9.0 100.0)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAllStrings [
 	| result strings expected |
 	expected := #('0.420000').
@@ -3055,9 +2663,7 @@ TensorFlowCAPITest >> testTensorAllStrings [
 	result delete
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorArrayNumbersAt [
 	| graph inputValues inputs mul numbers output results session |
 	graph := self mulGraphTwoInputsInt64.
@@ -3079,9 +2685,7 @@ TensorFlowCAPITest >> testTensorArrayNumbersAt [
 	self assert: numbers equals: 16r4242424242424242
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsNumbers [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
@@ -3100,9 +2704,7 @@ TensorFlowCAPITest >> testTensorAsNumbers [
 		equals: array
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsNumbersFloats [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
@@ -3121,9 +2723,7 @@ TensorFlowCAPITest >> testTensorAsNumbersFloats [
 		equals: array
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsNumbersInt32 [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
@@ -3142,17 +2742,13 @@ TensorFlowCAPITest >> testTensorAsNumbersInt32 [
 		equals: array
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsNumbersRank0 [
 	self assert: 1 equals: 1 asInt32Tensor asNumbers.
 	self assert: 1.0 equals: 1.0 asTensor asNumbers
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsOperation [
 	| graph a b result |
 	graph := TFGraph create.
@@ -3162,9 +2758,7 @@ TensorFlowCAPITest >> testTensorAsOperation [
 	self assert: 3.14 + 1.234 closeTo: result asNumbers
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAsStream [
 	self assertTensor: -13123213 asInt32Tensor streamEquals: #(-13123213).
 	self
@@ -3181,18 +2775,14 @@ TensorFlowCAPITest >> testTensorAsStream [
 			#(1.0 100.0 2.0 100.0 3.0 100.0 4.0 100.0 5.0 100.0 6.0 100.0 7.0 100.0 8.0 100.0 9.0 100.0)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorByteSize [
 	| tensor |
 	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3).
 	self assert: tensor byteSize equals: 8 * 2 * 3
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorData [
 	| tensor |
 	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3).
@@ -3201,9 +2791,7 @@ TensorFlowCAPITest >> testTensorData [
 	self deny: tensor isUndefined
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorElementsOf [
 	self assertElementsOf: -13123213 are: #(-13123213).
 	self assertElementsOf: #(123 123 123 123) are: #(123 123 123 123).
@@ -3219,9 +2807,7 @@ TensorFlowCAPITest >> testTensorElementsOf [
 		are: #(1 100 2 100 3 100 4 100 5 100 6 100 7 100 8 100 9 100)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromDoublesOutOfRange [
 "The following source failed to compile (all double quotes have been doubled):
 	| tensor template values |
@@ -3242,9 +2828,7 @@ TensorFlowCAPITest >> testTensorFromDoublesOutOfRange [
 	^ self skip. "This source code make VAST irresponsive. It's something to do with the large Float"
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromDoublesOutOfRangeForFloats [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 3.402824e38 1.175494351e-46 1.0e39 1.0e-50)
@@ -3261,9 +2845,7 @@ TensorFlowCAPITest >> testTensorFromDoublesOutOfRangeForFloats [
 	self assert: 0.0 ~= (values at: 5)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromDoublesShape [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 1.1).
@@ -3277,9 +2859,7 @@ TensorFlowCAPITest >> testTensorFromDoublesShape [
 		do: [ :templ :actual | self assert: templ closeTo: actual ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloats [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 3.402823466e38 1.175494351e-38).
@@ -3292,9 +2872,7 @@ TensorFlowCAPITest >> testTensorFromFloats [
 		do: [:templ :value | self assert: templ closeTo: value ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloats2x2 [
 	| tensor template values |
 	template := #(#(-1.1 -2.1) #(-1.2 -2.2)).
@@ -3308,9 +2886,7 @@ TensorFlowCAPITest >> testTensorFromFloats2x2 [
 		do: [ :reference :value | self assert: reference closeTo: value ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloats2x2SameElementsOrder [
 	| tensor template values constTensor consts |
 	template := #(#(-1.1 -2.1) #(-1.2 -2.2)).
@@ -3323,9 +2899,7 @@ TensorFlowCAPITest >> testTensorFromFloats2x2SameElementsOrder [
 		do: [ :const :value | self assert: const closeTo: value ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloatsInfinity [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 +101010 -101010)
@@ -3343,9 +2917,7 @@ TensorFlowCAPITest >> testTensorFromFloatsInfinity [
 
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloatsOutOfRange [
 	" This test actually depends on #floatAt:put: bounding the out of range floats and
 	 'invisibly' replacing them for +Inf or 0.0 "
@@ -3372,9 +2944,7 @@ TensorFlowCAPITest >> testTensorFromFloatsOutOfRange [
 	self assert: 0.0 equals: (values at: 5)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloatsScalar [
 	| tensor template values |
 	template := 3.141516.
@@ -3386,9 +2956,7 @@ TensorFlowCAPITest >> testTensorFromFloatsScalar [
 	self assert: template closeTo: values first
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloatsShape [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 1.1).
@@ -3402,9 +2970,7 @@ TensorFlowCAPITest >> testTensorFromFloatsShape [
 		do: [ :templ :actual | self assert: templ closeTo: actual ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromFloatsShapeUndefinedSize [
 	| template |
 	template := #(1.23456 0.0 -1.234567 1.1).
@@ -3413,9 +2979,7 @@ TensorFlowCAPITest >> testTensorFromFloatsShapeUndefinedSize [
 		raiseError: 'Inferred size and real size don''t match.'
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt32 [
 	| tensor template values |
 	template := -1123123123.
@@ -3432,9 +2996,7 @@ TensorFlowCAPITest >> testTensorFromInt32 [
 				yourself)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt32s [
 	| tensor template values |
 	template := #(0 -1 1 -2 2 32768 65536 -1123123123).
@@ -3451,9 +3013,7 @@ TensorFlowCAPITest >> testTensorFromInt32s [
 	self assert: values equals: template
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt32Shape [
 	| tensor template values |
 	template := #(123456 0 -1234567 11).
@@ -3468,9 +3028,7 @@ TensorFlowCAPITest >> testTensorFromInt32Shape [
 		do: [ :templ :actual | self assert: templ closeTo: actual ]
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt64 [
 	| tensor template values |
 	template := -1123123123727272.
@@ -3487,9 +3045,7 @@ TensorFlowCAPITest >> testTensorFromInt64 [
 				yourself)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt64s [
 	| tensor template values |
 	template := #(16r1234567812345678 0 -12345678910111213).
@@ -3501,9 +3057,7 @@ TensorFlowCAPITest >> testTensorFromInt64s [
 	self assert: template equals: values
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorFromInt64Shape [
 	| tensor template values |
 	template := #(123456 0 -1234567 11).
@@ -3518,9 +3072,7 @@ TensorFlowCAPITest >> testTensorFromInt64Shape [
 		do: [ :templ :actual | self assert: templ closeTo: actual ]
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromString [
 	| tensor template |
 	template := 'hola manola'.
@@ -3529,9 +3081,7 @@ TensorFlowCAPITest >> testTensorFromString [
 	self assert: tensor dataBytes allButFirst asString equals: template
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromStringArray [
 	| tensor template |
 	template := #('hola manola' 'te traje una lola' 'pamela' 'que pandulce!').
@@ -3539,9 +3089,7 @@ TensorFlowCAPITest >> testTensorFromStringArray [
 	self assert: tensor allStrings equals: template
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromStrings [
 	| tensor template flatten |
 	template := #(#('hola manola' 'te traje una lola') #('pamela' 'que pandulce!') #('habia una vez' 'truz')).
@@ -3551,9 +3099,7 @@ TensorFlowCAPITest >> testTensorFromStrings [
 	self assert: flatten equals: tensor allStrings
 ]
 
-{
-	#category : 'testing strings'
-}
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromStringsShape [
 	| template |
 	template := #('hola manola' 'te traje una lola' 'pamela' 'que pandulce!' 'habia una vez' 'truz').
@@ -3563,9 +3109,7 @@ TensorFlowCAPITest >> testTensorFromStringsShape [
 	self assertTensorFromStrings: #('hola como estas?') shape: #()
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorNewScalar [
 	| tensor |
 	tensor := TFTensor type: TFTensor typeInt64 shape: #().
@@ -3575,9 +3119,7 @@ TensorFlowCAPITest >> testTensorNewScalar [
 	self assert: tensor isNull
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape: anArray [
 	| tensor shape size |
 	tensor := TFTensor type: TFTensor typeInt64 shape: anArray.
@@ -3592,37 +3134,27 @@ TensorFlowCAPITest >> testTensorShape: anArray [
 	self assert: tensor size equals: size
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape0D [
 	^ self testTensorShape: #()
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape10D [
 	^ self testTensorShape: #(1 2 3 4 5 6 7 8 9 10)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape1D [
 	^ self testTensorShape: #(7)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape2D [
 	^ self testTensorShape: #(1 4)
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorType [
 	| tensor |
 	tensor := TFTensor type: TFTensor typeInt64 shape: #().
@@ -3631,9 +3163,7 @@ TensorFlowCAPITest >> testTensorType [
 	self assert: tensor type equals: tensor class typeFloat
 ]
 
-{
-	#category : 'testing tensor'
-}
+{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorTypes [
 	| types |
 	types := #(Float 1 Double 2 Int32 3 UInt8 4 Int16 5 Int8 6 String 7 Complex64 8 Int64 9 Boolean 10 QInt8 11 QUInt8 12 QInt32 13 BFloat16 14 QInt16 15 QUInt16 16 UInt16 17 Complex128 18 Half 19 Resource 20).
@@ -3645,9 +3175,7 @@ TensorFlowCAPITest >> testTensorTypes [
 			self assert: (TFTensor perform: (#type , name) asSymbol) equals: value ]
 ]
 
-{
-	#category : 'testing library'
-}
+{ #category : 'testing library' }
 TensorFlowCAPITest >> testVersion [
 	| version |
 	version := library version.
@@ -3657,9 +3185,7 @@ TensorFlowCAPITest >> testVersion [
 				includes: version)
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testWriteDefTo [
 	| graph strm |
 	graph := self constantInt64GraphFromDef.
@@ -3670,9 +3196,7 @@ TensorFlowCAPITest >> testWriteDefTo [
 		equals: strm contents size
 ]
 
-{
-	#category : 'testing graph'
-}
+{ #category : 'testing graph' }
 TensorFlowCAPITest >> testWriteDefToFileNamed [
 	| graph filename filedata |
 	filename := 'temporaryGraph.pb'.

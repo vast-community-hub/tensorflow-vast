@@ -4,10 +4,8 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFApiDefMap class >> initializeAfterLoad [
 	"Set an opaque layout."
 

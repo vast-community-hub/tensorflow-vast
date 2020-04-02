@@ -4,17 +4,13 @@ Class {
 	#category : 'TensorFlowTestsApp'
 }
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowTestsApp class >> failedRemove [
 
 	self loaded
 ]
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowTestsApp class >> loaded [
 	"Send #initializeOnLoad to every class defined in this subapplication that implements it."
 
@@ -22,17 +18,13 @@ TensorFlowTestsApp class >> loaded [
 		(aClass class includesSelector: #initializeOnLoad) ifTrue: [ aClass initializeOnLoad ] ]
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 TensorFlowTestsApp class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : 'loading/removing'
-}
+{ #category : 'loading/removing' }
 TensorFlowTestsApp class >> removing [
 	"Send #unload to every class defined in this subapplication that implements it."
 

@@ -2,19 +2,15 @@ Extension {
 	#name : 'TFSession'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFSession class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFSession class >> on: aTFGraph [
 	| options status answer |
 	options := TFSessionOptions create.
@@ -28,10 +24,8 @@ TFSession class >> on: aTFGraph [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['release'] }
 TFSession >> basicDelete [
 	| status |
 	status := TFStatus create.
@@ -40,10 +34,8 @@ TFSession >> basicDelete [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['release'] }
 TFSession >> close [
 	| status |
 	status := TFStatus create.
@@ -51,18 +43,14 @@ TFSession >> close [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> devices [
 	^ (TFDeviceList on: self) devices
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> run [
 	| status |
 	status := TFStatus create.
@@ -82,10 +70,8 @@ TFSession >> run [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outArrayOfTFOutputs [
 	| inputs invalues outputs outvalues status |
 	status := TFStatus create.
@@ -110,18 +96,14 @@ TFSession >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: ou
 	^ outvalues
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperation: aTFOperation [
 	^ self runOperations: (Array with: aTFOperation)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperation: aTFOperation input: inTFOutputOrInput value: inTFTensor output: outTFOutput [
 	| inputs invalues operations outputs outvalues tensor |
 	inputs := Array with: inTFOutputOrInput.
@@ -137,10 +119,8 @@ TFSession >> runOperation: aTFOperation input: inTFOutputOrInput value: inTFTens
 	^ tensor
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperation: aTFOperation output: aTFOutput [
 	| operations answer outputs |
 	operations := TFOperationPtrArray externalNew: 1.
@@ -151,10 +131,8 @@ TFSession >> runOperation: aTFOperation output: aTFOutput [
 	^ answer first
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperations: anArrayOfTFOperations [
 	| status operations |
 	status := TFStatus create.
@@ -176,10 +154,8 @@ TFSession >> runOperations: anArrayOfTFOperations [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperations: anArrayOfTFOperations inputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outArrayOfTFOutputs [
 	| operations inputs invalues outputs outvalues status |
 	status := TFStatus create.
@@ -206,10 +182,8 @@ TFSession >> runOperations: anArrayOfTFOperations inputs: inArrayOfTFOutputs val
 	^ outvalues
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOperations: aTFOperationArray outputs: aTFOutputArray size: anInteger [
 	| status outvalues |
 	status := TFStatus create.
@@ -231,10 +205,8 @@ TFSession >> runOperations: aTFOperationArray outputs: aTFOutputArray size: anIn
 	^ outvalues
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOutput: aTFOutput [
 	| results |
 	results := self
@@ -245,20 +217,16 @@ TFSession >> runOutput: aTFOutput [
 	^ results first
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOutputs: anArrayOfTFOutputs [
 	| outputs |
 	outputs := TFOutputArray externalFromArray: anArrayOfTFOutputs.
 	^ self runOutputs: outputs size: anArrayOfTFOutputs size
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFSession >> runOutputs: aTFOutputArray size: anInteger [
 	| status outvalues |
 	status := TFStatus create.

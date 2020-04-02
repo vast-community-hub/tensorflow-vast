@@ -4,10 +4,8 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFFunctionOptions class >> initializeAfterLoad [
 	"Set an opaque layout."
 

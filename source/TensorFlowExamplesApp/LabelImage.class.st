@@ -94,9 +94,7 @@ Class {
 	#category : 'TensorFlowExamplesApp'
 }
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 LabelImage >> colorToArray: aColor [
 	^Array 
 		with: (aColor red - inputMean) / inputStddev
@@ -104,9 +102,7 @@ LabelImage >> colorToArray: aColor [
 		with: (aColor blue - inputMean) / inputStddev
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 LabelImage >> imageToArray: image [
 
 	| answer |
@@ -120,9 +116,7 @@ LabelImage >> imageToArray: image [
 	^answer
 ]
 
-{
-	#category : 'initialization'
-}
+{ #category : 'initialization' }
 LabelImage >> initialize [
 	"Be careful because imageSize depends on the proto buffer used,
 	so you must check its documentation for a correct size"
@@ -136,9 +130,7 @@ LabelImage >> initialize [
 
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 LabelImage >> predict [
 
 	| results labels |
@@ -157,9 +149,7 @@ LabelImage >> predict [
 	^results
 ]
 
-{
-	#category : 'helpers'
-}
+{ #category : 'helpers' }
 LabelImage >> readLabels [
 
 	| labels |

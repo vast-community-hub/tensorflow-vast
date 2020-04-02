@@ -7,26 +7,20 @@ Class {
 	#category : 'TestTensorFlowApp'
 }
 
-{
-	#category : 'SUnit'
-}
+{ #category : 'SUnit' }
 TensorFlowTestCase class >> isAbstract [
 
 	^self sunitName = #TensorFlowTestCase
 ]
 
-{
-	#category : 'SUnit'
-}
+{ #category : 'SUnit' }
 TensorFlowTestCase class >> testSelectors [
 	"The API method is allTestSelectors which now includes #shouldInheritSelectors and so handles
 all cases.  Unlike that method, this does not guarantee to return a sorted ordered collection."
 	^self sunitSelectors select: [:each | ('test*' sunitMatch: each) and: [each argumentCount = 0]]
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> assert: aNumber closeTo: anotherNumber [
 	^ self
 		assert: (self number: aNumber isCloseTo: anotherNumber)
@@ -34,33 +28,25 @@ TensorFlowTestCase >> assert: aNumber closeTo: anotherNumber [
 
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> assertAll: aCollection closeTo: anotherCollection [
 	^ aCollection with: anotherCollection do: [:a :b | self assert: a closeTo: b]
 ]
 
-{
-	#category : 'Accessing',
-	#vaVisibility : 'private'
-}
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TensorFlowTestCase >> dispatcher [
 
 	^TFLibraryDispatcher default
 ]
 
-{
-	#category : 'Accessing'
-}
+{ #category : 'Accessing' }
 TensorFlowTestCase >> garbageCollect [
 	System globalGarbageCollect.
 	[Processor finalizeCycle] whileTrue: [].
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> number: aNumber isCloseTo: anotherNumber [
  	"are these two numbers close?"
 	self = 0.0 ifTrue: [^anotherNumber abs < 0.0001].
@@ -69,9 +55,7 @@ TensorFlowTestCase >> number: aNumber isCloseTo: anotherNumber [
 		or: [(aNumber - anotherNumber) abs / (aNumber abs max: anotherNumber abs) < 0.0001]
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> should: aBlock raiseError: aString [
 	| message |
 	message := 'No Error was signaled'.
@@ -79,17 +63,13 @@ TensorFlowTestCase >> should: aBlock raiseError: aString [
 	self assert: (message includesSubstring: aString)
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> shouldnt: aBlock raise: anExceptionalEvent [
 	aBlock value.
 	self assert: true.
 ]
 
-{
-	#category : 'Asserting'
-}
+{ #category : 'Asserting' }
 TensorFlowTestCase >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
 	[aBlock value] on: Error do: [self assert: false description: aString]
 ]

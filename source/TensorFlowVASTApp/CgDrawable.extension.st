@@ -2,11 +2,9 @@ Extension {
 	#name : 'CgDrawable'
 }
 
-{
-	#category : '*TensorFlowVASTApp',
-	#vaCategories : ['CG-Internal'],
-	#vaVisibility : 'private'
-}
+{ #category : '*TensorFlowVASTApp',
+ #vaCategories : ['CG-Internal'],
+  #vaVisibility : 'private' }
 CgDrawable >> getDeviceIndependentImage2: rectangle [
 
 	"Answer a CgDeviceIndependentImage copied from the
@@ -35,11 +33,9 @@ A CgDeviceIndependentImage.
 	^result
 ]
 
-{
-	#category : '*TensorFlowVASTApp',
-	#vaCategories : ['CG-Internal'],
-	#vaVisibility : 'private'
-}
+{ #category : '*TensorFlowVASTApp',
+ #vaCategories : ['CG-Internal'],
+  #vaVisibility : 'private' }
 CgDrawable >> osGetDeviceIndependentImage2: rectangle [
 	"Answer a CgDeviceIndependentImage copied from the area
 specified by the given rectangle in the receiver.  

@@ -12,9 +12,7 @@ Class {
 	#category : 'TensorFlowExamplesApp'
 }
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 ObjectDetectionImageRenderer >> displayImageInWindow [
 
 	| pixmap |
@@ -35,9 +33,7 @@ ObjectDetectionImageRenderer >> displayImageInWindow [
 				open]
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 ObjectDetectionImageRenderer >> dumpImageToNewFile [
 
 	| pixmap |
@@ -49,51 +45,37 @@ ObjectDetectionImageRenderer >> dumpImageToNewFile [
 		depth: 24
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageFile [
 	^imageFile
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageFile: anObject [
 	imageFile := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageResults [
 	^imageResults
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageResults: anObject [
 	imageResults := anObject
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageSize [
 	^imageSize
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ObjectDetectionImageRenderer >> imageSize: anObject [
 	imageSize := anObject
 ]
 
-{
-	#category : 'run'
-}
+{ #category : 'run' }
 ObjectDetectionImageRenderer >> printImageDetails [
 
 	Transcript
@@ -110,9 +92,7 @@ ObjectDetectionImageRenderer >> printImageDetails [
 		cr
 ]
 
-{
-	#category : 'processing'
-}
+{ #category : 'processing' }
 ObjectDetectionImageRenderer >> processResultsAndDrawBoxes [
 
 	| image pixmap gc boxesAndHigherScore |

@@ -4,9 +4,7 @@ Class {
 	#category : 'TensorFlowKernelApp'
 }
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ExternalWordArray class >> externalFromArray: anArray [
 	| answer |
 	answer := self externalNew: anArray size.
@@ -15,32 +13,24 @@ ExternalWordArray class >> externalFromArray: anArray [
 	^ answer
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ExternalWordArray class >> externalNew [
 	^ self shouldNotImplement
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ExternalWordArray class >> initializeAfterLoad [
 	self
 		members: #(value)
 		types: #(pointer)
 ]
 
-{
-	#category : 'instance creation'
-}
+{ #category : 'instance creation' }
 ExternalWordArray class >> new [
 	^ self shouldNotImplement
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> at: index [
 	^ (super at: index - 1) value
 	"This method was automatically generated. See PointerArray class>>fields."
@@ -49,45 +39,33 @@ ExternalWordArray >> at: index [
 	"
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> at: index put: value [
 	^ super at: index-1 put: (self class value: value)
 
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> first [
 	^ self at: 1
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> first: anExternalStructure [
 	self at: 1 put: anExternalStructure
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> fourth [
 	^ self at: 4
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> second [
 	^ self at: 2
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 ExternalWordArray >> third [
 	^ self at: 3
 ]

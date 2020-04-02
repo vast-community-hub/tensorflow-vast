@@ -4,9 +4,7 @@ Class {
 	#category : 'TestTensorFlowApp'
 }
 
-{
-	#category : 'Tests'
-}
+{ #category : 'Tests' }
 TestTFEnums >> testDataTypeEnum [
 	"Test TF_DataTypeSize function with enum args"
 	

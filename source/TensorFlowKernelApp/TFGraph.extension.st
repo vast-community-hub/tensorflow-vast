@@ -2,18 +2,14 @@ Extension {
 	#name : 'TFGraph'
 }
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFGraph class >> create [
 	^ TensorFlowCAPI current newGraph initialize useFinalization
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFGraph class >> fromBlock: aBlockClosure [
 	| output graph |
 	graph := self create.
@@ -22,110 +18,84 @@ TFGraph class >> fromBlock: aBlockClosure [
 	^ graph
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFGraph class >> fromFileNamed: aString [
 	^ self create importFileNamed: aString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFGraph class >> fromString: aString [
 	^ self create importString: aString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['instance creation']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
 TFGraph class >> new [
 
 	^super new initialize
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> add: nameString described: aBlock [
 	^ self newOperation: 'Add' named: nameString described: aBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> allInitializers [
 	^ self
 		operationsSelect: [ :op | op type = 'Assign' and: [ op name endsWith: '_initializer' ] ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> allInputs [
 	^ self operationsSelect: [ :op | op type = 'Placeholder' ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> allOperations [
 	^ self operationsSelect: [ :op | true ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> allVariables [
 	^ self operationsSelect: [ :op | op type = 'Variable' ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> asString: nameString described: aBlock [
 	^ self newOperation: 'AsString' named: nameString described: aBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> basicDelete [
 	^ self library deleteGraph: self
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> concat: nameString described: aBlock [
 	^ self newOperation: 'Concat' named: nameString described: aBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> const: aTFTensor [
 	| name |
 	name := self nameFor: 'constant'.
 	^ self const: name value: aTFTensor
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> const: nameString value: aTFTensor [
 	^ self
 		newOperation: 'Const'
@@ -135,10 +105,8 @@ TFGraph >> const: nameString value: aTFTensor [
 			description at: 'value' putTensor: aTFTensor ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> definition [
 	| buffer status |
 	status := TFStatus create.
@@ -148,10 +116,8 @@ TFGraph >> definition [
 	^ buffer dataBytes asString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> fromBlock: aBlockClosure [
 	| types |
 	types := Array new: aBlockClosure argumentCount.
@@ -159,10 +125,8 @@ TFGraph >> fromBlock: aBlockClosure [
 	^ self fromBlock: aBlockClosure inputTypes: types
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> fromBlock: aBlockClosure inputTypes: anArray [
 	| inputs index |
 	index := 0.
@@ -173,10 +137,8 @@ TFGraph >> fromBlock: aBlockClosure inputTypes: anArray [
 	^ aBlockClosure valueWithArguments: inputs
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> fromBlock: aBlockClosure inputTypes: anArray named: nameString [
 	| previousContext answer |
 	previousContext := context.
@@ -186,10 +148,8 @@ TFGraph >> fromBlock: aBlockClosure inputTypes: anArray named: nameString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> fromBlock: aBlockClosure named: nameString [
 	| types |
 	types := Array new: aBlockClosure argumentCount.
@@ -197,10 +157,8 @@ TFGraph >> fromBlock: aBlockClosure named: nameString [
 	^ self fromBlock: aBlockClosure inputTypes: types named: nameString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['gradients']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['gradients'] }
 TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
 
 	| y x dx status dy |
@@ -223,10 +181,8 @@ TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
 	^ dy
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> import: aTFBuffer [
 	| options status |
 	status := TFStatus create.
@@ -240,10 +196,8 @@ TFGraph >> import: aTFBuffer [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> importFileNamed: aString [
 	| buffer |
 	buffer := TFBuffer fromFileNamed: aString.
@@ -251,10 +205,8 @@ TFGraph >> importFileNamed: aString [
 		ensure: [ buffer delete ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> importString: aString [
 	| buffer |
 	buffer := TFBuffer fromString: aString.
@@ -262,18 +214,14 @@ TFGraph >> importString: aString [
 		ensure: [ buffer delete ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['initialize-release']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
 TFGraph >> initialize [
 	context := ''
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFGraph >> initializeOn: aTFSession [
 	| initializers |
 	initializers := self allInitializers
@@ -282,10 +230,8 @@ TFGraph >> initializeOn: aTFSession [
 		ifTrue: [ aTFSession runOutputs: initializers ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> inputType: typeInteger [
 	^ self
 		newOperation: 'Placeholder'
@@ -293,26 +239,20 @@ TFGraph >> inputType: typeInteger [
 		described: [ :description | description at: 'dtype' putType: typeInteger ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> mul: nameString described: aBlock [
 	^ self newOperation: 'Mul' named: nameString described: aBlock
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> nameFor: namePrefix [
 	^ context , namePrefix , '_' , self operationsCount printString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> newOperation: typeString named: aString [
 	^ self
 		newOperation: typeString
@@ -320,10 +260,8 @@ TFGraph >> newOperation: typeString named: aString [
 		described: [ :unused |  ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> newOperation: typeString named: aString described: aBlock [
 	| description answer |
 	description := self
@@ -335,10 +273,8 @@ TFGraph >> newOperation: typeString named: aString described: aBlock [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['operations'] }
 TFGraph >> newOperationDescription: typeString named: aString [
 	^ self library
 		newOperationDescriptionOn: self
@@ -346,26 +282,20 @@ TFGraph >> newOperationDescription: typeString named: aString [
 		named: aString
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> newOperationIteratorContext [
 	^ ByteArray new: 8
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationAt: contextULongLongPtr [
 	^ self library graph: self operationAt: contextULongLongPtr
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationNamed: aString [
 	| answer |
 	answer := self library
@@ -376,10 +306,8 @@ TFGraph >> operationNamed: aString [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationNamed: aString ifFound: aFoundBlock ifNotFound: aNotFoundBlock [
 
 	| answer |
@@ -388,10 +316,8 @@ TFGraph >> operationNamed: aString ifFound: aFoundBlock ifNotFound: aNotFoundBlo
 	^answer isNull ifTrue: aNotFoundBlock ifFalse: [aFoundBlock cull: answer]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationsCount [
 	| answer |
 	answer := 0.
@@ -399,10 +325,8 @@ TFGraph >> operationsCount [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationsDo: oneArgBlock [
 	| iterator operation |
 	iterator := self newOperationIteratorContext.
@@ -410,10 +334,8 @@ TFGraph >> operationsDo: oneArgBlock [
 	operation isNull ] whileFalse: [ oneArgBlock value: operation ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationsSelect: oneArgBlock [
 	| answer |
 	answer := OrderedCollection new.
@@ -421,10 +343,8 @@ TFGraph >> operationsSelect: oneArgBlock [
 	^ answer asArray
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['accessing']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
 TFGraph >> operationsSelect: conditionBlock thenDo: actionBlock [
 	| answer |
 	answer := OrderedCollection new.
@@ -435,10 +355,8 @@ TFGraph >> operationsSelect: conditionBlock thenDo: actionBlock [
 	^ answer asArray
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['outputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['outputs'] }
 TFGraph >> outputDimenssionsCount: aTFOutput [
 	| status answer |
 	status := TFStatus create.
@@ -450,10 +368,8 @@ TFGraph >> outputDimenssionsCount: aTFOutput [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> placeholder: nameString type: typeInteger [
 	^ self
 		newOperation: 'Placeholder'
@@ -461,10 +377,8 @@ TFGraph >> placeholder: nameString type: typeInteger [
 		described: [ :description | description at: 'dtype' putType: typeInteger ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['outputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['outputs'] }
 TFGraph >> rankOf: aTFOutputOrInput [
 	| status answer |
 	status := TFStatus create.
@@ -476,10 +390,8 @@ TFGraph >> rankOf: aTFOutputOrInput [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFGraph >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outArrayOfTFOutputs [
 	| session |
 	session := TFSession on: self.
@@ -490,10 +402,8 @@ TFGraph >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outA
 		outputs: outArrayOfTFOutputs
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFGraph >> runOutput: aTFOutput [
 	| session |
 	session := TFSession on: self.
@@ -501,10 +411,8 @@ TFGraph >> runOutput: aTFOutput [
 	^ session runOutput: aTFOutput
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['running']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['running'] }
 TFGraph >> runOutputs: anArrayOfTFOutputs [
 	| session |
 	session := TFSession on: self.
@@ -512,10 +420,8 @@ TFGraph >> runOutputs: anArrayOfTFOutputs [
 	^ session runOutputs: anArrayOfTFOutputs
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['outputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['outputs'] }
 TFGraph >> shapeOf: aTFOutputOrInput [
 	| status value size answer |
 	size := self rankOf: aTFOutputOrInput.
@@ -532,10 +438,8 @@ TFGraph >> shapeOf: aTFOutputOrInput [
 	^ answer
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['outputs']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['outputs'] }
 TFGraph >> shapeOf: aTFOutputOrInput set: shape [
 	| status value |
 	value := Int64Array externalFromArray: shape.
@@ -549,10 +453,8 @@ TFGraph >> shapeOf: aTFOutputOrInput set: shape [
 	status check
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> truncatedNormalRandomShaped: shapeArray [
 	| shape |
 	shape := self const: shapeArray asInt32Tensor.
@@ -561,20 +463,16 @@ TFGraph >> truncatedNormalRandomShaped: shapeArray [
 		described: [ :description | description at: 'dtype' putType: TFTensor typeFloat ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> truncatedNormalRandomShaped: shapeArray stddev: aNumber [
 	| random |
 	random := self truncatedNormalRandomShaped: shapeArray.
 	^ random @* (self const: aNumber asTensor)
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> variable: nameString forTensor: aTFTensor [
 	^ self
 		variable: nameString
@@ -582,10 +480,8 @@ TFGraph >> variable: nameString forTensor: aTFTensor [
 		shape: aTFTensor shape
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> variable: nameString initialValue: aTFTensor [
 	| const var |
 	var := self variable: nameString forTensor: aTFTensor.
@@ -594,10 +490,8 @@ TFGraph >> variable: nameString initialValue: aTFTensor [
 	^ var
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> variable: nameString initialValueFrom: aTFOperation [
 	| output var shape |
 	output := aTFOperation output: 0.
@@ -607,10 +501,8 @@ TFGraph >> variable: nameString initialValueFrom: aTFOperation [
 	^ var
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> variable: nameString type: typeInteger shape: anArray [
 	^ self
 		newOperation: 'Variable'
@@ -621,26 +513,20 @@ TFGraph >> variable: nameString type: typeInteger shape: anArray [
 				at: 'shape' putShape: anArray ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['debugging']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['debugging'] }
 TFGraph >> writeDefTo: strm [
 	strm nextPutAll: self definition
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['debugging']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['debugging'] }
 TFGraph >> writeDefToFileNamed: filename [
 	filename asPath writeStreamDo: [ :strm | self writeDefTo: strm ]
 ]
 
-{
-	#category : '*TensorFlowKernelApp',
-	#vaCategories : ['root operations']
-}
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
 TFGraph >> zerosShaped: shapeArray [
 	| shape |
 	shape := self const: shapeArray asInt32Tensor.

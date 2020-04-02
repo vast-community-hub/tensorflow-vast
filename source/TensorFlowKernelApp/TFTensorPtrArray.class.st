@@ -4,41 +4,31 @@ Class {
 	#category : 'TensorFlowKernelApp'
 }
 
-{
-	#category : 'Not categorized'
-}
+{ #category : 'Not categorized' }
 TFTensorPtrArray class >> initializeAfterLoad [
 	super initializeAfterLoad
 ]
 
-{
-	#category : 'Not categorized'
-}
+{ #category : 'Not categorized' }
 TFTensorPtrArray class >> value: aTFTensor [
 	^ (self new: 1)
 		pointerAt: #value put: aTFTensor address;
 		yourself
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 TFTensorPtrArray >> elementClass [
 	^ TFTensor
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 TFTensorPtrArray >> numbersAt: index [
 	| tensor |
 	tensor := self at: index.
 	^ tensor asNumbers
 ]
 
-{
-	#category : 'accessing'
-}
+{ #category : 'accessing' }
 TFTensorPtrArray >> value [
 	^ TFTensor address: (self pointerAt: #value)
 ]

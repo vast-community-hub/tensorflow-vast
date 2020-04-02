@@ -4,19 +4,15 @@ Class {
 	#category : 'TensorFlowApp'
 }
 
-{
-	#category : 'Startup/Shutdown',
-	#vaVisibility : 'private'
-}
+{ #category : 'Startup/Shutdown',
+  #vaVisibility : 'private' }
 TFDeviceList class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
 ]
 
-{
-	#category : 'Instance creation'
-}
+{ #category : 'Instance creation' }
 TFDeviceList class >> on: aTFSession [
 	| answer status |
 	status := TFStatus create.
@@ -26,9 +22,7 @@ TFDeviceList class >> on: aTFSession [
 	^ answer
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> at: anInteger [
 	^ TFDevice
 		name: (self nameAt: anInteger)
@@ -38,31 +32,23 @@ TFDeviceList >> at: anInteger [
 		
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> basicDelete [
 	^ self library deleteDeviceList: self
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> count [
 	^ self library deviceListCount: self
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> devices [
 	^ (1 to: self count) collect: [:i |
 		self at: i]
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> incarnationAt: anInteger [
 	| answer status |
 	status := TFStatus new.
@@ -71,9 +57,7 @@ TFDeviceList >> incarnationAt: anInteger [
 	^ answer
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> memoryAt: anInteger [
 	| answer status |
 	status := TFStatus new.
@@ -82,9 +66,7 @@ TFDeviceList >> memoryAt: anInteger [
 	^ answer
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> nameAt: anInteger [
 	| external status |
 	status := TFStatus new.
@@ -93,17 +75,13 @@ TFDeviceList >> nameAt: anInteger [
 	^ external
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> names [
 	^ (1 to: self count) collect: [:i |
 		self nameAt: i]
 ]
 
-{
-	#category : 'Accesssing'
-}
+{ #category : 'Accesssing' }
 TFDeviceList >> typeAt: anInteger [
 	| answer status |
 	status := TFStatus new.
