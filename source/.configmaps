@@ -1,6 +1,45 @@
 [
 	{
 		#applications : [
+			'FeedforwardNeuralNetworkModel' : '0.5',
+			'MLNeuralNetworkExamples' : '0.2',
+			'MLNeuralNetworkLayerModel' : '1.1',
+			'MLNeuralNetworkModel' : '0.5'
+		],
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					'TensorFlow | Environment' : '',
+					'Platform Portability' : 'V 9.2.0  [453]'
+				]
+			}
+		],
+		#name : 'Machine Learning TF | Runtime',
+		#versionName : '',
+		#comment : ''
+	},
+	{
+		#applications : [
+			'FeedforwardNeuralNetworkModelTests' : '0.3',
+			'MLNeuralNetworkLayerModelTests' : '1.1',
+			'MLNeuralNetworkModelTests' : '0.1'
+		],
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					'Machine Learning TF | Runtime' : '',
+					'SUnit' : 'V 9.2.0  [453]'
+				]
+			}
+		],
+		#name : 'Machine Learning TF | Development',
+		#versionName : '',
+		#comment : ''
+	},
+	{
+		#applications : [
 			'PharoCompatibilityModel' : '1.4'
 		],
 		#conditions : [
