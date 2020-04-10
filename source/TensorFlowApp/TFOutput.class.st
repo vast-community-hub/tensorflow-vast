@@ -1,6 +1,9 @@
 Class {
 	#name : 'TFOutput',
 	#superclass : 'TFStructure',
+	#instVars : [
+		'graph'
+	],
 	#category : 'TensorFlowApp'
 }
 

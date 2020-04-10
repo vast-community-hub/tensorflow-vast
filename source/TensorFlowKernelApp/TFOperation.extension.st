@@ -299,8 +299,9 @@ TFOperation >> input: indexInteger [
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
-TFOperation >> InputsCount [
-	^ self library operationNumInputs: self
+TFOperation >> inputsCount [
+
+	^self library operationNumInputs: self
 ]
 
 { #category : '*TensorFlowKernelApp',

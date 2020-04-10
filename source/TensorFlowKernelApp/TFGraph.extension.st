@@ -140,12 +140,13 @@ TFGraph >> fromBlock: aBlockClosure inputTypes: anArray [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['initialize-release'] }
 TFGraph >> fromBlock: aBlockClosure inputTypes: anArray named: nameString [
-	| previousContext answer |
-	previousContext := context.
-	context := context , nameString , '/'.
-	answer := self fromBlock: aBlockClosure inputTypes: anArray.
-	context := previousContext.
-	^ answer
+
+	| answer |
+
+	self
+		inScopeNamed: nameString
+		do: [answer := self fromBlock: aBlockClosure inputTypes: anArray].
+	^answer
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -237,6 +238,18 @@ TFGraph >> inputType: typeInteger [
 		newOperation: 'Placeholder'
 		named: (self nameFor: 'input')
 		described: [ :description | description at: 'dtype' putType: typeInteger ]
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['initialize-release'] }
+TFGraph >> inScopeNamed: aName do: aBlock [
+
+	| previousContext |
+
+	previousContext := context.
+	context := context , aName , '/'.
+	aBlock value.
+	context := previousContext
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -451,6 +464,20 @@ TFGraph >> shapeOf: aTFOutputOrInput set: shape [
 		size: shape size
 		status: status.
 	status check
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
+TFGraph >> statelessNormalRandomShaped: shapeArray withSeeds: aSeedsArray [
+
+	| shape seeds |
+
+	shape := self const: shapeArray asInt32Tensor.
+	seeds := self const: aSeedsArray asInt32Tensor.
+	^shape
+		binaryOp: 'StatelessTruncatedNormal'
+		with: seeds
+		described: [:description | description at: 'dtype' putType: TFTensor typeFloat]
 ]
 
 { #category : '*TensorFlowKernelApp',

@@ -21,9 +21,27 @@ TFOutput class >> new [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['instance creation'] }
 TFOutput class >> onOperation: aTFOperation index: anInteger [
-	^ self externalNew
+
+	^self externalNew
 		operation: aTFOperation;
-		index: anInteger
+		index: anInteger;
+		graph: aTFOperation graph;
+		yourself
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
+TFOutput >> graph [
+
+	^graph
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'] }
+TFOutput >> graph: aTFGraph [
+
+	
+	graph := aTFGraph
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -54,14 +72,12 @@ TFOutput >> operation: anObject [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
 TFOutput >> operationOn: aTFGraph [
-"The following source failed to compile (all double quotes have been doubled):
-	| answer |
-	answer := TFOperation fromHandle: (handle longPointerAt: 1).
-	answer graph: aTFGraph.
-	^ answer
-"
 
-	^ self halt: 'The source for this method failed to compile'
+	| answer |
+
+	answer := self operation.
+	answer graph: aTFGraph.
+	^answer
 ]
 
 { #category : '*TensorFlowKernelApp',

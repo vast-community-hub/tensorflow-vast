@@ -37,3 +37,11 @@ TFOutputArray >> at: anInteger put: aTFOutput [
 		put: aTFOutput
 		size: 1
 ]
+
+{ #category : 'accessing' }
+TFOutputArray >> printOn: aStream [
+	
+	" If use the default printOn: a stack overflow arise " 
+	
+	aStream nextPutAll: self class name
+]

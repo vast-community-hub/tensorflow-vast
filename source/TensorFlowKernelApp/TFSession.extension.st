@@ -75,7 +75,7 @@ TFSession >> run [
 TFSession >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outArrayOfTFOutputs [
 	| inputs invalues outputs outvalues status |
 	status := TFStatus create.
-	inputs := TFOutputArray externalFromArray: inArrayOfTFOutputs.
+	inputs := TFInputArray externalFromArray: inArrayOfTFOutputs.
 	invalues := TFTensorPtrArray externalFromArray: inArrayOfTFTensor.
 	outputs := TFOutputArray externalFromArray: outArrayOfTFOutputs.
 	outvalues := TFTensorPtrArray new: outArrayOfTFOutputs size.

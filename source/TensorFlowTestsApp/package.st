@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowTestsApp',
-	#vaPrerequisites : ['TensorFlowKernelApp','TestTensorFlowApp']
+	#vaPrerequisites : ['PharoCompatibilityModel','TensorFlowKernelApp','TestTensorFlowApp']
 }
