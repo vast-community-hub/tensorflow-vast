@@ -62,6 +62,13 @@
 		#applications : [
 			'TensorFlowEnvironmentModel' : '1.10',
 			'TensorFlowEnvironmentModelTests' : '1.8',
+			'TFOperationModel' : '1.0',
+			'TFOperationModelTests' : '1.0',
+			'TFOptimizerModel' : '1.0',
+			'TFOptimizerModelTests' : '1.0',
+			'TFRegularizationModel' : '1.0',
+			'TFRegularizationModelTests' : '1.0',
+			'TFVariableSpecificationModel' : '1.0'
 		],
 		#conditions : [
 			{
