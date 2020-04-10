@@ -57,5 +57,22 @@
 		#name : 'TensorFlow',
 		#versionName : '',
 		#comment : ''
+	},
+	{
+		#applications : [
+			'TensorFlowEnvironmentModel' : '1.10',
+			'TensorFlowEnvironmentModelTests' : '1.8',
+		],
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					'TensorFlow' : ''
+				]
+			}
+		],
+		#name : 'TensorFlow | Environment',
+		#versionName : '',
+		#comment : ''
 	}
 ]
