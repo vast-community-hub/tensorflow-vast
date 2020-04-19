@@ -106,6 +106,16 @@ TFGraph >> const: nameString value: aTFTensor [
 ]
 
 { #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
+TFGraph >> constShaped: aShape filledWith: aTensor [
+
+	| shape |
+
+	shape := self const: aShape asInt32Tensor.
+	^shape binaryOp: 'Fill' with: aTensor
+]
+
+{ #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
 TFGraph >> definition [
 	| buffer status |
@@ -248,8 +258,7 @@ TFGraph >> inScopeNamed: aName do: aBlock [
 
 	previousContext := context.
 	context := context , aName , '/'.
-	aBlock value.
-	context := previousContext
+	^aBlock ensure: [context := previousContext]
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -260,8 +269,14 @@ TFGraph >> mul: nameString described: aBlock [
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['root operations'] }
-TFGraph >> nameFor: namePrefix [
-	^ context , namePrefix , '_' , self operationsCount printString
+TFGraph >> nameFor: aNodeName [
+
+	| preffix count |
+
+	preffix := context , aNodeName.
+	count := (self operationsSelect: [:op | op name beginsWithSubCollection: preffix]) size.
+	count strictlyPositive ifTrue: [preffix := preffix , '_' , count printString].
+	^preffix
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -299,6 +314,13 @@ TFGraph >> newOperationDescription: typeString named: aString [
  #vaCategories : ['accessing'] }
 TFGraph >> newOperationIteratorContext [
 	^ ByteArray new: 8
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['root operations'] }
+TFGraph >> onesShaped: aShape [
+
+	^self constShaped: aShape filledWith: 1.0 asTensor
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -554,8 +576,7 @@ TFGraph >> writeDefToFileNamed: filename [
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['root operations'] }
-TFGraph >> zerosShaped: shapeArray [
-	| shape |
-	shape := self const: shapeArray asInt32Tensor.
-	^ shape binaryOp: 'Fill' with: 0.0 asTensor
+TFGraph >> zerosShaped: aShape [
+
+	^self constShaped: aShape filledWith: 0.0 asTensor
 ]

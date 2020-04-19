@@ -18,7 +18,7 @@ TFElementWiseMultiplication class >> named: anOperationName of: aLeftOperand and
 { #category : 'Instance Creation' }
 TFElementWiseMultiplication class >> of: aLeftOperand and: aRightOperand [
 
-	^self named: (aLeftOperand value nameFor: 'Mul') of: aLeftOperand and: aRightOperand
+	^self named: 'Mul' of: aLeftOperand and: aRightOperand
 ]
 
 { #category : 'Initialization',

@@ -16,7 +16,7 @@ TFSoftmaxActivationTest >> testActivatingFloatScalarFails [
 		assert: [tf compute: softmax]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: logits must have >= 1 dimension, got []
-	 [[{{node Softmax_3}}]]'
+	 [[{{node Softmax}}]]'
 ]
 
 { #category : 'Test' }
@@ -41,5 +41,5 @@ TFSoftmaxActivationTest >> testActivatingIntegerScalarFails [
 		assert: [TFSoftmaxActivation activating: input]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: Value for attr ''T'' of int32 is not in the list of allowed values: half, bfloat16, float, double
-	; NodeDef: {{node Softmax_3}}; Op<name=Softmax; signature=logits:T -> softmax:T; attr=T:type,allowed=[DT_HALF, DT_BFLOAT16, DT_FLOAT, DT_DOUBLE]>'
+	; NodeDef: {{node Softmax}}; Op<name=Softmax; signature=logits:T -> softmax:T; attr=T:type,allowed=[DT_HALF, DT_BFLOAT16, DT_FLOAT, DT_DOUBLE]>'
 ]

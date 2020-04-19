@@ -604,7 +604,7 @@ TensorFlowOperationsTest >> testOperationMatMulWrongType [
 	self
 		should: [ constA * constB ]
 		raiseError:
-			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''MatMul_2'' using Op'
+			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''MatMul'' using Op'
 ]
 
 { #category : 'unary operations' }
