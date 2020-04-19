@@ -16,7 +16,7 @@ TFConstantInitializer class >> with: aTFTensor [
 { #category : 'Evaluating' }
 TFConstantInitializer >> applyTo: aTFVariable [
 
-	aTFVariable assign: (initialValue asOperationOn: aTFVariable graph)
+	aTFVariable assign: (initialValue value asOperationOn: aTFVariable graph)
 ]
 
 { #category : 'Initialization',

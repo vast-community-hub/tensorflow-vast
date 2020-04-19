@@ -12,7 +12,7 @@ Class {
 { #category : 'Instance Creation' }
 TFSubstraction class >> named: anOperationName of: aLeftOperand minus: aRightOperand [
 
-	^super new initializeNamed: anOperationName of: aLeftOperand minus: aRightOperand
+	^self new initializeNamed: anOperationName of: aLeftOperand minus: aRightOperand
 ]
 
 { #category : 'Instance Creation' }

@@ -11,5 +11,5 @@ TFZeroInitializer >> applyTo: aTFVariable [
 
 	initialValue := aTFVariable currentComputation zerosShapedFor: aTFVariable.
 
-	aTFVariable assign: initialValue
+	aTFVariable assign: initialValue value
 ]
