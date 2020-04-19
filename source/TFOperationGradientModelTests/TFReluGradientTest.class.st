@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFReluGradientTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFOperationModelTests'
+	#category : 'TFOperationGradientModelTests'
 }
 
 { #category : 'Test' }

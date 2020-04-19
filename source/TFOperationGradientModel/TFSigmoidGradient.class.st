@@ -9,7 +9,7 @@ Class {
 		'backpropagation',
 		'inputsGradients'
 	],
-	#category : 'TFOperationModel'
+	#category : 'TFOperationGradientModel'
 }
 
 { #category : 'Instance Creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFTanhGradientTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFOperationModelTests'
+	#category : 'TFOperationGradientModelTests'
 }
 
 { #category : 'Test' }
@@ -14,5 +14,5 @@ TFTanhGradientTest >> testValue [
 
 	grad := TFTanhGradient considering: y andGradientsOfInputs: dy.
 
-	self assertOutputOf: grad isScalarCloseTo: 3 * (1 - (4 * 4))
+	self assertOutputOf: grad isFloatScalarCloseTo: 3 * (1 - (4 * 4))
 ]

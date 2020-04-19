@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFAddBiasGradient',
 	#superclass : 'TFGradientBehavior',
-	#category : 'TFOperationModel'
+	#category : 'TFOperationGradientModel'
 }
 
 { #category : 'Instance Creation' }

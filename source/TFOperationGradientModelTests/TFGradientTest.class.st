@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFGradientTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFOperationModelTests'
+	#category : 'TFOperationGradientModelTests'
 }
 
 { #category : 'Test' }
@@ -24,7 +24,7 @@ TFGradientTest >> testAccessingGradientIndependently [
 					at: 'var' put: 1.0 asTensor;
 					yourself).
 
-	self assertOutputOf: result isScalarCloseTo: 1.0
+	self assertOutputOf: result isFloatScalarCloseTo: 1.0
 ]
 
 { #category : 'Test' }
@@ -72,8 +72,8 @@ TFGradientTest >> testElementMultiplicationGradientWithRespectToSeveralVariables
 					at: 'var' put: 1.0 asTensor;
 					yourself).
 
-	self assert: (result at: grads first) isScalarCloseTo: Float pi.
-	self assert: (result at: grads second) isScalarCloseTo: 1.0
+	self assert: (result at: grads first) isFloatScalarCloseTo: Float pi.
+	self assert: (result at: grads second) isFloatScalarCloseTo: 1.0
 ]
 
 { #category : 'Test' }

@@ -20,13 +20,6 @@ TFOperationAbstract >> binaryOperation: anOperation between: aLeftOperand and: a
 
 { #category : 'Computing',
   #vaVisibility : 'private' }
-TFOperationAbstract >> calculateGradientsWithRespectToInputs [
-
-	self subclassResponsibility
-]
-
-{ #category : 'Computing',
-  #vaVisibility : 'private' }
 TFOperationAbstract >> calculateValue [
 
 	self subclassResponsibility

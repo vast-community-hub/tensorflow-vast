@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFAddBiasGradientTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFOperationModelTests'
+	#category : 'TFOperationGradientModelTests'
 }
 
 { #category : 'Tests' }
@@ -25,8 +25,8 @@ TFAddBiasGradientTest >> testInputWithMatrixOfShape2x1 [
 	input := tf variableNamed: 'input' with: #((2) (3)) asInt32Tensor.
 
 	output := TFAddBiasGradient withGradientsOfInputs: input.
-	
-	self assertOutputOf: output isFloatVectorCloseTo: (Array with: 2 + 3)
+
+	self assertOutputOf: output isIntegerVectorEqualsTo: (Array with: 2 + 3)
 ]
 
 { #category : 'Tests' }
@@ -40,7 +40,7 @@ TFAddBiasGradientTest >> testInputWithMatrixOfShape2x2 [
 
 	self
 		assertOutputOf: output
-		isFloatVectorCloseTo: (
+		isIntegerVectorEqualsTo: (
 			OrderedCollection new
 				add: 2 + 3;
 				add: 5 + 7;

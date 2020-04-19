@@ -6,7 +6,7 @@ Class {
 		'inputFeatures',
 		'operationName'
 	],
-	#category : 'TFOperationModel'
+	#category : 'TFOperationGradientModel'
 }
 
 { #category : 'Instance Creation' }

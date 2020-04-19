@@ -6,7 +6,7 @@ Class {
 		'functions',
 		'variables'
 	],
-	#category : 'TFOperationModel'
+	#category : 'TFOperationGradientModel'
 }
 
 { #category : 'Instance Creation' }
