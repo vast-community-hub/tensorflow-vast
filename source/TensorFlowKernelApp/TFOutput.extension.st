@@ -81,7 +81,35 @@ TFOutput >> operationOn: aTFGraph [
 ]
 
 { #category : '*TensorFlowKernelApp',
+ #vaCategories : ['accessing'],
+  #vaVisibility : 'private' }
+TFOutput >> tensorflowTypeFrom: aProtobufferType [
+
+	| mapping |
+
+	"Ref: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/framework/types.proto"
+
+	mapping :=
+		Dictionary new
+			at: 101 put: TFTensor typeFloat;
+			at: 102 put: TFTensor typeFloat;
+			at: 103 put: TFTensor typeInt32;
+			yourself.
+
+	^mapping
+		at: aProtobufferType
+		ifAbsent: [self error: ('No mapping found for the Protobuffer data type %1' bindWith: aProtobufferType)]
+]
+
+{ #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
 TFOutput >> type [
-	^ self library operationOutputType: self
+
+	| type |
+
+	type := self library operationOutputType: self.
+	" When querying the type of a Variable node output, TF_OperationOutputType is
+	 returning the protobuf DataType enum 
+	Ref: https://github.com/tensorflow/tensorflow/issues/5409. "
+	^self operation type = 'Variable' ifTrue: [self tensorflowTypeFrom: type] ifFalse: [type]
 ]
