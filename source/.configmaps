@@ -122,5 +122,24 @@
 		#name : 'TensorFlow | Environment',
 		#versionName : '1.13',
 		#comment : ''
+	},
+	{
+		#applications : [
+			'TensorboardWebViews' : '1.0'
+		],
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					'Javascript Core' : 'V 9.0.0  [453]',
+					'Seaside Development' : 'V 9.2.0  [453]',
+					'Seaside Core' : 'V 9.2.0  [453]',
+					'TensorFlow' : '0.64.4'
+				]
+			}
+		],
+		#name : 'TensorFlow | Visualization',
+		#versionName : '1.0',
+		#comment : ''
 	}
 ]
