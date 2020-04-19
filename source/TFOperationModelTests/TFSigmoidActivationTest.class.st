@@ -13,7 +13,7 @@ TFSigmoidActivationTest >> testActivatingFloatScalar [
 
 	sigmoid := TFSigmoidActivation activating: input.
 
-	self assertOutputOf: sigmoid isScalarCloseTo: (1 / (1 + (5 negated exp)))
+	self assertOutputOf: sigmoid isFloatScalarCloseTo: (1 / (1 + (5 negated exp)))
 ]
 
 { #category : 'Test' }

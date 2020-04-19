@@ -26,7 +26,7 @@ TFReduceSumTest >> testReduceAlongsideAxis [
 
 	self assertOutputOf: sum0 isFloatVectorCloseTo: #(6.3 3.6).
 	self assertOutputOf: sum1 isFloatVectorCloseTo: #(2.3 4.3 3.3).
-	self assertOutputOf: sum01 isScalarCloseTo: 9.9.
+	self assertOutputOf: sum01 isFloatScalarCloseTo: 9.9.
 	self
 		assertOutputOf: sumNone
 		isMatrixCloseTo: (
@@ -57,6 +57,6 @@ TFReduceSumTest >> testReduceWithoutAxis [
 	sum01 := TFReduceSum valuesIn: tensor alongside: #(0 1).
 	sum := TFReduceSum valuesIn: tensor.
 
-	self assertOutputOf: sum01 isScalarCloseTo: 9.9.
-	self assertOutputOf: sum isScalarCloseTo: 9.9
+	self assertOutputOf: sum01 isFloatScalarCloseTo: 9.9.
+	self assertOutputOf: sum isFloatScalarCloseTo: 9.9
 ]

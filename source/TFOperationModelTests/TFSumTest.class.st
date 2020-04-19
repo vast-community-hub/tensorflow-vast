@@ -5,7 +5,33 @@ Class {
 }
 
 { #category : 'Test' }
-TFSumTest >> testSumMoreThan2Terms [
+TFSumTest >> testSum2FloatVectors [
+
+	| sum a b |
+
+	a := tf defineFloatTensorWith: #(1 2 3).
+	b := tf defineFloatTensorWith: #(4 5 6).
+
+	sum := TFSum of: a plus: b.
+
+	self assertOutputOf: sum isFloatVectorCloseTo: #(5.0 7.0 9.0)
+]
+
+{ #category : 'Test' }
+TFSumTest >> testSum2IntegerVectors [
+
+	| sum a b |
+
+	a := tf defineIntegerTensorWith: #(1 2 3).
+	b := tf defineIntegerTensorWith: #(4 5 6).
+
+	sum := TFSum of: a plus: b.
+
+	self assertOutputOf: sum isIntegerVectorEqualsTo: #(5 7 9)
+]
+
+{ #category : 'Test' }
+TFSumTest >> testSumMoreThan2FloatVectors [
 
 	| sum tensors |
 

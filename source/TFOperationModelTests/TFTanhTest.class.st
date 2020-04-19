@@ -11,7 +11,7 @@ TFTanhTest >> testActivatingFloatScalar [
 
 	input := tf variableNamed: 'input' with: 0.549306 asFloatTensor.
 
-	self assertOutputOf: (TFTanhActivation activating: input) isScalarCloseTo: 0.5
+	self assertOutputOf: (TFTanhActivation activating: input) isFloatScalarCloseTo: 0.5
 ]
 
 { #category : 'Test' }

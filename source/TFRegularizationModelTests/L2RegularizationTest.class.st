@@ -19,7 +19,7 @@ L2RegularizationTest >> testRegularizeMatrix [
 	l2 := L2Regularization by: 0.001.
 	self
 		assertOutputOf: (l2 regularize: tensor)
-		isScalarCloseTo: (1 + 4 + 9 + 16 + 1 + 25 + 36) * 0.001
+		isFloatScalarCloseTo: (1 + 4 + 9 + 16 + 1 + 25 + 36) * 0.001
 ]
 
 { #category : 'Test' }
@@ -31,5 +31,5 @@ L2RegularizationTest >> testRegularizeVector [
 
 	l2 := L2Regularization by: 0.001.
 	
-	self assertOutputOf: (l2 regularize: tensor) isScalarCloseTo: (1 + 4 + 9 + 16) * 0.001
+	self assertOutputOf: (l2 regularize: tensor) isFloatScalarCloseTo: (1 + 4 + 9 + 16) * 0.001
 ]

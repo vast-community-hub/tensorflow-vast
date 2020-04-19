@@ -22,6 +22,6 @@ TFIndexWithMaximumTest >> testIndexWithMaximumValueAcrossAxis [
 	maxAcross0 := TFIndexWithMaximum in: tensor across: 0.
 	maxAcross1 := TFIndexWithMaximum in: tensor across: 1.
 
-	self assertOutputOf: maxAcross0 isIntegerVectorEqualsTo: #(2 1).
-	self assertOutputOf: maxAcross1 isIntegerVectorEqualsTo: #(1 1 0)
+	self assertOutputOf: maxAcross0 isLargeIntegerVectorEqualsTo: #(2 1).
+	self assertOutputOf: maxAcross1 isLargeIntegerVectorEqualsTo: #(1 1 0)
 ]

@@ -32,8 +32,18 @@ TensorFlowComputationBasedTest >> assert: aTFTensor hasFloatsCloseTo: anExpected
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar [
+
+	self assert: anOutput shape equals: #().
+	self assert: anOutput type equals: TFTensor typeFloat.
+	self assert: (anOutput allElements first closeTo: aScalar)
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isFloatVectorCloseTo: anExpectedArray [
 
+	self assert: anOutput type equals: TFTensor typeFloat.
 	self assert: anOutput shape equals: (Array with: anExpectedArray size).
 	self assert: anOutput hasFloatsCloseTo: anExpectedArray
 ]
@@ -57,17 +67,16 @@ TensorFlowComputationBasedTest >> assert: anOutput isMatrixCloseTo: aFloatMatrix
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assert: anOutput isScalarCloseTo: aScalar [
+TensorFlowComputationBasedTest >> assert: aBlock raisesExceptionWith: aDescription [
 
-	self assert: anOutput shape equals: #().
-	self assert: (anOutput allElements first closeTo: aScalar)
+	self should: aBlock raise: Error withDescription: (aDescription copyWithout: Character cr)
 ]
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assert: aBlock raisesExceptionWith: aDescription [
+TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isFloatScalarCloseTo: aScalar [
 
-	self should: aBlock raise: Error withDescription: (aDescription copyWithout: Character cr)
+	self assert: (tf compute: aTFOperation) isFloatScalarCloseTo: aScalar
 ]
 
 { #category : 'Test Support',
@@ -83,11 +92,36 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isFloatVectorClose
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isIntegerScalarEqualTo: aScalar [
+
+	| output |
+
+	output := tf compute: aTFOperation.
+	self assert: output shape equals: #().
+	self assert: output type equals: TFTensor typeInt32.
+	self assert: output allElements first equals: aScalar
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerVectorEqualsTo: anExpectedArray [
 
 	| output |
 
 	output := tf compute: anOperation.
+	self assert: output type equals: TFTensor typeInt32.
+	self assert: output shape equals: (Array with: anExpectedArray size).
+	output allInt64s with: anExpectedArray do: [:r :t | self assert: r equals: t]
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assertOutputOf: anOperation isLargeIntegerVectorEqualsTo: anExpectedArray [
+
+	| output |
+
+	output := tf compute: anOperation.
+	self assert: output type equals: TFTensor typeInt64.
 	self assert: output shape equals: (Array with: anExpectedArray size).
 	output allInt64s with: anExpectedArray do: [:r :t | self assert: r equals: t]
 ]
@@ -101,24 +135,6 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isMatrixCloseTo: a
 	output := tf compute: anOperation.
 	
 	self assert: output isMatrixCloseTo: aFloatMatrix
-]
-
-{ #category : 'Test Support',
-  #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isScalarCloseTo: aScalar [
-
-	self assert: (tf compute: aTFOperation) isScalarCloseTo: aScalar
-]
-
-{ #category : 'Test Support',
-  #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isScalarEqualTo: aScalar [
-
-	| output |
-
-	output := tf compute: aTFOperation.
-	self assert: output shape equals: #().
-	self assert: output allElements first equals: aScalar
 ]
 
 { #category : 'Test Support',

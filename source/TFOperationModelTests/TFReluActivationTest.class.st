@@ -39,12 +39,12 @@ TFReluActivationTest >> testActivatingFloatScalar [
 
 	relu := TFReluActivation activating: negative.
 
-	self assertOutputOf: relu isScalarEqualTo: 0.
+	self assertOutputOf: relu isFloatScalarCloseTo: 0.
 
 
 	relu := TFReluActivation activating: positive.
 
-	self assertOutputOf: relu isScalarEqualTo: 5
+	self assertOutputOf: relu isFloatScalarCloseTo: 5
 ]
 
 { #category : 'Test' }
@@ -69,10 +69,10 @@ TFReluActivationTest >> testActivatingIntegerScalar [
 
 	relu := TFReluActivation activating: negative.
 
-	self assertOutputOf: relu isScalarEqualTo: 0.
+	self assertOutputOf: relu isIntegerScalarEqualTo: 0.
 
 
 	relu := TFReluActivation activating: positive.
 
-	self assertOutputOf: relu isScalarEqualTo: 5
+	self assertOutputOf: relu isIntegerScalarEqualTo: 5
 ]

@@ -5,7 +5,19 @@ Class {
 }
 
 { #category : 'Test' }
-TFElementWiseSquareTest >> testSquare [
+TFElementWiseSquareTest >> testFloatMatrixSquare [
+
+	| tensor result |
+
+	tensor := tf defineFloatTensorWith: #((2 3 4) (0.5 -8 -5)).
+
+	result := TFElementWiseSquare of: tensor.
+
+	self assertOutputOf: result isMatrixCloseTo: #((4 9 16) (0.25 64 25))
+]
+
+{ #category : 'Test' }
+TFElementWiseSquareTest >> testFloatVectorSquare [
 
 	| tensor result |
 
@@ -13,5 +25,5 @@ TFElementWiseSquareTest >> testSquare [
 
 	result := TFElementWiseSquare of: tensor.
 
-	self assertOutputOf: result isIntegerVectorEqualsTo: #(4.0 9.0 16.0)
+	self assertOutputOf: result isFloatVectorCloseTo: #(4.0 9.0 16.0)
 ]

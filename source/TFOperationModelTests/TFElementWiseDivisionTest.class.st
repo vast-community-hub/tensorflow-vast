@@ -115,7 +115,7 @@ TFElementWiseDivisionTest >> testDivideIntegerVector [
 
 	result := TFElementWiseDivision of: input and: 2 asInt32Tensor.
 
-	self assertOutputOf: result isFloatVectorCloseTo: #(5 5 8)
+	self assertOutputOf: result isIntegerVectorEqualsTo: #(5 5 8)
 ]
 
 { #category : 'Test' }
@@ -127,5 +127,5 @@ TFElementWiseDivisionTest >> testDivideScalar [
 
 	result := TFElementWiseDivision of: input and: 2 asInt32Tensor.
 
-	self assertOutputOf: result isScalarCloseTo: 5
+	self assertOutputOf: result isIntegerScalarEqualTo: 5
 ]
