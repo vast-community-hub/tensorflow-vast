@@ -5,9 +5,6 @@ Class {
 		'graph',
 		'session'
 	],
-	#classInstVars : [
-		'instancesByGraph'
-	],
 	#category : 'TensorFlowEnvironmentModel'
 }
 
@@ -102,38 +99,10 @@ TensorFlowComputation >> createSessionAndCompute: anArrayOfOutputs feeding: anAr
 	^session runInputs: anArrayOfPlaceholders values: anArrayOfInputs outputs: anArrayOfOutputs
 ]
 
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> defineFloatTensorWith: aNumberOrArray [
-
-	^graph const: aNumberOrArray asFloatTensor
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> defineFloatTensorWith: aNumberOrMatrix named: aName [
-
-	^graph const: aName value: aNumberOrMatrix asFloatTensor
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> defineIntegerTensorWith: aNumberOrArray [
-
-	^graph const: aNumberOrArray asInt32Tensor
-]
-
 { #category : 'Creating - Inputs' }
 TensorFlowComputation >> floatInputNamed: anInputName [
 
 	^graph placeholder: anInputName type: TFTensor typeFloat
-]
-
-{ #category : 'Creating - Variables' }
-TensorFlowComputation >> floatVariableNamed: aVariableName shaped: aShape initializedWith: aVariableInitializer [
-
-	^self
-		variableNamed: aVariableName
-		of: TFTensor typeFloat
-		shaped: aShape
-		initializedWith: aVariableInitializer
 ]
 
 { #category : 'Computing' }
@@ -188,7 +157,7 @@ TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName 
 
 	^graph
 		newOperation: anOperationType
-		named: anOperationName
+		named: (graph nameFor: anOperationName)
 		described: [:description |
 			graphNodes do: [:node | description addInput: (node outputOn: graph)].
 			aBlock value: description]
@@ -202,53 +171,4 @@ TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName 
 		named: anOperationName
 		described: [:description |
 			description addInputs: (aTFNodeCollection collect: [:node | node outputOn: graph])]
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> oneAsFloat [
-
-	^graph
-		operationNamed: 'oneFloat'
-		ifFound: [:one | one]
-		ifNotFound: [graph const: 'oneFloat' value: 1.0 asTensor]
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> oneAsInt [
-
-	^graph const: 'one' value: 1 asInt32Tensor
-]
-
-{ #category : 'Creating - Variables' }
-TensorFlowComputation >> variableNamed: aVariableName of: aType shaped: aShape initializedWith: aVariableInitializer [
-
-	| var |
-
-	var := graph variable: aVariableName type: aType shape: aShape.
-	aVariableInitializer applyTo: var.
-	^var
-]
-
-{ #category : 'Creating - Variables' }
-TensorFlowComputation >> variableNamed: aVariableName with: aTensor [
-
-	^graph variable: aVariableName initialValue: aTensor
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> zeroAsInt [
-
-	^graph
-		operationNamed: 'zero'
-		ifFound: [:zeros | zeros]
-		ifNotFound: [graph const: 'zero' value: 0 asInt32Tensor]
-]
-
-{ #category : 'Creating - Constants' }
-TensorFlowComputation >> zerosShapedFor: aVariable [
-
-	| shape |
-
-	shape := graph shapeOf: aVariable firstOutput.
-	^graph zerosShaped: shape
 ]

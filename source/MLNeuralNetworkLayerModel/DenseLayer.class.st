@@ -91,8 +91,9 @@ DenseLayer >> initializeReceiving: anInput featuresOfInput: anInputSize features
 DenseLayer >> initializeWeight [
 
 	weights :=
-		tf
-			variableNamed: 'weight'
+		TFVariable
+			on: tf
+			named: 'weight'
 			of: input outputType
 			shaped: (Array with: inputSize with: outputSize)
 			initializedWith: weightSpec variableInitializer
