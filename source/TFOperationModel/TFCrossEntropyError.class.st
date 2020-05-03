@@ -3,8 +3,8 @@ Class {
 	#superclass : 'TFLossFunction',
 	#instVars : [
 		'operationName',
-		'logitsTensor',
-		'labelsTensor'
+		'unscaledLogits',
+		'labels'
 	],
 	#category : 'TFOperationModel'
 }
@@ -12,7 +12,8 @@ Class {
 { #category : 'Instance Creation' }
 TFCrossEntropyError class >> named: anOperationName of: aLogitsTensor whenExpectedIs: aLabelsTensor [
 
-	" Expects unscaled logits, since it performs a softmax on logits internally for efficiency. Do not call this op with the output of softmax, as it will produce incorrect results. "
+	" Expects unscaled logits, since it performs a softmax on logits internally for efficiency. 
+	 Do not call this op with the output of softmax, as it will produce incorrect results. "
 
 	^self new initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: aLabelsTensor
 ]
@@ -38,8 +39,8 @@ TFCrossEntropyError >> calculateValue [
 
 	^self
 		binaryOperation: 'SparseSoftmaxCrossEntropyWithLogits'
-		between: logitsTensor
-		and: labelsTensor
+		between: unscaledLogits
+		and: labels
 ]
 
 { #category : 'Initialization',
@@ -47,8 +48,8 @@ TFCrossEntropyError >> calculateValue [
 TFCrossEntropyError >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [
 
 	operationName := anOperationName.
-	logitsTensor := aLogitsTensor.
-	labelsTensor := anExpectedTensor.
+	unscaledLogits := aLogitsTensor.
+	labels := anExpectedTensor.
 	value := self calculateValue
 ]
 

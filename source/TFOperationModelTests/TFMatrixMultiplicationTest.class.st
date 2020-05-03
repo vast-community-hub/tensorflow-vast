@@ -9,8 +9,8 @@ TFMatrixMultiplicationTest >> testMultiplyMatrixAndVector [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0) (8.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0) (8.0)) named: 'b'.
 
 	output := TFMatrixMultiplication of: constA and: constB.
 
@@ -28,8 +28,8 @@ TFMatrixMultiplicationTest >> testOperationMatMul [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
 	output := TFMatrixMultiplication of: constA and: constB.
 
@@ -47,8 +47,8 @@ TFMatrixMultiplicationTest >> testOperationMatMul1x1 [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((3.14)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1)) named: 'a'.
+	constB := tf floatConstantWith: #((3.14)) named: 'b'.
 
 	output := TFMatrixMultiplication of: constA and: constB.
 
@@ -60,8 +60,8 @@ TFMatrixMultiplicationTest >> testOperationMatMul2x2 [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
 	output := TFMatrixMultiplication of: constA and: constB.
 
@@ -79,8 +79,8 @@ TFMatrixMultiplicationTest >> testOperationMatMulABTransposed [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
 	output := TFMatrixMultiplication ofTransposed: constA andTransposed: constB.
 
@@ -98,8 +98,8 @@ TFMatrixMultiplicationTest >> testOperationMatMulATransposed [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
 	output := TFMatrixMultiplication ofTransposed: constA and: constB.
 
@@ -117,8 +117,8 @@ TFMatrixMultiplicationTest >> testOperationMatMulBTransposed [
 
 	| constA constB output |
 
-	constA := tf defineFloatTensorWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
-	constB := tf defineFloatTensorWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
+	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
+	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
 	output := TFMatrixMultiplication of: constA andTransposed: constB.
 

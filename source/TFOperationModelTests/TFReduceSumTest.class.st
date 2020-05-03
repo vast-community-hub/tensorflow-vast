@@ -11,7 +11,7 @@ TFReduceSumTest >> testReduceAlongsideAxis [
 
 	tensor :=
 		tf
-			defineFloatTensorWith: (
+			floatConstantWith: (
 				OrderedCollection new
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);
@@ -46,7 +46,7 @@ TFReduceSumTest >> testReduceWithoutAxis [
 
 	tensor :=
 		tf
-			defineFloatTensorWith: (
+			floatConstantWith: (
 				OrderedCollection new
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);

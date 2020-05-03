@@ -35,15 +35,11 @@ BackpropagationAlgorithm >> initialize [
 	predicted := tf floatInputNamed: 'predicted'.
 	backProp := (TFSubstraction of: target minus: predicted) negated.
 
-	gradient := TFSigmoidGradient considering: backProp andGradientsOfInputs: predicted.
+	gradient := TFSigmoidGradient considering: predicted andGradientsOfInputs: backProp.
 
 	inputVariable := tf floatInputNamed: 'input'.
 	weights := tf floatInputNamed: 'weights'.
-	learningRate :=
-		tf
-			floatVariableNamed: 'learningRate'
-			shaped: #()
-			initializedWith: (TFConstantInitializer with: 0.9 asTensor).
+	learningRate := TFVariable on: tf named: 'learningRate' with: 0.9 asTensor.
 	output :=
 		TFSubstraction
 			of: weights

@@ -9,7 +9,7 @@ TFZeroInitializer >> applyTo: aTFVariable [
 
 	| initialValue |
 
-	initialValue := aTFVariable currentComputation zerosShapedFor: aTFVariable.
+	initialValue := TFConstant like: aTFVariable filledWith: 0.0.
 
 	aTFVariable assign: initialValue value
 ]

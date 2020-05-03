@@ -10,7 +10,7 @@ L2RegularizationTest >> testRegularizeMatrix [
 	| l2 tensor |
 
 	tensor :=
-		tf defineFloatTensorWith: (
+		tf floatConstantWith: (
 			OrderedCollection new
 				add: #(1 2 3 4);
 				add: #(0 1 5 6);
@@ -27,7 +27,7 @@ L2RegularizationTest >> testRegularizeVector [
 
 	| l2 tensor |
 
-	tensor := tf defineFloatTensorWith: #(1 2 3 4).
+	tensor := tf floatConstantWith: #(1 2 3 4).
 
 	l2 := L2Regularization by: 0.001.
 	

@@ -147,7 +147,7 @@ Sigmoid3LayerNeuralNetwork >> initializeLearningLayer1 [
 	bias := biasesByLayer at: 1.
 
 	gradient :=
-		TFSigmoidGradient considering: (backpropByLayer at: 2) andGradientsOfInputs: layerOutput.
+		TFSigmoidGradient considering: layerOutput andGradientsOfInputs: (backpropByLayer at: 2).
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
 	learntParameters add: (
@@ -172,7 +172,7 @@ Sigmoid3LayerNeuralNetwork >> initializeLearningLayer2 [
 	bias := biasesByLayer at: 2.
 
 	gradient :=
-		TFSigmoidGradient considering: (backpropByLayer at: 3) andGradientsOfInputs: layerOutput.
+		TFSigmoidGradient considering: layerOutput andGradientsOfInputs: (backpropByLayer at: 3).
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
 	learntParameters add: (

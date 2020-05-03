@@ -61,5 +61,5 @@ TFConstantTest >> testFromShapeFilledWithIntValue [
 
 	const := TFConstant on: tf shaped: #(2 1) filledWith: 0 asInt32Tensor.
 
-	self assertOutputOf: const isMatrixCloseTo: #((0) (0))
+	self assertOutputOf: const isIntegerMatrixCloseTo: #((0) (0))
 ]

@@ -3,8 +3,8 @@ Class {
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
 		'operationName',
-		'leftOperand',
-		'rightOperand'
+		'numerator',
+		'denominator'
 	],
 	#category : 'TFOperationModel'
 }
@@ -25,7 +25,7 @@ TFElementWiseDivision class >> of: aLeftOperand and: aRightOperand [
   #vaVisibility : 'private' }
 TFElementWiseDivision >> calculateValue [
 
-	^self binaryOperation: 'Div' between: leftOperand and: rightOperand
+	^self binaryOperation: 'Div' between: numerator and: denominator
 ]
 
 { #category : 'Initialization',
@@ -33,8 +33,8 @@ TFElementWiseDivision >> calculateValue [
 TFElementWiseDivision >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand [
 
 	operationName := anOperationName.
-	leftOperand := aLeftOperand.
-	rightOperand := aRightOperand.
+	numerator := aLeftOperand.
+	denominator := aRightOperand.
 	value := self calculateValue
 ]
 
@@ -48,8 +48,8 @@ TFElementWiseDivision >> operationName [
 TFElementWiseDivision >> printOn: aStream [
 
 	aStream nextPutAll: '('.
-	self print: leftOperand formattedOn: aStream.
+	self print: numerator formattedOn: aStream.
 	aStream nextPutAll: ' / '.
-	self print: rightOperand formattedOn: aStream.
+	self print: denominator formattedOn: aStream.
 	aStream nextPutAll: ')'
 ]

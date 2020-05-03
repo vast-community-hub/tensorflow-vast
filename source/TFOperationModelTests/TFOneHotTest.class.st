@@ -9,12 +9,12 @@ TFOneHotTest >> testTransforming3ElementVector [
 
 	| input oneHot |
 
-	input := tf defineIntegerTensorWith: #(0 1 2).
+	input := tf integerConstantWith: #(0 1 2).
 	oneHot := TFOneHot transforming: input toDepth: 3 asInt32Tensor.
 
 	self
 		assertOutputOf: oneHot
-		isMatrixCloseTo: (
+		isIntegerMatrixCloseTo: (
 			OrderedCollection new
 				add: #(1 0 0);
 				add: #(0 1 0);

@@ -19,7 +19,7 @@ TFGradientDescentTest >> learningRate [
 TFGradientDescentTest >> setUp [
 
 	super setUp.
-	optimizer := TFGradientDescent scalingBy: (tf defineFloatTensorWith: self learningRate)
+	optimizer := TFGradientDescent scalingBy: (tf constantWith: self learningRate)
 ]
 
 { #category : 'Test' }
@@ -29,13 +29,11 @@ TFGradientDescentTest >> testApplyGradientShouldUpdateVariables [
 
 	originalWeight := 1.0.
 	weights := tf variableNamed: 'var' with: originalWeight asTensor.
-	delta := tf defineFloatTensorWith: Float pi.
+	delta := tf constantWith: Float pi.
 
 	expectedNewWeight := originalWeight - (Float pi * self learningRate).
 
-	result := tf compute: (optimizer apply: delta to: weights).
-	self assert: (result allFloats first closeTo: expectedNewWeight).
-
-	result := tf compute: weights.
-	self assert: (result allFloats first closeTo: expectedNewWeight)
+	result := optimizer apply: delta to: weights.
+	self assertOutputOf: result isFloatScalarCloseTo: expectedNewWeight.
+	self assertOutputOf: weights isFloatScalarCloseTo: expectedNewWeight
 ]

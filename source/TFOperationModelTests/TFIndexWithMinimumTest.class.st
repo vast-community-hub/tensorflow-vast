@@ -11,7 +11,7 @@ TFIndexWithMinimumTest >> testIndexWithMinimumValueAcrossAxis [
 
 	tensor :=
 		tf
-			defineFloatTensorWith: (
+			floatConstantWith: (
 				OrderedCollection new
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);

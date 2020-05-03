@@ -9,8 +9,8 @@ TFSumTest >> testSum2FloatVectors [
 
 	| sum a b |
 
-	a := tf defineFloatTensorWith: #(1 2 3).
-	b := tf defineFloatTensorWith: #(4 5 6).
+	a := tf floatConstantWith: #(1 2 3).
+	b := tf floatConstantWith: #(4 5 6).
 
 	sum := TFSum of: a plus: b.
 
@@ -22,8 +22,8 @@ TFSumTest >> testSum2IntegerVectors [
 
 	| sum a b |
 
-	a := tf defineIntegerTensorWith: #(1 2 3).
-	b := tf defineIntegerTensorWith: #(4 5 6).
+	a := tf integerConstantWith: #(1 2 3).
+	b := tf integerConstantWith: #(4 5 6).
 
 	sum := TFSum of: a plus: b.
 
@@ -40,7 +40,7 @@ TFSumTest >> testSumMoreThan2FloatVectors [
 			add: #(1 2 3 4);
 			add: #(1 2 3 4);
 			add: #(1 2 3 4);
-			collect: [:tensor | tf defineFloatTensorWith: tensor].
+			collect: [:tensor | tf floatConstantWith: tensor].
 
 	sum := TFSum ofAll: tensors.
 

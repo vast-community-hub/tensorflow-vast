@@ -11,7 +11,7 @@ TFReduceMeanTest >> testReduceAlongsideAxis [
 
 	a :=
 		tf
-			defineFloatTensorWith: (
+			floatConstantWith: (
 				OrderedCollection new
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);
@@ -44,7 +44,7 @@ TFReduceMeanTest >> testReduceWithoutAxis [
 
 	a :=
 		tf
-			defineFloatTensorWith: (
+			floatConstantWith: (
 				OrderedCollection new
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);

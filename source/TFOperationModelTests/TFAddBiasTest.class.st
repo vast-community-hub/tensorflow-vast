@@ -16,7 +16,7 @@ TFAddBiasTest >> testAddBias [
 
 	self
 		assertOutputOf: output
-		isMatrixCloseTo: (
+		isIntegerMatrixCloseTo: (
 			OrderedCollection new
 				add: (Array with: 1 + 100 with: 2 + 101 with: 3 + 102);
 				add: (Array with: 5 + 100 with: 6 + 101 with: 7 + 102);
@@ -35,7 +35,7 @@ TFAddBiasTest >> testAddBiasComparedToSum [
 	sum := TFSum of: weight plus: bias.
 	self
 		assertOutputOf: addBias
-		isMatrixCloseTo: (
+		isIntegerMatrixCloseTo: (
 			OrderedCollection new
 				add: (Array with: 1 + 100 with: 2 + 101 with: 3 + 102);
 				add: (Array with: 5 + 100 with: 6 + 101 with: 7 + 102);
@@ -43,7 +43,7 @@ TFAddBiasTest >> testAddBiasComparedToSum [
 
 	self
 		assertOutputOf: sum
-		isMatrixCloseTo: (
+		isIntegerMatrixCloseTo: (
 			OrderedCollection new
 				add: (Array with: 1 + 100 with: 2 + 101 with: 3 + 102);
 				add: (Array with: 5 + 100 with: 6 + 101 with: 7 + 102);

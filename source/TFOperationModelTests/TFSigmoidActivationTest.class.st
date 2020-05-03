@@ -4,6 +4,13 @@ Class {
 	#category : 'TFOperationModelTests'
 }
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFSigmoidActivationTest >> sigmoidAppliedTo: aNumber [
+
+	^1 / (1 + aNumber negated exp)
+]
+
 { #category : 'Test' }
 TFSigmoidActivationTest >> testActivatingFloatScalar [
 
@@ -13,7 +20,7 @@ TFSigmoidActivationTest >> testActivatingFloatScalar [
 
 	sigmoid := TFSigmoidActivation activating: input.
 
-	self assertOutputOf: sigmoid isFloatScalarCloseTo: (1 / (1 + (5 negated exp)))
+	self assertOutputOf: sigmoid isFloatScalarCloseTo: (self sigmoidAppliedTo: 5)
 ]
 
 { #category : 'Test' }
@@ -29,8 +36,8 @@ TFSigmoidActivationTest >> testActivatingFloatVector [
 		assertOutputOf: sigmoid
 		isFloatVectorCloseTo: (
 			OrderedCollection new
-				add: (1 / (1 + (5 negated exp)));
-				add: (1 / (1 + (4 exp)));
+				add: (self sigmoidAppliedTo: 5);
+				add: (self sigmoidAppliedTo: -4);
 				yourself)
 ]
 

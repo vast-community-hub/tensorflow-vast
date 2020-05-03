@@ -9,7 +9,7 @@ TFElementWiseSquareTest >> testFloatMatrixSquare [
 
 	| tensor result |
 
-	tensor := tf defineFloatTensorWith: #((2 3 4) (0.5 -8 -5)).
+	tensor := tf floatConstantWith: #((2 3 4) (0.5 -8 -5)).
 
 	result := TFElementWiseSquare of: tensor.
 
@@ -21,7 +21,7 @@ TFElementWiseSquareTest >> testFloatVectorSquare [
 
 	| tensor result |
 
-	tensor := tf defineFloatTensorWith: #(2 3 4).
+	tensor := tf floatConstantWith: #(2 3 4).
 
 	result := TFElementWiseSquare of: tensor.
 
