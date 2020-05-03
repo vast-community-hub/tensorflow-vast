@@ -4,17 +4,36 @@ Extension {
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
-TFElementWiseSquareTest >> testPartialDerivativeWhenComposed [
-	" f(x) = tanh(x) ^2
+TFElementWiseSquareTest >> testGradientWhenComposed [
+	"f(x) = tanh(x) ^2
 	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
 
-	| input square dSquare |
+	| input square |
 
-	input := tf defineFloatTensorWith: 0.549306.
+	input := tf constantWith: 0.549306.
 	square := TFElementWiseSquare of: (TFTanhActivation activating: input).
-	dSquare := square partialDerivativeWithRespectTo: input.
 
-	self assertOutputOf: dSquare isFloatScalarCloseTo: 2 * 0.5 * (1 - (0.5 squared))
+	self
+		assertPartialDerivativeOf: square
+		withRespectTo: input
+		isCloseTo: (2 * 0.5 * (1 - (0.5 squared)))
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test'] }
+TFElementWiseSquareTest >> testPartialDerivativeWhenComposed [
+	"f(x) = tanh(x) ^2
+	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
+
+	| input square |
+
+	input := tf constantWith: 0.549306.
+	square := TFElementWiseSquare of: (TFTanhActivation activating: input).
+
+	self
+		assertPartialDerivativeOf: square
+		withRespectTo: input
+		isCloseTo: 2 * 0.5 * (1 - (0.5 squared))
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -25,10 +44,10 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherInputWhenCom
 
 	| input square dSquare x |
 
-	input := tf defineFloatTensorWith: 0.549306.
+	input := tf constantWith: 0.549306.
 	square := TFElementWiseSquare of: (TFTanhActivation activating: input).
 
-	x := tf defineFloatTensorWith: 4.
+	x := tf constantWith: 4.0.
 	dSquare := square partialDerivativeWithRespectTo: x.
 
 	self assertOutputOf: dSquare isFloatScalarCloseTo: 0
@@ -42,10 +61,10 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherScalarInput 
 
 	| input square x dSquare |
 
-	input := tf defineFloatTensorWith: 3.
+	input := tf constantWith: 3.0.
 	square := TFElementWiseSquare of: input.
 
-	x := tf defineFloatTensorWith: 4.
+	x := tf constantWith: 4.0.
 	dSquare := square partialDerivativeWithRespectTo: x.
 
 	self assertOutputOf: dSquare isFloatScalarCloseTo: 0
@@ -54,16 +73,15 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherScalarInput 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
 TFElementWiseSquareTest >> testPartialDerivativeWithRespectToScalarInput [
-	" f(x) = x^2
+	"f(x) = x^2
 	 df/dx = 2x"
 
-	| input square dSquare |
+	| input square |
 
-	input := tf defineFloatTensorWith: 3.
+	input := tf constantWith: 3.0.
 	square := TFElementWiseSquare of: input.
-	dSquare := square partialDerivativeWithRespectTo: input.
 
-	self assertOutputOf: dSquare isFloatScalarCloseTo: 6
+	self assertPartialDerivativeOf: square withRespectTo: input isCloseTo: 6
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -72,11 +90,10 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToVectorInput [
 	" f(x) = x^2
 	 df/dx = 2x"
 
-	| input square dSquare |
+	| input square |
 
-	input := tf defineFloatTensorWith: #(3 5).
+	input := tf floatConstantWith: #(3 5).
 	square := TFElementWiseSquare of: input.
-	dSquare := square partialDerivativeWithRespectTo: input.
 
-	self assertOutputOf: dSquare isFloatVectorCloseTo: #(6 10)
+	self assertPartialDerivativeOf: square withRespectTo: input isVectorCloseTo: #(6 10)
 ]

@@ -10,7 +10,7 @@ TFGradientTest >> testAccessingGradientIndependently [
 	| weights input output grads result |
 
 	weights := tf floatInputNamed: 'var'.
-	input := tf defineFloatTensorWith: Float pi.
+	input := tf constantWith: Float pi.
 
 	output := TFElementWiseMultiplication of: weights and: input.
 
@@ -33,7 +33,7 @@ TFGradientTest >> testElementMultiplicationGradient [
 	| weights input output gradWeight result |
 
 	weights := tf floatInputNamed: 'var'.
-	input := tf defineFloatTensorWith: Float pi.
+	input := tf constantWith: Float pi.
 
 	output := TFElementWiseMultiplication of: weights and: input.
 
@@ -56,7 +56,7 @@ TFGradientTest >> testElementMultiplicationGradientWithRespectToSeveralVariables
 	| weights input output grads result |
 
 	weights := tf floatInputNamed: 'var'.
-	input := tf defineFloatTensorWith: Float pi.
+	input := tf constantWith: Float pi.
 
 	output := TFElementWiseMultiplication of: weights and: input.
 
@@ -83,7 +83,7 @@ TFGradientTest >> testMSEGradient [
 	| prediction expected mse gradWeight result |
 
 	prediction := tf variableNamed: 'prediction' with: 3 asFloatTensor.
-	expected := tf defineFloatTensorWith: Float pi.
+	expected := tf constantWith: Float pi.
 
 	mse := TFMeanSquaredError of: prediction whenExpectedIs: expected.
 

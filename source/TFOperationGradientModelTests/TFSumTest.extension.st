@@ -4,19 +4,33 @@ Extension {
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
+TFSumTest >> testGradientUsingSameInput [
+	"f(x,y) = x^2 + 1/x
+	 df/dx = 2x - 1/x^2"
+
+	| x z |
+
+	x := tf constantWith: 3.0.
+
+	z := TFSum of: (TFElementWiseSquare of: x) plus: (TFReciprocal of: x).
+
+	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 2 * 3 - (1 / 9)
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test'] }
 TFSumTest >> testPartialDerivativeWithRespectToFloatInput [
 	"f(x,y) = x + y
 	 df/dx = 1"
 
-	| x y sum dx |
+	| x y sum |
 
-	x := tf defineFloatTensorWith: #(1 2 3).
-	y := tf defineFloatTensorWith: #(4 5 6).
+	x := tf floatConstantWith: #(1 2 3).
+	y := tf floatConstantWith: #(4 5 6).
 
 	sum := TFSum of: x plus: y.
-	dx := sum partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dx isFloatVectorCloseTo: #(1 1 1)
+	self assertPartialDerivativeOf: sum withRespectTo: x isVectorCloseTo: #(1 1 1)
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -27,8 +41,8 @@ TFSumTest >> testPartialDerivativeWithRespectToIntegerInput [
 
 	| x y sum dx |
 
-	x := tf defineIntegerTensorWith: #(1 2 3).
-	y := tf defineIntegerTensorWith: #(4 5 6).
+	x := tf integerConstantWith: #(1 2 3).
+	y := tf integerConstantWith: #(4 5 6).
 
 	sum := TFSum of: x plus: y.
 	dx := sum partialDerivativeWithRespectTo: x.
@@ -46,7 +60,7 @@ TFSumTest >> testPartialDerivativeWithRespectToOneInput [
 
 	x := tf floatInputNamed: 'x'.
 	y := tf floatInputNamed: 'y'.
-	three := tf defineFloatTensorWith: 3.
+	three := tf constantWith: 3.0.
 
 	sum :=
 		TFSum

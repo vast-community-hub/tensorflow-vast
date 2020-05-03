@@ -22,7 +22,7 @@ TFSigmoidGradient class >> considering: aBackpropagation andGradientsOfInputs: a
   #vaVisibility : 'private' }
 TFSigmoidGradient >> calculateValue [
 
-	^self binaryOperation: 'SigmoidGrad' between: inputsGradients and: backpropagation
+	^self binaryOperation: 'SigmoidGrad' between: backpropagation and: inputsGradients
 ]
 
 { #category : 'Initialization',

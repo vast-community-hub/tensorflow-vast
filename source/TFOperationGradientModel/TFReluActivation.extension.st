@@ -1,14 +1,14 @@
 Extension {
-	#name : 'TFTanhActivation'
+	#name : 'TFReluActivation'
 }
 
 { #category : '*TFOperationGradientModel',
  #vaCategories : ['Gradients'] }
-TFTanhActivation >> derivativeWithRespectTo: aVariable [
+TFReluActivation >> derivativeWithRespectTo: aVariable [
 
 	aVariable = neuron
 		ifTrue: [
-			^TFTanhGradient
+			^TFReluGradient
 				considering: self
 				andGradientsOfInputs: (TFConstant like: self filledWith: 1)].
 
@@ -17,16 +17,16 @@ TFTanhActivation >> derivativeWithRespectTo: aVariable [
 
 { #category : '*TFOperationGradientModel',
  #vaCategories : ['Accessing'] }
-TFTanhActivation >> inputsDo: aBlock [
+TFReluActivation >> inputsDo: aBlock [
 
 	aBlock value: neuron
 ]
 
 { #category : '*TFOperationGradientModel',
  #vaCategories : ['Gradients'] }
-TFTanhActivation >> partialDerivativeWithRespectTo: aVariable [
+TFReluActivation >> partialDerivativeWithRespectTo: aVariable [
 
-	^TFTanhGradient
+	^TFReluGradient
 		considering: self
 		andGradientsOfInputs: (neuron partialDerivativeWithRespectTo: aVariable)
 ]

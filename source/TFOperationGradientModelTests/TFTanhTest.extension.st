@@ -60,7 +60,7 @@ TFTanhTest >> testPartialDerivativeWithRespectToMatrixInput [
 	" f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
 
-	| input tanh dTanh |
+	| input tanh |
 
 	input :=
 		tf
@@ -72,10 +72,10 @@ TFTanhTest >> testPartialDerivativeWithRespectToMatrixInput [
 					asFloatTensor).
 
 	tanh := TFTanhActivation activating: input.
-	dTanh := tanh partialDerivativeWithRespectTo: input.
 
 	self
-		assertOutputOf: dTanh
+		assertPartialDerivativeOf: tanh
+		withRespectTo: input
 		isMatrixCloseTo: (
 			OrderedCollection new
 				add: (Array with: 1 - (0.5 squared) with: 1 - (0.6 squared));
@@ -86,16 +86,15 @@ TFTanhTest >> testPartialDerivativeWithRespectToMatrixInput [
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
 TFTanhTest >> testPartialDerivativeWithRespectToScalarInput [
-	" f(x) = tanh(x) 
+	"f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
 
-	| input tanh dTanh |
+	| input tanh |
 
 	input := tf variableNamed: 'input' with: 0.549306 asFloatTensor.
 	tanh := TFTanhActivation activating: input.
-	dTanh := tanh partialDerivativeWithRespectTo: input.
-
-	self assertOutputOf: dTanh isFloatScalarCloseTo: 1 - (0.5 squared)
+	
+	self assertPartialDerivativeOf: tanh withRespectTo: input isCloseTo: 1 - (0.5 squared)
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -104,13 +103,13 @@ TFTanhTest >> testPartialDerivativeWithRespectToVectorInput [
 	" f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
 
-	| input tanh dTanh |
+	| input tanh |
 
-	input := tf defineFloatTensorWith: #(0.549306 0.693147).
+	input := tf floatConstantWith: #(0.549306 0.693147).
 	tanh := TFTanhActivation activating: input.
-	dTanh := tanh partialDerivativeWithRespectTo: input.
 
 	self
-		assertOutputOf: dTanh
-		isFloatVectorCloseTo: (Array with: 1 - (0.5 squared) with: 1 - (0.6 squared))
+		assertPartialDerivativeOf: tanh
+		withRespectTo: input
+		isVectorCloseTo: (Array with: 1 - (0.5 squared) with: 1 - (0.6 squared))
 ]

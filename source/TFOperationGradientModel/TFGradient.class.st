@@ -50,7 +50,7 @@ TFGradient >> initializeNamed: aString of: aFunctionCollection withRespectTo: aV
 
 	value := functions first currentComputation gradientsOf: functions withRespectTo: variables.
 
-	"value is a TFOutputArray so I have to put the graph from outside. Pretty ugly"
+	"value is a TFOutputArray so I have to set the graph from outside. Pretty ugly"
 	self allGradients
 		do: [:gradOutput | gradOutput graph: (functions first currentComputation instVarAt: 1)]
 ]
