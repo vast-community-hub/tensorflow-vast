@@ -51,10 +51,8 @@ AutoDiffReverseMode >> propagateAdjointOf: anOperation withRespectTo: anInput [
 
 	| dInput |
 
-	dInput :=
-		TFElementWiseMultiplication
-			of: (anOperation derivativeWithRespectTo: anInput)
-			and: (self partialDerivativeOf: anOperation).
+	dInput := (anOperation derivativeWithRespectTo: anInput) *
+		(self partialDerivativeOf: anOperation).
 
 	self sum: dInput toPartialDerivativeOf: anInput
 ]
@@ -67,7 +65,7 @@ AutoDiffReverseMode >> sum: aValue toPartialDerivativeOf: aVariable [
 
 	dInput :=
 		(partialDerivatives includesKey: aVariable)
-			ifTrue: [TFSum of: aValue plus: (self partialDerivativeOf: aVariable)]
+			ifTrue: [aValue + (self partialDerivativeOf: aVariable)]
 			ifFalse: [aValue].
 
 	partialDerivatives at: aVariable put: dInput

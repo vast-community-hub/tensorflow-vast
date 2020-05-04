@@ -4,6 +4,23 @@ Class {
 	#category : 'TFOperationModel'
 }
 
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
+TFConstant class >> defaultName [
+
+	^'Const'
+]
+
+{ #category : 'Instance Creation' }
+TFConstant class >> like: anOperation filledWith: aValue [
+
+	^self
+		on: anOperation currentComputation
+		named: self defaultName
+		shaped: anOperation value outputShape
+		filledWith: (TFTensor fromNumbers: aValue type: anOperation value outputType)
+]
+
 { #category : 'Instance Creation' }
 TFConstant class >> on: aComputation named: aName shaped: aShape filledWith: aTensor [
 
@@ -30,13 +47,13 @@ TFConstant class >> on: aComputation named: aName with: aTensor wrappedWith: aBl
 { #category : 'Instance Creation' }
 TFConstant class >> on: aComputation shaped: aShape filledWith: aTensor [
 
-	^self on: aComputation named: 'Const' shaped: aShape filledWith: aTensor
+	^self on: aComputation named: self defaultName shaped: aShape filledWith: aTensor
 ]
 
 { #category : 'Instance Creation' }
 TFConstant class >> on: aComputation with: aTensor [
 
-	^self on: aComputation named: 'Const' with: aTensor
+	^self on: aComputation named: self defaultName with: aTensor
 ]
 
 { #category : 'Initialization',

@@ -45,7 +45,10 @@ TFReduceMean >> initializeNamed: anOperationName ofValuesIn: aTensor alongside: 
 	operationName := anOperationName.
 	tensor := aTensor.
 	axis := anAxis.
-	value := self calculateValue
+	value := self calculateValue.
+	" this is because the name desired can be changed with a suffix or preffix when written to graph. 
+	 should be a better way to do this" 
+	operationName := value name
 ]
 
 { #category : 'Accessing' }

@@ -31,11 +31,15 @@ TFIndexWithMaximum >> calculateValue [
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFIndexWithMaximum >> initializeNamed: anOperationName in: aTensor across: anAxis [
-	
-	operationName := anOperationName. 
-	tensor := aTensor. 
+
+	operationName := anOperationName.
+	tensor := aTensor.
 	axis := anAxis.
-	value := self calculateValue
+	value := self calculateValue.
+	" this is because the name desired can be changed with a suffix or preffix when written to graph. 
+	 should be a better way to do this" 
+	operationName := value operationName 
+	
 ]
 
 { #category : 'Accessing' }

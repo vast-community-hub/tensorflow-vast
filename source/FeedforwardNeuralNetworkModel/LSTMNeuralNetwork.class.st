@@ -64,7 +64,7 @@ LSTMNeuralNetwork >> initializeLayer1 [
 	tf
 		inScopeNamed: 'layer1'
 		do: [
-			score := TFSum of: (TFMatrixMultiplication of: layerInput and: weights) plus: biases.
+			score := (layerInput dot: weights) + biases.
 			outputsByLayer at: 1 put: (TFTanhActivation activating: score)].
 
 	weightsByLayer at: 1 put: weights.
@@ -94,7 +94,7 @@ LSTMNeuralNetwork >> initializeLayer2 [
 	tf
 		inScopeNamed: 'layer2'
 		do: [
-			score := TFSum of: (TFMatrixMultiplication of: layerInput and: weights) plus: biases.
+			score := (layerInput dot: weights) + biases.
 			outputsByLayer at: 2 put: (TFTanhActivation activating: score)].
 
 	weightsByLayer at: 2 put: weights.
@@ -124,7 +124,7 @@ LSTMNeuralNetwork >> initializeLayer3 [
 	tf
 		inScopeNamed: 'layer3'
 		do: [
-			score := TFSum of: (TFMatrixMultiplication of: layerInput and: weights) plus: biases.
+			score := (layerInput dot: weights) + biases.
 			outputsByLayer at: 3 put: (TFTanhActivation activating: score)].
 
 	weightsByLayer at: 3 put: weights.

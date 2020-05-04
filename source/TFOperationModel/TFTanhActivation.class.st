@@ -7,7 +7,7 @@ Class {
 { #category : 'Instance Creation' }
 TFTanhActivation class >> activating: aNeuron [
 
-	^self named: (aNeuron value nameFor: 'Tanh') activating: aNeuron
+	^self named: 'Tanh' activating: aNeuron
 ]
 
 { #category : 'Instance Creation' }
@@ -29,5 +29,6 @@ TFTanhActivation >> initializeNamed: anOperationName activating: aNeuron [
 
 	operationName := anOperationName.
 	neuron := aNeuron.
-	value := self calculateValue
+	value := self calculateValue.
+	operationName := value name
 ]

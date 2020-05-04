@@ -12,7 +12,7 @@ TFGradientTest >> testAccessingGradientIndependently [
 	weights := tf floatInputNamed: 'var'.
 	input := tf constantWith: Float pi.
 
-	output := TFElementWiseMultiplication of: weights and: input.
+	output := weights * input.
 
 	grads := TFGradient of: (Array with: output) withRespectTo: (Array with: weights with: input).
 
@@ -35,7 +35,7 @@ TFGradientTest >> testElementMultiplicationGradient [
 	weights := tf floatInputNamed: 'var'.
 	input := tf constantWith: Float pi.
 
-	output := TFElementWiseMultiplication of: weights and: input.
+	output := weights * input.
 
 	gradWeight := TFGradient of: (Array with: output) withRespectTo: (Array with: weights).
 
@@ -47,7 +47,7 @@ TFGradientTest >> testElementMultiplicationGradient [
 					at: 'var' put: 1.0 asTensor;
 					yourself).
 
-	self assert: (result allElements first closeTo: Float pi)
+	self assert: result isFloatScalarCloseTo: Float pi
 ]
 
 { #category : 'Test' }
@@ -58,7 +58,7 @@ TFGradientTest >> testElementMultiplicationGradientWithRespectToSeveralVariables
 	weights := tf floatInputNamed: 'var'.
 	input := tf constantWith: Float pi.
 
-	output := TFElementWiseMultiplication of: weights and: input.
+	output := weights * input.
 
 	grads :=
 		(TFGradient of: (Array with: output) withRespectTo: (Array with: weights with: input))
@@ -80,7 +80,7 @@ TFGradientTest >> testElementMultiplicationGradientWithRespectToSeveralVariables
 TFGradientTest >> testMSEGradient [
 	" This test fails randomly and don't know why. Needs work"
 
-	| prediction expected mse gradWeight result |
+	| prediction expected mse gradWeight |
 
 	prediction := tf variableNamed: 'prediction' with: 3 asFloatTensor.
 	expected := tf constantWith: Float pi.
@@ -89,7 +89,5 @@ TFGradientTest >> testMSEGradient [
 
 	gradWeight := TFGradient of: (Array with: mse) withRespectTo: (Array with: prediction).
 
-	result := tf compute: gradWeight.
-
-	self assert: (result allElements first closeTo: 2 * (3 - Float pi))
+	self assertOutputOf: (tf compute: gradWeight) isFloatScalarCloseTo: 2 * (3 - Float pi)
 ]

@@ -24,7 +24,6 @@ TFSubstraction >> inputsDo: aBlock [
  #vaCategories : ['Gradients'] }
 TFSubstraction >> partialDerivativeWithRespectTo: aVariable [
 
-	^TFSubstraction
-		of: (leftOperand partialDerivativeWithRespectTo: aVariable)
-		minus: (rightOperand partialDerivativeWithRespectTo: aVariable)
+	^(leftOperand partialDerivativeWithRespectTo: aVariable) -
+		(rightOperand partialDerivativeWithRespectTo: aVariable)
 ]

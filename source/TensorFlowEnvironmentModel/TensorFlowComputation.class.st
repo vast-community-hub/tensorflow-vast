@@ -99,12 +99,6 @@ TensorFlowComputation >> createSessionAndCompute: anArrayOfOutputs feeding: anAr
 	^session runInputs: anArrayOfPlaceholders values: anArrayOfInputs outputs: anArrayOfOutputs
 ]
 
-{ #category : 'Creating - Inputs' }
-TensorFlowComputation >> floatInputNamed: anInputName [
-
-	^graph placeholder: anInputName type: TFTensor typeFloat
-]
-
 { #category : 'Computing' }
 TensorFlowComputation >> gradientsOf: aFunctionCollection withRespectTo: aVariableCollection [
 
@@ -124,12 +118,6 @@ TensorFlowComputation >> initializeOn: aGraph [
 TensorFlowComputation >> inScopeNamed: aScopeName do: aBlock [
 
 	^graph inScopeNamed: aScopeName do: aBlock
-]
-
-{ #category : 'Creating - Inputs' }
-TensorFlowComputation >> integerInputNamed: anInputName [
-
-	^graph placeholder: anInputName type: TFTensor typeInt32
 ]
 
 { #category : 'Creating - Operations' }

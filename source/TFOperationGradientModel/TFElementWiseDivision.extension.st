@@ -6,10 +6,8 @@ Extension {
  #vaCategories : ['Gradients'] }
 TFElementWiseDivision >> derivativeWithRespectTo: aVariable [
 
-	aVariable = numerator ifTrue: [^TFReciprocal of: denominator].
-	aVariable = denominator
-		ifTrue: [
-			^(TFElementWiseDivision of: numerator and: (TFElementWiseSquare of: denominator)) negated].
+	aVariable = numerator ifTrue: [^denominator reciprocal].
+	aVariable = denominator ifTrue: [^(numerator / (denominator squared)) negated].
 
 	self raiseIsNotDifferentiableRespectTo: aVariable
 ]
@@ -28,16 +26,8 @@ TFElementWiseDivision >> partialDerivativeWithRespectTo: aVariable [
 
 	| a b |
 
-	a :=
-		TFElementWiseMultiplication
-			of: (numerator partialDerivativeWithRespectTo: aVariable)
-			and: denominator.
-	b :=
-		TFElementWiseMultiplication
-			of: numerator
-			and: (denominator partialDerivativeWithRespectTo: aVariable).
+	a := (numerator partialDerivativeWithRespectTo: aVariable) * denominator.
+	b := numerator * (denominator partialDerivativeWithRespectTo: aVariable).
 
-	^TFElementWiseDivision
-		of: (TFSubstraction of: a minus: b)
-		and: (TFElementWiseSquare of: denominator)
+	^(a - b) / (denominator squared)
 ]

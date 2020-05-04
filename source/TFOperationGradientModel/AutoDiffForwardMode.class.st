@@ -66,9 +66,7 @@ AutoDiffForwardMode >> propagateSensitivityOf: anOperation withRespectTo: anInpu
 	(self isDifferentiableWithRespectTo: anInput) ifFalse: [^self].
 
 	dInput := anOperation derivativeWithRespectTo: anInput.
-	inputDerivedRespectTo = anInput
-		ifFalse: [
-			dInput := TFElementWiseMultiplication of: dInput and: (self partialDerivativeOf: anInput)].
+	inputDerivedRespectTo = anInput ifFalse: [dInput := dInput * (self partialDerivativeOf: anInput)].
 
 	self sum: dInput toPartialDerivativeOf: anOperation
 ]
@@ -81,7 +79,7 @@ AutoDiffForwardMode >> sum: aValue toPartialDerivativeOf: aVariable [
 
 	dInput :=
 		(partialDerivatives includesKey: aVariable)
-			ifTrue: [TFSum of: aValue plus: (self partialDerivativeOf: aVariable)]
+			ifTrue: [aValue + (self partialDerivativeOf: aVariable)]
 			ifFalse: [aValue].
 
 	partialDerivatives at: aVariable put: dInput

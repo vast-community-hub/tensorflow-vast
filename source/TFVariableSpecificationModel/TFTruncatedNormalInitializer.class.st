@@ -71,11 +71,11 @@ TFTruncatedNormalInitializer >> applyTo: aTFVariable [
 		seeds
 			ifNil: [graph truncatedNormalRandomShaped: shape]
 			ifNotNil: [graph statelessNormalRandomShaped: shape withSeeds: seeds].
-			
+
 	meanTensor := graph const: mean asTensor.
 	devTensor := graph const: standardDeviation asTensor.
 
-	initialValue := TFSum of: (TFElementWiseMultiplication of: rnd and: devTensor) plus: meanTensor.
+	initialValue := (TFElementWiseMultiplication of: rnd and: devTensor) + meanTensor.
 
 	aTFVariable assign: initialValue value
 ]

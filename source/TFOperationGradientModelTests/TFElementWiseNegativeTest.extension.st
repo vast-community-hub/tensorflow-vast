@@ -12,7 +12,7 @@ TFElementWiseNegativeTest >> testGradientOfNegatedSquare [
 
 	x := tf constantWith: 3.0.
 
-	y := TFElementWiseNegative negativeOf: (TFElementWiseSquare of: x).
+	y := TFElementWiseNegative negativeOf: x squared.
 
 	self assertPartialDerivativeOf: y withRespectTo: x isCloseTo: -2 * 3
 ]

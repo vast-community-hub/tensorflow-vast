@@ -46,7 +46,7 @@ Sigmoid3LayerNeuralNetwork >> initialize [
 
 	backpropByLayer := Dictionary new.
 	optimizer := TFGradientDescent scalingBy: 0.1 asTensor.
-	batchSize := (input sizeOn: 0) castTo: TFTensor typeFloat.
+	batchSize := (input value sizeOn: 0) castTo: TFTensor typeFloat.
 	self initializeLearningLayer3.
 	self initializeLearningLayer2.
 	self initializeLearningLayer1.
@@ -67,14 +67,14 @@ Sigmoid3LayerNeuralNetwork >> initializeLayer1 [
 		tf
 			floatVariableNamed: 'weights1'
 			shaped: (Array with: inputSize with: outputSize)
-			initializedWith: (self randomInitializerFor: inputSize). 
+			initializedWith: (self randomInitializerFor: inputSize).
 	biases :=
 		tf
 			floatVariableNamed: 'biases1'
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
 
-	score := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+	score := (layerInput dot: weights) biasedBy: biases.
 	hidden1 := TFSigmoidActivation activating: score.
 
 	weightsByLayer at: 1 put: weights.
@@ -101,7 +101,7 @@ Sigmoid3LayerNeuralNetwork >> initializeLayer2 [
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
 
-	score := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+	score := (layerInput dot: weights) biasedBy: biases.
 	hidden2 := TFSigmoidActivation activating: score.
 
 	weightsByLayer at: 2 put: weights.
@@ -128,7 +128,7 @@ Sigmoid3LayerNeuralNetwork >> initializeLayer3 [
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
 
-	modelOutput := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+	modelOutput := (layerInput dot: weights) biasedBy: biases.
 	prediction := TFIndexWithMaximum named: 'prediction' in: modelOutput across: 1.
 
 	weightsByLayer at: 3 put: weights.
@@ -150,13 +150,8 @@ Sigmoid3LayerNeuralNetwork >> initializeLearningLayer1 [
 		TFSigmoidGradient considering: layerOutput andGradientsOfInputs: (backpropByLayer at: 2).
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights).
 	learntParameters add: (optimizer apply: biasGradient to: bias)
 ]
 
@@ -175,16 +170,11 @@ Sigmoid3LayerNeuralNetwork >> initializeLearningLayer2 [
 		TFSigmoidGradient considering: layerOutput andGradientsOfInputs: (backpropByLayer at: 3).
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights).
 	learntParameters add: (optimizer apply: biasGradient to: bias).
 
-	backpropByLayer at: 2 put: (TFMatrixMultiplication of: gradient andTransposed: weights)
+	backpropByLayer at: 2 put: (gradient dotTransposing: weights)
 ]
 
 { #category : 'Initialization',
@@ -200,13 +190,8 @@ Sigmoid3LayerNeuralNetwork >> initializeLearningLayer3 [
 	gradient := lossToMinimize backpropagatedGradient.
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights).
 	learntParameters add: (optimizer apply: biasGradient to: bias).
 
 	backpropByLayer at: 3 put: (TFMatrixMultiplication of: gradient andTransposed: weights)

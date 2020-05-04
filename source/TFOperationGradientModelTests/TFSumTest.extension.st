@@ -12,7 +12,7 @@ TFSumTest >> testGradientUsingSameInput [
 
 	x := tf constantWith: 3.0.
 
-	z := TFSum of: (TFElementWiseSquare of: x) plus: (TFReciprocal of: x).
+	z := TFSum of: x squared plus: x reciprocal.
 
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 2 * 3 - (1 / 9)
 ]
@@ -62,11 +62,7 @@ TFSumTest >> testPartialDerivativeWithRespectToOneInput [
 	y := tf floatInputNamed: 'y'.
 	three := tf constantWith: 3.0.
 
-	sum :=
-		TFSum
-			of: (TFElementWiseSquare of: x)
-			plus: (
-				TFElementWiseMultiplication of: three and: (TFElementWiseMultiplication of: x and: y)).
+	sum := x squared + (three * x * y).
 
 	dx := sum partialDerivativeWithRespectTo: x.
 

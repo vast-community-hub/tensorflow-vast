@@ -45,7 +45,7 @@ SoftmaxNeuralNetwork >> initializeInferenceGraph [
 		inScopeNamed: 'inference'
 		do: [
 			input := tf floatInputNamed: 'input'.
-			modelOutput := TFAddBias to: (TFMatrixMultiplication of: input and: weights) with: biases.
+			modelOutput := (input dot: weights) biasedBy: biases.
 			prediction :=
 				TFIndexWithMaximum
 					named: 'prediction'
@@ -64,15 +64,9 @@ SoftmaxNeuralNetwork >> initializeLearningGraph [
 			gradient := lossToMinimize backpropagatedGradient.
 			biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-			batchSize := (input sizeOn: 0) castTo: TFTensor typeFloat.
+			batchSize := (input value sizeOn: 0) castTo: TFTensor typeFloat.
 
-			learnWeights :=
-				optimizer
-					apply: (
-						TFElementWiseDivision
-							of: (TFMatrixMultiplication ofTransposed: input and: gradient)
-							and: batchSize)
-					to: weights.
+			learnWeights := optimizer apply: (input transposedDot: gradient) / batchSize to: weights.
 			learnBiases := optimizer apply: biasGradient to: biases]
 ]
 

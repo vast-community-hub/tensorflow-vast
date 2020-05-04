@@ -6,8 +6,7 @@ Extension {
  #vaCategories : ['Gradients'] }
 TFElementWiseSquare >> derivativeWithRespectTo: aVariable [
 
-	aVariable = operand
-		ifTrue: [^TFElementWiseMultiplication of: operand and: (TFConstant like: self filledWith: 2)].
+	aVariable = operand ifTrue: [^operand * (TFConstant like: self filledWith: 2)].
 
 	self raiseIsNotDifferentiableRespectTo: aVariable
 ]
@@ -23,7 +22,6 @@ TFElementWiseSquare >> inputsDo: aBlock [
  #vaCategories : ['Gradients'] }
 TFElementWiseSquare >> partialDerivativeWithRespectTo: aVariable [
 
-	^TFElementWiseMultiplication
-		of: (TFElementWiseMultiplication of: operand and: (TFConstant like: self filledWith: 2))
-		and: (operand partialDerivativeWithRespectTo: aVariable)
+	^(operand * (TFConstant like: self filledWith: 2)) *
+		(operand partialDerivativeWithRespectTo: aVariable)
 ]

@@ -22,5 +22,5 @@ TFElementWiseNegative >> inputsDo: aBlock [
  #vaCategories : ['Gradients'] }
 TFElementWiseNegative >> partialDerivativeWithRespectTo: aVariable [
 
-	^TFElementWiseNegative negativeOf: (operandToNegate partialDerivativeWithRespectTo: aVariable)
+	^(operandToNegate partialDerivativeWithRespectTo: aVariable) negated
 ]

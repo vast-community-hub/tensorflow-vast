@@ -7,7 +7,43 @@ Class {
 	#category : 'TFOperationModel'
 }
 
-{ #category : 'Accessing - Operation',
+{ #category : 'Operations' }
+TFOperationAbstract >> * anOperation [
+
+	^TFElementWiseMultiplication of: self and: anOperation
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> + anOperation [
+
+	^TFSum of: self plus: anOperation
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> - anOperation [
+
+	^TFSubstraction of: self minus: anOperation
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> / anOperation [
+
+	^TFElementWiseDivision of: self and: anOperation
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> abs [
+
+	^TFAbsoluteValue of: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> biasedBy: aBias [
+
+	^TFAddBias to: self with: aBias
+]
+
+{ #category : 'Accessing - TF Operation',
   #vaVisibility : 'private' }
 TFOperationAbstract >> binaryOperation: anOperation between: aLeftOperand and: aRightOperand [
 
@@ -31,7 +67,19 @@ TFOperationAbstract >> currentComputation [
 	^self value currentComputation
 ]
 
-{ #category : 'Accessing - Operation' }
+{ #category : 'Operations' }
+TFOperationAbstract >> dot: aMatrix [
+
+	^TFMatrixMultiplication of: self and: aMatrix
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> dotTransposing: aMatrix [
+
+	^TFMatrixMultiplication of: self andTransposed: aMatrix
+]
+
+{ #category : 'Operations' }
 TFOperationAbstract >> negated [
 
 	^TFElementWiseNegative negativeOf: self
@@ -44,7 +92,7 @@ TFOperationAbstract >> operationName [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing - Operation' }
+{ #category : 'Accessing - TF Operation' }
 TFOperationAbstract >> outputOn: aGraph [
 
 	^self value outputOn: aGraph
@@ -60,7 +108,31 @@ TFOperationAbstract >> print: aFormulaOrTensor formattedOn: aStream [
 			ifFalse: [aFormulaOrTensor])
 ]
 
-{ #category : 'Accessing - Operation',
+{ #category : 'Operations' }
+TFOperationAbstract >> reciprocal [
+
+	^TFReciprocal of: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> squared [
+
+	^TFElementWiseSquare of: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> transposedDot: aMatrix [
+
+	^TFMatrixMultiplication ofTransposed: self and: aMatrix
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> transposedDotTransposing: aMatrix [
+
+	^TFMatrixMultiplication ofTransposed: self andTransposed: aMatrix
+]
+
+{ #category : 'Accessing - TF Operation',
   #vaVisibility : 'private' }
 TFOperationAbstract >> unaryOperation: anOperation with: anOperand [
 
@@ -72,7 +144,7 @@ TFOperationAbstract >> unaryOperation: anOperation with: anOperand [
 
 ]
 
-{ #category : 'Accessing - Operation' }
+{ #category : 'Accessing - TF Operation' }
 TFOperationAbstract >> value [
 
 	^value

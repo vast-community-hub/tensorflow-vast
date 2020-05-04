@@ -27,7 +27,5 @@ TFMeanSquaredError class >> of: aLogitsTensor whenExpectedIs: anExpectedTensor [
 TFMeanSquaredError >> initializeNamed: anOperationName of: aPrediction whenExpectedIs: anExpectedValue [
 
 	operationName := anOperationName.
-	value :=
-		TFReduceMean ofValuesIn:
-			(TFElementWiseSquare of: (TFSubstraction of: aPrediction minus: anExpectedValue))
+	value := TFReduceMean ofValuesIn: (aPrediction - anExpectedValue) squared
 ]

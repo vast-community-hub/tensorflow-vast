@@ -1,41 +1,41 @@
 [
 	{
 		#applications : [
-			'FeedforwardNeuralNetworkModel' : '0.6',
+			'FeedforwardNeuralNetworkModel' : '0.7',
 			'MLNeuralNetworkExamples' : '0.2',
-			'MLNeuralNetworkLayerModel' : '1.2',
-			'MLNeuralNetworkModel' : '0.6'
+			'MLNeuralNetworkLayerModel' : '1.3',
+			'MLNeuralNetworkModel' : '0.7'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow | Environment' : '1.14',
+					'TensorFlow | Environment' : '1.15',
 					'Platform Portability' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.5',
+		#versionName : '0.6',
 		#comment : ''
 	},
 	{
 		#applications : [
-			'FeedforwardNeuralNetworkModelTests' : '0.3',
+			'FeedforwardNeuralNetworkModelTests' : '0.4',
 			'MLNeuralNetworkLayerModelTests' : '1.1',
-			'MLNeuralNetworkModelTests' : '0.1'
+			'MLNeuralNetworkModelTests' : '0.2'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Machine Learning TF | Runtime' : '0.5',
+					'Machine Learning TF | Runtime' : '0.6',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.4',
+		#versionName : '0.5',
 		#comment : ''
 	},
 	{
@@ -99,17 +99,17 @@
 	},
 	{
 		#applications : [
-			'TensorFlowEnvironmentModel' : '1.11',
+			'TensorFlowEnvironmentModel' : '1.12',
 			'TensorFlowEnvironmentModelTests' : '1.10',
-			'TFOperationGradientModel' : '1.1',
-			'TFOperationGradientModelTests' : '1.1',
-			'TFOperationModel' : '1.2',
+			'TFOperationGradientModel' : '1.2',
+			'TFOperationGradientModelTests' : '1.2',
+			'TFOperationModel' : '1.3',
 			'TFOperationModelTests' : '1.2',
 			'TFOptimizerModel' : '1.0',
 			'TFOptimizerModelTests' : '1.1',
-			'TFRegularizationModel' : '1.0',
+			'TFRegularizationModel' : '1.1',
 			'TFRegularizationModelTests' : '1.2',
-			'TFVariableSpecificationModel' : '1.2'
+			'TFVariableSpecificationModel' : '1.3'
 		],
 		#conditions : [
 			{
@@ -120,7 +120,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.14',
+		#versionName : '1.15',
 		#comment : ''
 	},
 	{

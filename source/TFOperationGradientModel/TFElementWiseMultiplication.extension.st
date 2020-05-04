@@ -24,13 +24,6 @@ TFElementWiseMultiplication >> inputsDo: aBlock [
  #vaCategories : ['Gradients'] }
 TFElementWiseMultiplication >> partialDerivativeWithRespectTo: aVariable [
 
-	^TFSum
-		of: (
-			TFElementWiseMultiplication
-				of: (leftOperand partialDerivativeWithRespectTo: aVariable)
-				and: rightOperand)
-		plus: (
-			TFElementWiseMultiplication
-				of: leftOperand
-				and: (rightOperand partialDerivativeWithRespectTo: aVariable))
+	^((leftOperand partialDerivativeWithRespectTo: aVariable) * rightOperand) +
+		(leftOperand * (rightOperand partialDerivativeWithRespectTo: aVariable))
 ]

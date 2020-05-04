@@ -45,7 +45,7 @@ Rectified3LayerNeuralNetwork >> initialize [
 
 	backpropByLayer := Dictionary new.
 	optimizer := TFGradientDescent scalingBy: 0.0001 asTensor.
-	batchSize := (input sizeOn: 0) castTo: TFTensor typeFloat.
+	batchSize := (input value sizeOn: 0) castTo: TFTensor typeFloat.
 	self initializeLearningLayer3.
 	self initializeLearningLayer2.
 	self initializeLearningLayer1.
@@ -72,10 +72,10 @@ Rectified3LayerNeuralNetwork >> initializeLayer1 [
 			floatVariableNamed: 'biases1'
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
-			
-	score := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+
+	score := (layerInput dot: weights) biasedBy: biases.
 	hidden1 := TFReluActivation activating: score.
-	
+
 	weightsByLayer at: 1 put: weights.
 	biasesByLayer at: 1 put: biases
 ]
@@ -100,7 +100,7 @@ Rectified3LayerNeuralNetwork >> initializeLayer2 [
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
 
-	score := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+	score := (layerInput dot: weights) biasedBy: biases.
 	hidden2 := TFReluActivation activating: score.
 
 	weightsByLayer at: 2 put: weights.
@@ -127,7 +127,7 @@ Rectified3LayerNeuralNetwork >> initializeLayer3 [
 			shaped: (Array with: outputSize)
 			initializedWith: TFZeroInitializer new.
 
-	modelOutput := TFAddBias to: (TFMatrixMultiplication of: layerInput and: weights) with: biases.
+	modelOutput := (layerInput dot: weights) biasedBy: biases.
 	prediction :=
 		TFIndexWithMaximum
 			named: 'prediction'
@@ -143,23 +143,18 @@ Rectified3LayerNeuralNetwork >> initializeLayer3 [
 Rectified3LayerNeuralNetwork >> initializeLearningLayer1 [
 
 	| layerInput layerOutput weights bias gradient biasGradient |
-	
-	layerInput := input. 
-	layerOutput := hidden1. 
+
+	layerInput := input.
+	layerOutput := hidden1.
 	weights := weightsByLayer at: 1.
 	bias := biasesByLayer at: 1.
-	
+
 	gradient := TFReluGradient considering: (backpropByLayer at: 2) andGradientsOfInputs: layerOutput.
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
-	learntParameters add: (optimizer apply: biasGradient to: bias)
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights);
+		add: (optimizer apply: biasGradient to: bias)
 ]
 
 { #category : 'Initialization',
@@ -176,16 +171,11 @@ Rectified3LayerNeuralNetwork >> initializeLearningLayer2 [
 	gradient := TFReluGradient considering: (backpropByLayer at: 3) andGradientsOfInputs: layerOutput.
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
-	learntParameters add: (optimizer apply: biasGradient to: bias).
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights);
+		add: (optimizer apply: biasGradient to: bias).
 
-	backpropByLayer at: 2 put: (TFMatrixMultiplication of: gradient andTransposed: weights)
+	backpropByLayer at: 2 put: (gradient dotTransposing: weights)
 ]
 
 { #category : 'Initialization',
@@ -201,14 +191,9 @@ Rectified3LayerNeuralNetwork >> initializeLearningLayer3 [
 	gradient := lossToMinimize backpropagatedGradient.
 	biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
 
-	learntParameters add: (
-		optimizer
-			apply: (
-				TFElementWiseDivision
-					of: (TFMatrixMultiplication ofTransposed: layerInput and: gradient)
-					and: batchSize)
-			to: weights).
-	learntParameters add: (optimizer apply: biasGradient to: bias).
+	learntParameters
+		add: (optimizer apply: (layerInput transposedDot: gradient) / batchSize to: weights);
+		add: (optimizer apply: biasGradient to: bias).
 
 	backpropByLayer at: 3 put: (TFMatrixMultiplication of: gradient andTransposed: weights)
 ]

@@ -55,7 +55,7 @@ DenseLayer >> calculateValue [
 
 	| output |
 
-	output := TFMatrixMultiplication of: input and: weights.
+	output := input dot: weights.
 
 	biasSpec ifNotNil: [:spec | | bias |
 		bias :=
@@ -63,7 +63,7 @@ DenseLayer >> calculateValue [
 				floatVariableNamed: 'bias'
 				shaped: (Array with: outputSize)
 				initializedWith: spec variableInitializer.
-		output := TFAddBias to: output with: bias].
+		output := output biasedBy: bias].
 
 	activation ifNotNil: [:activ | output := activ activating: output].
 

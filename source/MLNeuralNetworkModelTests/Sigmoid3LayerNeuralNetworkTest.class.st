@@ -14,7 +14,7 @@ Sigmoid3LayerNeuralNetworkTest >> testPrediction3LayersSigmoid [
 
 	nn := Sigmoid3LayerNeuralNetwork new.
 	result := nn predictFrom: images andCompareTo: labels.
-	loss := (result at: 'loss') allFloats.
+	loss := (result at: 'loss/loss') allFloats.
 	self deny: (loss first closeTo: 0).
 
 	nn :=
@@ -23,8 +23,8 @@ Sigmoid3LayerNeuralNetworkTest >> testPrediction3LayersSigmoid [
 			buildBasedOn: nn toFitPredictionFrom: images to: labels.
 
 	result := nn predictFrom: images andCompareTo: labels.
-	loss := (result at: 'loss') asNumbers.
+	loss := (result at: 'loss/loss') asNumbers.
 	self assert: (loss < 1).
 	prediction := nn predictFrom: images.
-	self assert: prediction asNumbers equals: labels 
+	self assert: prediction asNumbers equals: labels
 ]

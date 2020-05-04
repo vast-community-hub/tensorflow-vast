@@ -12,7 +12,7 @@ TFElementWiseMultiplicationTest >> testGradientUsingSameInput [
 
 	x := tf constantWith: 3.0.
 
-	z := TFElementWiseMultiplication of: (TFElementWiseSquare of: x) and: (TFReciprocal of: x).
+	z := TFElementWiseMultiplication of: x squared and: x reciprocal.
 
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1
 ]
@@ -29,7 +29,7 @@ TFElementWiseMultiplicationTest >> testGradientWithRespectToScalarInput [
 	x := tf constantWith: 3.0.
 	y := tf constantWith: 4.0.
 
-	z := TFElementWiseMultiplication of: (TFElementWiseSquare of: x) and: y.
+	z := TFElementWiseMultiplication of: x squared and: y.
 
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 2 * 3 * 4.
 	self assertPartialDerivativeOf: z withRespectTo: y isCloseTo: 3 * 3
@@ -45,7 +45,7 @@ TFElementWiseMultiplicationTest >> testGradientWithRespectToVariable [
 
 	x := tf variableNamed: 'input' with: 3.0 asTensor.
 
-	z := TFElementWiseMultiplication of: (TFElementWiseSquare of: x) and: (TFReciprocal of: x).
+	z := TFElementWiseMultiplication of: x squared and: x reciprocal.
 
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1
 ]

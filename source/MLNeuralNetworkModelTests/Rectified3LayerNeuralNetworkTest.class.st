@@ -46,7 +46,7 @@ Rectified3LayerNeuralNetworkTest >> testMNIST3LayersNNLossGraph [
 	self assert: (0 <= first and: [first < 10]).
 	self assert: (0 <= second and: [second < 10]).
 
-	loss := results at: 'loss'.
+	loss := results at: 'loss/loss'.
 	self assert: #() equals: loss shape.
 	self assert: loss asNumbers > 0
 
@@ -64,7 +64,7 @@ Rectified3LayerNeuralNetworkTest >> testPrediction3Layers [
 	nn := Rectified3LayerNeuralNetwork new.
 
 	result := nn predictFrom: images andCompareTo: labels.
-	loss := (result at: 'loss') allFloats.
+	loss := (result at: 'loss/loss') allFloats.
 	self deny: (loss first closeTo: 0).
 
 	nn :=
@@ -73,7 +73,7 @@ Rectified3LayerNeuralNetworkTest >> testPrediction3Layers [
 			buildBasedOn: nn toFitPredictionFrom: images to: labels.
 
 	result := nn predictFrom: images andCompareTo: labels.
-	loss := (result at: 'loss') allFloats.
+	loss := (result at: 'loss/loss') allFloats.
 	self assert: (loss first closeTo: 0).
 
 	prediction := nn predictFrom: images.

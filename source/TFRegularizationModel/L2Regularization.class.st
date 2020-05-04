@@ -29,7 +29,5 @@ L2Regularization >> initializeBy: aLambda [
 { #category : 'Processing' }
 L2Regularization >> regularize: aTFOperation [
 
-	^TFElementWiseMultiplication
-		of: (TFReduceSum valuesIn: (TFElementWiseSquare of: aTFOperation))
-		and: lambda asTensor
+	^(TFReduceSum valuesIn: aTFOperation squared) * lambda asTensor
 ]
