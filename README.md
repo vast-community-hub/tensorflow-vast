@@ -1,7 +1,7 @@
 <p align="center">
- <h1 align="center">TensorFlow for VASmalltalk</h1>
+ <h1 align="center">TensorFlow for VAST Platform (VA Smalltalk)</h1>
   <p align="center">
-    This is a TensorFlow wrapper for VASmalltalk
+    This is a TensorFlow wrapper for VA Smalltalk
     <!---
     <br>
     <a href="docs/"><strong>Explore the docs »</strong></a>
@@ -14,7 +14,7 @@
   </p>
 </p>
 
-TensorFlow is a Google open source machine learning library for research and production. And this is a wrapper to be used from a higher level language like VASmalltalk.
+TensorFlow is a Google open source machine learning library for research and production. And this is a wrapper to be used from a higher level language like VA Smalltalk.
 
 ## License
 
@@ -25,7 +25,7 @@ TensorFlow is a Google open source machine learning library for research and pro
 
 Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster), ARM64 (Rock64 and Armbian Buster) and ARM64 with GPU support (Nvidia Jetson Nano).
 
-VASmalltalk needed version is 9.2 or above and we have only tested on TensorFlow versions 1.13.x and 1.14.x.
+VA Smalltalk needed version is 9.2 or above and we have only tested on TensorFlow versions 1.13.x and 1.14.x.
 
 
 
@@ -65,9 +65,9 @@ We also have a more advanced Object Detection example with bounding boxes, label
 
 <img width="500" alt="ObjectDetectionZoo" src="https://i1.wp.com/marianopeck.blog/wp-content/uploads/2019/08/Screen-Shot-2019-08-18-at-12.34.23-PM.png?resize=768%2C519&ssl=1">
 
-## Running TensorFlow and VASmalltalk on ARM
+## Running TensorFlow and VA Smalltalk on ARM
 
-We believe that running TensorFlow and VASmalltalk on ARM-based boards is really interesting. From limited devices such as a Raspberry Pi to a Nvidia Jetson.
+We believe that running TensorFlow and VA Smalltalk on ARM-based boards is really interesting. From limited devices such as a Raspberry Pi to a Nvidia Jetson.
 
 We have compiled TensorFlow C library for ARM and ARM 64 and have been playing with different operating systems and boards such as Raspberry Pi 3B+ (Raspbian), Rock64 (Armbian) and soon Nvidia Jetson Nano and XT2.  
 
@@ -87,7 +87,7 @@ Building TensorFlow from scratch on ARM is a bit complicated so we try to docume
 
 ## Acknowledgments
 
-- [gera](https://github.com/gerasdf) for all his work on [the original code for Cuis Smalltalk](https://github.com/Cuis-Smalltalk/Machine-Learning) as well as for the port to VASmalltalk.
+- [gera](https://github.com/gerasdf) for all his work on [the original code for Cuis Smalltalk](https://github.com/Cuis-Smalltalk/Machine-Learning) as well as for the port to VA Smalltalk.
 - Github repository layout was generated with [Ba-St Github-setup project](https://github.com/ba-st/GitHub-setup).
 
 
