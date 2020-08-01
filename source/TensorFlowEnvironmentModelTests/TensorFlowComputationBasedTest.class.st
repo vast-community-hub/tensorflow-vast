@@ -93,6 +93,18 @@ TensorFlowComputationBasedTest >> assert: anOutput isMatrixCloseTo: aFloatMatrix
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOperation isNamedInGraphAs: aName [
+
+	tf
+		withOperationNamed: aName
+		do: [:op | self assert: op equals: anOperation value]
+		ifNone: [self fail: ('No operation called %1 found in graph' bindWith: aName)].
+
+	self assert: anOperation operationName equals: aName
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isOf: aType with: aShape comparedTo: anExpectedArray complying: aBlock [
 
 	self assert: anOutput type equals: aType.

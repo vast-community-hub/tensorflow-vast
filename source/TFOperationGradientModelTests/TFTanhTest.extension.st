@@ -6,7 +6,7 @@ Extension {
  #vaCategories : ['Test'] }
 TFTanhTest >> testPartialDerivativeWithRespectToAnotherMatrixVariable [
 
-	| input tanh dTanh x |
+	| input tanh x |
 
 	input :=
 		tf
@@ -19,39 +19,38 @@ TFTanhTest >> testPartialDerivativeWithRespectToAnotherMatrixVariable [
 	tanh := TFTanhActivation activating: input.
 
 	x := tf variableNamed: 'x' with: 1 asInt32Tensor.
-	dTanh := tanh partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dTanh isMatrixCloseTo: #((0 0) (0 0))
+	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
 TFTanhTest >> testPartialDerivativeWithRespectToAnotherScalarVariable [
+	"f(x) = tanh(x) 
+	 df/dx = 1 - tanh(x)^2"
 
-	| input tanh dTanh x |
+	| input tanh x |
 
 	input := tf variableNamed: 'input' with: 0.549306 asFloatTensor.
 	tanh := TFTanhActivation activating: input.
 
 	x := tf variableNamed: 'x' with: 1 asFloatTensor.
-	dTanh := tanh partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dTanh isFloatScalarCloseTo: 0
+	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
 TFTanhTest >> testPartialDerivativeWithRespectToAnotherVectorVariable [
 
-	| input tanh dTanh x |
+	| input tanh x |
 
 	input := tf variableNamed: 'input' with: #(0.549306 0.693147) asFloatTensor.
 	tanh := TFTanhActivation activating: input.
 
 	x := tf variableNamed: 'x' with: 1 asFloatTensor.
-	dTanh := tanh partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dTanh isFloatVectorCloseTo: #(0 0)
+	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
 { #category : '*TFOperationGradientModelTests',

@@ -11,7 +11,9 @@ TFConstantTest >> testFromFloatScalar [
 
 	const := TFConstant on: tf with: 1 asFloatTensor.
 
-	self assertOutputOf: const isFloatScalarCloseTo: 1
+	self assertOutputOf: const isFloatScalarCloseTo: 1.
+
+	self assert: const operationName equals: 'Const'
 ]
 
 { #category : 'Test' }
@@ -62,4 +64,16 @@ TFConstantTest >> testFromShapeFilledWithIntValue [
 	const := TFConstant on: tf shaped: #(2 1) filledWith: 0 asInt32Tensor.
 
 	self assertOutputOf: const isIntegerMatrixCloseTo: #((0) (0))
+]
+
+{ #category : 'Test' }
+TFConstantTest >> testIndentityConstant [
+
+	| eye eye1 |
+
+	eye := TFConstant identityMatrixOn: tf named: 'eye' rows: 2 columns: 3.
+	eye1 := TFConstant identityMatrixOn: tf named: 'eye1' rows: 4 columns: 1.
+
+	self assertOutputOf: eye isMatrixCloseTo: #((1 0 0) (0 1 0)).
+	self assertOutputOf: eye1 isMatrixCloseTo: #((1) (0) (0) (0))
 ]

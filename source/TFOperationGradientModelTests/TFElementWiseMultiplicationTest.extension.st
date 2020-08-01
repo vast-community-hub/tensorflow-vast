@@ -34,18 +34,3 @@ TFElementWiseMultiplicationTest >> testGradientWithRespectToScalarInput [
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 2 * 3 * 4.
 	self assertPartialDerivativeOf: z withRespectTo: y isCloseTo: 3 * 3
 ]
-
-{ #category : '*TFOperationGradientModelTests',
- #vaCategories : ['Test'] }
-TFElementWiseMultiplicationTest >> testGradientWithRespectToVariable [
-	"f(x) = x^2 / x
-	 df/dx = 1"
-
-	| x z |
-
-	x := tf variableNamed: 'input' with: 3.0 asTensor.
-
-	z := TFElementWiseMultiplication of: x squared and: x reciprocal.
-
-	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1
-]

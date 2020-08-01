@@ -160,3 +160,10 @@ TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName 
 		described: [:description |
 			description addInputs: (aTFNodeCollection collect: [:node | node outputOn: graph])]
 ]
+
+{ #category : 'Accessing' }
+TensorFlowComputation >> withOperationNamed: aName do: aBlock ifNone: aNoneBlock [
+
+
+	^graph operationNamed: aName ifFound: aBlock ifNotFound: aNoneBlock
+]

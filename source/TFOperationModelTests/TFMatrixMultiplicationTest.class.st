@@ -52,7 +52,10 @@ TFMatrixMultiplicationTest >> testOperationMatMul1x1 [
 
 	output := TFMatrixMultiplication of: constA and: constB.
 
-	self assertOutputOf: output isMatrixCloseTo: (Array with: 1.1 * 3.14)
+	self assertOutputOf: output isMatrixCloseTo: (Array with: 1.1 * 3.14).
+
+	self deny: output isFirstOperatorTransposed.
+	self deny: output isSecondOperatorTransposed
 ]
 
 { #category : 'Test' }
@@ -71,7 +74,10 @@ TFMatrixMultiplicationTest >> testOperationMatMul2x2 [
 			OrderedCollection new
 				add: (Array with: 1.1 * 2.0 + (1.2 * 8.0) with: 1.1 * 4.0 + (1.2 * 16.0));
 				add: (Array with: 2.1 * 2.0 + (2.2 * 8.0) with: 2.1 * 4.0 + (2.2 * 16.0));
-				yourself)
+				yourself).
+
+	self deny: output isFirstOperatorTransposed.
+	self deny: output isSecondOperatorTransposed
 ]
 
 { #category : 'Test' }
@@ -90,7 +96,10 @@ TFMatrixMultiplicationTest >> testOperationMatMulABTransposed [
 			OrderedCollection new
 				add: (Array with: 1.1 * 2.0 + (2.1 * 4.0) with: 1.1 * 8.0 + (2.1 * 16.0));
 				add: (Array with: 1.2 * 2.0 + (2.2 * 4.0) with: 1.2 * 8.0 + (2.2 * 16.0));
-				yourself)
+				yourself).
+
+	self assert: output isFirstOperatorTransposed.
+	self assert: output isSecondOperatorTransposed
 ]
 
 { #category : 'Test' }
@@ -109,7 +118,10 @@ TFMatrixMultiplicationTest >> testOperationMatMulATransposed [
 			OrderedCollection new
 				add: (Array with: 1.1 * 2.0 + (2.1 * 8.0) with: 1.1 * 4.0 + (2.1 * 16.0));
 				add: (Array with: 1.2 * 2.0 + (2.2 * 8.0) with: 1.2 * 4.0 + (2.2 * 16.0));
-				yourself)
+				yourself).
+
+	self assert: output isFirstOperatorTransposed.
+	self deny: output isSecondOperatorTransposed
 ]
 
 { #category : 'Test' }
@@ -128,5 +140,8 @@ TFMatrixMultiplicationTest >> testOperationMatMulBTransposed [
 			OrderedCollection new
 				add: (Array with: 1.1 * 2.0 + (1.2 * 4.0) with: 1.1 * 8.0 + (1.2 * 16.0));
 				add: (Array with: 2.1 * 2.0 + (2.2 * 4.0) with: 2.1 * 8.0 + (2.2 * 16.0));
-				yourself)
+				yourself).
+
+	self deny: output isFirstOperatorTransposed.
+	self assert: output isSecondOperatorTransposed
 ]

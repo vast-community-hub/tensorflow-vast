@@ -1,17 +1,11 @@
 Class {
 	#name : 'DenseLayerTest',
-	#superclass : 'TestCase',
+	#superclass : 'TensorFlowComputationBasedTest',
 	#instVars : [
-		'tf'
+		'tff1'
 	],
 	#category : 'MLNeuralNetworkLayerModelTests'
 }
-
-{ #category : 'Test' }
-DenseLayerTest >> setUp [
-
-	tf := TensorFlowComputation new
-]
 
 { #category : 'Test' }
 DenseLayerTest >> testCreating [
@@ -26,7 +20,7 @@ DenseLayerTest >> testCreating [
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
 				TFVariableSpecification
-					of: TFTensor typeFloat
+					of: TFTensor typeInt32
 					initializedWith: (TFConstantInitializer with: #((2) (3)) asInt32Tensor)).
 
 	result :=
@@ -37,8 +31,12 @@ DenseLayerTest >> testCreating [
 					at: 'input' put: #((1 2)) asInt32Tensor;
 					yourself).
 
-	self assert: result shape equals: #(1 1).
-	self assert: result allElements first equals: 1 * 2 + (2 * 3)
+	self
+		assert: result
+		isIntegerMatrixCloseTo: (
+			OrderedCollection new
+				add: 1 * 2 + (2 * 3);
+				yourself)
 ]
 
 { #category : 'Test' }
@@ -69,8 +67,12 @@ DenseLayerTest >> testCreatingWithBias [
 					at: 'input' put: #((1 2)) asFloatTensor;
 					yourself).
 
-	self assert: result shape equals: #(1 1).
-	self assert: result allElements first equals: (1 * 2 + (2 * 3)) + 4
+	self
+		assert: result
+		isMatrixCloseTo: (
+			OrderedCollection new
+				add: (1 * 2 + (2 * 3)) + 4;
+				yourself)
 ]
 
 { #category : 'Test' }
@@ -102,6 +104,10 @@ DenseLayerTest >> testCreatingWithBiasAndActivation [
 					at: 'input' put: #((1 2)) asFloatTensor;
 					yourself).
 
-	self assert: result shape equals: #(1 1).
-	self assert: (result allElements first closeTo: ((1 * 2 + (2 * 3)) + 4) sigmoid)
+	self
+		assert: result
+		isMatrixCloseTo: (
+			OrderedCollection new
+				add: ((1 * 2 + (2 * 3)) + 4) sigmoid;
+				yourself)
 ]

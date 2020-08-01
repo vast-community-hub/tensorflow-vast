@@ -4,6 +4,38 @@ Extension {
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
+TFReluActivationTest >> testDerivativeWithRespectToAnInvalidInput [
+
+	| negativeScalar positiveScalar |
+
+	negativeScalar := tf constantWith: -1.5.
+	positiveScalar := tf constantWith: 4.0.
+
+	self
+		assert: (TFReluActivation activating: negativeScalar)
+		isNotDifferentiableRespectTo: positiveScalar
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test'] }
+TFReluActivationTest >> testGradientOfReluOfFloatScalar [
+
+	| negativeScalar positiveScalar |
+
+	negativeScalar := tf constantWith: -1.5.
+	positiveScalar := tf constantWith: 4.0.
+
+	self
+		assertPartialDerivativeOf: (TFReluActivation activating: negativeScalar)
+			withRespectTo: negativeScalar
+			isCloseTo: 0;
+		assertPartialDerivativeOf: (TFReluActivation activating: positiveScalar)
+			withRespectTo: positiveScalar
+			isCloseTo: 1
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test'] }
 TFReluActivationTest >> testGradientOfReluOfFloatVector [
 
 	| input relu |
@@ -12,5 +44,5 @@ TFReluActivationTest >> testGradientOfReluOfFloatVector [
 
 	relu := TFReluActivation activating: input.
 
-	self assertPartialDerivativeOf: relu withRespectTo: input isVectorCloseTo: #(0 4 0 5)
+	self assertPartialDerivativeOf: relu withRespectTo: input isVectorCloseTo: #(0 1 0 1)
 ]

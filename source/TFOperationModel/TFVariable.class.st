@@ -41,3 +41,9 @@ TFVariable >> initializeOn: aTensorFlowComputation named: aName of: aType shaped
 					at: 'shape' putShape: aShape].
 	aVariableInitializer applyTo: value
 ]
+
+{ #category : 'Accessing' }
+TFVariable >> operationName [
+
+	^value name
+]

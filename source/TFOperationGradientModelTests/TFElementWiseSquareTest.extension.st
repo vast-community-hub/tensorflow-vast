@@ -42,15 +42,14 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherInputWhenCom
 	" f(x) = tanh(x) ^2
 	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
 
-	| input square dSquare x |
+	| input square x |
 
 	input := tf constantWith: 0.549306.
 	square := TFElementWiseSquare of: (TFTanhActivation activating: input).
 
 	x := tf constantWith: 4.0.
-	dSquare := square partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dSquare isFloatScalarCloseTo: 0
+	self assert: square isNotDifferentiableRespectTo: x
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -59,15 +58,14 @@ TFElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherScalarInput 
 	" f(x) = x^2
 	 df/dy = 0"
 
-	| input square x dSquare |
+	| input square x |
 
 	input := tf constantWith: 3.0.
 	square := TFElementWiseSquare of: input.
 
 	x := tf constantWith: 4.0.
-	dSquare := square partialDerivativeWithRespectTo: x.
 
-	self assertOutputOf: dSquare isFloatScalarCloseTo: 0
+	self assert: square isNotDifferentiableRespectTo: x
 ]
 
 { #category : '*TFOperationGradientModelTests',

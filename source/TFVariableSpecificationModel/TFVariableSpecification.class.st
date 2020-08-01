@@ -40,6 +40,12 @@ TFVariableSpecification >> variableInitializer [
 ]
 
 { #category : 'Accessing' }
+TFVariableSpecification >> variableType [
+
+	^type
+]
+
+{ #category : 'Accessing' }
 TFVariableSpecification >> withRegularizerDo: aBlock [
 
 	regularizer ifNotNil: aBlock

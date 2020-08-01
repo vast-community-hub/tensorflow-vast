@@ -56,17 +56,19 @@ DenseLayer >> calculateValue [
 	| output |
 
 	output := input dot: weights.
-
+	
 	biasSpec ifNotNil: [:spec | | bias |
 		bias :=
-			tf
-				floatVariableNamed: 'bias'
+			TFVariable
+				on: tf
+				named: 'bias'
+				of: spec variableType
 				shaped: (Array with: outputSize)
 				initializedWith: spec variableInitializer.
 		output := output biasedBy: bias].
-
+		
 	activation ifNotNil: [:activ | output := activ activating: output].
-
+	
 	^output
 ]
 
@@ -94,7 +96,7 @@ DenseLayer >> initializeWeight [
 		TFVariable
 			on: tf
 			named: 'weight'
-			of: input outputType
+			of: weightSpec variableType
 			shaped: (Array with: inputSize with: outputSize)
 			initializedWith: weightSpec variableInitializer
 ]

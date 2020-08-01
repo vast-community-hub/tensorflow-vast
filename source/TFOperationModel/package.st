@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFOperationModel',
-	#vaPrerequisites : ['TensorFlowEnvironmentModel']
+	#vaPrerequisites : ['TensorFlowEnvironmentModel','TFTensorModifierModel']
 }

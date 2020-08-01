@@ -89,6 +89,18 @@ TFMatrixMultiplication >> initializeNamed: anOperationName of: aLeftOperand and:
 ]
 
 { #category : 'Accessing' }
+TFMatrixMultiplication >> isFirstOperatorTransposed [
+
+	^self value boolAt: 'transpose_a'
+]
+
+{ #category : 'Accessing' }
+TFMatrixMultiplication >> isSecondOperatorTransposed [
+
+	^self value boolAt: 'transpose_b'
+]
+
+{ #category : 'Accessing' }
 TFMatrixMultiplication >> operationName [
 
 	^operationName

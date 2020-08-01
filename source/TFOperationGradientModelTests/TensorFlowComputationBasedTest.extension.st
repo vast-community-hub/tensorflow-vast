@@ -5,20 +5,24 @@ Extension {
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test Support'],
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOperation isNotDifferentiableRespectTo: anInput [
+
+	self
+		should: [anOperation partialDerivativeWithRespectTo: anInput]
+		raise: Error
+		withDescription: (
+			'INVALID_ARGUMENT: Cannot compute the partial derivative for node ''%1'' as it''s unreachable from the output node(s).'
+				bindWith: anInput operationName)
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test Support'],
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isCloseTo: anExpectedValue [
-
-	| derivativeUsingForward derivativeUsingReverse |
-
-	derivativeUsingForward :=
-		(AutoDiffForwardMode startingWith: anOperation withRespectTo: anInput) partialDerivativeValue.
-	derivativeUsingReverse :=
-		(AutoDiffReverseMode startingWith: anOperation) partialDerivativeOf: anInput.
 
 	self
 		assertOutputOf: (anOperation partialDerivativeWithRespectTo: anInput)
-			isFloatScalarCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingForward isFloatScalarCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingReverse isFloatScalarCloseTo: anExpectedValue
+		isFloatScalarCloseTo: anExpectedValue
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -26,18 +30,9 @@ TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRes
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isMatrixCloseTo: anExpectedValue [
 
-	| derivativeUsingForward derivativeUsingReverse |
-
-	derivativeUsingForward :=
-		(AutoDiffForwardMode startingWith: anOperation withRespectTo: anInput) partialDerivativeValue.
-	derivativeUsingReverse :=
-		(AutoDiffReverseMode startingWith: anOperation) partialDerivativeOf: anInput.
-
 	self
 		assertOutputOf: (anOperation partialDerivativeWithRespectTo: anInput)
-			isMatrixCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingForward isMatrixCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingReverse isMatrixCloseTo: anExpectedValue
+		isMatrixCloseTo: anExpectedValue
 ]
 
 { #category : '*TFOperationGradientModelTests',
@@ -45,16 +40,7 @@ TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRes
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isVectorCloseTo: anExpectedValue [
 
-	| derivativeUsingForward derivativeUsingReverse |
-
-	derivativeUsingForward :=
-		(AutoDiffForwardMode startingWith: anOperation withRespectTo: anInput) partialDerivativeValue.
-	derivativeUsingReverse :=
-		(AutoDiffReverseMode startingWith: anOperation) partialDerivativeOf: anInput.
-
 	self
 		assertOutputOf: (anOperation partialDerivativeWithRespectTo: anInput)
-			isFloatVectorCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingForward isFloatVectorCloseTo: anExpectedValue;
-		assertOutputOf: derivativeUsingReverse isFloatVectorCloseTo: anExpectedValue
+		isFloatVectorCloseTo: anExpectedValue
 ]

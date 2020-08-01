@@ -4,6 +4,22 @@ Extension {
 
 { #category : '*TFOperationGradientModelTests',
  #vaCategories : ['Test'] }
+TFSigmoidActivationTest >> testGradientWithRespectToScalarInput [
+
+	| input sigmoid |
+
+	input := tf variableNamed: 'input' with: -4.0 asFloatTensor.
+
+	sigmoid := TFSigmoidActivation activating: input.
+
+	self
+		assertPartialDerivativeOf: sigmoid
+		withRespectTo: input
+		isCloseTo: (self sigmoidAppliedTo: -4) * (1 - (self sigmoidAppliedTo: -4))
+]
+
+{ #category : '*TFOperationGradientModelTests',
+ #vaCategories : ['Test'] }
 TFSigmoidActivationTest >> testGradientWithRespectToVectorInput [
 
 	| input sigmoid |

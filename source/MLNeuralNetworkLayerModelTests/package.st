@@ -1,4 +1,4 @@
 Package {
 	#name : 'MLNeuralNetworkLayerModelTests',
-	#vaPrerequisites : ['MLNeuralNetworkLayerModel','TFVariableSpecificationModel']
+	#vaPrerequisites : ['MLNeuralNetworkLayerModel','TensorFlowEnvironmentModelTests','TFVariableSpecificationModel']
 }
