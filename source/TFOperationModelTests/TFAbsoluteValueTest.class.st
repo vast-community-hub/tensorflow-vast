@@ -30,3 +30,26 @@ TFAbsoluteValueTest >> testAbsoluteValueOfMatrixVariable [
 				add: #(0.3 0.3 0.3);
 				yourself)
 ]
+
+{ #category : 'Tests' }
+TFAbsoluteValueTest >> testOperationName [
+
+	| input |
+
+	input := tf constantWith: 3.
+
+	self assert: (TFAbsoluteValue of: input) isNamedInGraphAs: 'Abs'.
+	self assert: (TFAbsoluteValue of: input) isNamedInGraphAs: 'Abs_1'.
+	self assert: (TFAbsoluteValue named: 'value' of: input) isNamedInGraphAs: 'value'.
+	self assert: (TFAbsoluteValue named: 'value' of: input) isNamedInGraphAs: 'value_1'
+]
+
+{ #category : 'Tests' }
+TFAbsoluteValueTest >> testPrintString [
+
+	| input |
+
+	input := tf constantWith: 3.
+
+	self assert: (TFAbsoluteValue of: input) printString equals: 'abs(Const)'
+]

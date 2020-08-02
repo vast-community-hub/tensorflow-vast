@@ -145,3 +145,20 @@ TFMatrixMultiplicationTest >> testOperationMatMulBTransposed [
 	self deny: output isFirstOperatorTransposed.
 	self assert: output isSecondOperatorTransposed
 ]
+
+{ #category : 'Test' }
+TFMatrixMultiplicationTest >> testOperationName [
+
+	| constA constB |
+
+	constA := tf floatConstantWith: #((1.1)) named: 'a'.
+	constB := tf floatConstantWith: #((3.14)) named: 'b'.
+
+	self
+		assert: (TFMatrixMultiplication of: constA and: constB) isNamedInGraphAs: 'MatMul';
+		assert: (TFMatrixMultiplication of: constA and: constB) isNamedInGraphAs: 'MatMul_1';
+		assert: (TFMatrixMultiplication named: 'output' of: constA and: constB)
+			isNamedInGraphAs: 'output';
+		assert: (TFMatrixMultiplication named: 'output' of: constA and: constB)
+			isNamedInGraphAs: 'output_1'
+]

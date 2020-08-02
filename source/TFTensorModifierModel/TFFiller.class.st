@@ -9,7 +9,7 @@ TFFiller class >> fillWith: aValue tensorShaped: aShape [
 
 	^aShape currentComputation
 		newOperationOf: 'Fill'
-		named: 'Fill'
+		namePrefixed: 'Fill'
 		with: aShape
 		with: aValue asTensor
 ]
@@ -19,7 +19,7 @@ TFFiller class >> on: aTensorFlowComputation fillWith: aValue tensorShaped: aSha
 
 	^aTensorFlowComputation
 		newOperationOf: 'Fill'
-		named: 'Fill'
+		namePrefixed: 'Fill'
 		with: aShape asInt32Tensor
 		with: (TFTensor fromNumbers: aValue type: aTensorType)
 ]

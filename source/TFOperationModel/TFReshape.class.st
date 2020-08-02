@@ -2,7 +2,6 @@ Class {
 	#name : 'TFReshape',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'operand',
 		'newShape'
 	],
@@ -18,28 +17,26 @@ TFReshape class >> named: aName of: aTFOperation to: aNewShape [
 { #category : 'Instance Creation' }
 TFReshape class >> of: aTFOperation to: aNewShape [
 
-	^self named: (aTFOperation value nameFor: 'Reshape') of: aTFOperation to: aNewShape
+	^self named: self operationType of: aTFOperation to: aNewShape
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFReshape >> calculateValue [
+TFReshape class >> operationType [
 
-	^self binaryOperation: 'Reshape' between: operand and: newShape
+	^'Reshape'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFReshape >> initiailizeNamed: aName of: aTFOperation to: aNewShape [
 
-	operationName := aName.
 	operand := aTFOperation.
 	newShape := aNewShape.
-	value := self calculateValue
-]
-
-{ #category : 'Accessing' }
-TFReshape >> operationName [
-
-	^operationName
+	value :=
+		operand currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: aName
+			with: operand
+			with: newShape
 ]

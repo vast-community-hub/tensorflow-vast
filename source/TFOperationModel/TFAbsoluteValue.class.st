@@ -2,7 +2,7 @@ Class {
 	#name : 'TFAbsoluteValue',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName'
+		'originalValue'
 	],
 	#category : 'TFOperationModel'
 }
@@ -16,19 +16,32 @@ TFAbsoluteValue class >> named: aName of: anOperation [
 { #category : 'Instance Creation' }
 TFAbsoluteValue class >> of: anOperation [
 
-	^self named: 'Abs' of: anOperation
+	^self named: self operationType of: anOperation
+]
+
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
+TFAbsoluteValue class >> operationType [
+
+	^'Abs'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFAbsoluteValue >> initializeNamed: aName of: anOperation [
 
-	operationName := aName.
-	value := self unaryOperation: 'Abs' with: anOperation
+	originalValue := anOperation.
+	value :=
+		originalValue currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: aName
+			with: originalValue
 ]
 
-{ #category : 'Accessing' }
-TFAbsoluteValue >> operationName [
+{ #category : 'Printing' }
+TFAbsoluteValue >> printOn: aStream [
 
-	^operationName
+
+	aStream nextPutAll: ('abs(<1p>)' expandMacrosWith: originalValue)
+
 ]

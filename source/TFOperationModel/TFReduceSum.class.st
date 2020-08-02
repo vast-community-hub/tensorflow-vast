@@ -2,12 +2,24 @@ Class {
 	#name : 'TFReduceSum',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'axis',
 		'tensor'
 	],
 	#category : 'TFOperationModel'
 }
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFReduceSum class >> allAxisOf: aTFOperation [
+
+	^(1 to: aTFOperation value outputDimensions) collect: [:axis | axis - 1]
+]
+
+{ #category : 'Instance Creation' }
+TFReduceSum class >> named: anOperationName valuesIn: aTFOperation [
+
+	^self named: anOperationName valuesIn: aTFOperation alongside: (self allAxisOf: aTFOperation)
+]
 
 { #category : 'Instance Creation' }
 TFReduceSum class >> named: anOperationName valuesIn: aTensor alongside: anAxis [
@@ -15,41 +27,35 @@ TFReduceSum class >> named: anOperationName valuesIn: aTensor alongside: anAxis 
 	^self new initializeNamed: anOperationName sumValuesIn: aTensor alongside: anAxis
 ]
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFReduceSum class >> operationType [
+
+	^'Sum'
+]
+
 { #category : 'Instance Creation' }
 TFReduceSum class >> valuesIn: aTFOperation [
 
-	| allAxis |
-
-	allAxis := (1 to: aTFOperation value outputDimensions) collect: [:axis | axis - 1].
-
-	^self valuesIn: aTFOperation alongside: allAxis
+	^self valuesIn: aTFOperation alongside: (self allAxisOf: aTFOperation)
 ]
 
 { #category : 'Instance Creation' }
 TFReduceSum class >> valuesIn: aTensor alongside: anAxis [
 
-	^self named: (aTensor value nameFor: 'Sum') valuesIn: aTensor alongside: anAxis
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
-TFReduceSum >> calculateValue [
-
-	^self binaryOperation: 'Sum' between: tensor and: axis asInt32Tensor
+	^self named: self operationType valuesIn: aTensor alongside: anAxis
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFReduceSum >> initializeNamed: anOperationName sumValuesIn: aTensor alongside: anAxis [
 
-	operationName := anOperationName. 
-	tensor := aTensor. 
-	axis := anAxis. 
-	value := self calculateValue
-]
-
-{ #category : 'Accessing' }
-TFReduceSum >> operationName [
-
-	^operationName
+	tensor := aTensor.
+	axis := anAxis.
+	value :=
+		tensor currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: tensor
+			with: axis asInt32Tensor
 ]

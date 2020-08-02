@@ -26,8 +26,15 @@ TFOneHot >> initializeTransforming: anInput toDepth: aDepth usingAsOn: anOnValue
 
 	value :=
 		anInput currentComputation
-			newOperationOf: 'OneHot'
-			named: 'OneHot'
+			newOperationOf: self operationType
+			namePrefixed: self operationType
 			withAll: (Array with: anInput with: aDepth with: anOnValue with: anOffValue)
 			describedBy: [:description | ]
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+TFOneHot >> operationType [
+
+	^'OneHot'
 ]

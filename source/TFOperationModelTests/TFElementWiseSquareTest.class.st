@@ -27,3 +27,26 @@ TFElementWiseSquareTest >> testFloatVectorSquare [
 
 	self assertOutputOf: result isFloatVectorCloseTo: #(4.0 9.0 16.0)
 ]
+
+{ #category : 'Test' }
+TFElementWiseSquareTest >> testOperationName [
+
+	| tensor |
+
+	tensor := tf constantWith: 3 asTensor.
+
+	self assert: (TFElementWiseSquare of: tensor) isNamedInGraphAs: 'Square'.
+	self assert: (TFElementWiseSquare of: tensor) isNamedInGraphAs: 'Square_1'.
+	self assert: (TFElementWiseSquare named: 'output' of: tensor) isNamedInGraphAs: 'output'.
+	self assert: (TFElementWiseSquare named: 'output' of: tensor) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
+TFElementWiseSquareTest >> testPrintString [
+
+	| tensor |
+
+	tensor := tf constantWith: 3 asTensor.
+
+	self assert: (TFElementWiseSquare of: tensor) printString equals: '(Const)^2'
+]

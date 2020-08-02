@@ -2,7 +2,6 @@ Class {
 	#name : 'TFSum',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'operands'
 	],
 	#category : 'TFOperationModel'
@@ -23,43 +22,38 @@ TFSum class >> named: anOperationName ofAll: nodeCollection [
 { #category : 'Instance Creation' }
 TFSum class >> of: aLeftOperand plus: aRightOperand [
 
-	^self named: (aLeftOperand value nameFor: 'Add') of: aLeftOperand plus: aRightOperand
+	^self named: 'Add' of: aLeftOperand plus: aRightOperand
 ]
 
 { #category : 'Instance Creation' }
 TFSum class >> ofAll: nodeCollection [
 
-	^self named: (nodeCollection first value nameFor: 'AddN') ofAll: nodeCollection
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
-TFSum >> calculateValue [
-
-	| tf |
-
-	tf := operands first currentComputation.
-	^operands size = 2
-		ifTrue: [
-			tf
-				newOperationOf: 'Add'
-				named: self operationName
-				with: operands first
-				with: operands second]
-		ifFalse: [tf newOperationOf: 'AddN' named: self operationName withList: operands]
+	^self named: 'AddN' ofAll: nodeCollection
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFSum >> initializeNamed: anOperationName ofAll: nodes [
 
-	operationName := anOperationName.
+	| tf |
+
 	operands := nodes.
-	value := self calculateValue
+	tf := operands first currentComputation.
+	value :=
+		operands size = 2
+			ifTrue: [
+				tf
+					newOperationOf: 'Add'
+					namePrefixed: anOperationName
+					with: operands first
+					with: operands second]
+			ifFalse: [tf newOperationOf: 'AddN' namePrefixed: anOperationName withList: operands]
 ]
 
-{ #category : 'Accessing' }
-TFSum >> operationName [
+{ #category : 'Initialization' }
+TFSum >> printOn: aStream [
 
-	^operationName
+	operands doWithIndex: [:each :index |
+		aStream print: each.
+		index < operands size ifTrue: [aStream nextPutAll: ' + ']]
 ]

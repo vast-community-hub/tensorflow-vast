@@ -1,13 +1,16 @@
 Class {
 	#name : 'TFSigmoidActivation',
 	#superclass : 'TFActivationFunction',
+	#instVars : [
+		'neuron'
+	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
 TFSigmoidActivation class >> activating: aNeuron [
 
-	^self named: (aNeuron value nameFor: 'Sigmoid') activating: aNeuron
+	^self named: self operationType activating: aNeuron
 ]
 
 { #category : 'Instance Creation' }
@@ -16,18 +19,27 @@ TFSigmoidActivation class >> named: anOperationName activating: aNeuron [
 	^self new initializeNamed: anOperationName activating: aNeuron
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFSigmoidActivation >> calculateValue [
+TFSigmoidActivation class >> operationType [
 
-	^self unaryOperation: 'Sigmoid' with: neuron
+	^'Sigmoid'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFSigmoidActivation >> initializeNamed: anOperationName activating: aNeuron [
 
-	operationName := anOperationName.
 	neuron := aNeuron.
-	value := self calculateValue
+	value :=
+		neuron currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: neuron
+]
+
+{ #category : 'Printing' }
+TFSigmoidActivation >> printOn: aStream [
+
+	aStream nextPutAll: ('sigmoid(<1p>)' expandMacrosWith: neuron)
 ]

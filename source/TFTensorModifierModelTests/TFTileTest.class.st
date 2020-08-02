@@ -42,3 +42,19 @@ TFTileTest >> test3 [
 		assertOutputOf: (TFTile replicating: input by: multiples)
 		isIntegerMatrixCloseTo: #((1 2 3 1 2 3) (4 5 6 4 5 6) (1 2 3 1 2 3) (4 5 6 4 5 6))
 ]
+
+{ #category : 'Test' }
+TFTileTest >> testOperationName [
+
+	| input multiples |
+
+	input := tf constantWith: #((1 2 3) (4 5 6)) asInt32Tensor.
+	multiples := tf constantWith: #(1 2) asInt32Tensor.
+
+	self
+		assert: (TFTile replicating: input by: multiples) isNamedInGraphAs: 'Tile';
+		assert: (TFTile replicating: input by: multiples) isNamedInGraphAs: 'Tile_1';
+		assert: (TFTile named: 'output' replicating: input by: multiples) isNamedInGraphAs: 'output';
+		assert: (TFTile named: 'output' replicating: input by: multiples)
+			isNamedInGraphAs: 'output_1'
+]

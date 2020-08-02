@@ -2,7 +2,6 @@ Class {
 	#name : 'TFElementWiseMultiplication',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'leftOperand',
 		'rightOperand'
 	],
@@ -18,33 +17,31 @@ TFElementWiseMultiplication class >> named: anOperationName of: aLeftOperand and
 { #category : 'Instance Creation' }
 TFElementWiseMultiplication class >> of: aLeftOperand and: aRightOperand [
 
-	^self named: 'Mul' of: aLeftOperand and: aRightOperand
+	^self named: self operationType of: aLeftOperand and: aRightOperand
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFElementWiseMultiplication >> calculateValue [
+TFElementWiseMultiplication class >> operationType [
 
-	^self binaryOperation: 'Mul' between: leftOperand and: rightOperand
+	^'Mul'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFElementWiseMultiplication >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand [
 
-	operationName := anOperationName.
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
-	value := self calculateValue
+	value :=
+		leftOperand currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: leftOperand
+			with: rightOperand
 ]
 
-{ #category : 'Accessing' }
-TFElementWiseMultiplication >> operationName [
-
-	^operationName
-]
-
-{ #category : 'Accessing' }
+{ #category : 'Printing' }
 TFElementWiseMultiplication >> printOn: aStream [
 
 	aStream nextPutAll: '('.

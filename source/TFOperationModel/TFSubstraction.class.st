@@ -2,7 +2,6 @@ Class {
 	#name : 'TFSubstraction',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'leftOperand',
 		'rightOperand'
 	],
@@ -18,33 +17,31 @@ TFSubstraction class >> named: anOperationName of: aLeftOperand minus: aRightOpe
 { #category : 'Instance Creation' }
 TFSubstraction class >> of: aLeftOperand minus: aRightOperand [
 
-	^self named: (aLeftOperand value nameFor: 'Sub') of: aLeftOperand minus: aRightOperand
+	^self named: self operationType of: aLeftOperand minus: aRightOperand
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFSubstraction >> calculateValue [
+TFSubstraction class >> operationType [
 
-	^self binaryOperation: 'Sub' between: leftOperand and: rightOperand
+	^'Sub'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFSubstraction >> initializeNamed: anOperationName of: aLeftOperand minus: aRightOperand [
 
-	operationName := anOperationName.
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
-	value := self calculateValue
+	value :=
+		leftOperand currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: leftOperand
+			with: rightOperand
 ]
 
-{ #category : 'Initialization' }
-TFSubstraction >> operationName [
-
-	^operationName
-]
-
-{ #category : 'Initialization' }
+{ #category : 'Printing' }
 TFSubstraction >> printOn: aStream [
 
 	aStream nextPutAll: '('. 

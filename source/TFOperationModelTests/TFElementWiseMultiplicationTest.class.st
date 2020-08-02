@@ -134,3 +134,35 @@ TFElementWiseMultiplicationTest >> testMultiplyVectorByScalar [
 		assertOutputOf: (TFElementWiseMultiplication of: x and: y)
 		isIntegerVectorEqualsTo: #(12 16)
 ]
+
+{ #category : 'Test' }
+TFElementWiseMultiplicationTest >> testOperationName [
+
+	| x |
+
+	x := tf integerConstantWith: #(3 4).
+
+	self assert: (TFElementWiseMultiplication of: x and: 2 asTensor) isNamedInGraphAs: 'Mul'.
+	self assert: (TFElementWiseMultiplication of: x and: 2 asTensor) isNamedInGraphAs: 'Mul_1'.
+	self
+		assert: (TFElementWiseMultiplication named: 'output' of: x and: 2 asTensor)
+		isNamedInGraphAs: 'output'.
+	self
+		assert: (TFElementWiseMultiplication named: 'output' of: x and: 2 asTensor)
+		isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
+TFElementWiseMultiplicationTest >> testPrintString [
+
+	| x |
+
+	x := tf integerConstantWith: #(3 4).
+
+	self
+		assert: (TFElementWiseMultiplication of: x and: #(2 1) asInt32Tensor) printString
+		equals: '(Const x Int32 vector size 2)'.
+	self
+		assert: (TFElementWiseMultiplication of: x and: #((2)) asInt32Tensor) printString
+		equals: '(Const x Int32 1x1 matrix)'
+]

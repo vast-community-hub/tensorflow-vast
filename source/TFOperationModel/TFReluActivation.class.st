@@ -1,13 +1,16 @@
 Class {
 	#name : 'TFReluActivation',
 	#superclass : 'TFActivationFunction',
+	#instVars : [
+		'neuron'
+	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
 TFReluActivation class >> activating: aNeuron [
 
-	^self named: (aNeuron value nameFor: 'Relu') activating: aNeuron
+	^self named: self operationType activating: aNeuron
 ]
 
 { #category : 'Instance Creation' }
@@ -16,18 +19,27 @@ TFReluActivation class >> named: anOperationName activating: aNeuron [
 	^self new initializeNamed: anOperationName activating: aNeuron
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFReluActivation >> calculateValue [
+TFReluActivation class >> operationType [
 
-	^self unaryOperation: 'Relu' with: neuron
+	^'Relu'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFReluActivation >> initializeNamed: anOperationName activating: aNeuron [
 
-	operationName := anOperationName.
 	neuron := aNeuron.
-	value := self calculateValue
+	value :=
+		neuron currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: neuron
+]
+
+{ #category : 'Printing' }
+TFReluActivation >> printOn: aStream [
+
+	aStream nextPutAll: ('relu(<1p>)' expandMacrosWith: neuron)
 ]

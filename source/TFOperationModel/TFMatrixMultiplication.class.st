@@ -2,7 +2,6 @@ Class {
 	#name : 'TFMatrixMultiplication',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'leftOperand',
 		'rightOperand',
 		'customDescription'
@@ -30,80 +29,74 @@ TFMatrixMultiplication class >> named: anOperationName of: aLeftOperand and: aRi
 { #category : 'Instance Creation' }
 TFMatrixMultiplication class >> of: aLeftOperand and: aRightOperand [
 
-	^self named: (aLeftOperand value nameFor: 'MatMul') of: aLeftOperand and: aRightOperand
+	^self named: self operationType of: aLeftOperand and: aRightOperand
 ]
 
 { #category : 'Instance Creation' }
 TFMatrixMultiplication class >> of: aLeftOperand andTransposed: aRightOperand [
 
 	^self
-		named: (aLeftOperand value graph nameFor: 'MatMul')
+		named: self operationType
 		of: aLeftOperand
 		and: aRightOperand
-		customizedBy: [:d | d at: 'transpose_b' putBoolean: true]
+		customizedBy: [:d | d at: TFAttributeName transposeB putBoolean: true]
 ]
 
 { #category : 'Instance Creation' }
 TFMatrixMultiplication class >> ofTransposed: aLeftOperand and: aRightOperand [
 
 	^self
-		named: (aLeftOperand value nameFor: 'MatMul')
+		named: self operationType
 		of: aLeftOperand
 		and: aRightOperand
-		customizedBy: [:d | d at: 'transpose_a' putBoolean: true]
+		customizedBy: [:d | d at: TFAttributeName transposeA putBoolean: true]
 ]
 
 { #category : 'Instance Creation' }
 TFMatrixMultiplication class >> ofTransposed: aLeftOperand andTransposed: aRightOperand [
 
 	^self
-		named: (aLeftOperand value graph nameFor: 'MatMul')
+		named: self operationType
 		of: aLeftOperand
 		and: aRightOperand
 		customizedBy: [:d |
 			d
-				at: 'transpose_a' putBoolean: true;
-				at: 'transpose_b' putBoolean: true]
+				at: TFAttributeName transposeA putBoolean: true;
+				at: TFAttributeName transposeB putBoolean: true]
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFMatrixMultiplication >> calculateValue [
+TFMatrixMultiplication class >> operationType [
 
-	^leftOperand currentComputation
-		newOperationOf: 'MatMul'
-		named: self operationName
-		withAll: (Array with: leftOperand with: rightOperand)
-		describedBy: customDescription
+	^'MatMul'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFMatrixMultiplication >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand customizedBy: aDescription [
 
-	operationName := anOperationName.
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
 	customDescription := aDescription.
-	value := self calculateValue
+	value :=
+		leftOperand currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			withAll: (Array with: leftOperand with: rightOperand)
+			describedBy: customDescription
 ]
 
 { #category : 'Accessing' }
 TFMatrixMultiplication >> isFirstOperatorTransposed [
 
-	^self value boolAt: 'transpose_a'
+	^self value boolAt: TFAttributeName transposeA
 ]
 
 { #category : 'Accessing' }
 TFMatrixMultiplication >> isSecondOperatorTransposed [
 
-	^self value boolAt: 'transpose_b'
-]
-
-{ #category : 'Accessing' }
-TFMatrixMultiplication >> operationName [
-
-	^operationName
+	^self value boolAt: TFAttributeName transposeB
 ]
 
 { #category : 'Printing' }

@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : 'Test' }
+TFReshapeTest >> testOperationName [
+
+	| tensor newShape |
+
+	tensor := tf integerConstantWith: #((1 3) (3 2)).
+	newShape := tf integerConstantWith: #(4).
+
+	self assert: (TFReshape of: tensor to: newShape) isNamedInGraphAs: 'Reshape'.
+	self assert: (TFReshape of: tensor to: newShape) isNamedInGraphAs: 'Reshape_1'.
+	self assert: (TFReshape named: 'output' of: tensor to: newShape) isNamedInGraphAs: 'output'.
+	self assert: (TFReshape named: 'output' of: tensor to: newShape) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
 TFReshapeTest >> testReshapeFailsWhenDimensionsDoesntMatch [
 
 	| tensor newShape |

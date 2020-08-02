@@ -1,13 +1,16 @@
 Class {
 	#name : 'TFTanhActivation',
 	#superclass : 'TFActivationFunction',
+	#instVars : [
+		'neuron'
+	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
 TFTanhActivation class >> activating: aNeuron [
 
-	^self named: 'Tanh' activating: aNeuron
+	^self named: self operationType activating: aNeuron
 ]
 
 { #category : 'Instance Creation' }
@@ -16,19 +19,27 @@ TFTanhActivation class >> named: anOperationName activating: aNeuron [
 	^self new initializeNamed: anOperationName activating: aNeuron
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFTanhActivation >> calculateValue [
+TFTanhActivation class >> operationType [
 
-	^self unaryOperation: 'Tanh' with: neuron
+	^'Tanh'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFTanhActivation >> initializeNamed: anOperationName activating: aNeuron [
 
-	operationName := anOperationName.
 	neuron := aNeuron.
-	value := self calculateValue.
-	operationName := value name
+	value :=
+		neuron currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: neuron
+]
+
+{ #category : 'Printing' }
+TFTanhActivation >> printOn: aStream [
+
+	aStream nextPutAll: ('tanh(<1p>)' expandMacrosWith: neuron)
 ]

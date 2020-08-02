@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : 'Test' }
+TFReduceSumTest >> testOperationName [
+
+	| tensor |
+
+	tensor := tf constantWith: #((1.1)) asFloatTensor.
+
+	self assert: (TFReduceSum valuesIn: tensor) isNamedInGraphAs: 'Sum'.
+	self assert: (TFReduceSum valuesIn: tensor) isNamedInGraphAs: 'Sum_1'.
+	self assert: (TFReduceSum named: 'output' valuesIn: tensor) isNamedInGraphAs: 'output'.
+	self assert: (TFReduceSum named: 'output' valuesIn: tensor) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
 TFReduceSumTest >> testReduceAlongsideAxis [
 
 	| tensor sum0 sum01 sum1 sumNone |

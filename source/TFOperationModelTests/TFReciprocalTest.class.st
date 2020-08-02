@@ -48,3 +48,26 @@ Registered kernels:
 
 	 [[recip]]'
 ]
+
+{ #category : 'Tests' }
+TFReciprocalTest >> testOperationName [
+
+	| x |
+
+	x := tf floatConstantWith: 5.
+
+	self assert: (TFReciprocal of: x) isNamedInGraphAs: 'Reciprocal'.
+	self assert: (TFReciprocal of: x) isNamedInGraphAs: 'Reciprocal_1'.
+	self assert: (TFReciprocal named: 'recip' of: x) isNamedInGraphAs: 'recip'.
+	self assert: (TFReciprocal named: 'recip' of: x) isNamedInGraphAs: 'recip_1'
+]
+
+{ #category : 'Tests' }
+TFReciprocalTest >> testPrintString [
+
+	| x |
+
+	x := tf floatConstantWith: 5 named: 'input'.
+
+	self assert: (TFReciprocal of: x) printString equals: '1 / (input)'
+]

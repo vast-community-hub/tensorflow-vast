@@ -121,27 +121,27 @@ TensorFlowComputation >> inScopeNamed: aScopeName do: aBlock [
 ]
 
 { #category : 'Creating - Operations' }
-TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName with: aTFNode [
+TensorFlowComputation >> newOperationOf: anOperationType namePrefixed: anOperationName with: aTFNode [
 
 	^self
 		newOperationOf: anOperationType
-		named: anOperationName
+		namePrefixed: anOperationName
 		withAll: (Array with: aTFNode)
 		describedBy: [:desc | ]
 ]
 
 { #category : 'Creating - Operations' }
-TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName with: aTFNode with: anotherTFNode [
+TensorFlowComputation >> newOperationOf: anOperationType namePrefixed: anOperationName with: aTFNode with: anotherTFNode [
 
 	^self
 		newOperationOf: anOperationType
-		named: anOperationName
+		namePrefixed: anOperationName
 		withAll: (Array with: aTFNode with: anotherTFNode)
 		describedBy: [:desc | ]
 ]
 
 { #category : 'Creating - Operations' }
-TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName withAll: graphNodes describedBy: aBlock [
+TensorFlowComputation >> newOperationOf: anOperationType namePrefixed: anOperationName withAll: graphNodes describedBy: aBlock [
 
 	^graph
 		newOperation: anOperationType
@@ -152,11 +152,11 @@ TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName 
 ]
 
 { #category : 'Creating - Operations' }
-TensorFlowComputation >> newOperationOf: anOperationType named: anOperationName withList: aTFNodeCollection [
+TensorFlowComputation >> newOperationOf: anOperationType namePrefixed: anOperationName withList: aTFNodeCollection [
 
 	^graph
 		newOperation: anOperationType
-		named: anOperationName
+		named: (graph nameFor: anOperationName)
 		described: [:description |
 			description addInputs: (aTFNodeCollection collect: [:node | node outputOn: graph])]
 ]

@@ -7,7 +7,7 @@ Extension {
 TFElementWiseMultiplicationTest >> testGradientWithRespectToVariable [
 	"Somehow using a variable instead of constant, gradient crash de image
 	 f(x) = x^2 / x
-	 df/dx = 1"
+	 df/dx = 1
 
 	| x z |
 
@@ -15,5 +15,5 @@ TFElementWiseMultiplicationTest >> testGradientWithRespectToVariable [
 
 	z := TFElementWiseMultiplication of: x squared and: x reciprocal.
 
-	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1
+	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1"
 ]

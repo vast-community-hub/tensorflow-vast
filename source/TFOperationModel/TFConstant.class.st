@@ -4,13 +4,6 @@ Class {
 	#category : 'TFOperationModel'
 }
 
-{ #category : 'Instance Creation',
-  #vaVisibility : 'private' }
-TFConstant class >> defaultName [
-
-	^'Const'
-]
-
 { #category : 'Instance Creation' }
 TFConstant class >> identityMatrixOn: aComputation named: aName rows: totalOfRows columns: totalOfColumns [
 
@@ -32,7 +25,7 @@ TFConstant class >> like: anOperation filledWith: aValue [
 
 	^self
 		on: anOperation currentComputation
-		named: self defaultName
+		named: self operationType
 		shaped: anOperation value outputShape
 		filledWith: (TFTensor fromNumbers: aValue type: anOperation value outputType)
 ]
@@ -63,38 +56,33 @@ TFConstant class >> on: aComputation named: aName with: aTensor wrappedWith: aBl
 { #category : 'Instance Creation' }
 TFConstant class >> on: aComputation shaped: aShape filledWith: aTensor [
 
-	^self on: aComputation named: self defaultName shaped: aShape filledWith: aTensor
+	^self on: aComputation named: self operationType shaped: aShape filledWith: aTensor
 ]
 
 { #category : 'Instance Creation' }
 TFConstant class >> on: aComputation with: aTensor [
 
-	^self on: aComputation named: self defaultName with: aTensor
+	^self on: aComputation named: self operationType with: aTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFConstant class >> operationType [
+
+	^'Const'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFConstant >> initializeOn: aComputation named: aName with: aTFTensor wrappedWith: aWrapper [
-	
+
 	value :=
 		aWrapper value: (
 			aComputation
-				newOperationOf: 'Const'
-				named: aName
+				newOperationOf: self class operationType
+				namePrefixed: aName
 				withAll: #()
 				describedBy: [:description |
-					description at: 'dtype' putType: aTFTensor type.
-					description at: 'value' putTensor: aTFTensor])
-]
-
-{ #category : 'Not categorized' }
-TFConstant >> operationName [
-
-	^value operationName
-]
-
-{ #category : 'Printing' }
-TFConstant >> printOn: aStream [
-
-	aStream nextPutAll: self operationName
+					description at: TFAttributeName dataType putType: aTFTensor type.
+					description at: TFAttributeName value putTensor: aTFTensor])
 ]

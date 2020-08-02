@@ -1,9 +1,6 @@
 Class {
 	#name : 'TFMeanSquaredError',
 	#superclass : 'TFLossFunction',
-	#instVars : [
-		'operationName'
-	],
 	#category : 'TFOperationModel'
 }
 
@@ -26,6 +23,11 @@ TFMeanSquaredError class >> of: aLogitsTensor whenExpectedIs: anExpectedTensor [
   #vaVisibility : 'private' }
 TFMeanSquaredError >> initializeNamed: anOperationName of: aPrediction whenExpectedIs: anExpectedValue [
 
-	operationName := anOperationName.
-	value := TFReduceMean ofValuesIn: (aPrediction - anExpectedValue) squared
+	value := TFReduceMean named: anOperationName ofValuesIn: (aPrediction - anExpectedValue) squared
+]
+
+{ #category : 'Initialization' }
+TFMeanSquaredError >> value [
+
+	^value value
 ]

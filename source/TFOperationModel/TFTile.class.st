@@ -2,7 +2,6 @@ Class {
 	#name : 'TFTile',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'input',
 		'multipleTimes'
 	],
@@ -15,31 +14,29 @@ TFTile class >> named: aName replicating: aTensor by: aMultipleTimes [
 	^self new initializeNamed: aName replicating: aTensor by: aMultipleTimes
 ]
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFTile class >> operationType [
+
+	^'Tile'
+]
+
 { #category : 'Instance Creation' }
 TFTile class >> replicating: aTensor by: aMultipleTimes [
 
-	^self named: 'Tile' replicating: aTensor by: aMultipleTimes
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
-TFTile >> calculateValue [
-
-	^self binaryOperation: 'Tile' between: input and: multipleTimes
+	^self named: self operationType replicating: aTensor by: aMultipleTimes
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFTile >> initializeNamed: aName replicating: anInput by: aMultipleTimes [
 
-	operationName := aName.
 	input := anInput.
 	multipleTimes := aMultipleTimes.
-	value := self calculateValue
-]
-
-{ #category : 'Accessing' }
-TFTile >> operationName [
-
-	^operationName
+	value :=
+		input currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: aName
+			with: input
+			with: multipleTimes
 ]

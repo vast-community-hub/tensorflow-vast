@@ -1,13 +1,16 @@
 Class {
 	#name : 'TFSoftmaxActivation',
 	#superclass : 'TFActivationFunction',
+	#instVars : [
+		'neuron'
+	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
 TFSoftmaxActivation class >> activating: aNeuron [
 
-	^self named: (aNeuron value nameFor: 'Softmax') activating: aNeuron
+	^self named: self operationType activating: aNeuron
 ]
 
 { #category : 'Instance Creation' }
@@ -16,18 +19,27 @@ TFSoftmaxActivation class >> named: anOperationName activating: aNeuron [
 	^self new initializeNamed: anOperationName activating: aNeuron
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFSoftmaxActivation >> calculateValue [
+TFSoftmaxActivation class >> operationType [
 
-	^self unaryOperation: 'Softmax' with: neuron
+	^'Softmax'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFSoftmaxActivation >> initializeNamed: anOperationName activating: aNeuron [
 
-	operationName := anOperationName.
 	neuron := aNeuron.
-	value := self calculateValue
+	value :=
+		neuron currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: neuron
+]
+
+{ #category : 'Printing' }
+TFSoftmaxActivation >> printOn: aStream [
+
+	aStream nextPutAll: ('softmax(<1p>)' expandMacrosWith: neuron)
 ]

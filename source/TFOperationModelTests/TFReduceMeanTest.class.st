@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : 'Test' }
+TFReduceMeanTest >> testOperationName [
+
+	| a |
+
+	a := tf constantWith: #(1.1) asFloatTensor.
+
+	self assert: (TFReduceMean ofValuesIn: a) isNamedInGraphAs: 'Mean'.
+	self assert: (TFReduceMean ofValuesIn: a) isNamedInGraphAs: 'Mean_1'.
+	self assert: (TFReduceMean named: 'output' ofValuesIn: a) isNamedInGraphAs: 'output'.
+	self assert: (TFReduceMean named: 'output' ofValuesIn: a) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
 TFReduceMeanTest >> testReduceAlongsideAxis [
 
 	| a mean0 mean01 mean1 meanNone |

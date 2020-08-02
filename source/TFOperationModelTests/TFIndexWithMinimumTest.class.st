@@ -25,3 +25,18 @@ TFIndexWithMinimumTest >> testIndexWithMinimumValueAcrossAxis [
 	self assertOutputOf: minAcross0 isLargeIntegerVectorEqualsTo: #(0 2).
 	self assertOutputOf: minAcross1 isLargeIntegerVectorEqualsTo: #(0 0 1)
 ]
+
+{ #category : 'Tests' }
+TFIndexWithMinimumTest >> testOperationName [
+
+	| tensor |
+
+	tensor := tf constantWith: #((1.1 1.2)) asFloatTensor.
+
+	self assert: (TFIndexWithMinimum in: tensor across: 0) isNamedInGraphAs: 'ArgMin'.
+	self assert: (TFIndexWithMinimum in: tensor across: 0) isNamedInGraphAs: 'ArgMin_1'.
+	self assert: (TFIndexWithMinimum named: 'output' in: tensor across: 0) isNamedInGraphAs: 'output'.
+	self
+		assert: (TFIndexWithMinimum named: 'output' in: tensor across: 0)
+		isNamedInGraphAs: 'output_1'
+]

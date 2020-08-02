@@ -5,7 +5,6 @@ Class {
 	#name : 'TFSigmoidGradient',
 	#superclass : 'TFGradientBehavior',
 	#instVars : [
-		'operationName',
 		'backpropagation',
 		'inputsGradients'
 	],
@@ -20,23 +19,21 @@ TFSigmoidGradient class >> considering: aBackpropagation andGradientsOfInputs: a
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFSigmoidGradient >> calculateValue [
-
-	^self binaryOperation: 'SigmoidGrad' between: backpropagation and: inputsGradients
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
 TFSigmoidGradient >> initializeConsidering: aBackpropagation andGradientsOfInputs: anInput [
 
-	operationName := aBackpropagation value nameFor: 'SigmoidGrad'.
 	backpropagation := aBackpropagation.
 	inputsGradients := anInput.
-	value := self calculateValue
+	value :=
+		backpropagation currentComputation
+			newOperationOf: self operationType
+			namePrefixed: self operationType
+			with: backpropagation
+			with: inputsGradients
 ]
 
-{ #category : 'Accessing' }
-TFSigmoidGradient >> operationName [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFSigmoidGradient >> operationType [
 
-	^operationName
+	^'SigmoidGrad'
 ]

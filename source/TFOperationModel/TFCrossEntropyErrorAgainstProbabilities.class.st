@@ -2,7 +2,6 @@ Class {
 	#name : 'TFCrossEntropyErrorAgainstProbabilities',
 	#superclass : 'TFLossFunction',
 	#instVars : [
-		'operationName',
 		'logits',
 		'labelProbabilities'
 	],
@@ -18,10 +17,14 @@ TFCrossEntropyErrorAgainstProbabilities class >> named: anOperationName of: aLog
 { #category : 'Instance Creation' }
 TFCrossEntropyErrorAgainstProbabilities class >> of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor [
 
-	^self
-		named: 'SoftmaxCrossEntropyWithLogits'
-		of: aLogitsTensor
-		whenExpectedProbabilityIs: aLabelsTensor
+	^self named: self operationType of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFCrossEntropyErrorAgainstProbabilities class >> operationType [
+
+	^'SoftmaxCrossEntropyWithLogits'
 ]
 
 { #category : 'Accessing - Outputs' }
@@ -32,32 +35,20 @@ TFCrossEntropyErrorAgainstProbabilities >> backpropagatedGradient [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFCrossEntropyErrorAgainstProbabilities >> calculateValue [
-
-	^self
-		binaryOperation: 'SoftmaxCrossEntropyWithLogits'
-		between: logits
-		and: labelProbabilities
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
 TFCrossEntropyErrorAgainstProbabilities >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [
 
-	operationName := anOperationName.
 	logits := aLogitsTensor.
 	labelProbabilities := anExpectedTensor.
-	value := self calculateValue
+	value :=
+		logits currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: logits
+			with: labelProbabilities
 ]
 
 { #category : 'Accessing - Outputs' }
 TFCrossEntropyErrorAgainstProbabilities >> loss [
 
 	^value output: 0
-]
-
-{ #category : 'Accessing' }
-TFCrossEntropyErrorAgainstProbabilities >> operationName [
-
-	^operationName
 ]

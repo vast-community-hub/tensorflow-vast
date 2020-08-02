@@ -32,18 +32,19 @@ TFVariable >> initializeOn: aTensorFlowComputation named: aName of: aType shaped
 
 	value :=
 		aTensorFlowComputation
-			newOperationOf: 'Variable'
-			named: aName
+			newOperationOf: self operationType
+			namePrefixed: aName
 			withAll: #()
 			describedBy: [:description |
 				description
-					at: 'dtype' putType: aType;
-					at: 'shape' putShape: aShape].
+					at: TFAttributeName dataType putType: aType;
+					at: TFAttributeName shape putShape: aShape].
 	aVariableInitializer applyTo: value
 ]
 
-{ #category : 'Accessing' }
-TFVariable >> operationName [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFVariable >> operationType [
 
-	^value name
+	^'Variable'
 ]

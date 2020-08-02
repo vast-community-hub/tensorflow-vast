@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : 'Test' }
+TFOneHotTest >> testOperationName [
+
+	| input |
+
+	input := tf constantWith: #(0 1 2) asInt32Tensor.
+
+	self assert: (TFOneHot transforming: input toDepth: 3 asInt32Tensor) isNamedInGraphAs: 'OneHot'.
+	self assert: (TFOneHot transforming: input toDepth: 3 asInt32Tensor) isNamedInGraphAs: 'OneHot_1'
+]
+
+{ #category : 'Test' }
 TFOneHotTest >> testTransforming3ElementVector [
 
 	| input oneHot |

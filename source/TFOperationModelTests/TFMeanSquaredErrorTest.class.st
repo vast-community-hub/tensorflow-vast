@@ -84,3 +84,21 @@ TFMeanSquaredErrorTest >> testMSEBetweenTwoVariableVectors [
 
 	self assertOutputOf: mse isFloatScalarCloseTo: expectedMSE
 ]
+
+{ #category : 'Test' }
+TFMeanSquaredErrorTest >> testOperationName [
+
+	| prediction expected |
+
+	prediction := tf variableNamed: 'prediction' with: 3 asFloatTensor.
+	expected := tf constantWith: Float pi.
+
+	self
+		assert: (TFMeanSquaredError of: prediction whenExpectedIs: expected) isNamedInGraphAs: 'MSE';
+		assert: (TFMeanSquaredError of: prediction whenExpectedIs: expected)
+			isNamedInGraphAs: 'MSE_1';
+		assert: (TFMeanSquaredError named: 'error' of: prediction whenExpectedIs: expected)
+			isNamedInGraphAs: 'error';
+		assert: (TFMeanSquaredError named: 'error' of: prediction whenExpectedIs: expected)
+			isNamedInGraphAs: 'error_1'
+]

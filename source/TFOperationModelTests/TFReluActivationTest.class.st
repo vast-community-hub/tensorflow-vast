@@ -76,3 +76,26 @@ TFReluActivationTest >> testActivatingIntegerScalar [
 
 	self assertOutputOf: relu isIntegerScalarEqualTo: 5
 ]
+
+{ #category : 'Test' }
+TFReluActivationTest >> testOperationName [
+
+	| neuron |
+
+	neuron := tf variableNamed: 'positive' with: 5 asFloatTensor.
+
+	self assert: (TFReluActivation activating: neuron) isNamedInGraphAs: 'Relu'.
+	self assert: (TFReluActivation activating: neuron) isNamedInGraphAs: 'Relu_1'.
+	self assert: (TFReluActivation named: 'output' activating: neuron) isNamedInGraphAs: 'output'.
+	self assert: (TFReluActivation named: 'output' activating: neuron) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
+TFReluActivationTest >> testPrintString [
+
+	| neuron |
+
+	neuron := tf variableNamed: 'positive' with: 5 asFloatTensor.
+
+	self assert: (TFReluActivation activating: neuron) printString equals: 'relu(positive)'
+]

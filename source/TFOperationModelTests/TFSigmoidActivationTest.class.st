@@ -54,3 +54,28 @@ TFSigmoidActivationTest >> testActivatingIntegerScalarFails [
 			'INVALID_ARGUMENT: Value for attr ''T'' of int32 is not in the list of allowed values: bfloat16, half, float, double, complex64, complex128
 	; NodeDef: {{node Sigmoid}}; Op<name=Sigmoid; signature=x:T -> y:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_COMPLEX64, DT_COMPLEX128]>'
 ]
+
+{ #category : 'Test' }
+TFSigmoidActivationTest >> testOperationName [
+
+	| neuron |
+
+	neuron := tf variableNamed: 'input' with: 5 asFloatTensor.
+
+	self assert: (TFSigmoidActivation activating: neuron) isNamedInGraphAs: 'Sigmoid'.
+	self assert: (TFSigmoidActivation activating: neuron) isNamedInGraphAs: 'Sigmoid_1'.
+	self assert: (TFSigmoidActivation named: 'output' activating: neuron) isNamedInGraphAs: 'output'.
+	self
+		assert: (TFSigmoidActivation named: 'output' activating: neuron)
+		isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
+TFSigmoidActivationTest >> testPrintString [
+
+	| neuron |
+
+	neuron := tf variableNamed: 'input' with: 5 asFloatTensor.
+
+	self assert: (TFSigmoidActivation activating: neuron) printString equals: 'sigmoid(input)'
+]

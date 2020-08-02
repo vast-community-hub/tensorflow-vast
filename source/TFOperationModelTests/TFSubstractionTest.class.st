@@ -18,6 +18,31 @@ TFSubstractionTest >> testMatrixMinusVector [
 ]
 
 { #category : 'Tests' }
+TFSubstractionTest >> testOperationName [
+
+	| x y |
+
+	x := tf constantWith: 3.0.
+	y := tf constantWith: 5.0.
+
+	self assert: (TFSubstraction of: x minus: y) isNamedInGraphAs: 'Sub'.
+	self assert: (TFSubstraction of: x minus: y) isNamedInGraphAs: 'Sub_1'.
+	self assert: (TFSubstraction named: 'output' of: x minus: y) isNamedInGraphAs: 'output'.
+	self assert: (TFSubstraction named: 'output' of: x minus: y) isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Tests' }
+TFSubstractionTest >> testPrintString [
+
+	| x y |
+
+	x := tf floatConstantWith: 3.0 named: 'x'.
+	y := tf floatConstantWith: -1 named: 'y'.
+
+	self assert: (TFSubstraction of: x minus: y) printString equals: '(x - y)'
+]
+
+{ #category : 'Tests' }
 TFSubstractionTest >> testSubstractionOfFloarScalars [
 
 	| x y z |

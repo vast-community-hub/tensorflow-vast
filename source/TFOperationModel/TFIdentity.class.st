@@ -1,31 +1,40 @@
 Class {
 	#name : 'TFIdentity',
 	#superclass : 'TFOperationAbstract',
-	#instVars : [
-		'operationName'
-	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
-TFIdentity class >> of: aTensor evaluatedOnlyAfter: anOperationCollection [
+TFIdentity class >> named: anOperationName of: aTensor evaluatedOnlyAfter: anOperationCollection [
 
 	^self new
-		initializeOf: aTensor
+		initializeNamed: anOperationName
+		of: aTensor
 		describedBy: [:d |
 			anOperationCollection do: [:operation | d addControlInput: operation value]]
 ]
 
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
-TFIdentity >> initializeOf: aTensor describedBy: aBlock [
+{ #category : 'Instance Creation' }
+TFIdentity class >> of: aTensor evaluatedOnlyAfter: anOperationCollection [
 
-	operationName := aTensor value nameFor: 'Identity'.
-	value := aTensor value op: 'Identity' withAll: Array new named: operationName described: aBlock
+	^self named: self operationType of: aTensor evaluatedOnlyAfter: anOperationCollection
 ]
 
-{ #category : 'Initialization' }
-TFIdentity >> operationName [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFIdentity class >> operationType [
 
-	^operationName
+	^'Identity'
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+TFIdentity >> initializeNamed: anOperationName of: aTensor describedBy: aBlock [
+
+	value :=
+		aTensor currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			withAll: (Array with: aTensor)
+			describedBy: aBlock
 ]

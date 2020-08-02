@@ -2,7 +2,6 @@ Class {
 	#name : 'TFReciprocal',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'operation'
 	],
 	#category : 'TFOperationModel'
@@ -17,27 +16,30 @@ TFReciprocal class >> named: aName of: anOperation [
 { #category : 'Instance Creation' }
 TFReciprocal class >> of: anOperation [
 
-	^self named: 'Reciprocal' of: anOperation
+	^self named: self operationType of: anOperation
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFReciprocal >> calculateValue [
+TFReciprocal class >> operationType [
 
-	^self unaryOperation: 'Reciprocal' with: operation
+	^'Reciprocal'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFReciprocal >> initializeNamed: aName of: anOperation [
 
-	operationName := aName.
 	operation := anOperation.
-	value := self calculateValue
+	value :=
+		operation currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: aName
+			with: operation
 ]
 
-{ #category : 'Accessing' }
-TFReciprocal >> operationName [
-	
-	^operationName
+{ #category : 'Printing' }
+TFReciprocal >> printOn: aStream [
+
+	aStream nextPutAll: ('1 / (<1p>)' expandMacrosWith: operation)
 ]

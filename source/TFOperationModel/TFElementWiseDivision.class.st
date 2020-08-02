@@ -2,7 +2,6 @@ Class {
 	#name : 'TFElementWiseDivision',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'numerator',
 		'denominator'
 	],
@@ -18,33 +17,31 @@ TFElementWiseDivision class >> named: anOperationName of: aLeftOperand and: aRig
 { #category : 'Instance Creation' }
 TFElementWiseDivision class >> of: aLeftOperand and: aRightOperand [
 
-	^self named: (aLeftOperand value nameFor: 'Div') of: aLeftOperand and: aRightOperand
+	^self named: self operationType of: aLeftOperand and: aRightOperand
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFElementWiseDivision >> calculateValue [
+TFElementWiseDivision class >> operationType [
 
-	^self binaryOperation: 'Div' between: numerator and: denominator
+	^'Div'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFElementWiseDivision >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand [
 
-	operationName := anOperationName.
 	numerator := aLeftOperand.
 	denominator := aRightOperand.
-	value := self calculateValue
+	value :=
+		numerator currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: numerator
+			with: denominator
 ]
 
-{ #category : 'Accessing' }
-TFElementWiseDivision >> operationName [
-
-	^operationName
-]
-
-{ #category : 'Accessing' }
+{ #category : 'Printing' }
 TFElementWiseDivision >> printOn: aStream [
 
 	aStream nextPutAll: '('.

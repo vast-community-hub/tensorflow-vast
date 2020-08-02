@@ -43,24 +43,6 @@ TFOperationAbstract >> biasedBy: aBias [
 	^TFAddBias to: self with: aBias
 ]
 
-{ #category : 'Accessing - TF Operation',
-  #vaVisibility : 'private' }
-TFOperationAbstract >> binaryOperation: anOperation between: aLeftOperand and: aRightOperand [
-
-	^aLeftOperand currentComputation
-		newOperationOf: anOperation
-		named: self operationName
-		with: aLeftOperand
-		with: aRightOperand
-]
-
-{ #category : 'Computing',
-  #vaVisibility : 'private' }
-TFOperationAbstract >> calculateValue [
-
-	self subclassResponsibility
-]
-
 { #category : 'Accessing' }
 TFOperationAbstract >> currentComputation [
 
@@ -88,8 +70,7 @@ TFOperationAbstract >> negated [
 { #category : 'Accessing' }
 TFOperationAbstract >> operationName [
 
-
-	self subclassResponsibility
+	^self value operationName
 ]
 
 { #category : 'Accessing - TF Operation' }
@@ -106,6 +87,12 @@ TFOperationAbstract >> print: aFormulaOrTensor formattedOn: aStream [
 		(aFormulaOrTensor class = TFOperation)
 			ifTrue: [aFormulaOrTensor operationName]
 			ifFalse: [aFormulaOrTensor])
+]
+
+{ #category : 'Printing' }
+TFOperationAbstract >> printOn: aStream [
+
+	aStream nextPutAll: self operationName
 ]
 
 { #category : 'Operations' }
@@ -130,18 +117,6 @@ TFOperationAbstract >> transposedDot: aMatrix [
 TFOperationAbstract >> transposedDotTransposing: aMatrix [
 
 	^TFMatrixMultiplication ofTransposed: self andTransposed: aMatrix
-]
-
-{ #category : 'Accessing - TF Operation',
-  #vaVisibility : 'private' }
-TFOperationAbstract >> unaryOperation: anOperation with: anOperand [
-
-	^anOperand currentComputation
-		newOperationOf: anOperation
-		named: self operationName
-		with: anOperand
-
-
 ]
 
 { #category : 'Accessing - TF Operation' }

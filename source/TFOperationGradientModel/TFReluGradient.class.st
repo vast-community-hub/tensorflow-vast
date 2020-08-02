@@ -3,8 +3,7 @@ Class {
 	#superclass : 'TFGradientBehavior',
 	#instVars : [
 		'backpropagation',
-		'inputFeatures',
-		'operationName'
+		'inputFeatures'
 	],
 	#category : 'TFOperationGradientModel'
 }
@@ -17,23 +16,21 @@ TFReluGradient class >> considering: aBackpropagation andGradientsOfInputs: anIn
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFReluGradient >> calculateValue [
-
-	^self binaryOperation: 'ReluGrad' between: backpropagation and: inputFeatures
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
 TFReluGradient >> initializeConsidering: aBackpropagation andGradientsOfInputs: anInput [
 
 	backpropagation := aBackpropagation.
 	inputFeatures := anInput.
-	operationName := inputFeatures value nameFor: 'ReluGrad'. 
-	value := self calculateValue
+	value :=
+		backpropagation currentComputation
+			newOperationOf: self operationType
+			namePrefixed: self operationType
+			with: backpropagation
+			with: inputFeatures
 ]
 
-{ #category : 'Accessing' }
-TFReluGradient >> operationName [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFReluGradient >> operationType [
 
-	^operationName
+	^'ReluGrad'
 ]

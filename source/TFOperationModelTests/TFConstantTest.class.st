@@ -77,3 +77,19 @@ TFConstantTest >> testIndentityConstant [
 	self assertOutputOf: eye isMatrixCloseTo: #((1 0 0) (0 1 0)).
 	self assertOutputOf: eye1 isMatrixCloseTo: #((1) (0) (0) (0))
 ]
+
+{ #category : 'Test' }
+TFConstantTest >> testOperationName [
+
+	self assert: (TFConstant on: tf with: 1 asTensor) isNamedInGraphAs: 'Const'.
+	self assert: (TFConstant on: tf with: 1 asTensor) isNamedInGraphAs: 'Const_1'.
+	self assert: (TFConstant on: tf named: 'var' with: 1 asTensor) isNamedInGraphAs: 'var'.
+	self assert: (TFConstant on: tf named: 'var' with: 1 asTensor) isNamedInGraphAs: 'var_1'
+]
+
+{ #category : 'Test' }
+TFConstantTest >> testPrintString [
+
+	self assert: (TFConstant on: tf with: 1 asTensor) printString equals: 'Const'.
+	self assert: (TFConstant on: tf with: 1 asTensor) printString equals: 'Const_1'
+]

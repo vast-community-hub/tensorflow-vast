@@ -3,37 +3,46 @@ Class {
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
 		'addend',
-		'bias',
-		'operationName'
+		'bias'
 	],
 	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
+TFAddBias class >> named: anOperationName to: aTensorOrOperation with: aBias [
+
+	^self new initializeNamed: anOperationName to: aTensorOrOperation with: aBias
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFAddBias class >> operationType [
+
+	^'BiasAdd'
+]
+
+{ #category : 'Instance Creation' }
 TFAddBias class >> to: aTensorOrOperation with: aBias [
 
-	^self new initializeTo: aTensorOrOperation with: aBias
+	^self named: self operationType to: aTensorOrOperation with: aBias
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFAddBias >> calculateValue [
+TFAddBias >> initializeNamed: anOperationName to: aTensorOrOperation with: aBias [
 
-	^self binaryOperation: 'BiasAdd' between: addend and: bias
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
-TFAddBias >> initializeTo: aTensorOrOperation with: aBias [
-	
-	operationName := aTensorOrOperation value graph nameFor: 'BiasAdd'.
 	addend := aTensorOrOperation.
 	bias := aBias.
-	value := self calculateValue
+	value :=
+		addend currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: addend
+			with: bias
 ]
 
-{ #category : 'Accessing' }
-TFAddBias >> operationName [
+{ #category : 'Printing' }
+TFAddBias >> printOn: aStream [
 
-	^operationName
+	aStream nextPutAll: ('<1p> + <2p>' expandMacrosWith: addend with: bias)
 ]

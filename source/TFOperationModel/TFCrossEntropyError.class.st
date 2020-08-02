@@ -2,7 +2,6 @@ Class {
 	#name : 'TFCrossEntropyError',
 	#superclass : 'TFLossFunction',
 	#instVars : [
-		'operationName',
 		'unscaledLogits',
 		'labels'
 	],
@@ -21,10 +20,14 @@ TFCrossEntropyError class >> named: anOperationName of: aLogitsTensor whenExpect
 { #category : 'Instance Creation' }
 TFCrossEntropyError class >> of: aLogitsTensor whenExpectedIs: aLabelsTensor [
 
-	^self
-		named: 'SparseSoftmaxCrossEntropyWithLogits'
-		of: aLogitsTensor
-		whenExpectedIs: aLabelsTensor
+	^self named: self operationType of: aLogitsTensor whenExpectedIs: aLabelsTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFCrossEntropyError class >> operationType [
+
+	^'SparseSoftmaxCrossEntropyWithLogits'
 ]
 
 { #category : 'Accessing - Outputs' }
@@ -33,34 +36,22 @@ TFCrossEntropyError >> backpropagatedGradient [
 	^value output: 1
 ]
 
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-TFCrossEntropyError >> calculateValue [
-
-	^self
-		binaryOperation: 'SparseSoftmaxCrossEntropyWithLogits'
-		between: unscaledLogits
-		and: labels
-]
-
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFCrossEntropyError >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [
 
-	operationName := anOperationName.
 	unscaledLogits := aLogitsTensor.
 	labels := anExpectedTensor.
-	value := self calculateValue
+	value :=
+		unscaledLogits currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: unscaledLogits
+			with: labels
 ]
 
 { #category : 'Accessing - Outputs' }
 TFCrossEntropyError >> loss [
 
 	^value output: 0
-]
-
-{ #category : 'Accessing' }
-TFCrossEntropyError >> operationName [
-
-	^operationName
 ]

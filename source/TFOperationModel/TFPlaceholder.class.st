@@ -16,14 +16,15 @@ TFPlaceholder >> initializeOn: aTensorFlowComputation named: aName of: aType [
 
 	value :=
 		aTensorFlowComputation
-			newOperationOf: 'Placeholder'
-			named: aName
+			newOperationOf: self operationType
+			namePrefixed: aName
 			withAll: #()
-			describedBy: [:description | description at: 'dtype' putType: aType]
+			describedBy: [:description | description at: TFAttributeName dataType putType: aType]
 ]
 
-{ #category : 'Not categorized' }
-TFPlaceholder >> operationName [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFPlaceholder >> operationType [
 
-	^value name
+	^'Placeholder'
 ]

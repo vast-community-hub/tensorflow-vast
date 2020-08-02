@@ -17,29 +17,26 @@ TFElementWiseNegative class >> named: aString negativeOf: aTFOperation [
 { #category : 'Instance Creation' }
 TFElementWiseNegative class >> negativeOf: anOperand [
 
-	^self named: (anOperand value nameFor: 'Neg') negativeOf: anOperand
+	^self named: self operationType negativeOf: anOperand
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Instance Creation',
   #vaVisibility : 'private' }
-TFElementWiseNegative >> calculateValue [
+TFElementWiseNegative class >> operationType [
 
-	^self unaryOperation: 'Neg' with: operandToNegate
+	^'Neg'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFElementWiseNegative >> initializeNamed: anOperationName negativeOf: anOperand [
 
-	operationName := anOperationName.
 	operandToNegate := anOperand.
-	value := self calculateValue
-]
-
-{ #category : 'Accessing' }
-TFElementWiseNegative >> operationName [
-
-	^operationName
+	value :=
+		operandToNegate currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: operandToNegate
 ]
 
 { #category : 'Printing' }

@@ -2,7 +2,6 @@ Class {
 	#name : 'TFElementWiseSquare',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'operand'
 	],
 	#category : 'TFOperationModel'
@@ -17,27 +16,30 @@ TFElementWiseSquare class >> named: aName of: aTFOperation [
 { #category : 'Instance Creation' }
 TFElementWiseSquare class >> of: aTFOperation [
 
-	^self named: (aTFOperation value nameFor: 'Square') of: aTFOperation
+	^self named: self operationType of: aTFOperation
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFElementWiseSquare >> calculateValue [
+TFElementWiseSquare class >> operationType [
 
-	^self unaryOperation: 'Square' with: operand
+	^'Square'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFElementWiseSquare >> initializeNamed: aName of: aTFOperation [
 
-	operationName := aName.
 	operand := aTFOperation.
-	value := self calculateValue
+	value :=
+		operand currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: aName
+			with: operand
 ]
 
-{ #category : 'Accessing' }
-TFElementWiseSquare >> operationName [
-	
-	^operationName
+{ #category : 'Initialization' }
+TFElementWiseSquare >> printOn: aStream [
+
+	aStream nextPutAll: ('(<1p>)^2' expandMacrosWith: operand)
 ]

@@ -2,12 +2,23 @@ Class {
 	#name : 'TFReduceMean',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'axis',
 		'tensor'
 	],
 	#category : 'TFOperationModel'
 }
+
+{ #category : 'Instance Creation' }
+TFReduceMean class >> allAxisOf: aTFOperation [
+
+	^(1 to: aTFOperation value outputDimensions) collect: [:axis | axis - 1]
+]
+
+{ #category : 'Instance Creation' }
+TFReduceMean class >> named: aName ofValuesIn: aTFOperation [
+
+	^self named: aName ofValuesIn: aTFOperation alongside: (self allAxisOf: aTFOperation)
+]
 
 { #category : 'Instance Creation' }
 TFReduceMean class >> named: anOperationName ofValuesIn: aTensor alongside: anAxis [
@@ -18,41 +29,32 @@ TFReduceMean class >> named: anOperationName ofValuesIn: aTensor alongside: anAx
 { #category : 'Instance Creation' }
 TFReduceMean class >> ofValuesIn: aTFOperation [
 
-	| allAxis |
-
-	allAxis := (1 to: aTFOperation value outputDimensions) collect: [:axis | axis - 1].
-
-	^self ofValuesIn: aTFOperation alongside: allAxis
+	^self ofValuesIn: aTFOperation alongside: (self allAxisOf: aTFOperation)
 ]
 
 { #category : 'Instance Creation' }
 TFReduceMean class >> ofValuesIn: aTensor alongside: anAxis [
 
-	^self named: (aTensor value graph nameFor: 'Mean') ofValuesIn: aTensor alongside: anAxis
+	^self named: self operationType ofValuesIn: aTensor alongside: anAxis
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFReduceMean >> calculateValue [
+TFReduceMean class >> operationType [
 
-	^self binaryOperation: 'Mean' between: tensor and: axis asInt32Tensor
+	^'Mean'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFReduceMean >> initializeNamed: anOperationName ofValuesIn: aTensor alongside: anAxis [
 
-	operationName := anOperationName.
 	tensor := aTensor.
 	axis := anAxis.
-	value := self calculateValue.
-	" this is because the name desired can be changed with a suffix or preffix when written to graph. 
-	 should be a better way to do this" 
-	operationName := value name
-]
-
-{ #category : 'Accessing' }
-TFReduceMean >> operationName [
-
-	^operationName
+	value :=
+		tensor currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: tensor
+			with: axis asInt32Tensor
 ]

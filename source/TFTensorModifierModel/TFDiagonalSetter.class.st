@@ -15,7 +15,7 @@ TFDiagonalSetter class >> named: aName like: aTensor withElementsInDiagonal: aDi
 
 	^aTensor currentComputation
 		newOperationOf: 'MatrixSetDiag'
-		named: aName
+		namePrefixed: aName
 		with: aTensor
 		with: aDiagonalTensor
 ]

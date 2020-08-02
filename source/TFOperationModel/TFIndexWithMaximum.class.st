@@ -2,7 +2,6 @@ Class {
 	#name : 'TFIndexWithMaximum',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'tensor',
 		'axis'
 	],
@@ -12,7 +11,7 @@ Class {
 { #category : 'Instance Creation' }
 TFIndexWithMaximum class >> in: aTensor across: anAxis [
 
-	^self named: (aTensor value nameFor: 'ArgMin') in: aTensor across: anAxis
+	^self named: self operationType in: aTensor across: anAxis
 ]
 
 { #category : 'Instance Creation' }
@@ -21,29 +20,23 @@ TFIndexWithMaximum class >> named: anOperationName in: aTensor across: anAxis [
 	^self new initializeNamed: anOperationName in: aTensor across: anAxis
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFIndexWithMaximum >> calculateValue [
+TFIndexWithMaximum class >> operationType [
 
-	^self binaryOperation: 'ArgMax' between: tensor and: axis asInt32Tensor
+	^'ArgMax'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFIndexWithMaximum >> initializeNamed: anOperationName in: aTensor across: anAxis [
 
-	operationName := anOperationName.
 	tensor := aTensor.
 	axis := anAxis.
-	value := self calculateValue.
-	" this is because the name desired can be changed with a suffix or preffix when written to graph. 
-	 should be a better way to do this" 
-	operationName := value operationName 
-	
-]
-
-{ #category : 'Accessing' }
-TFIndexWithMaximum >> operationName [
-
-	^operationName
+	value :=
+		tensor currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: tensor
+			with: axis asInt32Tensor
 ]

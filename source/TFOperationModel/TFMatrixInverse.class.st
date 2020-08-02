@@ -2,7 +2,6 @@ Class {
 	#name : 'TFMatrixInverse',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'operationName',
 		'tensor'
 	],
 	#category : 'TFOperationModel'
@@ -17,27 +16,24 @@ TFMatrixInverse class >> named: anOperationName of: aTensor [
 { #category : 'Instance Creation' }
 TFMatrixInverse class >> of: aTensorOrFormula [
 
-	^self named: (aTensorOrFormula value nameFor: 'MatrixInverse') of: aTensorOrFormula
+	^self named: self operationType of: aTensorOrFormula
 ]
 
-{ #category : 'Initialization',
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
-TFMatrixInverse >> calculateValue [
+TFMatrixInverse class >> operationType [
 
-	^self unaryOperation: 'MatrixInverse' with: tensor
+	^'MatrixInverse'
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFMatrixInverse >> initializeNamed: anOperationName of: aTensor [
 
-	operationName := anOperationName.
 	tensor := aTensor.
-	value := self calculateValue
-]
-
-{ #category : 'Accessing' }
-TFMatrixInverse >> operationName [
-
-	^operationName
+	value :=
+		tensor currentComputation
+			newOperationOf: self class operationType
+			namePrefixed: anOperationName
+			with: tensor
 ]

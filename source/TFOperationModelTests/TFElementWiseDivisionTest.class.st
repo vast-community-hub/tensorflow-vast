@@ -129,3 +129,32 @@ TFElementWiseDivisionTest >> testDivideScalar [
 
 	self assertOutputOf: result isIntegerScalarEqualTo: 5
 ]
+
+{ #category : 'Test' }
+TFElementWiseDivisionTest >> testOperationName [
+
+	| input |
+
+	input := tf variableNamed: 'input' with: 10 asTensor.
+
+	self assert: (TFElementWiseDivision of: input and: 2 asTensor) isNamedInGraphAs: 'Div'.
+	self assert: (TFElementWiseDivision of: input and: 2 asTensor) isNamedInGraphAs: 'Div_1'.
+	self
+		assert: (TFElementWiseDivision named: 'output' of: input and: 2 asTensor)
+		isNamedInGraphAs: 'output'.
+	self
+		assert: (TFElementWiseDivision named: 'output' of: input and: 2 asTensor)
+		isNamedInGraphAs: 'output_1'
+]
+
+{ #category : 'Test' }
+TFElementWiseDivisionTest >> testPrintString [
+
+	| input |
+
+	input := tf variableNamed: 'input' with: 10 asTensor.
+
+	self
+		assert: (TFElementWiseDivision of: input and: 2 asTensor) printString
+		equals: '(input / Int32 scalar)'
+]
