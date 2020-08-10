@@ -2,11 +2,11 @@ Class {
 	#name : 'DenseLayer',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
+		'tf',
 		'inputSize',
 		'outputSize',
 		'weightSpec',
 		'biasSpec',
-		'tf',
 		'weights',
 		'activation',
 		'input'
@@ -99,4 +99,10 @@ DenseLayer >> initializeWeight [
 			of: weightSpec variableType
 			shaped: (Array with: inputSize with: outputSize)
 			initializedWith: weightSpec variableInitializer
+]
+
+{ #category : 'Initialization' }
+DenseLayer >> printOn: aStream [
+
+	aStream nextPutAll: ('Dense Layer[<1p> -> <2p>]' expandMacrosWith: inputSize with: outputSize)
 ]

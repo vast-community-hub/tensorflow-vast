@@ -9,7 +9,7 @@ TFZeroInitializer >> applyTo: aTFVariable [
 
 	| initialValue |
 
-	initialValue := TFConstant like: aTFVariable filledWith: 0.0.
+	initialValue := TFConstant like: aTFVariable filledWith: 0.
 
 	aTFVariable assign: initialValue value
 ]

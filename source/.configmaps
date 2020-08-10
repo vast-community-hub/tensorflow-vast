@@ -3,44 +3,44 @@
 		#applications : [
 			'FeedforwardNeuralNetworkModel' : '0.7',
 			'MLNeuralNetworkExamples' : '0.2',
-			'MLNeuralNetworkLayerModel' : '1.4',
+			'MLNeuralNetworkLayerModel' : '1.5',
 			'MLNeuralNetworkModel' : '0.7'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow | Environment' : '1.17',
+					'TensorFlow | Environment' : '1.18',
 					'Platform Portability' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.8',
+		#versionName : '0.9',
 		#comment : ''
 	},
 	{
 		#applications : [
 			'FeedforwardNeuralNetworkModelTests' : '0.4',
-			'MLNeuralNetworkLayerModelTests' : '1.4',
+			'MLNeuralNetworkLayerModelTests' : '1.5',
 			'MLNeuralNetworkModelTests' : '0.2'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Machine Learning TF | Runtime' : '0.8',
+					'Machine Learning TF | Runtime' : '0.9',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.7',
+		#versionName : '0.8',
 		#comment : ''
 	},
 	{
 		#applications : [
-			'PharoCompatibilityModel' : '1.4'
+			'PharoCompatibilityModel' : '1.5'
 		],
 		#conditions : [
 			{
@@ -52,7 +52,7 @@
 			}
 		],
 		#name : 'Pharo Compatibility | Runtime',
-		#versionName : '1.3',
+		#versionName : '1.4',
 		#comment : ''
 	},
 	{
@@ -63,13 +63,13 @@
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Pharo Compatibility | Runtime' : '1.3',
+					'Pharo Compatibility | Runtime' : '1.4',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Pharo Compatibility | Development',
-		#versionName : '1.2',
+		#versionName : '1.3',
 		#comment : ''
 	},
 	{
@@ -89,12 +89,12 @@
 				#requiredMaps : [
 					'z.ST: SUnit' : 'V 9.2.1  [457]',
 					'ENVY/Image Examples' : 'V 9.1.0  [453]',
-					'Pharo Compatibility | Runtime' : '1.3'
+					'Pharo Compatibility | Runtime' : '1.4'
 				]
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.4',
+		#versionName : '0.64.5',
 		#comment : ''
 	},
 	{
@@ -104,7 +104,7 @@
 			'TFOperationGradientFailingModelTests' : '1.13',
 			'TFOperationGradientModel' : '1.5',
 			'TFOperationGradientModelTests' : '1.3',
-			'TFOperationModel' : '1.5',
+			'TFOperationModel' : '1.6',
 			'TFOperationModelTests' : '1.5',
 			'TFOptimizerModel' : '1.1',
 			'TFOptimizerModelTests' : '1.1',
@@ -112,18 +112,18 @@
 			'TFRegularizationModelTests' : '1.2',
 			'TFTensorModifierModel' : '1.5',
 			'TFTensorModifierModelTests' : '1.5',
-			'TFVariableSpecificationModel' : '1.4'
+			'TFVariableSpecificationModel' : '1.5'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow' : '0.64.4'
+					'TensorFlow' : '0.64.5'
 				]
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.17',
+		#versionName : '1.18',
 		#comment : ''
 	},
 	{
@@ -137,12 +137,12 @@
 					'Javascript Core' : 'V 9.0.0  [453]',
 					'Seaside Development' : 'V 9.2.0  [453]',
 					'Seaside Core' : 'V 9.2.0  [453]',
-					'TensorFlow' : '0.64.4'
+					'TensorFlow' : '0.64.5'
 				]
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.0',
+		#versionName : '1.1',
 		#comment : ''
 	}
 ]

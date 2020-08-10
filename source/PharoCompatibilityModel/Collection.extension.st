@@ -80,6 +80,16 @@ Collection >> anyOne [
 
 { #category : '*PharoCompatibilityModel',
  #vaCategories : ['Pharo-API'] }
+Collection >> detect: aDetectionBlock ifFound: aFoundBlock ifNone: aNoneBlock [
+
+	| found |
+
+	found := self detect: aDetectionBlock ifNone: [^aNoneBlock value].
+	^aFoundBlock cull: found
+]
+
+{ #category : '*PharoCompatibilityModel',
+ #vaCategories : ['Pharo-API'] }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 

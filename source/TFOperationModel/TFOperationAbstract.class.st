@@ -79,6 +79,12 @@ TFOperationAbstract >> outputOn: aGraph [
 	^self value outputOn: aGraph
 ]
 
+{ #category : 'Accessing' }
+TFOperationAbstract >> outputShape [
+
+	^self value outputShape
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TFOperationAbstract >> print: aFormulaOrTensor formattedOn: aStream [
