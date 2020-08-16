@@ -100,11 +100,19 @@ TensorFlowComputation >> createSessionAndCompute: anArrayOfOutputs feeding: anAr
 ]
 
 { #category : 'Computing' }
-TensorFlowComputation >> gradientsOf: aFunctionCollection withRespectTo: aVariableCollection [
+TensorFlowComputation >> gradientsOf: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
+
+	| vectorOutputs |
+
+	vectorOutputs :=
+		aCotangentVectors
+			ifNil: [nil]
+			ifNotNil: [aCotangentVectors collect: [:var | var outputOn: graph]].
 
 	^graph
 		gradientsOf: (aFunctionCollection collect: [:function | function outputOn: graph])
 		withRespectTo: (aVariableCollection collect: [:var | var outputOn: graph])
+		product: vectorOutputs
 ]
 
 { #category : 'Initialization',

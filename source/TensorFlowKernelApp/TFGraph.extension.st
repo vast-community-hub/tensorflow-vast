@@ -172,11 +172,18 @@ TFGraph >> fromBlock: aBlockClosure named: nameString [
  #vaCategories : ['gradients'] }
 TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
 
+	^self gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: nil
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['gradients'] }
+TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: dxArrayOfOutput [
+
 	| y x dx status dy |
 
 	y := TFOutputArray externalFromArray: yArrayOfTFOutput.
 	x := TFOutputArray externalFromArray: xArrayOfTFOutput.
-	dx := nil. "TFOutputArray new: xArrayOfTFOutput size."
+	dx := dxArrayOfOutput ifNil: [nil] ifNotNil: [TFOutputArray externalFromArray: dxArrayOfOutput].
 	dy := TFOutputArray new: xArrayOfTFOutput size.
 	status := TFStatus create.
 	self library
@@ -189,7 +196,7 @@ TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
 		status: status
 		into: dy.
 	status check.
-	^ dy
+	^dy
 ]
 
 { #category : '*TensorFlowKernelApp',

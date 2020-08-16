@@ -162,3 +162,21 @@ TFMatrixMultiplicationTest >> testOperationName [
 		assert: (TFMatrixMultiplication named: 'output' of: constA and: constB)
 			isNamedInGraphAs: 'output_1'
 ]
+
+{ #category : 'Test' }
+TFMatrixMultiplicationTest >> testPrinting [
+
+	| constA constB |
+
+	constA := tf floatConstantWith: #((1.1)) named: 'a'.
+	constB := tf floatConstantWith: #((3.14)) named: 'b'.
+
+	self
+		assert: (TFMatrixMultiplication of: constA and: constB) asString equals: '(a x b)';
+		assert: (TFMatrixMultiplication ofTransposed: constA and: constB) asString
+			equals: '(a^T x b)';
+		assert: (TFMatrixMultiplication of: constA andTransposed: constB) asString
+			equals: '(a x b^T)';
+		assert: (TFMatrixMultiplication ofTransposed: constA andTransposed: constB) asString
+			equals: '(a^T x b^T)'
+]

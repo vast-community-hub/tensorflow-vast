@@ -10,3 +10,9 @@ SizeMismatch class >> signal [
 
 	^self signalWith: 'Collections sizes do not match'
 ]
+
+{ #category : 'Not categorized' }
+SizeMismatch >> messageText [
+
+	^self tag
+]

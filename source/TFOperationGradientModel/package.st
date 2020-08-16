@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFOperationGradientModel',
-	#vaPrerequisites : ['TFOperationModel']
+	#vaPrerequisites : ['PharoCompatibilityModel','TFOperationModel']
 }

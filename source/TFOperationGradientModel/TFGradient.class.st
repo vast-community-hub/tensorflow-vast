@@ -9,19 +9,57 @@ Class {
 	#category : 'TFOperationGradientModel'
 }
 
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
+TFGradient class >> assert: aFunctionCollection hasTheSameSizeAs: aVectorCollection [
+
+	aFunctionCollection size = aVectorCollection size ifFalse: [SizeMismatch signal]
+]
+
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
+TFGradient class >> defaultName [
+
+	^'Grad'
+]
+
 { #category : 'Instance Creation' }
 TFGradient class >> named: anOperationName of: aFunctionCollection withRespectTo: aVariableCollection [
+
+	^self
+		named: anOperationName
+		of: aFunctionCollection
+		withRespectTo: aVariableCollection
+		product: nil
+]
+
+{ #category : 'Instance Creation' }
+TFGradient class >> named: anOperationName of: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
+
+	aCotangentVectors
+		ifNotNil: [self assert: aFunctionCollection hasTheSameSizeAs: aCotangentVectors].
 
 	^self new
 		initializeNamed: anOperationName
 		of: aFunctionCollection
 		withRespectTo: aVariableCollection
+		product: aCotangentVectors
 ]
 
 { #category : 'Instance Creation' }
 TFGradient class >> of: aFunctionCollection withRespectTo: aVariableCollection [
-	
-	^self named: 'Grad' of: aFunctionCollection withRespectTo: aVariableCollection
+
+	^self named: self defaultName of: aFunctionCollection withRespectTo: aVariableCollection
+]
+
+{ #category : 'Instance Creation' }
+TFGradient class >> of: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
+
+	^self
+		named: self defaultName
+		of: aFunctionCollection
+		withRespectTo: aVariableCollection
+		product: aCotangentVectors
 ]
 
 { #category : 'Accessing' }
@@ -42,13 +80,17 @@ TFGradient >> gradientRespectTo: aVariable [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFGradient >> initializeNamed: aString of: aFunctionCollection withRespectTo: aVariableCollection [
+TFGradient >> initializeNamed: aString of: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
 
 	operationName := aString.
 	functions := aFunctionCollection.
 	variables := aVariableCollection.
 
-	value := functions first currentComputation gradientsOf: functions withRespectTo: variables.
+	value :=
+		functions first currentComputation
+			gradientsOf: functions
+			withRespectTo: variables
+			product: aCotangentVectors.
 
 	"value is a TFOutputArray so I have to set the graph from outside. Pretty ugly"
 	self allGradients

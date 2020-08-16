@@ -104,7 +104,9 @@ TFMatrixMultiplication >> printOn: aStream [
 
 	aStream nextPutAll: '('.
 	self print: leftOperand formattedOn: aStream.
+	self isFirstOperatorTransposed ifTrue: [aStream nextPutAll: '^T'].
 	aStream nextPutAll: ' x '.
 	self print: rightOperand formattedOn: aStream.
+	self isSecondOperatorTransposed ifTrue: [aStream nextPutAll: '^T'].
 	aStream nextPutAll: ')'
 ]
