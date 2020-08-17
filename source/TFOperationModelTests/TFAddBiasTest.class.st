@@ -12,7 +12,7 @@ TFAddBiasTest >> testAddBias [
 	weight := tf variableNamed: 'weight' with: #((1 2 3) (5 6 7)) asInt32Tensor.
 	bias := tf variableNamed: 'bias' with: #(100 101 102) asInt32Tensor.
 
-	output := TFAddBias to: weight with: bias.
+	output := weight biasedBy: bias.
 
 	self
 		assertOutputOf: output
@@ -31,8 +31,8 @@ TFAddBiasTest >> testAddBiasComparedToSum [
 	weight := tf variableNamed: 'weight' with: #((1 2 3) (5 6 7)) asInt32Tensor.
 	bias := tf variableNamed: 'bias' with: #(100 101 102) asInt32Tensor.
 
-	addBias := TFAddBias to: weight with: bias.
-	sum := TFSum of: weight plus: bias.
+	addBias := weight biasedBy: bias.
+	sum := weight + bias.
 	self
 		assertOutputOf: addBias
 		isIntegerMatrixCloseTo: (

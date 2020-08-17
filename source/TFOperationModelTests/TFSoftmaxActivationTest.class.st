@@ -10,8 +10,8 @@ TFSoftmaxActivationTest >> testActivatingFloatScalarFails [
 	| input softmax |
 
 	input := tf variableNamed: 'input' with: 4 asFloatTensor.
-	softmax := TFSoftmaxActivation activating: input.
-	
+	softmax := input softmax.
+
 	self
 		assert: [tf compute: softmax]
 		raisesExceptionWith:
@@ -22,12 +22,11 @@ TFSoftmaxActivationTest >> testActivatingFloatScalarFails [
 { #category : 'Test' }
 TFSoftmaxActivationTest >> testActivatingFloatVector [
 
-	| input softmax |
+	| input |
 
 	input := tf variableNamed: 'input' with: #(4 5 -1) asFloatTensor.
-	softmax := TFSoftmaxActivation activating: input.
-
-	self assertOutputOf: softmax isFloatVectorCloseTo: #(4 5 -1) softmax
+	
+	self assertOutputOf: input softmax isFloatVectorCloseTo: #(4 5 -1) softmax
 ]
 
 { #category : 'Test' }
@@ -38,7 +37,7 @@ TFSoftmaxActivationTest >> testActivatingIntegerScalarFails [
 	input := tf variableNamed: 'input' with: 4 asInt32Tensor.
 
 	self
-		assert: [TFSoftmaxActivation activating: input]
+		assert: [input softmax]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: Value for attr ''T'' of int32 is not in the list of allowed values: half, bfloat16, float, double
 	; NodeDef: {{node Softmax}}; Op<name=Softmax; signature=logits:T -> softmax:T; attr=T:type,allowed=[DT_HALF, DT_BFLOAT16, DT_FLOAT, DT_DOUBLE]>'

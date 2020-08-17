@@ -12,7 +12,7 @@ TFMatrixMultiplicationTest >> testMultiplyMatrixAndVector [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0) (8.0)) named: 'b'.
 
-	output := TFMatrixMultiplication of: constA and: constB.
+	output := constA dot: constB.
 
 	self
 		assertOutputOf: output
@@ -31,7 +31,7 @@ TFMatrixMultiplicationTest >> testOperationMatMul [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
-	output := TFMatrixMultiplication of: constA and: constB.
+	output := constA dot: constB.
 
 	self
 		assertOutputOf: output
@@ -50,7 +50,7 @@ TFMatrixMultiplicationTest >> testOperationMatMul1x1 [
 	constA := tf floatConstantWith: #((1.1)) named: 'a'.
 	constB := tf floatConstantWith: #((3.14)) named: 'b'.
 
-	output := TFMatrixMultiplication of: constA and: constB.
+	output := constA dot: constB.
 
 	self assertOutputOf: output isMatrixCloseTo: (Array with: 1.1 * 3.14).
 
@@ -66,7 +66,7 @@ TFMatrixMultiplicationTest >> testOperationMatMul2x2 [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
-	output := TFMatrixMultiplication of: constA and: constB.
+	output := constA dot: constB.
 
 	self
 		assertOutputOf: output
@@ -88,7 +88,7 @@ TFMatrixMultiplicationTest >> testOperationMatMulABTransposed [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
-	output := TFMatrixMultiplication ofTransposed: constA andTransposed: constB.
+	output := constA transposedDotTransposing: constB.
 
 	self
 		assertOutputOf: output
@@ -110,7 +110,7 @@ TFMatrixMultiplicationTest >> testOperationMatMulATransposed [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
-	output := TFMatrixMultiplication ofTransposed: constA and: constB.
+	output := constA transposedDot: constB.
 
 	self
 		assertOutputOf: output
@@ -132,7 +132,7 @@ TFMatrixMultiplicationTest >> testOperationMatMulBTransposed [
 	constA := tf floatConstantWith: #((1.1 1.2) (2.1 2.2)) named: 'a'.
 	constB := tf floatConstantWith: #((2.0 4.0) (8.0 16.0)) named: 'b'.
 
-	output := TFMatrixMultiplication of: constA andTransposed: constB.
+	output := constA dotTransposing: constB.
 
 	self
 		assertOutputOf: output

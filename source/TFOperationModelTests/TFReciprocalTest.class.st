@@ -18,12 +18,11 @@ TFReciprocalTest >> testFloatScalarReciprocal [
 { #category : 'Tests' }
 TFReciprocalTest >> testFloatVectorReciprocal [
 
-	| x reciprocal |
+	| x |
 
 	x := tf floatConstantWith: #(5 10 -0.5).
-	reciprocal := TFReciprocal of: x.
-
-	self assertOutputOf: reciprocal isFloatVectorCloseTo: #(0.2 0.1 -2)
+	
+	self assertOutputOf: x reciprocal isFloatVectorCloseTo: #(0.2 0.1 -2)
 ]
 
 { #category : 'Tests' }

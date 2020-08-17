@@ -18,7 +18,7 @@ TFElementWiseDivisionTest >> testDivideByVector [
 					add: #(3 -6 -16);
 					asFloatTensor).
 
-	result := TFElementWiseDivision of: input and: #(2 3 4) asFloatTensor.
+	result := input / #(2 3 4) asFloatTensor.
 
 	self
 		assertOutputOf: result
@@ -44,7 +44,7 @@ TFElementWiseDivisionTest >> testDivideByVerticalVector [
 					add: #(24 -16);
 					asFloatTensor).
 
-	result := TFElementWiseDivision of: input and: #((2) (3) (4)) asFloatTensor.
+	result := input / #((2) (3) (4)) asFloatTensor.
 
 	self
 		assertOutputOf: result
@@ -64,7 +64,7 @@ TFElementWiseDivisionTest >> testDivideFailsWhenMixingTypes [
 	input := tf variableNamed: 'input' with: #(10 11 17) asFloatTensor.
 
 	self
-		assert: [TFElementWiseDivision of: input and: 2 asInt32Tensor]
+		assert: [input / 2 asInt32Tensor]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''Div'' using Op<name=Div; signature=x:T, y:T -> z:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_UINT8, DT_INT8, DT_UINT16, DT_INT16, DT_INT32, DT_INT64, DT_COMPLEX64, DT_COMPLEX128]>'
 ]
@@ -83,7 +83,7 @@ TFElementWiseDivisionTest >> testDivideFloatMatrix [
 					add: #(3 -4 18.4);
 					asFloatTensor).
 
-	result := TFElementWiseDivision of: input and: 2 asFloatTensor.
+	result := input / 2 asFloatTensor.
 
 	self
 		assertOutputOf: result
@@ -101,7 +101,7 @@ TFElementWiseDivisionTest >> testDivideFloatVector [
 
 	input := tf variableNamed: 'input' with: #(10 11 17) asFloatTensor.
 
-	result := TFElementWiseDivision of: input and: 2 asFloatTensor.
+	result := input / 2 asFloatTensor.
 
 	self assertOutputOf: result isFloatVectorCloseTo: #(5 5.5 8.5)
 ]
@@ -113,7 +113,7 @@ TFElementWiseDivisionTest >> testDivideIntegerVector [
 
 	input := tf variableNamed: 'input' with: #(10 11 17) asInt32Tensor.
 
-	result := TFElementWiseDivision of: input and: 2 asInt32Tensor.
+	result := input / 2 asInt32Tensor.
 
 	self assertOutputOf: result isIntegerVectorEqualsTo: #(5 5 8)
 ]
@@ -125,7 +125,7 @@ TFElementWiseDivisionTest >> testDivideScalar [
 
 	input := tf variableNamed: 'input' with: 10 asInt32Tensor.
 
-	result := TFElementWiseDivision of: input and: 2 asInt32Tensor.
+	result := input / 2 asInt32Tensor.
 
 	self assertOutputOf: result isIntegerScalarEqualTo: 5
 ]

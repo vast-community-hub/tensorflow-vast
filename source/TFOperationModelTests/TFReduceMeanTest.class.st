@@ -32,10 +32,10 @@ TFReduceMeanTest >> testReduceAlongsideAxis [
 					yourself)
 			named: 'tensor'.
 
-	mean0 := TFReduceMean ofValuesIn: a alongside: #(0).
-	mean1 := TFReduceMean ofValuesIn: a alongside: #(1).
-	mean01 := TFReduceMean ofValuesIn: a alongside: #(0 1).
-	meanNone := TFReduceMean ofValuesIn: a alongside: #().
+	mean0 := a meanAlongside: #(0).
+	mean1 := a meanAlongside: #(1).
+	mean01 := a meanAlongside: #(0 1).
+	meanNone := a meanAlongside: #().
 
 	self assertOutputOf: mean0 isFloatVectorCloseTo: #(2.1 1.2).
 	self assertOutputOf: mean1 isFloatVectorCloseTo: #(1.15 2.15 1.65).
@@ -65,8 +65,8 @@ TFReduceMeanTest >> testReduceWithoutAxis [
 					yourself)
 			named: 'tensor'.
 
-	mean01 := TFReduceMean ofValuesIn: a alongside: #(0 1).
-	meanNone := TFReduceMean ofValuesIn: a.
+	mean01 := a meanAlongside: #(0 1).
+	meanNone := a mean.
 
 	self assertOutputOf: mean01 isFloatScalarCloseTo: 1.65.
 	self assertOutputOf: meanNone isFloatScalarCloseTo: 1.65

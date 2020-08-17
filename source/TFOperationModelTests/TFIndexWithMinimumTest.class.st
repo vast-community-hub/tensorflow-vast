@@ -19,8 +19,8 @@ TFIndexWithMinimumTest >> testIndexWithMinimumValueAcrossAxis [
 					yourself)
 			named: 'tensor'.
 
-	minAcross0 := TFIndexWithMinimum in: tensor across: 0.
-	minAcross1 := TFIndexWithMinimum in: tensor across: 1.
+	minAcross0 := tensor argMinAcross: 0.
+	minAcross1 := tensor argMinAcross: 1.
 
 	self assertOutputOf: minAcross0 isLargeIntegerVectorEqualsTo: #(0 2).
 	self assertOutputOf: minAcross1 isLargeIntegerVectorEqualsTo: #(0 0 1)

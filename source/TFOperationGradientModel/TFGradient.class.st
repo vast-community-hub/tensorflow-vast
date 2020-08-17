@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'operationName',
 		'functions',
-		'variables'
+		'variables',
+		'currentComputation'
 	],
 	#category : 'TFOperationGradientModel'
 }
@@ -73,6 +74,12 @@ TFGradient >> allGradients [
 ]
 
 { #category : 'Accessing' }
+TFGradient >> currentComputation [
+
+	^currentComputation
+]
+
+{ #category : 'Accessing' }
 TFGradient >> gradientRespectTo: aVariable [
 
 	^value at: (variables indexOf: aVariable)
@@ -82,19 +89,16 @@ TFGradient >> gradientRespectTo: aVariable [
   #vaVisibility : 'private' }
 TFGradient >> initializeNamed: aString of: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
 
+	currentComputation := aFunctionCollection first currentComputation.
 	operationName := aString.
 	functions := aFunctionCollection.
 	variables := aVariableCollection.
 
 	value :=
-		functions first currentComputation
-			gradientsOf: functions
-			withRespectTo: variables
-			product: aCotangentVectors.
+		currentComputation gradientsOf: functions withRespectTo: variables product: aCotangentVectors.
 
 	"value is a TFOutputArray so I have to set the graph from outside. Pretty ugly"
-	self allGradients
-		do: [:gradOutput | gradOutput graph: (functions first currentComputation instVarAt: 1)]
+	self allGradients do: [:gradOutput | gradOutput graph: (currentComputation instVarAt: 1)]
 ]
 
 { #category : 'Accessing' }

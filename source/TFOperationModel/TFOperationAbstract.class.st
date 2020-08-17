@@ -38,9 +38,33 @@ TFOperationAbstract >> abs [
 ]
 
 { #category : 'Operations' }
+TFOperationAbstract >> argMaxAcross: anAxis [
+
+	^TFIndexWithMaximum in: self across: anAxis
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> argMinAcross: anAxis [
+
+	^TFIndexWithMinimum in: self across: anAxis
+]
+
+{ #category : 'Operations' }
 TFOperationAbstract >> biasedBy: aBias [
 
 	^TFAddBias to: self with: aBias
+]
+
+{ #category : 'Accessing' }
+TFOperationAbstract >> compute [
+
+	^self currentComputation compute: self
+]
+
+{ #category : 'Accessing' }
+TFOperationAbstract >> computeWith: aPlaceholderValueMapping [
+
+	^self currentComputation compute: self feedingInputsWith: aPlaceholderValueMapping
 ]
 
 { #category : 'Accessing' }
@@ -59,6 +83,18 @@ TFOperationAbstract >> dot: aMatrix [
 TFOperationAbstract >> dotTransposing: aMatrix [
 
 	^TFMatrixMultiplication of: self andTransposed: aMatrix
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> mean [
+
+	^TFReduceMean ofValuesIn: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> meanAlongside: anAxis [
+
+	^TFReduceMean ofValuesIn: self alongside: anAxis
 ]
 
 { #category : 'Operations' }
@@ -101,6 +137,12 @@ TFOperationAbstract >> printOn: aStream [
 	aStream nextPutAll: self operationName
 ]
 
+{ #category : 'Accessing' }
+TFOperationAbstract >> raisedTo: theNthPower [
+
+	^TFExponentiation of: self raisedTo: theNthPower
+]
+
 { #category : 'Operations' }
 TFOperationAbstract >> reciprocal [
 
@@ -108,9 +150,51 @@ TFOperationAbstract >> reciprocal [
 ]
 
 { #category : 'Operations' }
+TFOperationAbstract >> relu [
+
+	^TFReluActivation activating: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> reshapeTo: aNewShape [
+
+	^TFReshape of: self to: aNewShape
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> sigmoid [
+
+	^TFSigmoidActivation activating: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> softmax [
+
+	^TFSoftmaxActivation activating: self
+]
+
+{ #category : 'Operations' }
 TFOperationAbstract >> squared [
 
 	^TFElementWiseSquare of: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> sumElements [
+
+	^TFReduceSum valuesIn: self
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> sumElementsAlongside: anAxis [
+
+	^TFReduceSum valuesIn: self alongside: anAxis
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> tanh [
+
+	^TFTanhActivation activating: self
 ]
 
 { #category : 'Operations' }

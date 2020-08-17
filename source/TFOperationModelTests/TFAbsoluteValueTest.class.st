@@ -21,7 +21,7 @@ TFAbsoluteValueTest >> testAbsoluteValueOfMatrixVariable [
 					asFloatTensor).
 
 	self
-		assertOutputOf: (TFAbsoluteValue of: input)
+		assertOutputOf: input abs
 		isMatrixCloseTo: (
 			(OrderedCollection new)
 				add: #(1 0 0.1);

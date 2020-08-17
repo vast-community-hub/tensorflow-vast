@@ -2,7 +2,8 @@ Class {
 	#name : 'TensorFlowComputationBasedTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tf'
+		'tf',
+		'errorTolerance'
 	],
 	#category : 'TensorFlowEnvironmentModelTests'
 }
@@ -18,7 +19,7 @@ TensorFlowComputationBasedTest class >> isAbstract [
 TensorFlowComputationBasedTest >> assert: aNumber closeTo: anotherNumber [
 
 	^self
-		assert: (aNumber - anotherNumber) abs < self tolerance
+		assert: (aNumber - anotherNumber) abs < errorTolerance
 		description:
 			anotherNumber printString , ' was expected to be close to ' , aNumber printString
 ]
@@ -137,15 +138,15 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isFloatVectorClose
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerMatrixCloseTo: aFloatMatrix [
 
-	self assert: (tf compute: anOperation) isIntegerMatrixCloseTo: aFloatMatrix
+	self assert: anOperation compute isIntegerMatrixCloseTo: aFloatMatrix
 ]
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isIntegerScalarEqualTo: aScalar [
+TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerScalarEqualTo: aScalar [
 
 	self
-		assert: (tf compute: aTFOperation)
+		assert: anOperation compute
 		isOf: TFTensor typeInt32
 		with: #()
 		comparedTo: (Array with: aScalar)
@@ -157,7 +158,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isIntegerScalarEq
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerVectorEqualsTo: anExpectedArray [
 
 	self
-		assert: (tf compute: anOperation)
+		assert: anOperation compute
 		isOf: TFTensor typeInt32
 		with: (Array with: anExpectedArray size)
 		comparedTo: anExpectedArray
@@ -169,7 +170,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerVectorEqu
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isLargeIntegerVectorEqualsTo: anExpectedArray [
 
 	self
-		assert: (tf compute: anOperation)
+		assert: anOperation compute
 		isOf: TFTensor typeInt64
 		with: (Array with: anExpectedArray size)
 		comparedTo: anExpectedArray
@@ -200,7 +201,9 @@ TensorFlowComputationBasedTest >> executeShould: aBlock inScopeOf: anException w
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> setUp [
 
-	tf := TensorFlowComputation new
+	tf := TensorFlowComputation new. 
+	
+	self tolerateErrorsLowerThan: 0.00001
 ]
 
 { #category : 'Test Support',
@@ -222,9 +225,9 @@ TensorFlowComputationBasedTest >> should: aBlock raise: anException withSignalDo
 		description: ('Expected exception (%1) wasn''t raised' bindWith: anException)
 ]
 
-{ #category : 'Accessing',
+{ #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> tolerance [
+TensorFlowComputationBasedTest >> tolerateErrorsLowerThan: aMaximumAbsoluteError [
 
-	^0.00001
+	errorTolerance := aMaximumAbsoluteError
 ]

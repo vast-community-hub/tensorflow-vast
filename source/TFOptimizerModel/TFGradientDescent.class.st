@@ -26,10 +26,10 @@ TFGradientDescent class >> scalingBy: aLearningRate [
 { #category : 'Applying' }
 TFGradientDescent >> apply: aGradient to: aVariable [
 
-	^aVariable value currentComputation
+	^aVariable currentComputation
 		newOperationOf: 'ApplyGradientDescent'
 		namePrefixed: operationName
-		withAll: (Array with: aVariable with: learningRate with: aGradient value)
+		withAll: (Array with: aVariable with: learningRate with: aGradient)
 		describedBy: [:d | ]
 ]
 

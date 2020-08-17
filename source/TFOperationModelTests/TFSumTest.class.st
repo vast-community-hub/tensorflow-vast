@@ -41,27 +41,23 @@ TFSumTest >> testPrintString [
 { #category : 'Test' }
 TFSumTest >> testSum2FloatVectors [
 
-	| sum a b |
+	| a b |
 
 	a := tf floatConstantWith: #(1 2 3).
 	b := tf floatConstantWith: #(4 5 6).
-
-	sum := TFSum of: a plus: b.
-
-	self assertOutputOf: sum isFloatVectorCloseTo: #(5.0 7.0 9.0)
+	
+	self assertOutputOf: a + b isFloatVectorCloseTo: #(5.0 7.0 9.0)
 ]
 
 { #category : 'Test' }
 TFSumTest >> testSum2IntegerVectors [
 
-	| sum a b |
+	| a b |
 
 	a := tf integerConstantWith: #(1 2 3).
 	b := tf integerConstantWith: #(4 5 6).
 
-	sum := TFSum of: a plus: b.
-
-	self assertOutputOf: sum isIntegerVectorEqualsTo: #(5 7 9)
+	self assertOutputOf: a + b isIntegerVectorEqualsTo: #(5 7 9)
 ]
 
 { #category : 'Test' }

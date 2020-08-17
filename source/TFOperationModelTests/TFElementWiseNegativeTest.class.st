@@ -7,37 +7,31 @@ Class {
 { #category : 'Tests' }
 TFElementWiseNegativeTest >> testFloatScalarNegative [
 
-	| x y |
+	| x |
 
 	x := tf constantWith: 3.0.
-
-	y := TFElementWiseNegative negativeOf: x.
-
-	self assertOutputOf: y isFloatScalarCloseTo: -3
+	
+	self assertOutputOf: x negated isFloatScalarCloseTo: -3
 ]
 
 { #category : 'Tests' }
 TFElementWiseNegativeTest >> testFloatVectorNegative [
 
-	| x y |
+	| x |
 
 	x := tf floatConstantWith: #(3 -1.5).
 
-	y := TFElementWiseNegative negativeOf: x.
-
-	self assertOutputOf: y isFloatVectorCloseTo: #(-3 1.5)
+	self assertOutputOf: x negated isFloatVectorCloseTo: #(-3 1.5)
 ]
 
 { #category : 'Tests' }
 TFElementWiseNegativeTest >> testIntegerScalarNegative [
 
-	| x y |
+	| x |
 
 	x := tf integerConstantWith: 3.
 
-	y := TFElementWiseNegative negativeOf: x.
-
-	self assertOutputOf: y isIntegerScalarEqualTo: -3
+	self assertOutputOf: x negated isIntegerScalarEqualTo: -3
 ]
 
 { #category : 'Tests' }

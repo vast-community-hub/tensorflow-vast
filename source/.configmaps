@@ -10,13 +10,13 @@
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow | Environment' : '1.19',
+					'TensorFlow | Environment' : '1.20',
 					'Platform Portability' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.10',
+		#versionName : '0.11',
 		#comment : ''
 	},
 	{
@@ -29,13 +29,13 @@
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Machine Learning TF | Runtime' : '0.10',
+					'Machine Learning TF | Runtime' : '0.11',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.9',
+		#versionName : '0.10',
 		#comment : ''
 	},
 	{
@@ -100,13 +100,13 @@
 	{
 		#applications : [
 			'TensorFlowEnvironmentModel' : '1.14',
-			'TensorFlowEnvironmentModelTests' : '1.13',
+			'TensorFlowEnvironmentModelTests' : '1.14',
 			'TFOperationGradientFailingModelTests' : '1.13',
-			'TFOperationGradientModel' : '1.14',
+			'TFOperationGradientModel' : '1.15',
 			'TFOperationGradientModelTests' : '1.14',
-			'TFOperationModel' : '1.7',
-			'TFOperationModelTests' : '1.7',
-			'TFOptimizerModel' : '1.1',
+			'TFOperationModel' : '1.14',
+			'TFOperationModelTests' : '1.14',
+			'TFOptimizerModel' : '1.14',
 			'TFOptimizerModelTests' : '1.1',
 			'TFRegularizationModel' : '1.1',
 			'TFRegularizationModelTests' : '1.2',
@@ -123,7 +123,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.19',
+		#versionName : '1.20',
 		#comment : ''
 	},
 	{
