@@ -1,5 +1,5 @@
 Class {
-	#name : 'TFCrossEntropyErrorAgainstProbabilities',
+	#name : 'TFCategoricalCrossEntropy',
 	#superclass : 'TFLossFunction',
 	#instVars : [
 		'logits',
@@ -9,33 +9,33 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-TFCrossEntropyErrorAgainstProbabilities class >> named: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor [
+TFCategoricalCrossEntropy class >> named: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor [
 
 	^self new initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor
 ]
 
 { #category : 'Instance Creation' }
-TFCrossEntropyErrorAgainstProbabilities class >> of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor [
+TFCategoricalCrossEntropy class >> of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor [
 
 	^self named: self operationType of: aLogitsTensor whenExpectedProbabilityIs: aLabelsTensor
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-TFCrossEntropyErrorAgainstProbabilities class >> operationType [
+TFCategoricalCrossEntropy class >> operationType [
 
 	^'SoftmaxCrossEntropyWithLogits'
 ]
 
 { #category : 'Accessing - Outputs' }
-TFCrossEntropyErrorAgainstProbabilities >> backpropagatedGradient [
+TFCategoricalCrossEntropy >> backpropagatedGradient [
 
 	^value output: 1
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFCrossEntropyErrorAgainstProbabilities >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [
+TFCategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [
 
 	logits := aLogitsTensor.
 	labelProbabilities := anExpectedTensor.
@@ -48,7 +48,13 @@ TFCrossEntropyErrorAgainstProbabilities >> initializeNamed: anOperationName of: 
 ]
 
 { #category : 'Accessing - Outputs' }
-TFCrossEntropyErrorAgainstProbabilities >> loss [
+TFCategoricalCrossEntropy >> loss [
 
 	^value output: 0
+]
+
+{ #category : 'Operations' }
+TFCategoricalCrossEntropy >> mean [
+
+	^TFCrossEntropyMean of: self
 ]

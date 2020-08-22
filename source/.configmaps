@@ -3,39 +3,39 @@
 		#applications : [
 			'FeedforwardNeuralNetworkModel' : '0.7',
 			'MLNeuralNetworkExamples' : '0.2',
-			'MLNeuralNetworkLayerModel' : '1.5',
-			'MLNeuralNetworkModel' : '0.7'
+			'MLNeuralNetworkLayerModel' : '1.15',
+			'MLNeuralNetworkModel' : '1.15'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow | Environment' : '1.20',
+					'TensorFlow | Environment' : '1.21',
 					'Platform Portability' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.11',
+		#versionName : '0.12',
 		#comment : ''
 	},
 	{
 		#applications : [
 			'FeedforwardNeuralNetworkModelTests' : '0.4',
-			'MLNeuralNetworkLayerModelTests' : '1.5',
+			'MLNeuralNetworkLayerModelTests' : '1.15',
 			'MLNeuralNetworkModelTests' : '0.2'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Machine Learning TF | Runtime' : '0.11',
+					'Machine Learning TF | Runtime' : '0.12',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.10',
+		#versionName : '0.11',
 		#comment : ''
 	},
 	{
@@ -99,13 +99,13 @@
 	},
 	{
 		#applications : [
-			'TensorFlowEnvironmentModel' : '1.14',
-			'TensorFlowEnvironmentModelTests' : '1.14',
+			'TensorFlowEnvironmentModel' : '1.15',
+			'TensorFlowEnvironmentModelTests' : '1.15',
 			'TFOperationGradientFailingModelTests' : '1.13',
-			'TFOperationGradientModel' : '1.15',
+			'TFOperationGradientModel' : '1.16',
 			'TFOperationGradientModelTests' : '1.14',
-			'TFOperationModel' : '1.14',
-			'TFOperationModelTests' : '1.14',
+			'TFOperationModel' : '1.15',
+			'TFOperationModelTests' : '1.15',
 			'TFOptimizerModel' : '1.14',
 			'TFOptimizerModelTests' : '1.1',
 			'TFRegularizationModel' : '1.1',
@@ -123,7 +123,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.20',
+		#versionName : '1.21',
 		#comment : ''
 	},
 	{

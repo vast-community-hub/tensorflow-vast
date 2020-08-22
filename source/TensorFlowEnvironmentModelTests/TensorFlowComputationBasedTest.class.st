@@ -24,6 +24,17 @@ TensorFlowComputationBasedTest >> assert: aNumber closeTo: anotherNumber [
 			anotherNumber printString , ' was expected to be close to ' , aNumber printString
 ]
 
+{ #category : 'Asserting',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOperationCollection hasTheSameOperationsAs: anotherOperations [
+
+	self assert: anOperationCollection size equals: anotherOperations size.
+	anOperationCollection
+		with: anotherOperations
+		do: [:anOperation :anotherOperation |
+			self assert: anOperation value equals: anotherOperation value]
+]
+
 { #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar [

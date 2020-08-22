@@ -10,12 +10,11 @@ Class {
 { #category : 'Test' }
 DenseLayerTest >> testCreating [
 
-	| layer input result |
+	| layer result |
 
-	input := tf integerInputNamed: 'input'.
 	layer :=
 		DenseLayer
-			receiving: input
+			receiving: (tf integerInputNamed: 'input')
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
@@ -36,18 +35,21 @@ DenseLayerTest >> testCreating [
 		isIntegerMatrixCloseTo: (
 			OrderedCollection new
 				add: 1 * 2 + (2 * 3);
-				yourself)
+				yourself).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs: (Array with: (tf operationNamed: 'weight'))
 ]
 
 { #category : 'Test' }
 DenseLayerTest >> testCreatingWithBias [
 
-	| layer input result |
+	| layer result |
 
-	input := tf floatInputNamed: 'input'.
 	layer :=
 		DenseLayer
-			receiving: input
+			receiving: (tf floatInputNamed: 'input')
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
@@ -72,18 +74,22 @@ DenseLayerTest >> testCreatingWithBias [
 		isMatrixCloseTo: (
 			OrderedCollection new
 				add: (1 * 2 + (2 * 3)) + 4;
-				yourself)
+				yourself).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
 DenseLayerTest >> testCreatingWithBiasAndActivation [
 
-	| layer input result |
+	| layer result |
 
-	input := tf floatInputNamed: 'input'.
 	layer :=
 		DenseLayer
-			receiving: input
+			receiving: (tf floatInputNamed: 'input')
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
@@ -109,7 +115,12 @@ DenseLayerTest >> testCreatingWithBiasAndActivation [
 		isMatrixCloseTo: (
 			OrderedCollection new
 				add: ((1 * 2 + (2 * 3)) + 4) sigmoid;
-				yourself)
+				yourself).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -147,7 +158,12 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingFloats [
 			OrderedCollection new
 				add: ((1 * 2 + (2 * 3)) + 4) sigmoid;
 				add: ((-1 * 2 + (0.4 * 3)) + 4) sigmoid;
-				yourself)
+				yourself).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -187,7 +203,12 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingIntegers [
 				add: (0 * 1 + (1 * 2)) + 1;
 				add: (1 * 1 + (0 * 2)) + 1;
 				add: (1 * 1 + (1 * 2)) + 1;
-				yourself)
+				yourself).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -231,5 +252,14 @@ DenseLayerTest >> testDenseLayerAsInputOfOtherLayer [
 					at: 'input' put: logicStatements;
 					yourself).
 
-	self assert: result isMatrixCloseTo: #(-6.357518 -5.524584 -6.440332 -6.8832903)
+	self assert: result isMatrixCloseTo: #(-6.357518 -5.524584 -6.440332 -6.8832903).
+
+	self
+		assert: layer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias')).
+	self
+		assert: secondLayer trainableVariables
+		hasTheSameOperationsAs:
+			(Array with: (tf operationNamed: 'weight_2') with: (tf operationNamed: 'bias_2'))
 ]

@@ -23,7 +23,10 @@ TFMeanSquaredError class >> of: aLogitsTensor whenExpectedIs: anExpectedTensor [
   #vaVisibility : 'private' }
 TFMeanSquaredError >> initializeNamed: anOperationName of: aPrediction whenExpectedIs: anExpectedValue [
 
-	value := TFReduceMean named: anOperationName ofValuesIn: (aPrediction - anExpectedValue) squared
+	value :=
+		TFReduceMean
+			named: anOperationName
+			ofValuesIn: (TFSquaredDifference between: aPrediction and: anExpectedValue)
 ]
 
 { #category : 'Initialization' }

@@ -35,7 +35,7 @@ SequentialModelBuilder >> addLayer: aDenseLayer [
 { #category : 'Building' }
 SequentialModelBuilder >> build [
 
-	^layers last
+	^SequentialModel composedOf: layers
 ]
 
 { #category : 'Initialization',

@@ -1,5 +1,5 @@
 Class {
-	#name : 'TFCrossEntropyError',
+	#name : 'TFSparseCategoricalCrossEntropy',
 	#superclass : 'TFLossFunction',
 	#instVars : [
 		'unscaledLogits',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-TFCrossEntropyError class >> named: anOperationName of: aLogitsTensor whenExpectedIs: aLabelsTensor [
+TFSparseCategoricalCrossEntropy class >> named: anOperationName of: aLogitsTensor whenExpectedIs: aLabelsTensor [
 
 	" Expects unscaled logits, since it performs a softmax on logits internally for efficiency. 
 	 Do not call this op with the output of softmax, as it will produce incorrect results. "
@@ -18,27 +18,27 @@ TFCrossEntropyError class >> named: anOperationName of: aLogitsTensor whenExpect
 ]
 
 { #category : 'Instance Creation' }
-TFCrossEntropyError class >> of: aLogitsTensor whenExpectedIs: aLabelsTensor [
+TFSparseCategoricalCrossEntropy class >> of: aLogitsTensor whenExpectedIs: aLabelsTensor [
 
 	^self named: self operationType of: aLogitsTensor whenExpectedIs: aLabelsTensor
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-TFCrossEntropyError class >> operationType [
+TFSparseCategoricalCrossEntropy class >> operationType [
 
 	^'SparseSoftmaxCrossEntropyWithLogits'
 ]
 
 { #category : 'Accessing - Outputs' }
-TFCrossEntropyError >> backpropagatedGradient [
+TFSparseCategoricalCrossEntropy >> backpropagatedGradient [
 
 	^value output: 1
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TFCrossEntropyError >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [
+TFSparseCategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [
 
 	unscaledLogits := aLogitsTensor.
 	labels := anExpectedTensor.
@@ -51,7 +51,13 @@ TFCrossEntropyError >> initializeNamed: anOperationName of: aLogitsTensor whenEx
 ]
 
 { #category : 'Accessing - Outputs' }
-TFCrossEntropyError >> loss [
+TFSparseCategoricalCrossEntropy >> loss [
 
 	^value output: 0
+]
+
+{ #category : 'Operations' }
+TFSparseCategoricalCrossEntropy >> mean [
+
+	^TFCrossEntropyMean of: self
 ]

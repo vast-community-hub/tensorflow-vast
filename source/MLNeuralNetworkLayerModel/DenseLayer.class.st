@@ -5,11 +5,10 @@ Class {
 		'tf',
 		'inputSize',
 		'outputSize',
-		'weightSpec',
-		'biasSpec',
 		'weights',
 		'activation',
-		'input'
+		'input',
+		'trainableVariables'
 	],
 	#category : 'MLNeuralNetworkLayerModel'
 }
@@ -51,24 +50,25 @@ DenseLayer class >> receiving: anInput featuresOfInput: anInputSize featuresOfOu
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-DenseLayer >> calculateValue [
+DenseLayer >> calculateValueUsing: aBiasSpec [
 
 	| output |
 
 	output := input dot: weights.
-	
-	biasSpec ifNotNil: [:spec | | bias |
+
+	aBiasSpec ifNotNil: [| bias |
 		bias :=
 			TFVariable
 				on: tf
 				named: 'bias'
-				of: spec variableType
+				of: aBiasSpec variableType
 				shaped: (Array with: outputSize)
-				initializedWith: spec variableInitializer.
+				initializedWith: aBiasSpec variableInitializer.
+		trainableVariables add: bias.
 		output := output biasedBy: bias].
-		
+
 	activation ifNotNil: [:activ | output := activ activating: output].
-	
+
 	^output
 ]
 
@@ -77,32 +77,39 @@ DenseLayer >> calculateValue [
 DenseLayer >> initializeReceiving: anInput featuresOfInput: anInputSize featuresOfOutput: anOutputSize weightSpecifiedBy: aWeightSpecification biasSpecifiedBy: aBiasSpecification activatedBy: anActivation [
 
 	tf := anInput value currentComputation.
+	trainableVariables := OrderedCollection new: 2.
 	input := anInput.
 	inputSize := anInputSize.
 	outputSize := anOutputSize.
-	weightSpec := aWeightSpecification.
-	biasSpec := aBiasSpecification.
 	activation := anActivation.
 
-	self initializeWeight.
-	value := self calculateValue 
+	self initializeWeightFrom: aWeightSpecification.
+	value := self calculateValueUsing: aBiasSpecification
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-DenseLayer >> initializeWeight [
+DenseLayer >> initializeWeightFrom: aVariableSpec [
 
 	weights :=
 		TFVariable
 			on: tf
 			named: 'weight'
-			of: weightSpec variableType
+			of: aVariableSpec variableType
 			shaped: (Array with: inputSize with: outputSize)
-			initializedWith: weightSpec variableInitializer
+			initializedWith: aVariableSpec variableInitializer. 
+	
+	trainableVariables add: weights
 ]
 
 { #category : 'Initialization' }
 DenseLayer >> printOn: aStream [
 
 	aStream nextPutAll: ('Dense Layer[<1p> -> <2p>]' expandMacrosWith: inputSize with: outputSize)
+]
+
+{ #category : 'Accessing' }
+DenseLayer >> trainableVariables [
+
+	^trainableVariables
 ]

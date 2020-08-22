@@ -51,6 +51,47 @@ TFReduceMeanTest >> testReduceAlongsideAxis [
 ]
 
 { #category : 'Test' }
+TFReduceMeanTest >> testReducePlaceholder [
+
+	| inputValue constant inputWithSize inputWithoutShape |
+
+	inputValue :=
+		(OrderedCollection new)
+			add: #(1.1 1.2);
+			add: #(2.1 2.2);
+			add: #(3.1 0.2);
+			yourself.
+
+	constant := tf floatConstantWith: inputValue.
+	inputWithoutShape := tf floatInputNamed: 'input'.
+	inputWithSize := TFPlaceholder on: tf named: 'inputWithSize' of: TFTensor typeFloat sized: 2.
+
+	self assert: constant mean compute isFloatScalarCloseTo: 1.65.
+	self
+		assert: (
+			inputWithSize mean computeWith: (
+				Dictionary new
+					at: 'inputWithSize' put: inputValue asFloatTensor;
+					yourself))
+		isFloatScalarCloseTo: 1.65. 
+	
+	" If the Input doesn't have the information of the shape, then the creation of the mean won't know
+	 how many axis to reduce, and just won't reduce "
+	self
+		assert: (
+			inputWithoutShape mean computeWith: (
+				Dictionary new
+					at: 'input' put: inputValue asFloatTensor;
+					yourself))
+		isMatrixCloseTo: (
+			OrderedCollection new
+				add: #(1.1 1.2);
+				add: #(2.1 2.2);
+				add: #(3.1 0.2);
+				yourself)
+]
+
+{ #category : 'Test' }
 TFReduceMeanTest >> testReduceWithoutAxis [
 
 	| a mean01 meanNone |

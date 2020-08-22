@@ -37,14 +37,18 @@ TFGradient class >> named: anOperationName of: aFunctionCollection withRespectTo
 { #category : 'Instance Creation' }
 TFGradient class >> named: anOperationName of: aFunctionCollection withRespectTo: aVariableCollection product: aCotangentVectors [
 
-	aCotangentVectors
-		ifNotNil: [self assert: aFunctionCollection hasTheSameSizeAs: aCotangentVectors].
+	| functions variables cotangents |
+
+	functions := self toArray: aFunctionCollection.
+	variables := self toArray: aVariableCollection.
+	cotangents := aCotangentVectors ifNil: [nil] ifNotNil: [self toArray: aCotangentVectors].
+	aCotangentVectors ifNotNil: [self assert: functions hasTheSameSizeAs: cotangents].
 
 	^self new
 		initializeNamed: anOperationName
-		of: aFunctionCollection
-		withRespectTo: aVariableCollection
-		product: aCotangentVectors
+		of: functions
+		withRespectTo: variables
+		product: cotangents
 ]
 
 { #category : 'Instance Creation' }
@@ -61,6 +65,15 @@ TFGradient class >> of: aFunctionCollection withRespectTo: aVariableCollection p
 		of: aFunctionCollection
 		withRespectTo: aVariableCollection
 		product: aCotangentVectors
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TFGradient class >> toArray: aSingleElementOrCollection [
+
+	^(aSingleElementOrCollection isA: Collection)
+		ifTrue: [aSingleElementOrCollection]
+		ifFalse: [Array with: aSingleElementOrCollection]
 ]
 
 { #category : 'Accessing' }
@@ -98,7 +111,8 @@ TFGradient >> initializeNamed: aString of: aFunctionCollection withRespectTo: aV
 		currentComputation gradientsOf: functions withRespectTo: variables product: aCotangentVectors.
 
 	"value is a TFOutputArray so I have to set the graph from outside. Pretty ugly"
-	self allGradients do: [:gradOutput | gradOutput graph: (currentComputation instVarAt: 1)]
+	self allGradients
+		do: [:gradOutput | gradOutput graph: (currentComputation instVarNamed: 'graph')]
 ]
 
 { #category : 'Accessing' }

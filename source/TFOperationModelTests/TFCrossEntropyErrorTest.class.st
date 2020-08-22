@@ -5,36 +5,7 @@ Class {
 }
 
 { #category : 'Test' }
-TFCrossEntropyErrorTest >> testOperationName [
-
-	| labels logits |
-
-	labels := tf constantWith: #((0.9 0.01 0.1)) asFloatTensor.
-	logits := tf constantWith: #((0.9 0.01 0.1)) asFloatTensor.
-
-	self
-		assert: (
-				TFCrossEntropyErrorAgainstProbabilities of: logits whenExpectedProbabilityIs: labels)
-			isNamedInGraphAs: 'SoftmaxCrossEntropyWithLogits';
-		assert: (
-				TFCrossEntropyErrorAgainstProbabilities of: logits whenExpectedProbabilityIs: labels)
-			isNamedInGraphAs: 'SoftmaxCrossEntropyWithLogits_1';
-		assert: (
-				TFCrossEntropyErrorAgainstProbabilities
-					named: 'loss'
-					of: logits
-					whenExpectedProbabilityIs: labels)
-			isNamedInGraphAs: 'loss';
-		assert: (
-				TFCrossEntropyErrorAgainstProbabilities
-					named: 'loss'
-					of: logits
-					whenExpectedProbabilityIs: labels)
-			isNamedInGraphAs: 'loss_1'
-]
-
-{ #category : 'Test' }
-TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogits [
+TFCrossEntropyErrorTest >> testCategoricalCrossEntropy [
 
 	| labels logits crossEntropy |
 
@@ -61,7 +32,7 @@ TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogits [
 					asFloatTensor).
 					
 	crossEntropy :=
-		TFCrossEntropyErrorAgainstProbabilities of: logits whenExpectedProbabilityIs: labels.
+		TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels.
 		
 	self
 		assertOutputOf: crossEntropy loss
@@ -79,7 +50,36 @@ TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogits [
 ]
 
 { #category : 'Test' }
-TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogitsFromTensorflow [
+TFCrossEntropyErrorTest >> testCategoricalCrossEntropyOperationName [
+
+	| labels logits |
+
+	labels := tf constantWith: #((0.9 0.01 0.1)) asFloatTensor.
+	logits := tf constantWith: #((0.9 0.01 0.1)) asFloatTensor.
+
+	self
+		assert: (
+				TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels)
+			isNamedInGraphAs: 'SoftmaxCrossEntropyWithLogits';
+		assert: (
+				TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels)
+			isNamedInGraphAs: 'SoftmaxCrossEntropyWithLogits_1';
+		assert: (
+				TFCategoricalCrossEntropy
+					named: 'loss'
+					of: logits
+					whenExpectedProbabilityIs: labels)
+			isNamedInGraphAs: 'loss';
+		assert: (
+				TFCategoricalCrossEntropy
+					named: 'loss'
+					of: logits
+					whenExpectedProbabilityIs: labels)
+			isNamedInGraphAs: 'loss_1'
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testFromTensorflowExamplesForCategoricalCrossEntropy [
 	"\tensorflow\compiler\tests\binary_ops_test.py"
 
 	| labelsProbability logits crossEntropy |
@@ -102,7 +102,7 @@ TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogitsFromTensorflow [
 					asFloatTensor).
 					
 	crossEntropy :=
-		TFCrossEntropyErrorAgainstProbabilities
+		TFCategoricalCrossEntropy
 			of: logits
 			whenExpectedProbabilityIs: labelsProbability.
 			
@@ -117,7 +117,7 @@ TFCrossEntropyErrorTest >> testSoftmaxCrossEntropyWithLogitsFromTensorflow [
 ]
 
 { #category : 'Test' }
-TFCrossEntropyErrorTest >> testSparseSoftmaxCrossEntropyWithLogits [
+TFCrossEntropyErrorTest >> testSparseCategoricalCrossEntropy [
 
 	| logits labels logitsTensor crossEntropy |
 
@@ -130,7 +130,7 @@ TFCrossEntropyErrorTest >> testSparseSoftmaxCrossEntropyWithLogits [
 	logitsTensor := tf variableNamed: 'features' with: logits asFloatTensor.
 	labels := tf variableNamed: 'expected' with: #(0 1 0) asInt32Tensor.
 
-	crossEntropy := TFCrossEntropyError of: logitsTensor whenExpectedIs: labels.
+	crossEntropy := TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels.
 
 	self
 		assertOutputOf: crossEntropy loss
@@ -152,7 +152,7 @@ TFCrossEntropyErrorTest >> testSparseSoftmaxCrossEntropyWithLogits [
 ]
 
 { #category : 'Test' }
-TFCrossEntropyErrorTest >> testSparseSoftmaxCrossEntropyWithLogitsOperationName [
+TFCrossEntropyErrorTest >> testSparseCategoricalCrossEntropyOperationName [
 
 	| labels logitsTensor |
 
@@ -160,12 +160,12 @@ TFCrossEntropyErrorTest >> testSparseSoftmaxCrossEntropyWithLogitsOperationName 
 	labels := tf variableNamed: 'expected' with: #(0) asInt32Tensor.
 
 	self
-		assert: (TFCrossEntropyError of: logitsTensor whenExpectedIs: labels)
+		assert: (TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels)
 			isNamedInGraphAs: 'SparseSoftmaxCrossEntropyWithLogits';
-		assert: (TFCrossEntropyError of: logitsTensor whenExpectedIs: labels)
+		assert: (TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels)
 			isNamedInGraphAs: 'SparseSoftmaxCrossEntropyWithLogits_1';
-		assert: (TFCrossEntropyError named: 'loss' of: logitsTensor whenExpectedIs: labels)
+		assert: (TFSparseCategoricalCrossEntropy named: 'loss' of: logitsTensor whenExpectedIs: labels)
 			isNamedInGraphAs: 'loss';
-		assert: (TFCrossEntropyError named: 'loss' of: logitsTensor whenExpectedIs: labels)
+		assert: (TFSparseCategoricalCrossEntropy named: 'loss' of: logitsTensor whenExpectedIs: labels)
 			isNamedInGraphAs: 'loss_1'
 ]

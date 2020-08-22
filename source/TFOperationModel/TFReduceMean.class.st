@@ -8,10 +8,11 @@ Class {
 	#category : 'TFOperationModel'
 }
 
-{ #category : 'Instance Creation' }
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
 TFReduceMean class >> allAxisOf: aTFOperation [
 
-	^(1 to: aTFOperation value outputDimensions) collect: [:axis | axis - 1]
+	^(1 to: aTFOperation outputDimensions) collect: [:axis | axis - 1]
 ]
 
 { #category : 'Instance Creation' }

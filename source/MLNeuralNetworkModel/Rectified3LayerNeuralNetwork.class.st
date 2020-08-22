@@ -206,7 +206,7 @@ Rectified3LayerNeuralNetwork >> initializeLossLayer [
 		inScopeNamed: 'loss'
 		do: [
 			expectedLabel := tf integerInputNamed: 'expectedLabel'.
-			lossToMinimize := TFCrossEntropyError of: modelOutput whenExpectedIs: expectedLabel.
+			lossToMinimize := TFSparseCategoricalCrossEntropy of: modelOutput whenExpectedIs: expectedLabel.
 			loss := TFReduceMean named: 'loss' ofValuesIn: lossToMinimize loss alongside: #(0)]
 ]
 

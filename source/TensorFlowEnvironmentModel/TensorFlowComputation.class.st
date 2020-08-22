@@ -170,6 +170,15 @@ TensorFlowComputation >> newOperationOf: anOperationType namePrefixed: anOperati
 ]
 
 { #category : 'Accessing' }
+TensorFlowComputation >> operationNamed: aName [
+
+	^self
+		withOperationNamed: aName
+		do: [:op | ^op]
+		ifNone: [self error: (#'Operation named <1p> not found in the graph' expandMacrosWith: aName)]
+]
+
+{ #category : 'Accessing' }
 TensorFlowComputation >> withOperationNamed: aName do: aBlock ifNone: aNoneBlock [
 
 

@@ -110,6 +110,12 @@ TFOperationAbstract >> operationName [
 ]
 
 { #category : 'Accessing - TF Operation' }
+TFOperationAbstract >> outputDimensions [
+
+	^self value outputDimensions
+]
+
+{ #category : 'Accessing - TF Operation' }
 TFOperationAbstract >> outputOn: aGraph [
 
 	^self value outputOn: aGraph
