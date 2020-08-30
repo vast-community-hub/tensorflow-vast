@@ -36,6 +36,12 @@ TFSparseCategoricalCrossEntropy >> backpropagatedGradient [
 	^value output: 1
 ]
 
+{ #category : 'Accessing' }
+TFSparseCategoricalCrossEntropy >> expectedVariableName [
+
+	^labels operationName
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFSparseCategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [

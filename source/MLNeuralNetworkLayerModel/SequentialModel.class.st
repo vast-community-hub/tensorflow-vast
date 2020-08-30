@@ -29,10 +29,25 @@ SequentialModel >> initializeComposedOf: aLayersCollection applyingToLogits: aBl
 	value := aBlock value: logits.
 ]
 
+{ #category : 'Calculate' }
+SequentialModel >> inputVariableName [
+
+	^layers first inputVariableName
+]
+
 { #category : 'Accessing' }
 SequentialModel >> logits [
 
 	^logits
+]
+
+{ #category : 'Calculate' }
+SequentialModel >> predictFrom: anInput [
+
+	^self computeWith: (
+		Dictionary new
+			at: self inputVariableName put: anInput;
+			yourself)
 ]
 
 { #category : 'Printing' }

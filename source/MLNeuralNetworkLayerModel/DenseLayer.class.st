@@ -106,6 +106,12 @@ DenseLayer >> initializeWeightFrom: aVariableSpec [
 	trainableVariables add: weights
 ]
 
+{ #category : 'Accessing' }
+DenseLayer >> inputVariableName [
+
+	^input operationName
+]
+
 { #category : 'Initialization' }
 DenseLayer >> printOn: aStream [
 

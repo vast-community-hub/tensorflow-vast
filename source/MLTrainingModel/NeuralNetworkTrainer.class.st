@@ -81,10 +81,10 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 			using: optimizer
 			until: stopCondition.
 	trainingNumber := 0.
-	
+
 	afterTrainingCallback value: trainingNumber value: summary.
 	[
-		summary addLossAfter: [aTraining value: optimization].
+		summary addLossAfter: [aTraining value: loss value: optimization].
 		trainingNumber := trainingNumber + 1.
 		afterTrainingCallback value: trainingNumber value: summary.
 		stopCondition isModelWellTrainedAccording: summary]
@@ -97,13 +97,13 @@ NeuralNetworkTrainer >> train: aModel toFitPredictionFrom: anInstanceCollection 
 
 	^self
 		train: aModel
-		doing: [:optimization |
+		doing: [:loss :optimization |
 			tf
 				compute: optimization
 				feedingInputsWith: (
 					Dictionary new
-						at: 'input' put: anInstanceCollection;
-						at: 'expected' put: aTarget;
+						at: aModel inputVariableName put: anInstanceCollection;
+						at: loss expectedVariableName put: aTarget;
 						yourself)]
 ]
 

@@ -21,6 +21,12 @@ TFCrossEntropyMean >> backpropagatedGradient [
 		and: ((TFReduceSum valuesIn: crossEntropy value shape) value castTo: TFTensor typeFloat)
 ]
 
+{ #category : 'Accessing' }
+TFCrossEntropyMean >> expectedVariableName [
+
+	^crossEntropy expectedVariableName
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFCrossEntropyMean >> initializeOf: aCrossEntropyLoss [

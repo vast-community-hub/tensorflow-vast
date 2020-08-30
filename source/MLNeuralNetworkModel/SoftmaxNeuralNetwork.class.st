@@ -47,8 +47,7 @@ SoftmaxNeuralNetwork >> initializeFeedforward [
 				builtWith: [:layer |
 					layer
 						inputSize: self inputSize;
-						weightInitializedToZero;
-						biasInitializedToZero];
+						weightInitializedToZero];
 			buildApplyingToLogits: [:logits |
 				TFIndexWithMaximum named: 'prediction' in: logits softmax across: 1]
 ]

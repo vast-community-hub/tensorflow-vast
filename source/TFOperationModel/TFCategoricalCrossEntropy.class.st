@@ -33,6 +33,12 @@ TFCategoricalCrossEntropy >> backpropagatedGradient [
 	^value output: 1
 ]
 
+{ #category : 'Accessing' }
+TFCategoricalCrossEntropy >> expectedVariableName [
+
+	^labelProbabilities operationName
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TFCategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [

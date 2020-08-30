@@ -21,6 +21,16 @@ NeuralNetworkTrainingSummary class >> of: aModel trainedMinimizing: aLossFunctio
 		until: aStopCondition
 ]
 
+{ #category : 'Compute' }
+NeuralNetworkTrainingSummary >> accuracyOfPredictionFrom: anInput whenExpectedIs: anExpectedValues [
+
+	^lossFunction computeWith: (
+		Dictionary new
+			at: model inputVariableName put: anInput;
+			at: lossFunction expectedVariableName put: anExpectedValues;
+			yourself)
+]
+
 { #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> addLossAfter: aTraining [
 

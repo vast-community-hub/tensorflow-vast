@@ -8,27 +8,21 @@ Class {
   #vaVisibility : 'private' }
 SequentialModelBuilderTest >> inputWithFourFeatures [
 
-	^(Dictionary new)
-		at: 'input' put: #((1 2 3 4) (4 3 2 1)) asFloatTensor;
-		yourself
+	^#((1 2 3 4) (4 3 2 1)) asFloatTensor
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 SequentialModelBuilderTest >> inputWithThreeFeatures [
 
-	^(Dictionary new)
-		at: 'input' put: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor;
-		yourself
+	^#((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 SequentialModelBuilderTest >> inputWithTwoFeatures [
 
-	^(Dictionary new)
-		at: 'input' put: #((1 2)) asFloatTensor;
-		yourself
+	^#((1 2)) asFloatTensor
 ]
 
 { #category : 'Tests' }
@@ -46,8 +40,14 @@ SequentialModelBuilderTest >> testBuildWithArgMaxOnLogits [
 			buildApplyingToLogits: [:logits | logits argMaxOnRows].
 
 	inputValues := self inputWithFourFeatures.
-	self assert: (model logits computeWith: inputValues) isMatrixCloseTo: #((0.6 2.2) (0.9 0.8)).
-	self assert: (model computeWith: inputValues) isVectorTyped: TFTensor typeInt64 closeTo: #(1 0)
+	self
+		assert: (
+			model logits computeWith: (
+				Dictionary new
+					at: model inputVariableName put: inputValues;
+					yourself))
+		isMatrixCloseTo: #((0.6 2.2) (0.9 0.8)).
+	self assert: (model predictFrom: inputValues) isVectorTyped: TFTensor typeInt64 closeTo: #(1 0)
 ]
 
 { #category : 'Tests' }
@@ -57,16 +57,11 @@ SequentialModelBuilderTest >> testOneLayerInitializedRandomly [
 
 	model :=
 		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 2
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedRandomly;
-						biasInitializedToZero];
+			addDenseLayerSized: 2 builtWith: [:layer | layer inputSize: 3];
 			build.
-			
-	result := model computeWith: self inputWithThreeFeatures.
-	
+
+	result := model predictFrom: self inputWithThreeFeatures.
+
 	self assert: result type equals: TFTensor typeFloat.
 	self assert: result shape equals: #(4 2)
 ]
@@ -85,9 +80,9 @@ SequentialModelBuilderTest >> testOneLayerInitializedToZero [
 						weightInitializedToZero;
 						biasInitializedToZero];
 			build.
-			
+
 	self
-		assert: (model computeWith: self inputWithThreeFeatures)
+		assert: (model predictFrom: self inputWithThreeFeatures)
 		isMatrixCloseTo: #((0 0) (0 0) (0 0) (0 0))
 ]
 
@@ -105,9 +100,9 @@ SequentialModelBuilderTest >> testOneLayerInitializedToZeroWithBias [
 						weightInitializedToZero;
 						biasInitializedTo: #(0.7 0.3)];
 			build.
-			
+
 	self
-		assert: (model computeWith: self inputWithThreeFeatures)
+		assert: (model predictFrom: self inputWithThreeFeatures)
 		isMatrixCloseTo: #((0.7 0.3) (0.7 0.3) (0.7 0.3) (0.7 0.3))
 ]
 
@@ -122,7 +117,8 @@ SequentialModelBuilderTest >> testOneLayerModelCharacteristics [
 				builtWith: [:layer |
 					layer
 						inputSize: 2;
-						weightInitializedTo: #((2) (3))];
+						weightInitializedTo: #((2) (3));
+						withoutBias];
 			build.
 
 	self
@@ -144,11 +140,12 @@ SequentialModelBuilderTest >> testOneLayerModelPrediction [
 				builtWith: [:layer |
 					layer
 						inputSize: 2;
-						weightInitializedTo: #((2) (3))];
+						weightInitializedTo: #((2) (3));
+						withoutBias];
 			build.
-			
+
 	self
-		assert: (model computeWith: self inputWithTwoFeatures)
+		assert: (model predictFrom: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
 			(OrderedCollection new)
 				add: 1 * 2 + (2 * 3);
@@ -172,9 +169,9 @@ SequentialModelBuilderTest >> testOneLayerWithBias [
 						weightInitializedTo: #((2) (3));
 						biasInitializedTo: #(4)];
 			build.
-			
+
 	self
-		assert: (model computeWith: self inputWithTwoFeatures)
+		assert: (model predictFrom: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
 			(OrderedCollection new)
 				add: 1 * 2 + (2 * 3) + 4;
@@ -198,7 +195,7 @@ SequentialModelBuilderTest >> testOneLayerWithBiasAndActivation [
 			build.
 
 	self
-		assert: (model computeWith: self inputWithTwoFeatures)
+		assert: (model predictFrom: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
 			(OrderedCollection new)
 				add: (1 * 2 + (2 * 3) + 4) sigmoid;
@@ -220,10 +217,7 @@ SequentialModelBuilderTest >> testTwoLayersModelCharacteristics [
 						biasInitializedTo: #(0.7 0.3);
 						activatedBySigmoid];
 			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						weightInitializedTo: #((-2.5) (-5.2));
-						biasInitializedToZero];
+				builtWith: [:layer | layer weightInitializedTo: #((-2.5) (-5.2))];
 			build.
 
 	self
@@ -257,14 +251,11 @@ SequentialModelBuilderTest >> testTwoLayersModelPrediction [
 						biasInitializedTo: #(0.7 0.3);
 						activatedBySigmoid];
 			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						weightInitializedTo: #((-2.5) (-5.2));
-						biasInitializedToZero];
+				builtWith: [:layer | layer weightInitializedTo: #((-2.5) (-5.2))];
 			build.
 
 	self
-		assert: (model computeWith: self inputWithThreeFeatures)
+		assert: (model predictFrom: self inputWithThreeFeatures)
 		isMatrixCloseTo: #((-6.357518) (-5.524584) (-6.440332) (-6.8832903)).
 	self
 		assert: model trainableVariables

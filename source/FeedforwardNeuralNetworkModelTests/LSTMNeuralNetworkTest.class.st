@@ -23,7 +23,7 @@ LSTMNeuralNetworkTest >> testPredictAndCompare [
 	self
 		assert: (prediction at: 'Tanh_2')
 		isMatrixCloseTo: #(-9.95241761207581e-1 -9.94422078132629e-1).
-	self assert: (prediction at: 'Mean') isFloatScalarCloseTo: 66.7607879638672
+	self assert: (prediction at: 'MSE') isFloatScalarCloseTo: 66.7607879638672
 ]
 
 { #category : 'Test' }

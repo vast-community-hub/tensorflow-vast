@@ -89,9 +89,9 @@ DenseLayerBuilder >> initializeOfSize: aNumberOfOutputFeatures receiving: anInpu
 	input := anInput.
 
 	inputSize := nil.
-	weightSpecification := nil.
-	biasSpecification := nil.
-	activation := nil
+	activation := nil.
+	self weightInitializedRandomly.
+	self biasInitializedToZero
 ]
 
 { #category : 'Configuring' }
@@ -129,4 +129,10 @@ DenseLayerBuilder >> weightInitializedWith: anVariableInitializer [
 DenseLayerBuilder >> weightSpecifiedBy: aVariableSpecification [
 
 	weightSpecification := aVariableSpecification
+]
+
+{ #category : 'Configuring - Bias' }
+DenseLayerBuilder >> withoutBias [
+
+	self biasSpecifiedBy: nil
 ]

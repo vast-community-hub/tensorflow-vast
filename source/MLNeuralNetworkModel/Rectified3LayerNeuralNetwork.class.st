@@ -49,7 +49,6 @@ Rectified3LayerNeuralNetwork >> initializeFeedforward [
 					layer
 						inputSize: inputSize;
 						weightInitializedWith: (self randomInitializerFor: inputSize);
-						biasInitializedToZero;
 						activatedByRelu];
 			addDenseLayerSized: 32
 				builtWith: [:layer | | inputSize |
@@ -57,15 +56,13 @@ Rectified3LayerNeuralNetwork >> initializeFeedforward [
 					layer
 						inputSize: inputSize;
 						weightInitializedWith: (self randomInitializerFor: inputSize);
-						biasInitializedToZero;
 						activatedByRelu];
 			addDenseLayerSized: 10
 				builtWith: [:layer | | inputSize |
 					inputSize := 32.
 					layer
 						inputSize: inputSize;
-						weightInitializedWith: (self randomInitializerFor: inputSize);
-						biasInitializedToZero];
+						weightInitializedWith: (self randomInitializerFor: inputSize)];
 			buildApplyingToLogits: [:logits |
 				TFIndexWithMaximum named: 'prediction' in: logits softmax across: 1]
 ]

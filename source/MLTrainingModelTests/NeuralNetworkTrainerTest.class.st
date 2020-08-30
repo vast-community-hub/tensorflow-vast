@@ -4,6 +4,20 @@ Class {
 	#category : 'MLTrainingModelTests'
 }
 
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainerTest >> expectedLabels [
+
+	^#(0 1 0 0) asInt32Tensor
+]
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainerTest >> expectedProbabilityByLabel [
+
+	^#((0 1) (1 0) (0 1) (1 1)) asFloatTensor
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 NeuralNetworkTrainerTest >> logictStatements [
@@ -45,6 +59,29 @@ NeuralNetworkTrainerTest >> testAfterTrainingCallback [
 ]
 
 { #category : 'Tests' }
+NeuralNetworkTrainerTest >> testCalculateLossAfterTraining [
+
+	| model summary |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		(NeuralNetworkTrainer on: tf)
+			minimizeCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
+			train: model
+				toFitPredictionFrom: self logictStatements
+				to: self expectedProbabilityByLabel.
+
+	self assert: (model predictFrom: self logictStatements) isLargeIntegerVectorEqualsTo: #(1 1 1 1).
+	self
+		assert: (
+			summary
+				accuracyOfPredictionFrom: self logictStatements
+				whenExpectedIs: self expectedProbabilityByLabel)
+		isFloatScalarCloseTo: 8.46859931945801e-1
+]
+
+{ #category : 'Tests' }
 NeuralNetworkTrainerTest >> testStopTrainingAfterLossHasNotImprovedADelta [
 
 	| model summary |
@@ -56,8 +93,8 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossHasNotImprovedADelta [
 			stopTrainingWhen: (LossHasNotImproved moreThan: 0.005);
 			train: model
 				toFitPredictionFrom: self logictStatements
-				to: #((0 1) (1 0) (0 1) (1 1)) asFloatTensor.
-
+				to: self expectedProbabilityByLabel.
+				
 	self assert: summary totalNumberOfEpochs equals: 25
 ]
 
@@ -73,8 +110,8 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossReachedAMinimum [
 			stopTrainingWhen: (LossReachedMinimum lowerThan: 0.5);
 			train: model
 				toFitPredictionFrom: self logictStatements
-				to: #((0 1) (1 0) (0 1) (1 1)) asFloatTensor.
-
+				to: self expectedProbabilityByLabel.
+				
 	self assert: summary totalNumberOfEpochs equals: 67.
 	self assert: (summary historicalTrainingLoss at: 66) > 0.5.
 	self assert: (summary historicalTrainingLoss at: 67) <= 0.5
@@ -115,7 +152,7 @@ NeuralNetworkTrainerTest >> testTrainMinimizingCategoricalCrossEntropyUsingGradi
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model
 				toFitPredictionFrom: self logictStatements
-				to: #((0 1) (1 0) (0 1) (1 1)) asFloatTensor.
+				to: self expectedProbabilityByLabel.
 
 	self assert: summary totalNumberOfEpochs equals: 1.
 
@@ -124,13 +161,8 @@ NeuralNetworkTrainerTest >> testTrainMinimizingCategoricalCrossEntropyUsingGradi
 		isMatrixCloseTo: #(
 			(1.45656336098909e-2 3.54343727231026e-2) (6.45656362175942e-2 -1.45656289532781e-2)
 			(4.68484535813332e-2 3.15155694261193e-3)).
-	self
-		assert: (
-			model computeWith: (
-				Dictionary new
-					at: 'input' put: self logictStatements;
-					yourself))
-		isLargeIntegerVectorEqualsTo: #(1 1 1 1)
+
+	self assert: (model predictFrom: self logictStatements) isLargeIntegerVectorEqualsTo: #(1 1 1 1)
 ]
 
 { #category : 'Tests' }
@@ -145,20 +177,15 @@ NeuralNetworkTrainerTest >> testTrainMinimizingMeanSquaredErrorUsingGradientDesc
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model
 				toFitPredictionFrom: self logictStatements
-				to: #((0 1) (1 0) (0 1) (1 1)) asFloatTensor.
-	
+				to: self expectedProbabilityByLabel.
+				
 	self assert: summary totalNumberOfEpochs equals: 1.
 	self
 		assertOutputOf: (tf operationNamed: 'weight')
 		isMatrixCloseTo: #((0.03 0.02) (0.08 -0.03) (0.07 -0.02)).
 	self assertOutputOf: (tf operationNamed: 'bias') isFloatVectorCloseTo: #(0.26 0.79).
-	self
-		assert: (
-			model computeWith: (
-				Dictionary new
-					at: 'input' put: self logictStatements;
-					yourself))
-		isLargeIntegerVectorEqualsTo: #(1 1 1 1)
+	
+	self assert: (model predictFrom: self logictStatements) isLargeIntegerVectorEqualsTo: #(1 1 1 1)
 ]
 
 { #category : 'Tests' }
@@ -171,19 +198,14 @@ NeuralNetworkTrainerTest >> testTrainMinimizingSparseCategoricalCrossEntropyUsin
 		(NeuralNetworkTrainer on: tf)
 			minimizeSparseCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-			train: model toFitPredictionFrom: self logictStatements to: #(0 1 0 0) asInt32Tensor.
-
+			train: model toFitPredictionFrom: self logictStatements to: self expectedLabels.
+			
 	self assert: summary totalNumberOfEpochs equals: 1.
 	self
 		assertOutputOf: (tf operationNamed: 'weight')
 		isMatrixCloseTo: #(
 			(6.45656362175942e-2 -6.45656287670136e-2) (1.45656336098909e-2 -1.45656289532781e-2)
 			(4.68484535813332e-2 -4.68484424054623e-2)).
-	self
-		assert: (
-			model computeWith: (
-				Dictionary new
-					at: 'input' put: self logictStatements;
-					yourself))
-		isLargeIntegerVectorEqualsTo: #(1 1 1 1)
+			
+	self assert: (model predictFrom: self logictStatements) isLargeIntegerVectorEqualsTo: #(1 1 1 1)
 ]

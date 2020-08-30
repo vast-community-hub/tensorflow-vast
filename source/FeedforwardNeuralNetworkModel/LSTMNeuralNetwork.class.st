@@ -64,19 +64,16 @@ LSTMNeuralNetwork >> initializeFeedforward [
 					layer
 						inputSize: 3;
 						weightInitializedWith: random;
-						biasInitializedToZero;
 						activatedByTanh];
 			addDenseLayerSized: 2
 				builtWith: [:layer |
 					layer
 						weightInitializedWith: random;
-						biasInitializedToZero;
 						activatedByTanh];
 			addDenseLayerSized: 1
 				builtWith: [:layer |
 					layer
 						weightInitializedWith: random;
-						biasInitializedToZero;
 						activatedByTanh];
 			build
 ]
