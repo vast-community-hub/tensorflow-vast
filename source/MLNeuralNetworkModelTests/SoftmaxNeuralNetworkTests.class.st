@@ -39,7 +39,7 @@ SoftmaxNeuralNetworkTests >> testMNISTSoftMaxLossGraph [
 	self assert: prediction asNumbers first equals: 0.
 	self assert: prediction asNumbers second equals: 0.
 
-	loss := results at: 'loss/loss'.
+	loss := results at: 'loss/Mean'.
 	self assert: #() equals: loss shape.
 	self assert: loss allFloats sum abs > 0
 ]
@@ -55,7 +55,7 @@ SoftmaxNeuralNetworkTests >> testPrediction [
 	nn := SoftmaxNeuralNetwork new.
 	result := nn predictFrom: images andCompareTo: labels.
 
-	loss := (result at: 'loss/loss') asNumbers.
+	loss := (result at: 'loss/Mean') asNumbers.
 	self deny: (loss closeTo: 0).
 
 	nn :=
@@ -64,7 +64,7 @@ SoftmaxNeuralNetworkTests >> testPrediction [
 			buildBasedOn: nn toFitPredictionFrom: images to: labels.
 			
 	result := nn predictFrom: images andCompareTo: labels.
-	loss := (result at: 'loss/loss') asNumbers.
+	loss := (result at: 'loss/Mean') asNumbers.
 	self assert: (0 closeTo: loss).
 
 	prediction := nn predictFrom: images.

@@ -1,4 +1,4 @@
 Package {
 	#name : 'MLNeuralNetworkModel',
-	#vaPrerequisites : ['TFOperationGradientModel','TFOptimizerModel','TFVariableSpecificationModel']
+	#vaPrerequisites : ['MLTrainingModel','TFOptimizerModel']
 }

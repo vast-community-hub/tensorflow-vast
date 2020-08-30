@@ -1,4 +1,4 @@
 Package {
 	#name : 'FeedforwardNeuralNetworkModel',
-	#vaPrerequisites : ['MLNeuralNetworkModel','TFRegularizationModel']
+	#vaPrerequisites : ['MLNeuralNetworkModel','TFOperationGradientModel','TFRegularizationModel']
 }

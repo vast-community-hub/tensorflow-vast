@@ -79,6 +79,38 @@ TFCrossEntropyErrorTest >> testCategoricalCrossEntropyOperationName [
 ]
 
 { #category : 'Test' }
+TFCrossEntropyErrorTest >> testCategoricalCrossEntropyPrintString [
+
+	| labels logits |
+
+	labels :=
+		tf
+			variableNamed: 'expected'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	logits :=
+		tf
+			variableNamed: 'features'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	self
+		assert: (TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels) printString
+		equals: 'Categorical Cross Entropy'
+]
+
+{ #category : 'Test' }
 TFCrossEntropyErrorTest >> testFromTensorflowExamplesForCategoricalCrossEntropy [
 	"\tensorflow\compiler\tests\binary_ops_test.py"
 
@@ -114,6 +146,148 @@ TFCrossEntropyErrorTest >> testFromTensorflowExamplesForCategoricalCrossEntropy 
 				add: #(-0.067941 -0.112856 -0.063117 0.243914);
 				add: #(-0.367941 -0.212856 0.036883 0.543914);
 				yourself)
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testReducedMeanSparseCategoricalCrossEntropy [
+
+	| logits labels logitsTensor crossEntropy |
+
+	logits :=
+		OrderedCollection new
+			add: #(0.1 0.2);
+			add: #(0.1 0.2);
+			add: #(0 0);
+			yourself.
+	logitsTensor := tf variableNamed: 'features' with: logits asFloatTensor.
+	labels := tf variableNamed: 'expected' with: #(0 1 0) asInt32Tensor.
+
+	crossEntropy :=
+		TFCrossEntropyMean
+			of: (TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels).
+
+	self
+		assertOutputOf: crossEntropy
+		isFloatScalarCloseTo: (
+			OrderedCollection new
+				add: ((logits at: 1) softmax at: 1) ln negated;
+				add: ((logits at: 2) softmax at: 2) ln negated;
+				add: ((logits at: 3) softmax at: 1) ln negated;
+				mean).
+
+	self
+		assertOutputOf: crossEntropy backpropagatedGradient
+		isMatrixCloseTo: (
+			OrderedCollection new
+				add: #(-1.74993067979813e-1 1.74993067979813e-1);
+				add: #(1.58340275287628e-1 -1.58340275287628e-1);
+				add: #(-0.16666667163372 0.16666667163372);
+				yourself)
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testReducedMeanSparseCategoricalCrossEntropyPrintString [
+
+	| logits labels logitsTensor crossEntropy |
+
+	logits :=
+		OrderedCollection new
+			add: #(0.1 0.2);
+			add: #(0.1 0.2);
+			add: #(0 0);
+			yourself.
+	logitsTensor := tf variableNamed: 'features' with: logits asFloatTensor.
+	labels := tf variableNamed: 'expected' with: #(0 1 0) asInt32Tensor.
+
+	crossEntropy :=
+		TFCrossEntropyMean
+			of: (TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels).
+
+	self
+		assert: crossEntropy printString
+		equals: 'Sparse Categorical Cross Entropy (Reduced to scalar with mean)'
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testReduceMeanCategoricalCrossEntropy [
+
+	| labels logits crossEntropy |
+
+	labels :=
+		tf
+			variableNamed: 'expected'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	logits :=
+		tf
+			variableNamed: 'features'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	crossEntropy :=
+		TFCrossEntropyMean
+			of: (TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels).
+
+	self
+		assertOutputOf: crossEntropy
+		isFloatScalarCloseTo:
+			#(0.715673923492432 0.698368966579437 0.715673923492432 0.988751113414764) mean.
+	self
+		assertOutputOf: crossEntropy backpropagatedGradient
+		isMatrixCloseTo: (
+			(OrderedCollection new)
+				add: #(-9.05902832746506e-2 5.26961199939251e-2 3.53941768407822e-2);
+				add: #(5.47672249376774e-2 3.55271473526955e-2 -9.0294361114502e-2);
+				add: #(-9.05902832746506e-2 5.26961199939251e-2 3.53941768407822e-2);
+				add: #(8.33333283662796e-3 8.33333283662796e-3 8.33333283662796e-3);
+				yourself)
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testReduceMeanCategoricalCrossEntropyPrintString [
+
+	| labels logits crossEntropy |
+
+	labels :=
+		tf
+			variableNamed: 'expected'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	logits :=
+		tf
+			variableNamed: 'features'
+			with: (
+				(OrderedCollection new)
+					add: #(0.9 0.01 0.1);
+					add: #(0.0 0.1 0.9);
+					add: #(0.9 0.01 0.1);
+					add: #(0.3 0.3 0.3);
+					asFloatTensor).
+
+	crossEntropy :=
+		TFCrossEntropyMean
+			of: (TFCategoricalCrossEntropy of: logits whenExpectedProbabilityIs: labels).
+
+	self
+		assert: crossEntropy printString
+		equals: 'Categorical Cross Entropy (Reduced to scalar with mean)'
 ]
 
 { #category : 'Test' }
@@ -168,4 +342,23 @@ TFCrossEntropyErrorTest >> testSparseCategoricalCrossEntropyOperationName [
 			isNamedInGraphAs: 'loss';
 		assert: (TFSparseCategoricalCrossEntropy named: 'loss' of: logitsTensor whenExpectedIs: labels)
 			isNamedInGraphAs: 'loss_1'
+]
+
+{ #category : 'Test' }
+TFCrossEntropyErrorTest >> testSparseCategoricalCrossEntropyPrintString [
+
+	| logits labels logitsTensor |
+
+	logits :=
+		OrderedCollection new
+			add: #(0.1 0.2);
+			add: #(0.1 0.2);
+			add: #(0 0);
+			yourself.
+	logitsTensor := tf variableNamed: 'features' with: logits asFloatTensor.
+	labels := tf variableNamed: 'expected' with: #(0 1 0) asInt32Tensor.
+
+	self
+		assert: (TFSparseCategoricalCrossEntropy of: logitsTensor whenExpectedIs: labels) printString
+		equals: 'Sparse Categorical Cross Entropy'
 ]

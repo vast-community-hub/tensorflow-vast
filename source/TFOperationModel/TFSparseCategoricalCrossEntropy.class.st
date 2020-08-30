@@ -61,3 +61,9 @@ TFSparseCategoricalCrossEntropy >> mean [
 
 	^TFCrossEntropyMean of: self
 ]
+
+{ #category : 'Printing' }
+TFSparseCategoricalCrossEntropy >> printOn: aStream [
+
+	aStream nextPutAll: 'Sparse Categorical Cross Entropy'
+]

@@ -28,3 +28,10 @@ TFCrossEntropyMean >> initializeOf: aCrossEntropyLoss [
 	crossEntropy := aCrossEntropyLoss.
 	value := TFReduceMean ofValuesIn: aCrossEntropyLoss
 ]
+
+{ #category : 'Printing' }
+TFCrossEntropyMean >> printOn: aStream [
+
+
+	aStream nextPutAll: ('<1p> (Reduced to scalar with mean)' expandMacrosWith: crossEntropy)
+]

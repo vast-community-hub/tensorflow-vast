@@ -7,23 +7,20 @@ Class {
 { #category : 'Tests' }
 TFIndexWithMaximumTest >> testIndexWithMaximumValueAcrossAxis [
 
-	| tensor maxAcross0 maxAcross1 |
+	| tensor |
 
 	tensor :=
 		tf
 			floatConstantWith: (
-				OrderedCollection new
+				(OrderedCollection new)
 					add: #(1.1 1.2);
 					add: #(2.1 2.2);
 					add: #(3.1 0.2);
 					yourself)
 			named: 'tensor'.
-
-	maxAcross0 := tensor argMaxAcross: 0.
-	maxAcross1 := tensor argMaxAcross: 1.
-
-	self assertOutputOf: maxAcross0 isLargeIntegerVectorEqualsTo: #(2 1).
-	self assertOutputOf: maxAcross1 isLargeIntegerVectorEqualsTo: #(1 1 0)
+			
+	self assertOutputOf: tensor argMaxOnColumns isLargeIntegerVectorEqualsTo: #(2 1).
+	self assertOutputOf: tensor argMaxOnRows isLargeIntegerVectorEqualsTo: #(1 1 0)
 ]
 
 { #category : 'Tests' }

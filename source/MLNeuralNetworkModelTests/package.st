@@ -1,4 +1,4 @@
 Package {
 	#name : 'MLNeuralNetworkModelTests',
-	#vaPrerequisites : ['LibTensorFlowExamplesApp','MLNeuralNetworkModel','MLTrainingModel']
+	#vaPrerequisites : ['LibTensorFlowExamplesApp','MLNeuralNetworkModel']
 }

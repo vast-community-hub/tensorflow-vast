@@ -2,152 +2,101 @@ Class {
 	#name : 'SoftmaxNeuralNetwork',
 	#superclass : 'NeuralNetwork',
 	#instVars : [
-		'session',
-		'weights',
-		'biases',
-		'prediction',
-		'input',
-		'loss',
-		'expectedLabel',
-		'learnWeights',
-		'learnBiases',
 		'tf',
-		'lossToMinimize',
-		'modelOutput'
+		'loss',
+		'prediction',
+		'optimization'
 	],
 	#category : 'MLNeuralNetworkModel'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'Accessing' }
 SoftmaxNeuralNetwork class >> new [
-
+	
 	^super new initialize
 ]
 
-{ #category : 'initialization',
+{ #category : 'Initialization',
   #vaVisibility : 'private' }
 SoftmaxNeuralNetwork >> initialize [
 
 	tf := TensorFlowComputation new.
-
-	self
-		initializeParameters;
-		initializeInferenceGraph;
-		initializeLossGraph;
-		initializeLearningGraph 
+	tf inScopeNamed: 'inference' do: [self initializeFeedforward].
+	tf inScopeNamed: 'loss' do: [self initializeLossLayer].
+	self initializeBackpropagation
 ]
 
-{ #category : 'initialization',
+{ #category : 'Initialization',
   #vaVisibility : 'private' }
-SoftmaxNeuralNetwork >> initializeInferenceGraph [
+SoftmaxNeuralNetwork >> initializeBackpropagation [
 
-	tf
-		inScopeNamed: 'inference'
-		do: [
-			input := tf floatInputNamed: 'input'.
-			modelOutput := (input dot: weights) biasedBy: biases.
-			prediction :=
-				TFIndexWithMaximum
-					named: 'prediction'
-					in: (TFSoftmaxActivation activating: modelOutput)
-					across: 1]
+	optimization :=
+		ModelUpdater
+			updating: prediction
+			toMinimize: loss
+			using: (TFGradientDescent scalingBy: 0.9 asTensor)
 ]
 
-{ #category : 'initialization',
+{ #category : 'Initialization',
   #vaVisibility : 'private' }
-SoftmaxNeuralNetwork >> initializeLearningGraph [
+SoftmaxNeuralNetwork >> initializeFeedforward [
 
-	tf
-		inScopeNamed: 'learning'
-		do: [| batchSize optimizer gradient biasGradient |
-			optimizer := TFGradientDescent scalingBy: 0.9 asTensor.
-			gradient := lossToMinimize backpropagatedGradient.
-			biasGradient := TFReduceMean ofValuesIn: gradient alongside: #(0).
-
-			batchSize := (input value sizeOn: 0) castTo: TFTensor typeFloat.
-
-			learnWeights := optimizer apply: (input transposedDot: gradient) / batchSize to: weights.
-			learnBiases := optimizer apply: biasGradient to: biases]
+	prediction :=
+		(SequentialModelBuilder on: tf)
+			addDenseLayerSized: 10
+				builtWith: [:layer |
+					layer
+						inputSize: self inputSize;
+						weightInitializedToZero;
+						biasInitializedToZero];
+			buildApplyingToLogits: [:logits |
+				TFIndexWithMaximum named: 'prediction' in: logits softmax across: 1]
 ]
 
-{ #category : 'initialization',
+{ #category : 'Initialization',
   #vaVisibility : 'private' }
-SoftmaxNeuralNetwork >> initializeLossGraph [
+SoftmaxNeuralNetwork >> initializeLossLayer [
 
-	tf
-		inScopeNamed: 'loss'
-		do: [
-			expectedLabel := tf integerInputNamed: 'expectedLabel'.
-			lossToMinimize := TFSparseCategoricalCrossEntropy of: modelOutput whenExpectedIs: expectedLabel.
-			loss := TFReduceMean named: 'loss' ofValuesIn: lossToMinimize loss alongside: #(0)]
+	loss := (TFLossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
 ]
 
-{ #category : 'initialization',
-  #vaVisibility : 'private' }
-SoftmaxNeuralNetwork >> initializeParameters [
-
-	weights :=
-		tf
-			floatVariableNamed: 'weights'
-			shaped: (Array with: self inputSize with: self outputSize)
-			initializedWith: TFZeroInitializer new. 
-
-	biases :=
-		tf
-			floatVariableNamed: 'biases'
-			shaped: (Array with: self outputSize)
-			initializedWith: TFZeroInitializer new
-]
-
-{ #category : 'accessing',
-  #vaVisibility : 'private' }
+{ #category : 'Accessing' }
 SoftmaxNeuralNetwork >> inputSize [
 
 	^28 * 28
 ]
 
-{ #category : 'accessing',
-  #vaVisibility : 'private' }
-SoftmaxNeuralNetwork >> outputSize [
-
-	^10
-]
-
-{ #category : 'running' }
+{ #category : 'Predicting' }
 SoftmaxNeuralNetwork >> predictFrom: inputs [
 
 	^tf
 		compute: prediction
 		feedingInputsWith: (
 			Dictionary new
-				at: input operationName put: inputs asFloatTensor;
+				at: 'inference/input' put: inputs asFloatTensor;
 				yourself)
 ]
 
-{ #category : 'running' }
+{ #category : 'Predicting' }
 SoftmaxNeuralNetwork >> predictFrom: aFeatureTensor andCompareTo: anExpectedTensor [
 
 	^tf
 		computeAllNamed: (Array with: prediction operationName with: loss operationName)
 		feedingInputsWith: (
 			Dictionary new
-				at: input operationName put: aFeatureTensor asFloatTensor;
-				at: expectedLabel operationName put: anExpectedTensor asInt32Tensor;
-				yourself) 
+				at: 'inference/input' put: aFeatureTensor asFloatTensor;
+				at: 'loss/expected' put: anExpectedTensor asInt32Tensor;
+				yourself)
 ]
 
 { #category : 'Training' }
 SoftmaxNeuralNetwork >> updateWeightsToFitPredictionFrom: aFeatureTensor to: aTrainingLabelTensor [
 
 	tf
-		computeAllNamed: (
-			Array
-				with: loss operationName
-				with: learnWeights operationName
-				with: learnBiases operationName)
+		computeAllNamed: (Array with: optimization operationName)
 		feedingInputsWith: (
 			Dictionary new
-				at: input operationName put: aFeatureTensor asFloatTensor;
-				at: expectedLabel operationName put: aTrainingLabelTensor asInt32Tensor;
-				yourself) 
+				at: 'inference/input' put: aFeatureTensor asFloatTensor;
+				at: 'loss/expected' put: aTrainingLabelTensor asInt32Tensor;
+				yourself)
 ]

@@ -3,10 +3,7 @@ Class {
 	#superclass : 'TFOptimizer',
 	#instVars : [
 		'operationName',
-		'weightsTensor',
-		'learningRate',
-		'gradientsTensor',
-		'value'
+		'learningRate'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -39,4 +36,11 @@ TFGradientDescent >> initializeNamed: anOperationName scalingBy: aLearningRate [
 
 	operationName := anOperationName.
 	learningRate := aLearningRate
+]
+
+{ #category : 'Printing' }
+TFGradientDescent >> printOn: aStream [
+
+	aStream
+		nextPutAll: ('Gradient Descent with a learning rate of <1p>' expandMacrosWith: learningRate)
 ]

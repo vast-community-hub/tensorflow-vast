@@ -1,4 +1,4 @@
 Package {
 	#name : 'FeedforwardNeuralNetworkModelTests',
-	#vaPrerequisites : ['FeedforwardNeuralNetworkModel','MLTrainingModel','TensorFlowEnvironmentModelTests']
+	#vaPrerequisites : ['FeedforwardNeuralNetworkModel','TensorFlowEnvironmentModelTests']
 }

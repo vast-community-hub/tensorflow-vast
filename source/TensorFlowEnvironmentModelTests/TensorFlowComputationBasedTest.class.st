@@ -51,12 +51,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isFloatVectorCloseTo: anExpectedArray [
 
-	self
-		assert: anOutput
-		isOf: TFTensor typeFloat
-		with: (Array with: anExpectedArray size)
-		comparedTo: anExpectedArray
-		complying: [:actual :expected | self assert: actual closeTo: expected]
+	self assert: anOutput isVectorTyped: TFTensor typeFloat closeTo: anExpectedArray
 ]
 
 { #category : 'Test Support',
@@ -83,22 +78,41 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerMatrixCloseTo: aFloa
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assert: anOutput isMatrixCloseTo: aFloatMatrix [
-
-	| columns rows |
-
-	aFloatMatrix first isCollection
-		ifTrue: [
-			columns := aFloatMatrix first size.
-			rows := aFloatMatrix flatCollect: #yourself as: OrderedCollection]
-		ifFalse: [
-			columns := 1.
-			rows := aFloatMatrix].
+TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerVectorEqualsTo: anExpectedArray [
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeFloat
-		with: (Array with: aFloatMatrix size with: columns)
+		isOf: TFTensor typeInt64
+		with: (Array with: anExpectedArray size)
+		comparedTo: anExpectedArray
+		complying: [:actual :expected | self assert: actual equals: expected]
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isMatrixCloseTo: anExpectedMatrix [
+
+	self assert: anOutput isMatrixTyped: TFTensor typeFloat closeTo: anExpectedMatrix
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isMatrixTyped: aType closeTo: anExpectedMatrix [
+
+	| columns rows |
+
+	anExpectedMatrix first isCollection
+		ifTrue: [
+			columns := anExpectedMatrix first size.
+			rows := anExpectedMatrix flatCollect: #yourself as: OrderedCollection]
+		ifFalse: [
+			columns := 1.
+			rows := anExpectedMatrix].
+
+	self
+		assert: anOutput
+		isOf: aType
+		with: (Array with: anExpectedMatrix size with: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
@@ -122,6 +136,18 @@ TensorFlowComputationBasedTest >> assert: anOutput isOf: aType with: aShape comp
 	self assert: anOutput type equals: aType.
 	self assert: anOutput shape equals: aShape.
 	anOutput allElements with: anExpectedArray do: aBlock
+]
+
+{ #category : 'Asserting',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isVectorTyped: aType closeTo: anExpectedArray [
+
+	self
+		assert: anOutput
+		isOf: aType
+		with: (Array with: anExpectedArray size)
+		comparedTo: anExpectedArray
+		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
 
 { #category : 'Test Support',
@@ -180,12 +206,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerVectorEqu
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isLargeIntegerVectorEqualsTo: anExpectedArray [
 
-	self
-		assert: anOperation compute
-		isOf: TFTensor typeInt64
-		with: (Array with: anExpectedArray size)
-		comparedTo: anExpectedArray
-		complying: [:actual :expected | self assert: actual equals: expected]
+	self assert: anOperation compute isLargeIntegerVectorEqualsTo: anExpectedArray
 ]
 
 { #category : 'Test Support',

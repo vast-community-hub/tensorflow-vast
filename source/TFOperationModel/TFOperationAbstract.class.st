@@ -44,6 +44,20 @@ TFOperationAbstract >> argMaxAcross: anAxis [
 ]
 
 { #category : 'Operations' }
+TFOperationAbstract >> argMaxOnColumns [
+	" (This assumes a tensor of rank 2, i.e. matrix, to make the concept of column valid)
+	For each column, applies argMax "
+	^self argMaxAcross: 0
+]
+
+{ #category : 'Operations' }
+TFOperationAbstract >> argMaxOnRows [
+	" (This assumes a tensor of rank 2, i.e. matrix, to make the concept of row valid)
+	For each row, applies argMax "
+	^self argMaxAcross: 1
+]
+
+{ #category : 'Operations' }
 TFOperationAbstract >> argMinAcross: anAxis [
 
 	^TFIndexWithMinimum in: self across: anAxis

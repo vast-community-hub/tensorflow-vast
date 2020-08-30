@@ -1,41 +1,43 @@
 [
 	{
 		#applications : [
-			'FeedforwardNeuralNetworkModel' : '0.7',
+			'FeedforwardNeuralNetworkModel' : '0.8',
 			'MLNeuralNetworkExamples' : '0.2',
-			'MLNeuralNetworkLayerModel' : '1.15',
-			'MLNeuralNetworkModel' : '1.15'
+			'MLNeuralNetworkLayerModel' : '0.8',
+			'MLNeuralNetworkModel' : '0.8',
+			'MLTrainingModel' : '1.2'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'TensorFlow | Environment' : '1.21',
+					'TensorFlow | Environment' : '1.22',
 					'Platform Portability' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.12',
+		#versionName : '0.13',
 		#comment : ''
 	},
 	{
 		#applications : [
-			'FeedforwardNeuralNetworkModelTests' : '0.4',
-			'MLNeuralNetworkLayerModelTests' : '1.15',
-			'MLNeuralNetworkModelTests' : '0.2'
+			'FeedforwardNeuralNetworkModelTests' : '0.5',
+			'MLNeuralNetworkLayerModelTests' : '0.5',
+			'MLNeuralNetworkModelTests' : '0.5',
+			'MLTrainingModelTests' : '0.1'
 		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'Machine Learning TF | Runtime' : '0.12',
+					'Machine Learning TF | Runtime' : '0.13',
 					'SUnit' : 'V 9.2.0  [453]'
 				]
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.11',
+		#versionName : '0.12',
 		#comment : ''
 	},
 	{
@@ -100,14 +102,14 @@
 	{
 		#applications : [
 			'TensorFlowEnvironmentModel' : '1.15',
-			'TensorFlowEnvironmentModelTests' : '1.15',
+			'TensorFlowEnvironmentModelTests' : '1.16',
 			'TFOperationGradientFailingModelTests' : '1.13',
 			'TFOperationGradientModel' : '1.16',
 			'TFOperationGradientModelTests' : '1.14',
-			'TFOperationModel' : '1.15',
-			'TFOperationModelTests' : '1.15',
-			'TFOptimizerModel' : '1.14',
-			'TFOptimizerModelTests' : '1.1',
+			'TFOperationModel' : '1.16',
+			'TFOperationModelTests' : '1.16',
+			'TFOptimizerModel' : '1.16',
+			'TFOptimizerModelTests' : '1.16',
 			'TFRegularizationModel' : '1.1',
 			'TFRegularizationModelTests' : '1.2',
 			'TFTensorModifierModel' : '1.5',
@@ -123,7 +125,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.21',
+		#versionName : '1.22',
 		#comment : ''
 	},
 	{

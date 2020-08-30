@@ -4,420 +4,56 @@ Class {
 	#category : 'MLNeuralNetworkLayerModelTests'
 }
 
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndCategoricalCrossEntropyLoss [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+SequentialModelBuilderTest >> inputWithFourFeatures [
 
-	| model result logicStatements loss expected |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss := (TFLossBuilder for: model) buildCategoricalCrossEntropy.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isFloatScalarCloseTo: 0
+	^(Dictionary new)
+		at: 'input' put: #((1 2 3 4) (4 3 2 1)) asFloatTensor;
+		yourself
 ]
 
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndCategoricalCrossEntropyLossGradient [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+SequentialModelBuilderTest >> inputWithThreeFeatures [
 
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss := (TFLossBuilder for: model) buildCategoricalCrossEntropy.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0.5) (0.25) (0.5))
+	^(Dictionary new)
+		at: 'input' put: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor;
+		yourself
 ]
 
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndCategoricalCrossEntropyLossWithoutReducing [
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+SequentialModelBuilderTest >> inputWithTwoFeatures [
 
-	| model result logicStatements loss expected |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildCategoricalCrossEntropy.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isFloatVectorCloseTo: #(0 0 0 0)
+	^(Dictionary new)
+		at: 'input' put: #((1 2)) asFloatTensor;
+		yourself
 ]
 
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndCategoricalCrossEntropyLossWithoutReducingGradient [
+{ #category : 'Tests' }
+SequentialModelBuilderTest >> testBuildWithArgMaxOnLogits [
 
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildCategoricalCrossEntropy.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((2) (1) (2))
-]
-
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndMeanSquaredErrorGradient [
-
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss := (TFLossBuilder for: model) buildSquaredError.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0.2) (-0.3) (-0.2))
-]
-
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndMeanSquaredErrorLoss [
-
-	| model result logicStatements loss expected |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss := (TFLossBuilder for: model) buildMeanSquaredError.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isFloatScalarCloseTo: 0.19
-]
-
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndMeanSquaredErrorWithoutReducing [
-
-	| model result logicStatements loss expected |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildSquaredError.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0.04) (0.64) (0.04) (0.04))
-]
-
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndMeanSquaredErrorWithoutReducingGradient [
-
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 1
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildSquaredError.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #((0) (1) (0) (0)) asFloatTensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0.8) (-1.2) (-0.8))
-]
-
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndSparseCategoricalCrossEntropyLoss [
-
-	| model result logicStatements loss expected |
+	| model inputValues |
 
 	model :=
 		(SequentialModelBuilder on: tf)
 			addDenseLayerSized: 2
 				builtWith: [:layer |
 					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2 0.8)];
-			build.
+						inputSize: 4;
+						weightInitializedTo: #((0.2 -0.3) (0.1 0.5) (-0.2 0.1) (0.2 0.3))];
+			buildApplyingToLogits: [:logits | logits argMaxOnRows].
 
-	loss := (TFLossBuilder for: model) buildSparseCategoricalCrossEntropy.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #(0 1 0 0) asInt32Tensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isFloatScalarCloseTo: 0.887488
+	inputValues := self inputWithFourFeatures.
+	self assert: (model logits computeWith: inputValues) isMatrixCloseTo: #((0.6 2.2) (0.9 0.8)).
+	self assert: (model computeWith: inputValues) isVectorTyped: TFTensor typeInt64 closeTo: #(1 0)
 ]
 
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndSparseCategoricalCrossEntropyLossGradient [
-
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 2
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2 0.8)];
-			build.
-
-	loss := (TFLossBuilder for: model) buildSparseCategoricalCrossEntropy.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #(0 1 0 0) asInt32Tensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self
-		assert: result
-		isMatrixCloseTo: #(
-			(-0.32282817 0.32282814) (-0.07282817 0.07282814) (-0.23424226 0.23424222))
-]
-
-{ #category : 'Test - Loss' }
-SequentialModelBuilderTest >> testOneLayerAndSparseCategoricalCrossEntropyLossWithoutReducing [
-
-	| model result logicStatements loss expected |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 2
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2 0.8)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildSparseCategoricalCrossEntropy.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #(0 1 0 0) asInt32Tensor.
-	result :=
-		loss computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self assert: result isFloatVectorCloseTo: #(1.0374879 0.4374879 1.0374879 1.0374879)
-]
-
-{ #category : 'Test - Gradients' }
-SequentialModelBuilderTest >> testOneLayerAndSparseCategoricalCrossEntropyLossWithoutReducingGradient [
-
-	| model result logicStatements loss expected grads |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 2
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2 0.8)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildSparseCategoricalCrossEntropy.
-	grads := loss partialDerivativeWithRespectTo: (tf operationNamed: 'weight').
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #(0 1 0 0) asInt32Tensor.
-	result :=
-		grads computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-
-	self
-		assert: result
-		isMatrixCloseTo: #(
-			(-1.2913127 1.2913126) (-0.29131266 0.29131258) (-0.93696904 0.93696886))
-]
-
-{ #category : 'Test - Optimizer' }
-SequentialModelBuilderTest >> testOneLayerAndSparseCategoricalCrossEntropyLossWithoutReducingOptimizer [
-
-	| model logicStatements loss weight expected grads optimize |
-
-	model :=
-		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 2
-				builtWith: [:layer |
-					layer
-						inputSize: 3;
-						weightInitializedToZero;
-						biasInitializedTo: #(0.2 0.8)];
-			build.
-
-	loss :=
-		(TFLossBuilder for: model)
-			withoutReducing;
-			buildSparseCategoricalCrossEntropy.
-	weight := tf operationNamed: 'weight'.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (TFGradientDescent scalingBy: 0.2) apply: grads to: weight.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	expected := #(0 1 0 0) asInt32Tensor.
-	tf
-		compute: optimize
-		feedingInputsWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				at: 'expected' put: expected;
-				yourself).
-	self
-		assertOutputOf: weight
-		isMatrixCloseTo: #(
-			(0.2582634 -0.2582634) (0.058262532 -0.058262532) (0.187393808 -0.187393808))
-]
-
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerInitializedRandomly [
 
-	| model result logicStatements |
+	| model result |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -428,22 +64,17 @@ SequentialModelBuilderTest >> testOneLayerInitializedRandomly [
 						weightInitializedRandomly;
 						biasInitializedToZero];
 			build.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				yourself).
-
+			
+	result := model computeWith: self inputWithThreeFeatures.
+	
 	self assert: result type equals: TFTensor typeFloat.
 	self assert: result shape equals: #(4 2)
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerInitializedToZero [
 
-	| model result logicStatements |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -454,21 +85,16 @@ SequentialModelBuilderTest >> testOneLayerInitializedToZero [
 						weightInitializedToZero;
 						biasInitializedToZero];
 			build.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0 0) (0 0) (0 0) (0 0))
+			
+	self
+		assert: (model computeWith: self inputWithThreeFeatures)
+		isMatrixCloseTo: #((0 0) (0 0) (0 0) (0 0))
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerInitializedToZeroWithBias [
 
-	| model result logicStatements |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -479,18 +105,13 @@ SequentialModelBuilderTest >> testOneLayerInitializedToZeroWithBias [
 						weightInitializedToZero;
 						biasInitializedTo: #(0.7 0.3)];
 			build.
-
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((0.7 0.3) (0.7 0.3) (0.7 0.3) (0.7 0.3))
+			
+	self
+		assert: (model computeWith: self inputWithThreeFeatures)
+		isMatrixCloseTo: #((0.7 0.3) (0.7 0.3) (0.7 0.3) (0.7 0.3))
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerModelCharacteristics [
 
 	| model |
@@ -508,14 +129,14 @@ SequentialModelBuilderTest >> testOneLayerModelCharacteristics [
 		assert: model trainableVariables
 		hasTheSameOperationsAs: (Array with: (tf operationNamed: 'weight')).
 
-	self assert: model printString equals: 'Sequential Model (Layers: 1)
+	self assert: model printString equals: 'Sequential Model with 1 layer
 Dense Layer[2 -> 1]'
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerModelPrediction [
 
-	| model result |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -525,29 +146,22 @@ SequentialModelBuilderTest >> testOneLayerModelPrediction [
 						inputSize: 2;
 						weightInitializedTo: #((2) (3))];
 			build.
-
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: #((1 2)) asFloatTensor;
-				yourself).
-
+			
 	self
-		assert: result
+		assert: (model computeWith: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
-			OrderedCollection new
+			(OrderedCollection new)
 				add: 1 * 2 + (2 * 3);
 				yourself).
-
 	self
 		assert: model trainableVariables
 		hasTheSameOperationsAs: (Array with: (tf operationNamed: 'weight'))
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerWithBias [
 
-	| model result |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -558,25 +172,19 @@ SequentialModelBuilderTest >> testOneLayerWithBias [
 						weightInitializedTo: #((2) (3));
 						biasInitializedTo: #(4)];
 			build.
-
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: #((1 2)) asFloatTensor;
-				yourself).
-
+			
 	self
-		assert: result
+		assert: (model computeWith: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
-			OrderedCollection new
-				add: (1 * 2 + (2 * 3)) + 4;
+			(OrderedCollection new)
+				add: 1 * 2 + (2 * 3) + 4;
 				yourself)
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testOneLayerWithBiasAndActivation [
 
-	| model result |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -586,24 +194,18 @@ SequentialModelBuilderTest >> testOneLayerWithBiasAndActivation [
 						inputSize: 2;
 						weightInitializedTo: #((2) (3));
 						biasInitializedTo: #(4);
-						activatedBy: TFSigmoidActivation];
+						activatedBySigmoid];
 			build.
 
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: #((1 2)) asFloatTensor;
-				yourself).
-
 	self
-		assert: result
+		assert: (model computeWith: self inputWithTwoFeatures)
 		isMatrixCloseTo: (
-			OrderedCollection new
-				add: ((1 * 2 + (2 * 3)) + 4) sigmoid;
+			(OrderedCollection new)
+				add: (1 * 2 + (2 * 3) + 4) sigmoid;
 				yourself)
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testTwoLayersModelCharacteristics [
 
 	| model |
@@ -616,7 +218,7 @@ SequentialModelBuilderTest >> testTwoLayersModelCharacteristics [
 						inputSize: 3;
 						weightInitializedTo: #((1 1.3) (0.1 -1.1) (0.2 1.7));
 						biasInitializedTo: #(0.7 0.3);
-						activatedBy: TFSigmoidActivation];
+						activatedBySigmoid];
 			addDenseLayerSized: 1
 				builtWith: [:layer |
 					layer
@@ -635,15 +237,15 @@ SequentialModelBuilderTest >> testTwoLayersModelCharacteristics [
 
 	self
 		assert: model printString
-		equals: 'Sequential Model (Layers: 2)
+		equals: 'Sequential Model with 2 layers
 Dense Layer[3 -> 2]
 Dense Layer[2 -> 1]'
 ]
 
-{ #category : 'Test - Forward' }
+{ #category : 'Tests' }
 SequentialModelBuilderTest >> testTwoLayersModelPrediction [
 
-	| model result logicStatements |
+	| model |
 
 	model :=
 		(SequentialModelBuilder on: tf)
@@ -653,7 +255,7 @@ SequentialModelBuilderTest >> testTwoLayersModelPrediction [
 						inputSize: 3;
 						weightInitializedTo: #((1 1.3) (0.1 -1.1) (0.2 1.7));
 						biasInitializedTo: #(0.7 0.3);
-						activatedBy: TFSigmoidActivation];
+						activatedBySigmoid];
 			addDenseLayerSized: 1
 				builtWith: [:layer |
 					layer
@@ -661,15 +263,9 @@ SequentialModelBuilderTest >> testTwoLayersModelPrediction [
 						biasInitializedToZero];
 			build.
 
-	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
-	result :=
-		model computeWith: (
-			Dictionary new
-				at: 'input' put: logicStatements;
-				yourself).
-
-	self assert: result isMatrixCloseTo: #((-6.357518) (-5.524584) (-6.440332) (-6.8832903)).
-
+	self
+		assert: (model computeWith: self inputWithThreeFeatures)
+		isMatrixCloseTo: #((-6.357518) (-5.524584) (-6.440332) (-6.8832903)).
 	self
 		assert: model trainableVariables
 		hasTheSameOperationsAs: (

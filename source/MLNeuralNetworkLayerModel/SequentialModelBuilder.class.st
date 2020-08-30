@@ -9,9 +9,15 @@ Class {
 }
 
 { #category : 'Instance Creation' }
+SequentialModelBuilder class >> new [
+
+	^self on: TensorFlowComputation new
+]
+
+{ #category : 'Instance Creation' }
 SequentialModelBuilder class >> on: aTensorFlowComputation [
 
-	^self new initializeOn: aTensorFlowComputation
+	^super new initializeOn: aTensorFlowComputation
 ]
 
 { #category : 'Configuring' }
@@ -35,7 +41,13 @@ SequentialModelBuilder >> addLayer: aDenseLayer [
 { #category : 'Building' }
 SequentialModelBuilder >> build [
 
-	^SequentialModel composedOf: layers
+	^self buildApplyingToLogits: [:logits | logits]
+]
+
+{ #category : 'Building' }
+SequentialModelBuilder >> buildApplyingToLogits: aBlock [
+
+	^SequentialModel composedOf: layers applyingToLogits: aBlock
 ]
 
 { #category : 'Initialization',

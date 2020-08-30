@@ -19,7 +19,7 @@ TFGradientDescentTest >> learningRate [
 TFGradientDescentTest >> setUp [
 
 	super setUp.
-	optimizer := TFGradientDescent scalingBy: (tf constantWith: self learningRate)
+	optimizer := TFGradientDescent scalingBy: self learningRate
 ]
 
 { #category : 'Test' }
@@ -36,4 +36,10 @@ TFGradientDescentTest >> testApplyGradientShouldUpdateVariables [
 	result := optimizer apply: delta to: weights.
 	self assertOutputOf: result isFloatScalarCloseTo: expectedNewWeight.
 	self assertOutputOf: weights isFloatScalarCloseTo: expectedNewWeight
+]
+
+{ #category : 'Test' }
+TFGradientDescentTest >> testPrintString [
+
+	self assert: optimizer printString equals: 'Gradient Descent with a learning rate of 0.7'
 ]

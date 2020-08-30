@@ -58,3 +58,9 @@ TFCategoricalCrossEntropy >> mean [
 
 	^TFCrossEntropyMean of: self
 ]
+
+{ #category : 'Printing' }
+TFCategoricalCrossEntropy >> printOn: aStream [
+
+	aStream nextPutAll: 'Categorical Cross Entropy' 
+]

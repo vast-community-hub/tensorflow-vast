@@ -2,13 +2,12 @@ Class {
 	#name : 'DenseLayer',
 	#superclass : 'TFOperationAbstract',
 	#instVars : [
-		'tf',
 		'inputSize',
 		'outputSize',
 		'weights',
-		'activation',
 		'input',
-		'trainableVariables'
+		'trainableVariables',
+		'activation'
 	],
 	#category : 'MLNeuralNetworkLayerModel'
 }
@@ -59,7 +58,7 @@ DenseLayer >> calculateValueUsing: aBiasSpec [
 	aBiasSpec ifNotNil: [| bias |
 		bias :=
 			TFVariable
-				on: tf
+				on: self currentComputation
 				named: 'bias'
 				of: aBiasSpec variableType
 				shaped: (Array with: outputSize)
@@ -72,11 +71,16 @@ DenseLayer >> calculateValueUsing: aBiasSpec [
 	^output
 ]
 
+{ #category : 'Accessing' }
+DenseLayer >> currentComputation [
+
+	^input currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 DenseLayer >> initializeReceiving: anInput featuresOfInput: anInputSize featuresOfOutput: anOutputSize weightSpecifiedBy: aWeightSpecification biasSpecifiedBy: aBiasSpecification activatedBy: anActivation [
 
-	tf := anInput value currentComputation.
 	trainableVariables := OrderedCollection new: 2.
 	input := anInput.
 	inputSize := anInputSize.
@@ -93,12 +97,12 @@ DenseLayer >> initializeWeightFrom: aVariableSpec [
 
 	weights :=
 		TFVariable
-			on: tf
+			on: self currentComputation
 			named: 'weight'
 			of: aVariableSpec variableType
 			shaped: (Array with: inputSize with: outputSize)
-			initializedWith: aVariableSpec variableInitializer. 
-	
+			initializedWith: aVariableSpec variableInitializer.
+
 	trainableVariables add: weights
 ]
 

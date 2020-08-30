@@ -24,6 +24,24 @@ DenseLayerBuilder >> activatedBy: anActivation [
 	activation := anActivation
 ]
 
+{ #category : 'Configuring' }
+DenseLayerBuilder >> activatedByRelu [
+
+	self activatedBy: TFReluActivation
+]
+
+{ #category : 'Configuring' }
+DenseLayerBuilder >> activatedBySigmoid [
+
+	self activatedBy: TFSigmoidActivation
+]
+
+{ #category : 'Configuring' }
+DenseLayerBuilder >> activatedByTanh [
+
+	self activatedBy: TFTanhActivation
+]
+
 { #category : 'Configuring - Bias' }
 DenseLayerBuilder >> biasInitializedTo: anArray [
 
@@ -85,26 +103,26 @@ DenseLayerBuilder >> inputSize: aNumberOfInputFeatures [
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedRandomly [
 
-	self weightSpecifiedBy: (
-		TFVariableSpecification
-			of: TFTensor typeFloat
-			initializedWith: TFTruncatedNormalInitializer new)
+	self weightInitializedWith: TFTruncatedNormalInitializer new
 ]
 
 { #category : 'Configuring - Weight' }
-DenseLayerBuilder >> weightInitializedTo: anArray [
+DenseLayerBuilder >> weightInitializedTo: aTensor [
 
-	self weightSpecifiedBy: (
-		TFVariableSpecification
-			of: TFTensor typeFloat
-			initializedWith: (TFConstantInitializer with: anArray asFloatTensor))
+	self weightInitializedWith: (TFConstantInitializer with: aTensor asFloatTensor)
 ]
 
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedToZero [
 
+	self weightInitializedWith: TFZeroInitializer new
+]
+
+{ #category : 'Configuring - Weight' }
+DenseLayerBuilder >> weightInitializedWith: anVariableInitializer [
+
 	self weightSpecifiedBy:
-		(TFVariableSpecification of: TFTensor typeFloat initializedWith: TFZeroInitializer new)
+		(TFVariableSpecification of: TFTensor typeFloat initializedWith: anVariableInitializer)
 ]
 
 { #category : 'Configuring - Weight' }
