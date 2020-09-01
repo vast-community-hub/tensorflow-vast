@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.23',
-						#ts : 3776263126
+						#versionName : '1.24',
+						#ts : 3776362127
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3776263136,
+		#ts : 3776362136,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -48,7 +48,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.14'
+		#versionName : '0.15'
 	},
 	{
 		#conditions : [
@@ -57,8 +57,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.14',
-						#ts : 3776263136
+						#versionName : '0.15',
+						#ts : 3776362136
 					},
 					{
 						#name : 'SUnit',
@@ -68,7 +68,7 @@
 				]
 			}
 		],
-		#ts : 3776263136,
+		#ts : 3776362136,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -94,7 +94,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.13'
+		#versionName : '0.14'
 	},
 	{
 		#conditions : [
@@ -242,7 +242,7 @@
 				]
 			}
 		],
-		#ts : 3776263126,
+		#ts : 3776362127,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -312,13 +312,23 @@
 				#ts : 3773783911
 			},
 			{
+				#name : 'TFUtilityModel',
+				#versionName : '1.0',
+				#ts : 3776345570
+			},
+			{
+				#name : 'TFUtilityModelTests',
+				#versionName : '1.0',
+				#ts : 3776345551
+			},
+			{
 				#name : 'TFVariableSpecificationModel',
 				#versionName : '1.5',
 				#ts : 3774427041
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.23'
+		#versionName : '1.24'
 	},
 	{
 		#conditions : [

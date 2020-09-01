@@ -19,34 +19,35 @@ NearestNeighbor class >> new [
 
 { #category : 'private-csv' }
 NearestNeighbor >> decodeCSV: csvLines graphRun: description [
-"The following source failed to compile (all double quotes have been doubled):
-	|  graph output records session results values answer |
-		
+
+	| graph output records session results values answer |
+
 	graph := self decodeCSVGraphDefaults: description.
 	records := (graph operationNamed: 'records') input: 0.
 	output := graph operationNamed: 'output'.
-	values := TF_Tensor fromStringArray: csvLines.
-	
-	session := TF_Session on: graph.
-	results := session
-		runOperations: {output}
-		inputs: {records}
-		values: {values}
-		outputs: {
-			(output output: 0).
-			(output output: 1).
-			(output output: 2).
-			(output output: 3).
-			(output output: 4)}.
-		
-	graph delete.
-	
-	answer := (1 to: 4) asOrderedCollection collect: [:i |
-		(results at: i) allFloats].
-	^ answer add: (results at: 5) allInt64s; yourself.
-"
+	values := TFTensor fromStringArray: csvLines.
 
-	^ self halt: 'The source for this method failed to compile'
+	session := TFSession on: graph.
+	results :=
+		session
+			runOperations: (Array with: output)
+			inputs: (Array with: records)
+			values: (Array with: values)
+			outputs: (
+				OrderedCollection new
+					add: (output output: 0);
+					add: (output output: 1);
+					add: (output output: 2);
+					add: (output output: 3);
+					add: (output output: 4);
+					yourself).
+
+	graph delete.
+
+	answer := (1 to: 4) asOrderedCollection collect: [:i | (results at: i) allFloats].
+	^answer
+		add: (results at: 5) allInt64s;
+		yourself
 ]
 
 { #category : 'private-csv' }
@@ -109,21 +110,21 @@ NearestNeighbor >> loadDataSet [
 { #category : 'running' }
 NearestNeighbor >> run [
 
-	| covariatesTr covariatesTe predictions size dataset testing training |
+	| trainingDataset covariatesTe predictions size dataset testingDatasetAndLabels trainingDatasetAndLabels |
 
 	dataset := self loadDataSet.
-	training := dataset first.
-	testing := dataset second.
-	covariatesTr := training allButLast asFloatTensor.
-	size := testing first size.
+	trainingDatasetAndLabels := dataset first.
+	testingDatasetAndLabels := dataset second.
+	trainingDataset := trainingDatasetAndLabels allButLast asFloatTensor.
+	size := testingDatasetAndLabels first size.
 	predictions :=
 		(1 to: size) collect: [:i | | covariates index predicted results trueValue |
-			covariates := testing collect: [:col | Array with: (col at: i)].
+			covariates := testingDatasetAndLabels collect: [:col | Array with: (col at: i)].
 			covariatesTe := covariates allButLast asFloatTensor.
-			results := plan predict: covariatesTe from: covariatesTr.
+			results := plan predict: covariatesTe from: trainingDataset.
 			index := results first.
 			trueValue := covariates fifth first.
-			predicted := training fifth at: index.
+			predicted := trainingDatasetAndLabels fifth at: index.
 			trueValue = predicted ifTrue: [1] ifFalse: [0]].
 	^predictions
 ]
