@@ -61,7 +61,7 @@ TensorFlowEnvironmentTest >> should: aBlock raise: anException withSignalDo: ano
 
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anException withSignalDo: anotherBlock)
-		description: ('Expected exception (%1) wasn''t raised' bindWith: anException)
+		description: ('Expected exception (<1p>) wasn''t raised' expandMacrosWith: anException)
 ]
 
 { #category : 'Tests' }

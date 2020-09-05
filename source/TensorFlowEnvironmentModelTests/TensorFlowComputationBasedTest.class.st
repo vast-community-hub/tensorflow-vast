@@ -245,7 +245,8 @@ TensorFlowComputationBasedTest >> should: aBlock raise: anException withDescript
 	self
 		should: aBlock
 		raise: anException
-		withSignalDo: [:exception | self assert: exception messageText equals: aString]
+		withSignalDo: [:exception |
+			self assert: exception messageText isEqualSkippingSeparatorsTo: aString]
 ]
 
 { #category : 'Test Support',
@@ -254,7 +255,7 @@ TensorFlowComputationBasedTest >> should: aBlock raise: anException withSignalDo
 
 	^self
 		assert: (self executeShould: aBlock inScopeOf: anException withSignalDo: anotherBlock)
-		description: ('Expected exception (%1) wasn''t raised' bindWith: anException)
+		description: ('Expected exception (<1p>) wasn''t raised' expandMacrosWith: anException)
 ]
 
 { #category : 'Test Support',

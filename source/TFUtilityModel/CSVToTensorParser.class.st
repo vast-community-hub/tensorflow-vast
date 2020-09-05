@@ -74,7 +74,7 @@ CSVToTensorParser >> parseColumnsFrom: aLineCollection [
 CSVToTensorParser >> parseColumnsInFileNamed: aFileName [
 
 	^self parseColumnsFrom: (
-		aFileName asPath readStreamDo: [:stream |
+		aFileName asFileReference readStreamDo: [:stream |
 			shouldIgnoreHeaders ifTrue: [stream nextLine].
 			stream upToEnd lines])
 ]

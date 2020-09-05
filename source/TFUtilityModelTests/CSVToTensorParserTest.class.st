@@ -73,7 +73,7 @@ CSVToTensorParserTest >> testParseFile [
 
 	fileName := 'testParseFile.csv'.
 	[
-		fileName asPath writeStreamDo: [:stream |
+		fileName asFileReference writeStreamDo: [:stream |
 			stream
 				nextPutAll: '1,2,3,4';
 				cr;
@@ -95,7 +95,7 @@ CSVToTensorParserTest >> testParseFile [
 		self assert: (columns at: 2) isVectorTyped: TFTensor typeFloat closeTo: #(2 0.5).
 		self assert: (columns at: 3) isVectorTyped: TFTensor typeFloat closeTo: #(3 6.3).
 		self assert: (columns at: 4) isVectorTyped: TFTensor typeInt32 closeTo: #(4 1)]
-			ensure: [fileName asPath delete]
+			ensure: [fileName asFileReference delete]
 ]
 
 { #category : 'Tests' }
@@ -105,7 +105,7 @@ CSVToTensorParserTest >> testParseFileIgnoringHeader [
 
 	fileName := 'testParseFile.csv'.
 	[
-		fileName asPath writeStreamDo: [:stream |
+		fileName asFileReference writeStreamDo: [:stream |
 			stream
 				nextPutAll: 'a1,a2,a3,a4';
 				cr;
@@ -134,7 +134,7 @@ CSVToTensorParserTest >> testParseFileIgnoringHeader [
 		self assert: (columns at: 2) isVectorTyped: TFTensor typeFloat closeTo: #(2 0.5).
 		self assert: (columns at: 3) isVectorTyped: TFTensor typeFloat closeTo: #(3 6.3).
 		self assert: (columns at: 4) isVectorTyped: TFTensor typeInt32 closeTo: #(4 1)]
-			ensure: [fileName asPath delete]
+			ensure: [fileName asFileReference delete]
 ]
 
 { #category : 'Tests' }
