@@ -31,17 +31,6 @@ TensorFlowComputation >> floatInputNamed: anInputName [
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Creating - Variables'] }
-TensorFlowComputation >> floatVariableNamed: aVariableName shaped: aShape initializedWith: aVariableInitializer [
-
-	^TFVariable
-		on: self
-		named: aVariableName
-		forFloatsShaped: aShape
-		initializedWith: aVariableInitializer
-]
-
-{ #category : '*TFOperationModel',
  #vaCategories : ['Creating - Constants'] }
 TensorFlowComputation >> integerConstantWith: aNumberOrArray [
 

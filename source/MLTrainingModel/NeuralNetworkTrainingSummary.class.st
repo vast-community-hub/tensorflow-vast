@@ -58,6 +58,12 @@ NeuralNetworkTrainingSummary >> initializeOf: aModel trainedMinimizing: aLossFun
 	historicalTrainingLoss := OrderedCollection new
 ]
 
+{ #category : 'Accessing' }
+NeuralNetworkTrainingSummary >> optimizer [
+
+	^optimizer
+]
+
 { #category : 'Printing' }
 NeuralNetworkTrainingSummary >> printOn: aStream [
 

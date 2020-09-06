@@ -9,3 +9,9 @@ TFOptimizer >> apply: aGradient to: aVariable [
 
 	self subclassResponsibility
 ]
+
+{ #category : 'Applying' }
+TFOptimizer >> shortName [
+
+	self subclassResponsibility
+]

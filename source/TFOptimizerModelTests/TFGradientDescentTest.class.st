@@ -23,6 +23,27 @@ TFGradientDescentTest >> setUp [
 ]
 
 { #category : 'Test' }
+TFGradientDescentTest >> testAppliedTwice [
+
+	| weights grads weightsTensor gradsTensor |
+
+	weights := 1.0.
+	grads := Float pi.
+	weightsTensor := tf variableNamed: 'var' with: weights asTensor.
+	gradsTensor := tf constantWith: grads.
+
+	weights := weights - (grads * self learningRate).
+	self
+		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
+		isFloatScalarCloseTo: weights.
+
+	weights := weights - (grads * self learningRate).
+	self
+		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
+		isFloatScalarCloseTo: weights
+]
+
+{ #category : 'Test' }
 TFGradientDescentTest >> testApplyGradientShouldUpdateVariables [
 
 	| originalWeight weights delta result expectedNewWeight |
@@ -41,5 +62,7 @@ TFGradientDescentTest >> testApplyGradientShouldUpdateVariables [
 { #category : 'Test' }
 TFGradientDescentTest >> testPrintString [
 
-	self assert: optimizer printString equals: 'Gradient Descent with a learning rate of 0.7'
+	self
+		assert: optimizer shortName equals: 'Gradient Descent';
+		assert: optimizer printString equals: 'Gradient Descent (learning rate: 0.7)'
 ]

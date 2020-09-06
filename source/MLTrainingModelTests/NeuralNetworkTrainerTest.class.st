@@ -135,7 +135,7 @@ Sequential Model with 1 layer
 Dense Layer[3 -> 2]
 =====
 Loss: Sparse Categorical Cross Entropy (Reduced to scalar with mean)
-Optimization Algorithm: Gradient Descent with a learning rate of 0.2
+Optimization Algorithm: Gradient Descent (learning rate: 0.2)
 Stop Condition: Stop training after 10 epochs
 Current number of epochs run: 10'
 ]

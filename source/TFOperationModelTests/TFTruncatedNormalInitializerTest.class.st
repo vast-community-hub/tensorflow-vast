@@ -10,12 +10,14 @@ TFTruncatedNormalInitializerTest >> testUsingSeed [
 	| initializer variable |
 
 	initializer := TFTruncatedNormalInitializer withSeeds: #(0 1).
-	variable := TFVariable
-		on: tf
-		named: 'input'
-		forFloatsShaped: #(2 3)
-		initializedWith: initializer.
-
+	variable :=
+		TFVariable
+			on: tf
+			named: 'input'
+			of: TFTensor typeFloat
+			shaped: #(2 3)
+			initializedWith: initializer.
+			
 	self
 		assertOutputOf: variable
 		isMatrixCloseTo: (

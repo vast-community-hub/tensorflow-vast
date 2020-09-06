@@ -11,7 +11,13 @@ Class {
 { #category : 'Instance Creation' }
 TFGradientDescent class >> named: anOperationName scalingBy: aLearningRate [
 
-	^self new initializeNamed: anOperationName scalingBy: aLearningRate
+	^super new initializeNamed: anOperationName scalingBy: aLearningRate
+]
+
+{ #category : 'Instance Creation' }
+TFGradientDescent class >> new [
+
+	^self scalingBy: 0.001
 ]
 
 { #category : 'Instance Creation' }
@@ -42,5 +48,11 @@ TFGradientDescent >> initializeNamed: anOperationName scalingBy: aLearningRate [
 TFGradientDescent >> printOn: aStream [
 
 	aStream
-		nextPutAll: ('Gradient Descent with a learning rate of <1p>' expandMacrosWith: learningRate)
+		nextPutAll: ('Gradient Descent (learning rate: <1p>)' expandMacrosWith: learningRate)
+]
+
+{ #category : 'Accessing' }
+TFGradientDescent >> shortName [
+
+	^'Gradient Descent'
 ]

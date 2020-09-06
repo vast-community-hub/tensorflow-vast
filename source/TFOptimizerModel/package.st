@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFOptimizerModel',
-	#vaPrerequisites : ['TensorFlowEnvironmentModel']
+	#vaPrerequisites : ['TFVariableSpecificationModel']
 }
