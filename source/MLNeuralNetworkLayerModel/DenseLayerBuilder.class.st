@@ -27,35 +27,35 @@ DenseLayerBuilder >> activatedBy: anActivation [
 { #category : 'Configuring' }
 DenseLayerBuilder >> activatedByRelu [
 
-	self activatedBy: TFReluActivation
+	self activatedBy: RectifiedLinear
 ]
 
 { #category : 'Configuring' }
 DenseLayerBuilder >> activatedBySigmoid [
 
-	self activatedBy: TFSigmoidActivation
+	self activatedBy: Sigmoid
 ]
 
 { #category : 'Configuring' }
 DenseLayerBuilder >> activatedByTanh [
 
-	self activatedBy: TFTanhActivation
+	self activatedBy: Tanh
 ]
 
 { #category : 'Configuring - Bias' }
 DenseLayerBuilder >> biasInitializedTo: anArray [
 
 	self biasSpecifiedBy: (
-		TFVariableSpecification
+		VariableNodeSpecification
 			of: TFTensor typeFloat
-			initializedWith: (TFConstantInitializer with: anArray asFloatTensor))
+			initializedWith: (ConstantInitializer with: anArray asFloatTensor))
 ]
 
 { #category : 'Configuring - Bias' }
 DenseLayerBuilder >> biasInitializedToZero [
 
 	self biasSpecifiedBy:
-		(TFVariableSpecification of: TFTensor typeFloat initializedWith: TFZeroInitializer new)
+		(VariableNodeSpecification of: TFTensor typeFloat initializedWith: ZeroInitializer new)
 ]
 
 { #category : 'Configuring - Bias' }
@@ -103,26 +103,26 @@ DenseLayerBuilder >> inputSize: aNumberOfInputFeatures [
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedRandomly [
 
-	self weightInitializedWith: TFTruncatedNormalInitializer new
+	self weightInitializedWith: TruncatedNormalInitializer new
 ]
 
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedTo: aTensor [
 
-	self weightInitializedWith: (TFConstantInitializer with: aTensor asFloatTensor)
+	self weightInitializedWith: (ConstantInitializer with: aTensor asFloatTensor)
 ]
 
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedToZero [
 
-	self weightInitializedWith: TFZeroInitializer new
+	self weightInitializedWith: ZeroInitializer new
 ]
 
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedWith: anVariableInitializer [
 
 	self weightSpecifiedBy:
-		(TFVariableSpecification of: TFTensor typeFloat initializedWith: anVariableInitializer)
+		(VariableNodeSpecification of: TFTensor typeFloat initializedWith: anVariableInitializer)
 ]
 
 { #category : 'Configuring - Weight' }

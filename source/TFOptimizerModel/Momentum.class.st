@@ -1,6 +1,6 @@
 Class {
 	#name : 'Momentum',
-	#superclass : 'TFOptimizer',
+	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
 		'momentum',
@@ -31,7 +31,7 @@ Momentum >> apply: aGradient to: aVariable [
 
 	tf := aVariable currentComputation.
 	accumulator
-		ifNil: [accumulator := TFVariable on: tf named: 'accum' filledWithZerosLike: aVariable].
+		ifNil: [accumulator := VariableNode on: tf named: 'accum' filledWithZerosLike: aVariable].
 
 	^tf
 		newOperationOf: 'ApplyMomentum'
@@ -44,7 +44,7 @@ Momentum >> apply: aGradient to: aVariable [
 				add: aGradient;
 				add: momentum;
 				yourself)
-		describedBy: [:d | d at: 'use_nesterov' putBoolean: useNesterov]
+		describedBy: [:d | d at: TFAttributeName useNesterov putBoolean: useNesterov]
 ]
 
 { #category : 'Initialization',

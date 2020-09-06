@@ -31,12 +31,12 @@ LSTMNeuralNetwork >> initialize [
 	tf := TensorFlowComputation new.
 	self initializeFeedforward.
 	
-	loss := (TFLossBuilder for: modelOutput) buildMeanSquaredError.
+	loss := (LossBuilder for: modelOutput) buildMeanSquaredError.
 	optimization :=
 		ModelUpdater
 			updating: modelOutput
 			toMinimize: loss
-			using: (TFGradientDescent scalingBy: 0.9 asTensor)
+			using: (GradientDescent scalingBy: 0.9 asTensor)
 ]
 
 { #category : 'Initialization',
@@ -47,7 +47,7 @@ LSTMNeuralNetwork >> initializeBackpropagation [
 		ModelUpdater
 			updating: modelOutput
 			toMinimize: loss
-			using: (TFGradientDescent scalingBy: 0.9 asTensor)
+			using: (GradientDescent scalingBy: 0.9 asTensor)
 ]
 
 { #category : 'Initialization',
@@ -56,7 +56,7 @@ LSTMNeuralNetwork >> initializeFeedforward [
 
 	| random |
 
-	random := TFTruncatedNormalInitializer withSeeds: #(0 1).
+	random := TruncatedNormalInitializer withSeeds: #(0 1).
 	modelOutput :=
 		(SequentialModelBuilder on: tf)
 			addDenseLayerSized: 3
@@ -82,7 +82,7 @@ LSTMNeuralNetwork >> initializeFeedforward [
   #vaVisibility : 'private' }
 LSTMNeuralNetwork >> initializeLossGraph [
 
-	loss := (TFLossBuilder for: modelOutput) buildMeanSquaredError
+	loss := (LossBuilder for: modelOutput) buildMeanSquaredError
 ]
 
 { #category : 'Predicting' }

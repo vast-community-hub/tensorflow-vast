@@ -1,6 +1,6 @@
 Class {
 	#name : 'L2Regularization',
-	#superclass : 'TFRegularizer',
+	#superclass : 'Regularizer',
 	#instVars : [
 		'lambda'
 	],
@@ -27,7 +27,7 @@ L2Regularization >> initializeBy: aLambda [
 ]
 
 { #category : 'Processing' }
-L2Regularization >> regularize: aTFOperation [
+L2Regularization >> regularize: anOperation [
 
-	^(TFReduceSum valuesIn: aTFOperation squared) * lambda asTensor
+	^(ReduceSum valuesIn: anOperation squared) * lambda asTensor
 ]

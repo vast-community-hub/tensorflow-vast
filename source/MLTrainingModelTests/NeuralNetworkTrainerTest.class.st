@@ -48,7 +48,7 @@ NeuralNetworkTrainerTest >> testAfterTrainingCallback [
 	model := self modelWithTwoOutputUnits.
 
 	(NeuralNetworkTrainer on: tf)
-		minimizeSparseCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+		minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 		stopTrainingWhen: (CompletedNumberOfTraining after: 10);
 		afterEveryTrainingDo: [:iter :summary |
 			runs := runs + 1.
@@ -66,7 +66,7 @@ NeuralNetworkTrainerTest >> testCalculateLossAfterTraining [
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model
 				toFitPredictionFrom: self logictStatements
@@ -89,7 +89,7 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossHasNotImprovedADelta [
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (LossHasNotImproved moreThan: 0.005);
 			train: model
 				toFitPredictionFrom: self logictStatements
@@ -106,7 +106,7 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossReachedAMinimum [
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (LossReachedMinimum lowerThan: 0.5);
 			train: model
 				toFitPredictionFrom: self logictStatements
@@ -126,7 +126,7 @@ NeuralNetworkTrainerTest >> testSummaryPrintString [
 
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeSparseCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
 			train: model toFitPredictionFrom: self logictStatements to: #(0 1 0 0) asInt32Tensor.
 
@@ -148,7 +148,7 @@ NeuralNetworkTrainerTest >> testTrainMinimizingCategoricalCrossEntropyUsingGradi
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model
 				toFitPredictionFrom: self logictStatements
@@ -173,7 +173,7 @@ NeuralNetworkTrainerTest >> testTrainMinimizingMeanSquaredErrorUsingGradientDesc
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeMeanSquaredErrorUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeMeanSquaredErrorUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model
 				toFitPredictionFrom: self logictStatements
@@ -196,7 +196,7 @@ NeuralNetworkTrainerTest >> testTrainMinimizingSparseCategoricalCrossEntropyUsin
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeSparseCategoricalCrossEntropyUsing: (TFGradientDescent scalingBy: 0.2);
+			minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
 			train: model toFitPredictionFrom: self logictStatements to: self expectedLabels.
 			

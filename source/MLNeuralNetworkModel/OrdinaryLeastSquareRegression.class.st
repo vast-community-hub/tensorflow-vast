@@ -36,5 +36,5 @@ OrdinaryLeastSquareRegression >> initialize [
 	x := tf floatInputNamed: 'x'.
 	y := tf floatInputNamed: 'y'.
 
-	prediction := (TFMatrixInverse of: (x transposedDot: x)) dot: (x transposedDot: y)
+	prediction := (MatrixInverse of: (x transposedDot: x)) dot: (x transposedDot: y)
 ]

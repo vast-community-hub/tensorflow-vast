@@ -1,6 +1,6 @@
 Class {
 	#name : 'SequentialModel',
-	#superclass : 'TFOperationAbstract',
+	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'layers',
 		'logits'

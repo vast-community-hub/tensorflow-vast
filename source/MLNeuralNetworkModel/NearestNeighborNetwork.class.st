@@ -26,8 +26,8 @@ NearestNeighborNetwork >> initialize [
 	testing := tf floatInputNamed: 'testing'.
 
 	axis := 0.
-	distance := TFReduceSum valuesIn: (testing - training) abs alongside: (Array with: axis).
-	prediction := TFIndexWithMinimum in: distance across: axis
+	distance := ReduceSum valuesIn: (testing - training) abs alongside: (Array with: axis).
+	prediction := IndexWithMinimum in: distance across: axis
 ]
 
 { #category : 'evaluating' }

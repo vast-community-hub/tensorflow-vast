@@ -1,6 +1,6 @@
 Class {
 	#name : 'RootMeanSquaredPropagation',
-	#superclass : 'TFOptimizer',
+	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
 		'rho',
@@ -67,9 +67,9 @@ RootMeanSquaredPropagation >> apply: aGradient to: aVariable [
 
 	tf := aVariable currentComputation.
 	meanSquaredAccum
-		ifNil: [meanSquaredAccum := TFVariable on: tf named: 'ms' filledWithZerosLike: aVariable].
+		ifNil: [meanSquaredAccum := VariableNode on: tf named: 'ms' filledWithZerosLike: aVariable].
 	momentumAccum
-		ifNil: [momentumAccum := TFVariable on: tf named: 'mom' filledWithZerosLike: aVariable].
+		ifNil: [momentumAccum := VariableNode on: tf named: 'mom' filledWithZerosLike: aVariable].
 
 	^tf
 		newOperationOf: 'ApplyRMSProp'

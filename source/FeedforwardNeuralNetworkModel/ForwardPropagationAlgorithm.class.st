@@ -25,7 +25,7 @@ ForwardPropagationAlgorithm >> initialize [
 	inputVariable := tf floatInputNamed: 'input'.
 	weights := tf floatInputNamed: 'weights'.
 
-	prediction := TFSigmoidActivation activating: (weights dot: inputVariable)
+	prediction := Sigmoid activating: (weights dot: inputVariable)
 ]
 
 { #category : 'Processing' }

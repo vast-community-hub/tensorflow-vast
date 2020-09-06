@@ -18,9 +18,9 @@ DenseLayerTest >> testCreating [
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeInt32
-					initializedWith: (TFConstantInitializer with: #((2) (3)) asInt32Tensor)).
+					initializedWith: (ConstantInitializer with: #((2) (3)) asInt32Tensor)).
 
 	result :=
 		tf
@@ -53,13 +53,13 @@ DenseLayerTest >> testCreatingWithBias [
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #((2) (3)) asFloatTensor))
+					initializedWith: (ConstantInitializer with: #((2) (3)) asFloatTensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #(4) asFloatTensor)).
+					initializedWith: (ConstantInitializer with: #(4) asFloatTensor)).
 
 	result :=
 		tf
@@ -93,14 +93,14 @@ DenseLayerTest >> testCreatingWithBiasAndActivation [
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #((2) (3)) asFloatTensor))
+					initializedWith: (ConstantInitializer with: #((2) (3)) asFloatTensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #(4) asFloatTensor))
-			activatedBy: TFSigmoidActivation.
+					initializedWith: (ConstantInitializer with: #(4) asFloatTensor))
+			activatedBy: Sigmoid.
 
 	result :=
 		tf
@@ -134,14 +134,14 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingFloats [
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #((2) (3)) asFloatTensor))
+					initializedWith: (ConstantInitializer with: #((2) (3)) asFloatTensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #(4) asFloatTensor))
-			activatedBy: TFSigmoidActivation.
+					initializedWith: (ConstantInitializer with: #(4) asFloatTensor))
+			activatedBy: Sigmoid.
 
 	input := #((1 2) (-1 0.4)) asFloatTensor.
 	result :=
@@ -177,14 +177,14 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingIntegers [
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeInt32
-					initializedWith: (TFConstantInitializer with: #((1) (2)) asInt32Tensor))
+					initializedWith: (ConstantInitializer with: #((1) (2)) asInt32Tensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeInt32
-					initializedWith: (TFConstantInitializer with: #(1) asInt32Tensor))
-			activatedBy: TFReluActivation.
+					initializedWith: (ConstantInitializer with: #(1) asInt32Tensor))
+			activatedBy: RectifiedLinear.
 
 	logicStatements := #((0 0) (0 1) (1 0) (1 1)) asInt32Tensor.
 	result :=
@@ -222,26 +222,26 @@ DenseLayerTest >> testDenseLayerAsInputOfOtherLayer [
 			featuresOfInput: 3
 			featuresOfOutput: 2
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (
-						TFConstantInitializer with: #((1 1.3) (0.1 -1.1) (0.2 1.7)) asFloatTensor))
+					initializedWith:
+						(ConstantInitializer with: #((1 1.3) (0.1 -1.1) (0.2 1.7)) asFloatTensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #(0.7 0.3) asFloatTensor))
-			activatedBy: TFSigmoidActivation.
+					initializedWith: (ConstantInitializer with: #(0.7 0.3) asFloatTensor))
+			activatedBy: Sigmoid.
 	secondLayer :=
 		DenseLayer
 			receiving: layer
 			featuresOfInput: 2
 			featuresOfOutput: 1
 			weightSpecifiedBy: (
-				TFVariableSpecification
+				VariableNodeSpecification
 					of: TFTensor typeFloat
-					initializedWith: (TFConstantInitializer with: #((-2.5) (-5.2)) asFloatTensor))
+					initializedWith: (ConstantInitializer with: #((-2.5) (-5.2)) asFloatTensor))
 			biasSpecifiedBy: (
-				TFVariableSpecification of: TFTensor typeFloat initializedWith: TFZeroInitializer new).
+				VariableNodeSpecification of: TFTensor typeFloat initializedWith: ZeroInitializer new).
 
 	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
 	result :=

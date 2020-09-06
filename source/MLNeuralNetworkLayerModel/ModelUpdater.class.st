@@ -1,6 +1,6 @@
 Class {
 	#name : 'ModelUpdater',
-	#superclass : 'TFOperationAbstract',
+	#superclass : 'TensorFlowOperationAbstract',
 	#category : 'MLNeuralNetworkLayerModel'
 }
 
@@ -19,6 +19,6 @@ ModelUpdater >> initializeUpdating: aModel toMinimize: aLossFunction using: anOp
 	grads := aLossFunction partialDerivativeWithRespectTo: aModel trainableVariables.
 	optimizations :=
 		aModel trainableVariables collect: [:variable |
-			anOptimizer apply: (grads gradientRespectTo: variable) to: variable].
-	value := TFIdentity of: aLossFunction evaluatedOnlyAfter: optimizations
+			anOptimizer apply: (grads valueWithRespectTo: variable) to: variable].
+	value := IdentityTransformation of: aLossFunction evaluatedOnlyAfter: optimizations
 ]

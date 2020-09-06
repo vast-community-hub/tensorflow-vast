@@ -1,6 +1,6 @@
 Class {
 	#name : 'AdaptiveMomentEstimation',
-	#superclass : 'TFOptimizer',
+	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
 		'beta1',
@@ -68,9 +68,9 @@ AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 
 	tf := aVariable currentComputation.
 	movingAverages
-		ifNil: [movingAverages := TFVariable on: tf named: 'm' filledWithZerosLike: aVariable].
+		ifNil: [movingAverages := VariableNode on: tf named: 'm' filledWithZerosLike: aVariable].
 	squaredGradient
-		ifNil: [squaredGradient := TFVariable on: tf named: 'v' filledWithZerosLike: aVariable].
+		ifNil: [squaredGradient := VariableNode on: tf named: 'v' filledWithZerosLike: aVariable].
 	timestep := 1. " When should it be updated? "
 
 	^tf
@@ -89,7 +89,7 @@ AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 				add: epsilon;
 				add: aGradient;
 				yourself)
-		describedBy: [:d | d at: 'use_nesterov' putBoolean: useNesterov]
+		describedBy: [:d | d at: TFAttributeName useNesterov putBoolean: useNesterov]
 ]
 
 { #category : 'Initialization',

@@ -6,7 +6,7 @@ Extension {
  #vaCategories : ['Creating - Constants'] }
 TensorFlowComputation >> constantWith: aNumberOrArray [
 
-	^TFConstant on: self with: aNumberOrArray asTensor
+	^ConstantNode on: self with: aNumberOrArray asTensor
 ]
 
 { #category : '*TFOperationModel',
@@ -20,14 +20,14 @@ TensorFlowComputation >> floatConstantWith: aNumberOrArray [
  #vaCategories : ['Creating - Constants'] }
 TensorFlowComputation >> floatConstantWith: aNumberOrMatrix named: aName [
 
-	^TFConstant on: self named: aName with: aNumberOrMatrix asFloatTensor
+	^ConstantNode on: self named: aName with: aNumberOrMatrix asFloatTensor
 ]
 
 { #category : '*TFOperationModel',
  #vaCategories : ['Creating - Inputs'] }
 TensorFlowComputation >> floatInputNamed: anInputName [
 
-	^TFPlaceholder on: self named: anInputName of: TFTensor typeFloat
+	^InputNode on: self named: anInputName of: TFTensor typeFloat
 ]
 
 { #category : '*TFOperationModel',
@@ -41,12 +41,12 @@ TensorFlowComputation >> integerConstantWith: aNumberOrArray [
  #vaCategories : ['Creating - Inputs'] }
 TensorFlowComputation >> integerInputNamed: anInputName [
 
-	^TFPlaceholder on: self named: anInputName of: TFTensor typeInt32
+	^InputNode on: self named: anInputName of: TFTensor typeInt32
 ]
 
 { #category : '*TFOperationModel',
  #vaCategories : ['Creating - Variables'] }
 TensorFlowComputation >> variableNamed: aVariableName with: aTensor [
 
-	^TFVariable on: self named: aVariableName with: aTensor
+	^VariableNode on: self named: aVariableName with: aTensor
 ]

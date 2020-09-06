@@ -36,5 +36,5 @@ CSVColumnDefinition >> initializeContaining: aTensor [
 { #category : 'Converting' }
 CSVColumnDefinition >> outputOn: aTensorFlowComputation [
 
-	^(TFConstant on: aTensorFlowComputation named: 'Const' with: definition) value firstOutput
+	^(ConstantNode on: aTensorFlowComputation named: 'Const' with: definition) value firstOutput
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : 'AdaptiveGradient',
-	#superclass : 'TFOptimizer',
+	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
 		'accumulatorInitialValue',
@@ -35,7 +35,7 @@ AdaptiveGradient >> apply: aGradient to: aVariable [
 
 	tf := aVariable currentComputation.
 	accumulator
-		ifNil: [accumulator := TFVariable on: tf named: 'accum' filledWithZerosLike: aVariable].
+		ifNil: [accumulator := VariableNode on: tf named: 'accum' filledWithZerosLike: aVariable].
 
 	^tf
 		newOperationOf: 'ApplyAdagrad'

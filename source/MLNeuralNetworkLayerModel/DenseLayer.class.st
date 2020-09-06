@@ -1,6 +1,6 @@
 Class {
 	#name : 'DenseLayer',
-	#superclass : 'TFOperationAbstract',
+	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'inputSize',
 		'outputSize',
@@ -57,7 +57,7 @@ DenseLayer >> calculateValueUsing: aBiasSpec [
 
 	aBiasSpec ifNotNil: [| bias |
 		bias :=
-			TFVariable
+			VariableNode
 				on: self currentComputation
 				named: 'bias'
 				of: aBiasSpec variableType
@@ -96,7 +96,7 @@ DenseLayer >> initializeReceiving: anInput featuresOfInput: anInputSize features
 DenseLayer >> initializeWeightFrom: aVariableSpec [
 
 	weights :=
-		TFVariable
+		VariableNode
 			on: self currentComputation
 			named: 'weight'
 			of: aVariableSpec variableType

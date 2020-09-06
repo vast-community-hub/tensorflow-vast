@@ -29,6 +29,12 @@ TFAttributeName class >> transposeB [
 ]
 
 { #category : 'Accessing' }
+TFAttributeName class >> useNesterov [
+
+	^'use_nesterov'
+]
+
+{ #category : 'Accessing' }
 TFAttributeName class >> value [
 
 	^'value' 

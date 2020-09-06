@@ -3,6 +3,13 @@ Extension {
 }
 
 { #category : '*MLMathExtensions',
+ #vaCategories : ['*Math-Numerical'] }
+Collection >> mean [
+
+	^self sum / self size
+]
+
+{ #category : '*MLMathExtensions',
  #vaCategories : ['Not categorized'] }
 Collection >> softmax [
 	" This assumes self represents a Matrix (is a collection of collection of numbers)

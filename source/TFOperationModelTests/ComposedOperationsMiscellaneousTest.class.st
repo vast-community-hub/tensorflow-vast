@@ -8,7 +8,7 @@ Class {
   #vaVisibility : 'private' }
 ComposedOperationsMiscellaneousTest >> sumUpTo: anUpperLimit theTerms: aTermBlock [
 
-	^TFSum ofAll: ((0 to: anUpperLimit) collect: [:n | aTermBlock value: n asFloat])
+	^Sum ofAll: ((0 to: anUpperLimit) collect: [:n | aTermBlock value: n asFloat])
 ]
 
 { #category : 'Test' }

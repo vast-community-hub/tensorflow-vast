@@ -34,7 +34,7 @@ Rectified3LayerNeuralNetwork >> initializeBackpropagation [
 		ModelUpdater
 			updating: prediction
 			toMinimize: loss
-			using: (TFGradientDescent scalingBy: 0.0001 asTensor)
+			using: (GradientDescent scalingBy: 0.0001 asTensor)
 ]
 
 { #category : 'Initialization',
@@ -64,14 +64,14 @@ Rectified3LayerNeuralNetwork >> initializeFeedforward [
 						inputSize: inputSize;
 						weightInitializedWith: (self randomInitializerFor: inputSize)];
 			buildApplyingToLogits: [:logits |
-				TFIndexWithMaximum named: 'prediction' in: logits softmax across: 1]
+				IndexWithMaximum named: 'prediction' in: logits softmax across: 1]
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Rectified3LayerNeuralNetwork >> initializeLossLayer [
 
-	loss := (TFLossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
+	loss := (LossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
 ]
 
 { #category : 'Accessing' }
@@ -107,7 +107,7 @@ Rectified3LayerNeuralNetwork >> predictFrom: aFeatureTensor andCompareTo: anExpe
   #vaVisibility : 'private' }
 Rectified3LayerNeuralNetwork >> randomInitializerFor: anAmountOfFeatures [
 
-	^TFTruncatedNormalInitializer deviatedBy: 1.0 / anAmountOfFeatures sqrt withSeeds: #(0 1)
+	^TruncatedNormalInitializer deviatedBy: 1.0 / anAmountOfFeatures sqrt withSeeds: #(0 1)
 ]
 
 { #category : 'Training' }

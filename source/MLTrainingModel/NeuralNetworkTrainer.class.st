@@ -72,7 +72,7 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
 	| loss optimization trainingNumber summary |
 
-	loss := lossBuilder value: (TFLossBuilder for: aModel logits).
+	loss := lossBuilder value: (LossBuilder for: aModel logits).
 	optimization := ModelUpdater updating: aModel toMinimize: loss using: optimizer.
 	summary :=
 		NeuralNetworkTrainingSummary

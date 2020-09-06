@@ -34,7 +34,7 @@ SoftmaxNeuralNetwork >> initializeBackpropagation [
 		ModelUpdater
 			updating: prediction
 			toMinimize: loss
-			using: (TFGradientDescent scalingBy: 0.9 asTensor)
+			using: (GradientDescent scalingBy: 0.9 asTensor)
 ]
 
 { #category : 'Initialization',
@@ -49,14 +49,14 @@ SoftmaxNeuralNetwork >> initializeFeedforward [
 						inputSize: self inputSize;
 						weightInitializedToZero];
 			buildApplyingToLogits: [:logits |
-				TFIndexWithMaximum named: 'prediction' in: logits softmax across: 1]
+				IndexWithMaximum named: 'prediction' in: logits softmax across: 1]
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SoftmaxNeuralNetwork >> initializeLossLayer [
 
-	loss := (TFLossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
+	loss := (LossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
 ]
 
 { #category : 'Accessing' }

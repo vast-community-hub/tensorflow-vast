@@ -44,8 +44,7 @@ CSVToTensorParser >> initializeOn: aTensorflowComputation named: aName withColum
 
 	tf := aTensorflowComputation.
 	columnDefinitions := aColumnParserDefinitions.
-	input :=
-		TFPlaceholder on: tf named: ('input-<1s>' expandMacrosWith: aName) of: TFTensor typeString.
+	input := InputNode on: tf named: ('input-<1s>' expandMacrosWith: aName) of: TFTensor typeString.
 	shouldIgnoreHeaders := aParserConfiguration linesIncludesHeaders.
 	parsing :=
 		tf

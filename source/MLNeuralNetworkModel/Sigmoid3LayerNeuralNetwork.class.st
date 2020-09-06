@@ -34,7 +34,7 @@ Sigmoid3LayerNeuralNetwork >> initializeBackpropagation [
 		ModelUpdater
 			updating: prediction
 			toMinimize: loss
-			using: (TFGradientDescent scalingBy: 0.1 asTensor)
+			using: (GradientDescent scalingBy: 0.1 asTensor)
 ]
 
 { #category : 'Initialization',
@@ -64,14 +64,14 @@ Sigmoid3LayerNeuralNetwork >> initializeFeedforward [
 						inputSize: inputSize;
 						weightInitializedWith: (self randomInitializerFor: inputSize)];
 			buildApplyingToLogits: [:logits |
-				TFIndexWithMaximum named: 'prediction' in: logits across: 1]
+				IndexWithMaximum named: 'prediction' in: logits across: 1]
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Sigmoid3LayerNeuralNetwork >> initializeLossLayer [
 
-	loss := (TFLossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
+	loss := (LossBuilder for: prediction logits) buildSparseCategoricalCrossEntropy
 ]
 
 { #category : 'Computing' }
@@ -101,7 +101,7 @@ Sigmoid3LayerNeuralNetwork >> predictFrom: aFeatureTensor andCompareTo: anExpect
   #vaVisibility : 'private' }
 Sigmoid3LayerNeuralNetwork >> randomInitializerFor: anAmountOfFeatures [
 
-	^TFTruncatedNormalInitializer deviatedBy: 1.0 / anAmountOfFeatures sqrt withSeeds: #(0 1)
+	^TruncatedNormalInitializer deviatedBy: 1.0 / anAmountOfFeatures sqrt withSeeds: #(0 1)
 ]
 
 { #category : 'Computing' }
