@@ -25,38 +25,38 @@ GradientDescentTest >> setUp [
 { #category : 'Test' }
 GradientDescentTest >> testAppliedTwice [
 
-	| weights grads weightsTensor gradsTensor |
+	| parameter grad parameterTensor gradTensor |
 
-	weights := 1.0.
-	grads := Float pi.
-	weightsTensor := tf variableNamed: 'var' with: weights asTensor.
-	gradsTensor := tf constantWith: grads.
+	parameter := 1.0.
+	grad := Float pi.
+	parameterTensor := tf variableNamed: 'var' with: parameter asTensor.
+	gradTensor := tf constantWith: grad.
 
-	weights := weights - (grads * self learningRate).
+	parameter := parameter - (grad * self learningRate).
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights.
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter.
 
-	weights := weights - (grads * self learningRate).
+	parameter := parameter - (grad * self learningRate).
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter
 ]
 
 { #category : 'Test' }
 GradientDescentTest >> testApplyGradientShouldUpdateVariables [
 
-	| originalWeight weights delta result expectedNewWeight |
+	| parameter parameterTensor grad result |
 
-	originalWeight := 1.0.
-	weights := tf variableNamed: 'var' with: originalWeight asTensor.
-	delta := tf constantWith: Float pi.
+	parameter := 1.0.
+	parameterTensor := tf variableNamed: 'var' with: parameter asTensor.
+	grad := tf constantWith: Float pi.
 
-	expectedNewWeight := originalWeight - (Float pi * self learningRate).
+	parameter := parameter - (Float pi * self learningRate).
 
-	result := optimizer apply: delta to: weights.
-	self assertOutputOf: result isFloatScalarCloseTo: expectedNewWeight.
-	self assertOutputOf: weights isFloatScalarCloseTo: expectedNewWeight
+	result := optimizer apply: grad to: parameterTensor.
+	self assertOutputOf: result isFloatScalarCloseTo: parameter.
+	self assertOutputOf: parameterTensor isFloatScalarCloseTo: parameter
 ]
 
 { #category : 'Test' }

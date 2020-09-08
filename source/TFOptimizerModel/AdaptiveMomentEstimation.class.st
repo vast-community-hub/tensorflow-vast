@@ -3,12 +3,12 @@ Class {
 	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
-		'beta1',
-		'beta2',
 		'epsilon',
-		'movingAverages',
-		'squaredGradient',
-		'useNesterov'
+		'useNesterov',
+		'meanGradientByVariable',
+		'gradientVarianceByVariable',
+		'firstMomentDecayingRate',
+		'secondMomentoDecayingRate'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -64,28 +64,23 @@ AdaptiveMomentEstimation class >> scalingBy: aLearningRate decayingFirstMomentBy
 { #category : 'Applying' }
 AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 
-	| tf timestep |
+	| timestep |
 
-	tf := aVariable currentComputation.
-	movingAverages
-		ifNil: [movingAverages := VariableNode on: tf named: 'm' filledWithZerosLike: aVariable].
-	squaredGradient
-		ifNil: [squaredGradient := VariableNode on: tf named: 'v' filledWithZerosLike: aVariable].
 	timestep := 1. " When should it be updated? "
 
-	^tf
+	^aVariable currentComputation
 		newOperationOf: 'ApplyAdam'
-		namePrefixed: 'ApplyAdam'
+		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
-			OrderedCollection new
+			(OrderedCollection new)
 				add: aVariable;
-				add: movingAverages;
-				add: squaredGradient;
-				add: (beta1 raisedTo: timestep);
-				add: (beta2 raisedTo: timestep);
+				add: (self meanGradientOf: aVariable);
+				add: (self uncenteredVarianceGradientOf: aVariable);
+				add: (firstMomentDecayingRate raisedTo: timestep);
+				add: (secondMomentoDecayingRate raisedTo: timestep);
 				add: learningRate;
-				add: beta1;
-				add: beta2;
+				add: firstMomentDecayingRate;
+				add: secondMomentoDecayingRate;
 				add: epsilon;
 				add: aGradient;
 				yourself)
@@ -97,10 +92,22 @@ AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 AdaptiveMomentEstimation >> initializeScalingBy: aLearningRate decayingFirstMomentBy: aBeta1Factor decayingSecondMomentBy: aBeta2Factor usingForNumericalStability: anEpsilonValue [
 
 	learningRate := aLearningRate.
-	beta1 := aBeta1Factor.
-	beta2 := aBeta2Factor.
-	epsilon := anEpsilonValue. 
-	useNesterov := false. 
+	firstMomentDecayingRate := aBeta1Factor.
+	secondMomentoDecayingRate := aBeta2Factor.
+	epsilon := anEpsilonValue.
+	useNesterov := false.
+	meanGradientByVariable := Dictionary new.
+	gradientVarianceByVariable := Dictionary new
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> meanGradientOf: aVariable [
+
+	^meanGradientByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'm' filledWithZerosLike: aVariable]
 ]
 
 { #category : 'Printing' }
@@ -109,8 +116,8 @@ AdaptiveMomentEstimation >> printOn: aStream [
 	aStream nextPutAll: (
 		'Adam (learning rate: <1p>; beta1: <2p>; beta2: <3p>; epsilon: <4p>)'
 			expandMacrosWith: learningRate
-			with: beta1
-			with: beta2
+			with: firstMomentDecayingRate
+			with: secondMomentoDecayingRate
 			with: epsilon asFloat)
 ]
 
@@ -118,6 +125,16 @@ AdaptiveMomentEstimation >> printOn: aStream [
 AdaptiveMomentEstimation >> shortName [
 
 	^'Adam'
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> uncenteredVarianceGradientOf: aVariable [
+
+	^gradientVarianceByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'v' filledWithZerosLike: aVariable]
 ]
 
 { #category : 'Configuring' }

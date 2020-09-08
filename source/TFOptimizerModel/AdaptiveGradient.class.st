@@ -3,8 +3,7 @@ Class {
 	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
-		'accumulatorInitialValue',
-		'accumulator'
+		'accumulatorByVariable'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -28,22 +27,32 @@ AdaptiveGradient class >> scalingBy: aLearningRate [
 	^super new initializeScalingBy: aLearningRate
 ]
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveGradient >> accumulatorFor: aVariable [
+
+	^accumulatorByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode
+				on: aVariable currentComputation
+				named: 'accum'
+				filledWithZerosLike: aVariable]
+]
+
 { #category : 'Applying' }
 AdaptiveGradient >> apply: aGradient to: aVariable [
 
 	| tf |
 
 	tf := aVariable currentComputation.
-	accumulator
-		ifNil: [accumulator := VariableNode on: tf named: 'accum' filledWithZerosLike: aVariable].
-
 	^tf
 		newOperationOf: 'ApplyAdagrad'
-		namePrefixed: 'ApplyAdagrad'
+		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
-			OrderedCollection new
+			(OrderedCollection new)
 				add: aVariable;
-				add: accumulator;
+				add: (self accumulatorFor: aVariable);
 				add: learningRate;
 				add: aGradient;
 				yourself)
@@ -54,7 +63,8 @@ AdaptiveGradient >> apply: aGradient to: aVariable [
   #vaVisibility : 'private' }
 AdaptiveGradient >> initializeScalingBy: aLearningRate [
 
-	learningRate := aLearningRate
+	learningRate := aLearningRate.
+	accumulatorByVariable := Dictionary new
 ]
 
 { #category : 'Printing' }

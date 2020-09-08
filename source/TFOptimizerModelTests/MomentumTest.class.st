@@ -7,14 +7,14 @@ Class {
 { #category : 'Tests' }
 MomentumTest >> testAppliedToVector [
 
-	| weights grads optimizer |
+	| parameter grad optimizer |
 
-	weights := #(1.0 2.0).
-	grads := #(3.14 2.71).
+	parameter := #(1.0 2.0).
+	grad := #(3.14 2.71).
 	optimizer :=
 		(Momentum scalingBy: 0.02 momentumSetTo: 5.0)
-			apply: (tf constantWith: grads asFloatTensor)
-			to: (tf variableNamed: 'var' with: weights asFloatTensor).
+			apply: (tf constantWith: grad asFloatTensor)
+			to: (tf variableNamed: 'var' with: parameter asFloatTensor).
 
 	self
 		assertOutputOf: optimizer
@@ -24,56 +24,92 @@ MomentumTest >> testAppliedToVector [
 { #category : 'Tests' }
 MomentumTest >> testAppliedTwice [
 
-	| weights grads optimizer gradsTensor weightsTensor accum |
+	| parameter grad optimizer gradTensor parameterTensor accum |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 	optimizer := Momentum scalingBy: 0.001 momentumSetTo: 0.9.
 
-	gradsTensor := tf constantWith: grads.
-	weightsTensor := tf variableNamed: 'var' with: weights asTensor.
+	gradTensor := tf constantWith: grad.
+	parameterTensor := tf variableNamed: 'var' with: parameter asTensor.
 
-	accum := grads.
-	weights := weights - (0.001 * accum).
+	accum := grad.
+	parameter := parameter - (0.001 * accum).
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights.
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter.
 
-	accum := (accum * 0.9) + grads.
-	weights := weights - (0.001 * accum).
+	accum := (accum * 0.9) + grad.
+	parameter := parameter - (0.001 * accum).
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter
+]
+
+{ #category : 'Tests' }
+MomentumTest >> testAppliedTwiceToDifferentParameters [
+
+	| parameter1 optimizer param1Optimization param2Optimization accum parameter2 grad1 grad2 |
+
+	parameter1 := 1.0.
+	parameter2 := #(1.5 2.0).
+	grad1 := Float pi.
+	grad2 := Array with: Float pi / 2 with: Float pi * 2.
+	optimizer := Momentum scalingBy: 0.001 momentumSetTo: 0.9.
+
+	param1Optimization :=
+		optimizer
+			apply: (tf constantWith: grad1)
+			to: (tf variableNamed: 'var' with: parameter1 asTensor).
+	param2Optimization :=
+		optimizer
+			apply: (tf constantWith: grad2 asFloatTensor)
+			to: (tf variableNamed: 'bias' with: parameter2 asFloatTensor).
+
+	accum := grad1.
+	parameter1 := parameter1 - (0.001 * accum).
+	self assertOutputOf: param1Optimization isFloatScalarCloseTo: parameter1.
+
+	accum := (accum * 0.9) + grad1.
+	parameter1 := parameter1 - (0.001 * accum).
+	self assertOutputOf: param1Optimization isFloatScalarCloseTo: parameter1.
+
+	self
+		assertOutputOf: param2Optimization
+		isFloatVectorCloseTo: #(1.49842917919159 1.99371683597565).
+	self
+		assertOutputOf: param2Optimization
+		isFloatVectorCloseTo: #(1.4954446554184 1.98177874088287)
 ]
 
 { #category : 'Tests' }
 MomentumTest >> testInitializedWithCustomValues [
 
-	| weights grads optimizer |
+	| parameter grad optimizer |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 	optimizer :=
 		(Momentum scalingBy: 0.02 momentumSetTo: 5.0)
-			apply: (tf constantWith: grads)
-			to: (tf variableNamed: 'var' with: weights asTensor).
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	self assertOutputOf: optimizer isFloatScalarCloseTo: weights - (0.02 * grads)
+	self assertOutputOf: optimizer isFloatScalarCloseTo: parameter - (0.02 * grad)
 ]
 
 { #category : 'Tests' }
 MomentumTest >> testInitializedWithDefaultValues [
 
-	| weights grads optimizer |
+	| parameter grad optimizer |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 	optimizer :=
 		Momentum new
-			apply: (tf constantWith: grads)
-			to: (tf variableNamed: 'var' with: weights asTensor).
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	self assertOutputOf: optimizer isFloatScalarCloseTo: weights - (0.001 * grads)
+	self assertOutputOf: optimizer isFloatScalarCloseTo: parameter - (0.001 * grad)
 ]
 
 { #category : 'Tests' }

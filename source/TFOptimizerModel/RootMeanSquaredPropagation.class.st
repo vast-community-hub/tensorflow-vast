@@ -6,8 +6,8 @@ Class {
 		'rho',
 		'momentum',
 		'epsilon',
-		'meanSquaredAccum',
-		'momentumAccum'
+		'meanSquaredAccumByVariable',
+		'momentumAccumByVariable'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -63,22 +63,14 @@ RootMeanSquaredPropagation class >> scalingBy: aLearningRate decayingBy: theRhoF
 { #category : 'Applying' }
 RootMeanSquaredPropagation >> apply: aGradient to: aVariable [
 
-	| tf |
-
-	tf := aVariable currentComputation.
-	meanSquaredAccum
-		ifNil: [meanSquaredAccum := VariableNode on: tf named: 'ms' filledWithZerosLike: aVariable].
-	momentumAccum
-		ifNil: [momentumAccum := VariableNode on: tf named: 'mom' filledWithZerosLike: aVariable].
-
-	^tf
+	^aVariable currentComputation
 		newOperationOf: 'ApplyRMSProp'
-		namePrefixed: 'ApplyRMSProp'
+		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
 			OrderedCollection new
 				add: aVariable;
-				add: meanSquaredAccum;
-				add: momentumAccum;
+				add: (self meanSquaredAccumulatorFor: aVariable);
+				add: (self momentumAccumulatorFor: aVariable);
 				add: learningRate;
 				add: rho;
 				add: momentum;
@@ -95,7 +87,29 @@ RootMeanSquaredPropagation >> initializeScalingBy: aLearningRate decayingBy: the
 	learningRate := aLearningRate.
 	rho := theRhoFactor.
 	momentum := aMomentumConstant.
-	epsilon := anEpsilonValue
+	epsilon := anEpsilonValue.
+	meanSquaredAccumByVariable := Dictionary new.
+	momentumAccumByVariable := Dictionary new
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+RootMeanSquaredPropagation >> meanSquaredAccumulatorFor: aVariable [
+
+	^meanSquaredAccumByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'ms' filledWithZerosLike: aVariable]
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+RootMeanSquaredPropagation >> momentumAccumulatorFor: aVariable [
+
+	^momentumAccumByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'mom' filledWithZerosLike: aVariable]
 ]
 
 { #category : 'Printing' }

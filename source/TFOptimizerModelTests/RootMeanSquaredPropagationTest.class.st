@@ -7,15 +7,15 @@ Class {
 { #category : 'Tests' }
 RootMeanSquaredPropagationTest >> testAppliedToVector [
 
-	| weights grads optimizer |
+	| parameter grad optimizer |
 
-	weights := #(1.0 2.0).
-	grads := #(3.14 2.71).
+	parameter := #(1.0 2.0).
+	grad := #(3.14 2.71).
 
 	optimizer :=
 		RootMeanSquaredPropagation new
-			apply: (tf constantWith: grads asFloatTensor)
-			to: (tf variableNamed: 'var' with: weights asFloatTensor).
+			apply: (tf constantWith: grad asFloatTensor)
+			to: (tf variableNamed: 'var' with: parameter asFloatTensor).
 
 	self assertOutputOf: optimizer isFloatVectorCloseTo: #(0.9968377 1.9968377)
 ]
@@ -23,10 +23,10 @@ RootMeanSquaredPropagationTest >> testAppliedToVector [
 { #category : 'Tests' }
 RootMeanSquaredPropagationTest >> testAppliedTwice [
 
-	| weights grads gradsTensor weightsTensor optimizer ms mom |
+	| parameter grad gradTensor parameterTensor optimizer ms mom |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 	optimizer :=
 		RootMeanSquaredPropagation
 			scalingBy: 0.03
@@ -34,31 +34,70 @@ RootMeanSquaredPropagationTest >> testAppliedTwice [
 			momentumSetTo: 0.5
 			usingForNumericalStability: 1e-08.
 
-	gradsTensor := tf constantWith: grads.
-	weightsTensor := tf variableNamed: 'var' with: weights asTensor.
+	gradTensor := tf constantWith: grad.
+	parameterTensor := tf variableNamed: 'var' with: parameter asTensor.
 
-	ms := 0.2 * 0 + ((1 - 0.2) * grads * grads).
-	mom := 0.5 * 0 + (0.03 * grads / (ms + 1e-08) sqrt).
-	weights := weights - mom.
+	ms := 0.2 * 0 + ((1 - 0.2) * grad * grad).
+	mom := 0.5 * 0 + (0.03 * grad / (ms + 1e-08) sqrt).
+	parameter := parameter - mom.
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights.
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter.
 
-	ms := (0.2 * ms) + ((1 - 0.2) * grads * grads).
-	mom := (0.5 * mom) + (0.03 * grads / ((ms + 1e-08) sqrt)).
-	weights := weights - mom.
+	ms := (0.2 * ms) + ((1 - 0.2) * grad * grad).
+	mom := (0.5 * mom) + (0.03 * grad / ((ms + 1e-08) sqrt)).
+	parameter := parameter - mom.
 	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights
+		assertOutputOf: (optimizer apply: gradTensor to: parameterTensor)
+		isFloatScalarCloseTo: parameter
+]
+
+{ #category : 'Tests' }
+RootMeanSquaredPropagationTest >> testAppliedTwiceToDifferentParameters [
+
+	| parameter1 grad1 optimizer ms mom parameter2 grad2 param2Optimization param1Optimization |
+
+	parameter1 := 1.0.
+	parameter2 := #(1.5 2.0).
+	grad1 := Float pi.
+	grad2 := Array with: Float pi / 2 with: Float pi * 2.
+	optimizer :=
+		RootMeanSquaredPropagation
+			scalingBy: 0.03
+			decayingBy: 0.2
+			momentumSetTo: 0.5
+			usingForNumericalStability: 1e-08.
+
+	param1Optimization :=
+		optimizer
+			apply: (tf constantWith: grad1)
+			to: (tf variableNamed: 'var' with: parameter1 asTensor).
+	param2Optimization :=
+		optimizer
+			apply: (tf constantWith: grad2 asFloatTensor)
+			to: (tf variableNamed: 'bias' with: parameter2 asFloatTensor).
+
+	ms := 0.2 * 0 + ((1 - 0.2) * grad1 * grad1).
+	mom := 0.5 * 0 + (0.03 * grad1 / (ms + 1e-08) sqrt).
+	parameter1 := parameter1 - mom.
+	self assertOutputOf: param1Optimization isFloatScalarCloseTo: parameter1.
+
+	ms := (0.2 * ms) + ((1 - 0.2) * grad1 * grad1).
+	mom := (0.5 * mom) + (0.03 * grad1 / ((ms + 1e-08) sqrt)).
+	parameter1 := parameter1 - mom.
+	self assertOutputOf: param1Optimization isFloatScalarCloseTo: parameter1.
+
+	self assertOutputOf: param2Optimization isFloatVectorCloseTo: #(1.46645903587341 1.96645903587341).
+	self assertOutputOf: param2Optimization isFloatVectorCloseTo: #(1.41906988620758 1.91906988620758)
 ]
 
 { #category : 'Tests' }
 RootMeanSquaredPropagationTest >> testInitializedWithCustomValues [
 
-	| weights grads optimizer ms mom |
+	| parameter grad optimizer ms mom |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 
 	optimizer :=
 		(RootMeanSquaredPropagation
@@ -66,30 +105,30 @@ RootMeanSquaredPropagationTest >> testInitializedWithCustomValues [
 			decayingBy: 0.2
 			momentumSetTo: 0.5
 			usingForNumericalStability: 1e-08)
-				apply: (tf constantWith: grads)
-				to: (tf variableNamed: 'var' with: weights asTensor).
+				apply: (tf constantWith: grad)
+				to: (tf variableNamed: 'var' with: parameter asTensor).
 		
-	ms := 0.2 * 0 + (1 - 0.2) * grads * grads.
-	mom := 0.5 * 0 + 0.03 * grads / (ms + 1e-08) sqrt.
-	self assertOutputOf: optimizer isFloatScalarCloseTo: weights - mom
+	ms := 0.2 * 0 + (1 - 0.2) * grad * grad.
+	mom := 0.5 * 0 + 0.03 * grad / (ms + 1e-08) sqrt.
+	self assertOutputOf: optimizer isFloatScalarCloseTo: parameter - mom
 ]
 
 { #category : 'Tests' }
 RootMeanSquaredPropagationTest >> testInitializedWithDefaultValues [
 
-	| weights grads optimizer ms mom |
+	| parameter grad optimizer ms mom |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 
 	optimizer :=
 		RootMeanSquaredPropagation new
-			apply: (tf constantWith: grads)
-			to: (tf variableNamed: 'var' with: weights asTensor).
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	ms := (1 - 0.9) * grads * grads.
-	mom := 0.001 * grads / (ms + 1e-07) sqrt.
-	self assertOutputOf: optimizer isFloatScalarCloseTo: weights - mom
+	ms := (1 - 0.9) * grad * grad.
+	mom := 0.001 * grad / (ms + 1e-07) sqrt.
+	self assertOutputOf: optimizer isFloatScalarCloseTo: parameter - mom
 ]
 
 { #category : 'Tests' }

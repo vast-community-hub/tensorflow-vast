@@ -4,8 +4,8 @@ Class {
 	#instVars : [
 		'learningRate',
 		'momentum',
-		'accumulator',
-		'useNesterov'
+		'useNesterov',
+		'accumulatorByVariable'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -24,22 +24,29 @@ Momentum class >> scalingBy: aLearningRate momentumSetTo: aMomentumTerm [
 
 ]
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+Momentum >> accumulatorFor: aVariable [
+
+	^accumulatorByVariable
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode
+				on: aVariable currentComputation
+				named: 'accum'
+				filledWithZerosLike: aVariable]
+]
+
 { #category : 'Applying' }
 Momentum >> apply: aGradient to: aVariable [
 
-	| tf |
-
-	tf := aVariable currentComputation.
-	accumulator
-		ifNil: [accumulator := VariableNode on: tf named: 'accum' filledWithZerosLike: aVariable].
-
-	^tf
+	^aVariable currentComputation
 		newOperationOf: 'ApplyMomentum'
-		namePrefixed: 'ApplyMomentum'
+		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
-			OrderedCollection new
+			(OrderedCollection new)
 				add: aVariable;
-				add: accumulator;
+				add: (self accumulatorFor: aVariable);
 				add: learningRate;
 				add: aGradient;
 				add: momentum;
@@ -53,7 +60,8 @@ Momentum >> initializeScalingBy: aLearningRate momentumSetTo: aMomentumTerm [
 
 	learningRate := aLearningRate.
 	momentum := aMomentumTerm.
-	useNesterov := false
+	useNesterov := false.
+	accumulatorByVariable := Dictionary new. 
 ]
 
 { #category : 'Printing' }

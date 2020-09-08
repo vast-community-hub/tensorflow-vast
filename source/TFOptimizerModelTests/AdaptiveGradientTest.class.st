@@ -7,15 +7,15 @@ Class {
 { #category : 'Tests' }
 AdaptiveGradientTest >> testAppliedToVector [
 
-	| weights grads optimizer |
+	| parameter grad optimizer |
 
-	weights := #(1.0 2.0).
-	grads := #(3.14 2.71).
+	parameter := #(1.0 2.0).
+	grad := #(3.14 2.71).
 
 	optimizer :=
 		AdaptiveGradient new
-			apply: (tf constantWith: grads asFloatTensor)
-			to: (tf variableNamed: 'var' with: weights asFloatTensor).
+			apply: (tf constantWith: grad asFloatTensor)
+			to: (tf variableNamed: 'var' with: parameter asFloatTensor).
 
 	self assertOutputOf: optimizer isFloatVectorCloseTo: #(0.999 1.99899)
 ]
@@ -23,44 +23,94 @@ AdaptiveGradientTest >> testAppliedToVector [
 { #category : 'Tests' }
 AdaptiveGradientTest >> testAppliedTwice [
 
-	| weights grads optimizer gradsTensor weightsTensor accum |
+	| parameter grad optimizer optimization accum |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
+	optimizer := AdaptiveGradient scalingBy: 0.02.
+	optimization :=
+		optimizer
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
+
+	accum := grad * grad.
+	parameter := parameter - (0.02 * grad / accum sqrt).
+	self assertOutputOf: optimization isFloatScalarCloseTo: parameter.
+
+	accum := accum + (grad * grad).
+	parameter := parameter - (0.02 * grad / accum sqrt).
+	self assertOutputOf: optimization isFloatScalarCloseTo: parameter
+]
+
+{ #category : 'Tests' }
+AdaptiveGradientTest >> testAppliedTwiceToDifferentParameters [
+
+	| parameter1 parameter2 grad2 grad1 optimizer accum param1optimization param2optimization |
+
+	parameter1 := 1.0.
+	parameter2 := #(1.5 2.0).
+	grad1 := Float pi.
+	grad2 := Array with: Float pi / 2 with: Float pi * 2.
 	optimizer := AdaptiveGradient scalingBy: 0.02.
 
-	gradsTensor := tf constantWith: grads.
-	weightsTensor := tf variableNamed: 'var' with: weights asTensor.
+	param1optimization :=
+		optimizer
+			apply: (tf constantWith: grad1)
+			to: (tf variableNamed: 'var' with: parameter1 asTensor).
+	param2optimization :=
+		optimizer
+			apply: (tf constantWith: grad2 asFloatTensor)
+			to: (tf variableNamed: 'bias' with: parameter2 asFloatTensor).
 
-	accum := (grads * grads).
-	weights := weights - (0.02 * grads / accum sqrt).
-	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights.
+	accum := grad1 * grad1.
+	parameter1 := parameter1 - (0.02 * grad1 / accum sqrt).
+	self assertOutputOf: param1optimization isFloatScalarCloseTo: parameter1.
 
-	accum := accum + (grads * grads).
-	weights := weights - (0.02 * grads / accum sqrt).
-	self
-		assertOutputOf: (optimizer apply: gradsTensor to: weightsTensor)
-		isFloatScalarCloseTo: weights
+	accum := accum + (grad1 * grad1).
+	parameter1 := parameter1 - (0.02 * grad1 / accum sqrt).
+	self assertOutputOf: param1optimization isFloatScalarCloseTo: parameter1.
+
+	self assertOutputOf: param2optimization isFloatVectorCloseTo: #(1.48 1.98).
+	self assertOutputOf: param2optimization isFloatVectorCloseTo: #(1.46585786342621 1.96585786342621)
+]
+
+{ #category : 'Tests' }
+AdaptiveGradientTest >> testAppliedTwiceToSameVariable [
+
+	| parameter grad optimization accum |
+
+	parameter := 1.0.
+	grad := Float pi.
+	optimization :=
+		(AdaptiveGradient scalingBy: 0.02)
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
+
+	accum := (grad * grad).
+	parameter := parameter - (0.02 * grad / accum sqrt).
+	self assertOutputOf: optimization isFloatScalarCloseTo: parameter.
+
+	accum := accum + (grad * grad).
+	parameter := parameter - (0.02 * grad / accum sqrt).
+	self assertOutputOf: optimization isFloatScalarCloseTo: parameter
 ]
 
 { #category : 'Tests' }
 AdaptiveGradientTest >> testInitializedWithDefaultValues [
 
-	| weights grads optimizer accum |
+	| parameter grad optimizer accum |
 
-	weights := 1.0.
-	grads := Float pi.
+	parameter := 1.0.
+	grad := Float pi.
 
 	optimizer :=
 		AdaptiveGradient new
-			apply: (tf constantWith: grads)
-			to: (tf variableNamed: 'var' with: weights asTensor).
+			apply: (tf constantWith: grad)
+			to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	accum := grads * grads.
-	weights := weights - (0.001 * grads / accum sqrt).
-	self assertOutputOf: optimizer isFloatScalarCloseTo: weights
+	accum := grad * grad.
+	parameter := parameter - (0.001 * grad / accum sqrt).
+	self assertOutputOf: optimizer isFloatScalarCloseTo: parameter
 ]
 
 { #category : 'Tests' }
