@@ -27,6 +27,12 @@ Substraction class >> operationType [
 	^'Sub'
 ]
 
+{ #category : 'Accessing' }
+Substraction >> currentComputation [
+
+	^leftOperand currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Substraction >> initializeNamed: anOperationName of: aLeftOperand minus: aRightOperand [
@@ -34,7 +40,7 @@ Substraction >> initializeNamed: anOperationName of: aLeftOperand minus: aRightO
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
 	value :=
-		leftOperand currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: leftOperand

@@ -26,13 +26,19 @@ Reciprocal class >> operationType [
 	^'Reciprocal'
 ]
 
+{ #category : 'Accessing' }
+Reciprocal >> currentComputation [
+
+	^operation currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Reciprocal >> initializeNamed: aName of: anOperation [
 
 	operation := anOperation.
 	value :=
-		operation currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: aName
 			with: operation

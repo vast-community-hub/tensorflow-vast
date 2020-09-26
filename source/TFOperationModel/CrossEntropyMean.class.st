@@ -18,7 +18,13 @@ CrossEntropyMean >> backpropagatedGradient [
 
 	^ElementWiseDivision
 		of: crossEntropy backpropagatedGradient
-		and: ((ReduceSum valuesIn: crossEntropy value shape) value castTo: TFTensor typeFloat)
+		and: ((ReduceSum valuesIn: crossEntropy shape) castedTo: TFTensor typeFloat)
+]
+
+{ #category : 'Accessing' }
+CrossEntropyMean >> currentComputation [
+
+	^crossEntropy currentComputation
 ]
 
 { #category : 'Accessing' }

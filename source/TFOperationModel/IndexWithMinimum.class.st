@@ -27,6 +27,12 @@ IndexWithMinimum class >> operationType [
 	^'ArgMin'
 ]
 
+{ #category : 'Accessing' }
+IndexWithMinimum >> currentComputation [
+
+	^tensor currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 IndexWithMinimum >> initializeNamed: anOperationName in: aTensor across: anAxis [
@@ -34,7 +40,7 @@ IndexWithMinimum >> initializeNamed: anOperationName in: aTensor across: anAxis 
 	tensor := aTensor.
 	axis := anAxis.
 	value :=
-		tensor currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: tensor

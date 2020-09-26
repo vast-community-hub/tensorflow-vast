@@ -27,13 +27,19 @@ ElementWiseNegative class >> operationType [
 	^'Neg'
 ]
 
+{ #category : 'Accessing' }
+ElementWiseNegative >> currentComputation [
+
+	^operandToNegate currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ElementWiseNegative >> initializeNamed: anOperationName of: anOperand [
 
 	operandToNegate := anOperand.
 	value :=
-		operandToNegate currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: operandToNegate

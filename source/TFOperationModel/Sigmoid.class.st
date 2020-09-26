@@ -26,6 +26,12 @@ Sigmoid class >> operationType [
 	^'Sigmoid'
 ]
 
+{ #category : 'Accessing' }
+Sigmoid >> currentComputation [
+
+	^neuron currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Sigmoid >> initializeNamed: anOperationName activating: aNeuron [

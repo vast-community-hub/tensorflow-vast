@@ -27,6 +27,12 @@ Tile class >> replicating: aTensor by: aMultipleTimes [
 	^self named: self operationType replicating: aTensor by: aMultipleTimes
 ]
 
+{ #category : 'Accessing' }
+Tile >> currentComputation [
+
+	^input currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Tile >> initializeNamed: aName replicating: anInput by: aMultipleTimes [
@@ -34,7 +40,7 @@ Tile >> initializeNamed: aName replicating: anInput by: aMultipleTimes [
 	input := anInput.
 	multipleTimes := aMultipleTimes.
 	value :=
-		input currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: aName
 			with: input

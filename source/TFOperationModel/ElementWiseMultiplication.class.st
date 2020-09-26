@@ -27,6 +27,12 @@ ElementWiseMultiplication class >> operationType [
 	^'Mul'
 ]
 
+{ #category : 'Accessing' }
+ElementWiseMultiplication >> currentComputation [
+
+	^leftOperand currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ElementWiseMultiplication >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand [
@@ -34,7 +40,7 @@ ElementWiseMultiplication >> initializeNamed: anOperationName of: aLeftOperand a
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
 	value :=
-		leftOperand currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: leftOperand

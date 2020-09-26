@@ -26,13 +26,19 @@ ElementWiseSquare class >> operationType [
 	^'Square'
 ]
 
+{ #category : 'Initialization' }
+ElementWiseSquare >> currentComputation [
+
+	^operand currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ElementWiseSquare >> initializeNamed: aName of: aTFOperation [
 
 	operand := aTFOperation.
 	value :=
-		operand currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: aName
 			with: operand

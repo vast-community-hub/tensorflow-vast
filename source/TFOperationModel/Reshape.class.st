@@ -27,6 +27,12 @@ Reshape class >> operationType [
 	^'Reshape'
 ]
 
+{ #category : 'Accessing' }
+Reshape >> currentComputation [
+
+	^operand currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Reshape >> initiailizeNamed: aName of: aTFOperation to: aNewShape [
@@ -34,7 +40,7 @@ Reshape >> initiailizeNamed: aName of: aTFOperation to: aNewShape [
 	operand := aTFOperation.
 	newShape := aNewShape.
 	value :=
-		operand currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: aName
 			with: operand

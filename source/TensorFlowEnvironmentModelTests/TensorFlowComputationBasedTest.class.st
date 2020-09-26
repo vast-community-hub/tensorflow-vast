@@ -16,12 +16,12 @@ TensorFlowComputationBasedTest class >> isAbstract [
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
-TensorFlowComputationBasedTest >> assert: aNumber closeTo: anotherNumber [
+TensorFlowComputationBasedTest >> assert: aNumber closeTo: anExpectedNumber [
 
 	^self
-		assert: (aNumber - anotherNumber) abs < errorTolerance
+		assert: (aNumber - anExpectedNumber) abs < errorTolerance
 		description:
-			anotherNumber printString , ' was expected to be close to ' , aNumber printString
+			aNumber printString , ' was expected to be close to ' , anExpectedNumber printString
 ]
 
 { #category : 'Asserting',
@@ -74,6 +74,18 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerMatrixCloseTo: aFloa
 		with: (Array with: aFloatMatrix size with: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual closeTo: expected]
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isIntegerVectorEqualsTo: anExpectedArray [
+
+	self
+		assert: anOutput
+		isOf: TFTensor typeInt32
+		with: (Array with: anExpectedArray size)
+		comparedTo: anExpectedArray
+		complying: [:actual :expected | self assert: actual equals: expected]
 ]
 
 { #category : 'Test Support',
@@ -194,12 +206,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerScalarEqu
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerVectorEqualsTo: anExpectedArray [
 
-	self
-		assert: anOperation compute
-		isOf: TFTensor typeInt32
-		with: (Array with: anExpectedArray size)
-		comparedTo: anExpectedArray
-		complying: [:actual :expected | self assert: actual equals: expected]
+	self assert: anOperation compute isIntegerVectorEqualsTo: anExpectedArray
 ]
 
 { #category : 'Test Support',

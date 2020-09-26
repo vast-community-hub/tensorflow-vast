@@ -3,7 +3,8 @@ Class {
 	#superclass : 'LossFunction',
 	#instVars : [
 		'logits',
-		'labelProbabilities'
+		'labelProbabilities',
+		'currentComputation'
 	],
 	#category : 'TFOperationModel'
 }
@@ -34,6 +35,12 @@ CategoricalCrossEntropy >> backpropagatedGradient [
 ]
 
 { #category : 'Accessing' }
+CategoricalCrossEntropy >> currentComputation [
+
+	^currentComputation
+]
+
+{ #category : 'Accessing' }
 CategoricalCrossEntropy >> expectedVariableName [
 
 	^labelProbabilities operationName
@@ -43,6 +50,7 @@ CategoricalCrossEntropy >> expectedVariableName [
   #vaVisibility : 'private' }
 CategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [
 
+	currentComputation := aLogitsTensor currentComputation.
 	logits := aLogitsTensor.
 	labelProbabilities := anExpectedTensor.
 	value :=

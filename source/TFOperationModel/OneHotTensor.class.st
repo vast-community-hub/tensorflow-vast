@@ -1,6 +1,9 @@
 Class {
 	#name : 'OneHotTensor',
 	#superclass : 'TensorFlowOperationAbstract',
+	#instVars : [
+		'input'
+	],
 	#category : 'TFOperationModel'
 }
 
@@ -20,12 +23,19 @@ OneHotTensor class >> transforming: anInput toDepth: aDepth usingAsOn: anOnValue
 		andAsOff: anOffValue
 ]
 
+{ #category : 'Accessing' }
+OneHotTensor >> currentComputation [
+
+	^input currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 OneHotTensor >> initializeTransforming: anInput toDepth: aDepth usingAsOn: anOnValue andAsOff: anOffValue [
 
+	input := anInput.
 	value :=
-		anInput currentComputation
+		self currentComputation
 			newOperationOf: self operationType
 			namePrefixed: self operationType
 			withAll: (Array with: anInput with: aDepth with: anOnValue with: anOffValue)

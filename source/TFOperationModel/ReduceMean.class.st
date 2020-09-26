@@ -3,7 +3,8 @@ Class {
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'axis',
-		'tensor'
+		'tensor',
+		'currentComputation'
 	],
 	#category : 'TFOperationModel'
 }
@@ -48,8 +49,16 @@ ReduceMean class >> operationType [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-ReduceMean >> initializeNamed: anOperationName ofValuesIn: aTensor alongside: anAxis [
+ReduceMean >> currentComputation [
 
+	^currentComputation
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+ReduceMean >> initializeNamed: anOperationName ofValuesIn: aTensor alongside: anAxis [
+	
+	currentComputation := aTensor currentComputation.
 	tensor := aTensor.
 	axis := anAxis.
 	value :=

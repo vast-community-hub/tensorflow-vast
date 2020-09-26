@@ -46,6 +46,12 @@ ReduceSum class >> valuesIn: aTensor alongside: anAxis [
 	^self named: self operationType valuesIn: aTensor alongside: anAxis
 ]
 
+{ #category : 'Accessing' }
+ReduceSum >> currentComputation [
+
+	^tensor currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ReduceSum >> initializeNamed: anOperationName sumValuesIn: aTensor alongside: anAxis [
@@ -53,7 +59,7 @@ ReduceSum >> initializeNamed: anOperationName sumValuesIn: aTensor alongside: an
 	tensor := aTensor.
 	axis := anAxis.
 	value :=
-		tensor currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: tensor

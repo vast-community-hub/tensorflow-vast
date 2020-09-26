@@ -2,7 +2,8 @@ Class {
 	#name : 'Sum',
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
-		'operands'
+		'operands',
+		'currentComputation'
 	],
 	#category : 'TFOperationModel'
 }
@@ -31,23 +32,31 @@ Sum class >> ofAll: nodeCollection [
 	^self named: 'AddN' ofAll: nodeCollection
 ]
 
+{ #category : 'Accessing' }
+Sum >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Sum >> initializeNamed: anOperationName ofAll: nodes [
 
-	| tf |
-
+	currentComputation := nodes first currentComputation.
 	operands := nodes.
-	tf := operands first currentComputation.
 	value :=
 		operands size = 2
 			ifTrue: [
-				tf
+				self currentComputation
 					newOperationOf: 'Add'
 					namePrefixed: anOperationName
 					with: operands first
 					with: operands second]
-			ifFalse: [tf newOperationOf: 'AddN' namePrefixed: anOperationName withList: operands]
+			ifFalse: [
+				self currentComputation
+					newOperationOf: 'AddN'
+					namePrefixed: anOperationName
+					withList: operands]
 ]
 
 { #category : 'Initialization' }

@@ -37,6 +37,12 @@ SparseCategoricalCrossEntropy >> backpropagatedGradient [
 ]
 
 { #category : 'Accessing' }
+SparseCategoricalCrossEntropy >> currentComputation [
+
+	^unscaledLogits currentComputation
+]
+
+{ #category : 'Accessing' }
 SparseCategoricalCrossEntropy >> expectedVariableName [
 
 	^labels operationName

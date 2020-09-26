@@ -4,33 +4,7 @@ Extension {
 
 { #category : '*TFOperationModel',
  #vaCategories : ['Accessing'] }
-TFTensor >> outputOn: aGraph [
-
-	^(self asOperationOn: aGraph) outputOn: aGraph
-]
-
-{ #category : '*TFOperationModel',
- #vaCategories : ['Printing'] }
-TFTensor >> printOn: aStream [
-
-	aStream nextPutAll:
-		('<1s> <2s>' expandMacrosWith: self typeDescription with: self shapeDescription asLowercase)
-]
-
-{ #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
-TFTensor >> shapeDescription [
-
-	self rank = 0 ifTrue: [^'Scalar'].
-	self rank = 1 ifTrue: [^'Vector size <1p>' expandMacrosWith: self shape any].
-	self rank = 2
-		ifTrue: [^'<1p>x<2p> matrix' expandMacrosWith: self shape first with: self shape second].
-	^'<1p>' expandMacrosWith: self shape
-]
-
-{ #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
-TFTensor >> typeDescription [
+TFTensor class >> descriptionOf: aType [
 
 	^Dictionary new
 		at: TF_BFLOAT16 put: 'BFloat16';
@@ -57,5 +31,56 @@ TFTensor >> typeDescription [
 		at: TF_UINT64 put: 'Uint64';
 		at: TF_UINT8 put: 'Uint8';
 		at: TF_VARIANT put: 'Variant';
-		at: self type
+		at: aType
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> isMatrix [
+	^self rank = 2
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> isScalar [
+	^self rank = 0
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> isVector [
+	^self rank = 1
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> outputOn: aGraph [
+
+	^(self asOperationOn: aGraph) outputOn: aGraph
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Printing'] }
+TFTensor >> printOn: aStream [
+
+	aStream nextPutAll:
+		('<1s> <2s>' expandMacrosWith: self typeDescription with: self shapeDescription asLowercase)
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> shapeDescription [
+
+	self isScalar ifTrue: [^'Scalar'].
+	self isVector ifTrue: [^'Vector size <1p>' expandMacrosWith: self shape any].
+	self isMatrix
+		ifTrue: [^'<1p>x<2p> matrix' expandMacrosWith: self shape first with: self shape second].
+	^'<1p>' expandMacrosWith: self shape
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['Accessing'] }
+TFTensor >> typeDescription [
+
+	^self class descriptionOf: self type
 ]

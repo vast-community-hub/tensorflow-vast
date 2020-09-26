@@ -1,6 +1,9 @@
 Class {
 	#name : 'ConstantNode',
 	#superclass : 'TensorFlowOperationAbstract',
+	#instVars : [
+		'currentComputation'
+	],
 	#category : 'TFOperationModel'
 }
 
@@ -72,10 +75,17 @@ ConstantNode class >> operationType [
 	^'Const'
 ]
 
+{ #category : 'Initialization' }
+ConstantNode >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ConstantNode >> initializeOn: aComputation named: aName with: aTFTensor wrappedWith: aWrapper [
-
+	
+	currentComputation := aComputation. 
 	value :=
 		aWrapper value: (
 			aComputation

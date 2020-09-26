@@ -13,6 +13,12 @@ SquaredDifference class >> between: aValue and: anotherValue [
 	^self new initializeBetween: aValue and: anotherValue
 ]
 
+{ #category : 'Accessing' }
+SquaredDifference >> currentComputation [
+
+	^value currentComputation
+]
+
 { #category : 'Initialization' }
 SquaredDifference >> expectedVariableName [
 

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'leftOperand',
 		'rightOperand',
-		'customDescription'
+		'customDescription',
+		'currentComputation'
 	],
 	#category : 'TFOperationModel'
 }
@@ -72,10 +73,17 @@ MatrixMultiplication class >> operationType [
 	^'MatMul'
 ]
 
+{ #category : 'Accessing' }
+MatrixMultiplication >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 MatrixMultiplication >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand customizedBy: aDescription [
-
+	
+	currentComputation := aLeftOperand currentComputation.
 	leftOperand := aLeftOperand.
 	rightOperand := aRightOperand.
 	customDescription := aDescription.

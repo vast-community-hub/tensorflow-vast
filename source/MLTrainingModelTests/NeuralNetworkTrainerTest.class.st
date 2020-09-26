@@ -59,7 +59,7 @@ NeuralNetworkTrainerTest >> testAfterTrainingCallback [
 ]
 
 { #category : 'Tests' }
-NeuralNetworkTrainerTest >> testCalculateLossAfterTraining [
+NeuralNetworkTrainerTest >> testCalculateCategoricalCrossEntropyAfterTraining [
 
 	| model summary |
 
@@ -72,13 +72,91 @@ NeuralNetworkTrainerTest >> testCalculateLossAfterTraining [
 				toFitPredictionFrom: self logictStatements
 				to: self expectedProbabilityByLabel.
 
-	self assert: (model predictFrom: self logictStatements) isLargeIntegerVectorEqualsTo: #(1 1 1 1).
+	self
+		assertOutputOf: model trainableVariables first
+		isMatrixCloseTo: #(
+			(0.01456563 0.03543437) (0.06456564 -0.01456563) (0.04684845 0.00315156)).
 	self
 		assert: (
+			model logits computeWith: (
+				Dictionary new
+					at: 'input' put: self logictStatements;
+					yourself))
+		isMatrixCloseTo: #(
+			(0.27597973 0.82402027) (0.34054536 0.8094547) (0.2436969 0.8563031)
+			(0.355111 0.84488904)).
+	self
+		assertOutputOf: (
 			summary
 				accuracyOfPredictionFrom: self logictStatements
 				whenExpectedIs: self expectedProbabilityByLabel)
-		isFloatScalarCloseTo: 8.46859931945801e-1
+		isFloatScalarCloseTo: 0.822440
+]
+
+{ #category : 'Tests' }
+NeuralNetworkTrainerTest >> testCalculateMeanSquaredErrorAfterTraining [
+
+	| model summary |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		(NeuralNetworkTrainer on: tf)
+			minimizeMeanSquaredErrorUsing: (GradientDescent scalingBy: 0.2);
+			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
+			train: model
+				toFitPredictionFrom: self logictStatements
+				to: self expectedProbabilityByLabel.
+
+	self
+		assertOutputOf: model trainableVariables first
+		isMatrixCloseTo: #((0.03 0.02) (0.08000001 -0.03) (0.07000001 -0.02)).
+	self
+		assert: (
+			model logits computeWith: (
+				Dictionary new
+					at: 'input' put: self logictStatements;
+					yourself))
+		isMatrixCloseTo: #((0.32999998 0.77000004) (0.41 0.74) (0.29 0.81) (0.44 0.76)).
+	self
+		assertOutputOf: (
+			summary
+				accuracyOfPredictionFrom: self logictStatements
+				whenExpectedIs: self expectedProbabilityByLabel)
+		isFloatScalarCloseTo: 0.193613.
+	
+]
+
+{ #category : 'Tests' }
+NeuralNetworkTrainerTest >> testCalculateSparseCategoricalCrossEntropyAfterTraining [
+
+	| model summary |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		(NeuralNetworkTrainer on: tf)
+			minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
+			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
+			train: model toFitPredictionFrom: self logictStatements to: self expectedLabels.
+
+	self
+		assertOutputOf: model trainableVariables first
+		isMatrixCloseTo: #(
+			(0.06456564 -0.06456563) (0.01456563 -0.01456563) (0.04684845 -0.04684844)).
+	self
+		assert: (
+			model logits computeWith: (
+				Dictionary new
+					at: 'input' put: self logictStatements;
+					yourself))
+		isMatrixCloseTo: #(
+			(0.3259797 0.67402035) (0.34054536 0.6594547) (0.3436969 0.65630317)
+			(0.40511099 0.59488904)).
+	self
+		assertOutputOf: (
+			summary
+				accuracyOfPredictionFrom: self logictStatements
+				whenExpectedIs: self expectedLabels)
+		isFloatScalarCloseTo: 0.770683
 ]
 
 { #category : 'Tests' }

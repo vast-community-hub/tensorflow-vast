@@ -27,6 +27,12 @@ Exponentiation class >> operationType [
 	^'Pow'
 ]
 
+{ #category : 'Accessing' }
+Exponentiation >> currentComputation [
+
+	^base currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Exponentiation >> initializeNamed: aName of: aBase raisedTo: theNthPower [
@@ -34,7 +40,7 @@ Exponentiation >> initializeNamed: aName of: aBase raisedTo: theNthPower [
 	base := aBase.
 	exponent := theNthPower.
 	value :=
-		aBase currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: aName
 			with: base

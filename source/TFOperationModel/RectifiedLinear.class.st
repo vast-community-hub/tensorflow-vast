@@ -26,6 +26,12 @@ RectifiedLinear class >> operationType [
 	^'Relu'
 ]
 
+{ #category : 'Accessing' }
+RectifiedLinear >> currentComputation [
+
+	^neuron currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 RectifiedLinear >> initializeNamed: anOperationName activating: aNeuron [

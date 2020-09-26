@@ -26,13 +26,19 @@ Tanh class >> operationType [
 	^'Tanh'
 ]
 
+{ #category : 'Accessing' }
+Tanh >> currentComputation [
+
+	^neuron currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Tanh >> initializeNamed: anOperationName activating: aNeuron [
 
 	neuron := aNeuron.
 	value :=
-		neuron currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: neuron

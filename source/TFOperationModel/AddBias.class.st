@@ -27,6 +27,12 @@ AddBias class >> to: aTensorOrOperation with: aBias [
 	^self named: self operationType to: aTensorOrOperation with: aBias
 ]
 
+{ #category : 'Accessing' }
+AddBias >> currentComputation [
+
+	^addend currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 AddBias >> initializeNamed: anOperationName to: aTensorOrOperation with: aBias [
@@ -34,7 +40,7 @@ AddBias >> initializeNamed: anOperationName to: aTensorOrOperation with: aBias [
 	addend := aTensorOrOperation.
 	bias := aBias.
 	value :=
-		addend currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: addend

@@ -20,6 +20,12 @@ SequentialModel class >> composedOf: aLayersCollection applyingToLogits: aBlock 
 	^self new initializeComposedOf: aLayersCollection applyingToLogits: aBlock
 ]
 
+{ #category : 'Accessing' }
+SequentialModel >> currentComputation [
+
+	^logits currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SequentialModel >> initializeComposedOf: aLayersCollection applyingToLogits: aBlock [

@@ -26,13 +26,19 @@ Softmax class >> operationType [
 	^'Softmax'
 ]
 
+{ #category : 'Accessing' }
+Softmax >> currentComputation [
+
+	^neuron currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 Softmax >> initializeNamed: anOperationName activating: aNeuron [
 
 	neuron := aNeuron.
 	value :=
-		neuron currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: neuron

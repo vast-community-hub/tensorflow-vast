@@ -1,5 +1,5 @@
 Class {
-	#name : 'MatrixInverse',
+	#name : 'Shape',
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'tensor'
@@ -8,38 +8,38 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-MatrixInverse class >> named: anOperationName of: aTensor [
+Shape class >> named: anOperationName of: anOperationNode [
 
-	^self new initializeNamed: anOperationName of: aTensor
+	^self new initializeNamed: anOperationName of: anOperationNode
 ]
 
 { #category : 'Instance Creation' }
-MatrixInverse class >> of: aTensorOrFormula [
+Shape class >> of: anOperationNode [
 
-	^self named: self operationType of: aTensorOrFormula
+	^self named: self operationType of: anOperationNode
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-MatrixInverse class >> operationType [
+Shape class >> operationType [
 
-	^'MatrixInverse'
+	^'Shape'
 ]
 
-{ #category : 'Initialization' }
-MatrixInverse >> currentComputation [
+{ #category : 'Accessing' }
+Shape >> currentComputation [
 
 	^tensor currentComputation
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-MatrixInverse >> initializeNamed: anOperationName of: aTensor [
+Shape >> initializeNamed: anOperationName of: anOperationNode [
 
-	tensor := aTensor.
+	tensor := anOperationNode.
 	value :=
 		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
-			with: tensor
+			with: anOperationNode
 ]

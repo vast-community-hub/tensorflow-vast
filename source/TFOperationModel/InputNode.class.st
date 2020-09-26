@@ -1,6 +1,9 @@
 Class {
 	#name : 'InputNode',
 	#superclass : 'TensorFlowOperationAbstract',
+	#instVars : [
+		'currentComputation'
+	],
 	#category : 'TFOperationModel'
 }
 
@@ -27,10 +30,17 @@ InputNode class >> on: aComputation named: anInputName of: aType sized: aNumberO
 		shaped: (Array with: -1 with: aNumberOfFeatures)
 ]
 
+{ #category : 'Accessing' }
+InputNode >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 InputNode >> initializeOn: aTensorFlowComputation named: aName of: aType shaped: aShape [
-
+	
+	currentComputation := aTensorFlowComputation.
 	value :=
 		aTensorFlowComputation
 			newOperationOf: self operationType

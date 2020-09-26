@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.28',
-						#ts : 3776968382
+						#versionName : '1.29',
+						#ts : 3777499878
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3776968391,
+		#ts : 3777499886,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -33,8 +33,8 @@
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
-				#versionName : '0.10',
-				#ts : 3776804301
+				#versionName : '0.12',
+				#ts : 3778577311
 			},
 			{
 				#name : 'MLNeuralNetworkModel',
@@ -48,7 +48,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.19'
+		#versionName : '0.20'
 	},
 	{
 		#conditions : [
@@ -57,8 +57,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.19',
-						#ts : 3776968391
+						#versionName : '0.20',
+						#ts : 3777499886
 					},
 					{
 						#name : 'SUnit',
@@ -68,7 +68,7 @@
 				]
 			}
 		],
-		#ts : 3776968391,
+		#ts : 3777499886,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -89,12 +89,12 @@
 			},
 			{
 				#name : 'MLTrainingModelTests',
-				#versionName : '1.5',
-				#ts : 3776805684
+				#versionName : '1.8',
+				#ts : 3778576087
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.18'
+		#versionName : '0.19'
 	},
 	{
 		#conditions : [
@@ -181,7 +181,7 @@
 				]
 			}
 		],
-		#ts : 3776717590,
+		#ts : 3778431281,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -197,8 +197,8 @@
 			},
 			{
 				#name : 'TensorFlowApp',
-				#versionName : '0.4.20',
-				#ts : 3762579488
+				#versionName : '0.4.21',
+				#ts : 3777757608
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
@@ -207,8 +207,8 @@
 			},
 			{
 				#name : 'TensorFlowKernelApp',
-				#versionName : '0.30',
-				#ts : 3774915885
+				#versionName : '0.31',
+				#ts : 3777757608
 			},
 			{
 				#name : 'TensorFlowTestsApp',
@@ -222,12 +222,12 @@
 			},
 			{
 				#name : 'TestTensorFlowApp',
-				#versionName : '0.17',
-				#ts : 3750325281
+				#versionName : '0.18',
+				#ts : 3777757608
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.7'
+		#versionName : '0.64.8'
 	},
 	{
 		#conditions : [
@@ -236,13 +236,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.7',
-						#ts : 3776717590
+						#versionName : '0.64.8',
+						#ts : 3778431281
 					}
 				]
 			}
 		],
-		#ts : 3776968382,
+		#ts : 3777499878,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -258,13 +258,13 @@
 			},
 			{
 				#name : 'TensorFlowEnvironmentModelTests',
-				#versionName : '1.17',
-				#ts : 3776717496
+				#versionName : '1.19',
+				#ts : 3778576089
 			},
 			{
 				#name : 'TFOperationGradientFailingModelTests',
-				#versionName : '1.14',
-				#ts : 3776805221
+				#versionName : '1.15',
+				#ts : 3777392183
 			},
 			{
 				#name : 'TFOperationGradientModel',
@@ -278,18 +278,18 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1.19',
-				#ts : 3776802148
+				#versionName : '1.23',
+				#ts : 3778577311
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '1.18',
-				#ts : 3776802795
+				#versionName : '1.22',
+				#ts : 3778577311
 			},
 			{
 				#name : 'TFOptimizerModel',
-				#versionName : '1.19',
-				#ts : 3776968378
+				#versionName : '1.20',
+				#ts : 3777757608
 			},
 			{
 				#name : 'TFOptimizerModelTests',
@@ -333,7 +333,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.28'
+		#versionName : '1.29'
 	},
 	{
 		#conditions : [

@@ -27,6 +27,12 @@ ElementWiseDivision class >> operationType [
 	^'Div'
 ]
 
+{ #category : 'Accessing' }
+ElementWiseDivision >> currentComputation [
+
+	^numerator currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ElementWiseDivision >> initializeNamed: anOperationName of: aLeftOperand and: aRightOperand [
@@ -34,7 +40,7 @@ ElementWiseDivision >> initializeNamed: anOperationName of: aLeftOperand and: aR
 	numerator := aLeftOperand.
 	denominator := aRightOperand.
 	value :=
-		numerator currentComputation
+		self currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: numerator

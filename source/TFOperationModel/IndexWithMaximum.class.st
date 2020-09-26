@@ -3,7 +3,8 @@ Class {
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'tensor',
-		'axis'
+		'axis',
+		'currentComputation'
 	],
 	#category : 'TFOperationModel'
 }
@@ -27,14 +28,21 @@ IndexWithMaximum class >> operationType [
 	^'ArgMax'
 ]
 
+{ #category : 'Initialization' }
+IndexWithMaximum >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 IndexWithMaximum >> initializeNamed: anOperationName in: aTensor across: anAxis [
 
+	currentComputation := aTensor currentComputation.
 	tensor := aTensor.
 	axis := anAxis.
 	value :=
-		tensor currentComputation
+		currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			with: tensor

@@ -32,6 +32,12 @@ MeanSquaredError class >> of: aLogitsTensor whenExpectedIs: anExpectedTensor [
 ]
 
 { #category : 'Accessing' }
+MeanSquaredError >> currentComputation [
+
+	^value currentComputation
+]
+
+{ #category : 'Accessing' }
 MeanSquaredError >> expectedVariableName [
 
 	^squareDifference expectedVariableName

@@ -69,6 +69,18 @@ TensorFlowOperationAbstract >> biasedBy: aBias [
 	^AddBias to: self with: aBias
 ]
 
+{ #category : 'Accessing - TF Operation' }
+TensorFlowOperationAbstract >> castedTo: aDataType [
+
+	^TypeCast of: self to: aDataType
+]
+
+{ #category : 'Accessing - TF Operation' }
+TensorFlowOperationAbstract >> comparedWith: anOperation [
+
+	^ElementWiseEquality between: self and: anOperation
+]
+
 { #category : 'Accessing' }
 TensorFlowOperationAbstract >> compute [
 
@@ -84,7 +96,7 @@ TensorFlowOperationAbstract >> computeWith: aPlaceholderValueMapping [
 { #category : 'Accessing' }
 TensorFlowOperationAbstract >> currentComputation [
 
-	^self value currentComputation
+	self subclassResponsibility
 ]
 
 { #category : 'Operations' }
@@ -179,6 +191,12 @@ TensorFlowOperationAbstract >> relu [
 TensorFlowOperationAbstract >> reshapeTo: aNewShape [
 
 	^Reshape of: self to: aNewShape
+]
+
+{ #category : 'Operations' }
+TensorFlowOperationAbstract >> shape [
+
+	^Shape of: self
 ]
 
 { #category : 'Operations' }
