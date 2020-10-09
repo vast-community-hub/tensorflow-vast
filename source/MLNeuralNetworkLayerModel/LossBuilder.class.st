@@ -22,9 +22,9 @@ LossBuilder >> buildCategoricalCrossEntropy [
 	labels :=
 		InputNode
 			on: model currentComputation
-			named: self expectedInputName
+			named: self targetInputName
 			of: TFTensor typeFloat
-			shaped: model value outputShape.
+			shaped: model outputShape.
 
 	^reduction value: (CategoricalCrossEntropy of: model whenExpectedProbabilityIs: labels)
 ]
@@ -43,7 +43,7 @@ LossBuilder >> buildSparseCategoricalCrossEntropy [
 	| labels |
 
 	labels :=
-		InputNode on: model currentComputation named: self expectedInputName of: TFTensor typeInt32.
+		InputNode on: model currentComputation named: self targetInputName of: TFTensor typeInt32.
 
 	^reduction value: (SparseCategoricalCrossEntropy of: model whenExpectedIs: labels)
 ]
@@ -56,18 +56,11 @@ LossBuilder >> buildSquaredError [
 	expected :=
 		InputNode
 			on: model currentComputation
-			named: self expectedInputName
+			named: self targetInputName
 			of: TFTensor typeFloat
-			shaped: model value outputShape.
+			shaped: model outputShape.
 
 	^reduction value: (SquaredDifference between: model and: expected)
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-LossBuilder >> expectedInputName [
-
-	^'expected'
 ]
 
 { #category : 'Initialization',
@@ -82,6 +75,13 @@ LossBuilder >> initializeFor: aPredictor [
 LossBuilder >> reducedUsingMean [
 
 	reduction := [:loss | loss mean]
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+LossBuilder >> targetInputName [
+
+	^'expected'
 ]
 
 { #category : 'Configuring' }

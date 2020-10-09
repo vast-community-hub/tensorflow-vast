@@ -6,7 +6,8 @@ Class {
 		'lossFunction',
 		'optimizer',
 		'stopCondition',
-		'historicalTrainingLoss'
+		'historicalTrainingLoss',
+		'accuracy'
 	],
 	#category : 'MLTrainingModel'
 }
@@ -21,14 +22,15 @@ NeuralNetworkTrainingSummary class >> of: aModel trainedMinimizing: aLossFunctio
 		until: aStopCondition
 ]
 
-{ #category : 'Compute' }
-NeuralNetworkTrainingSummary >> accuracyOfPredictionFrom: anInput whenExpectedIs: anExpectedValues [
+{ #category : 'Accessing' }
+NeuralNetworkTrainingSummary >> accuracyValueWhenPredictingFrom: anInput andExpectedIs: anExpectedValues [
 
-	^lossFunction computeWith: (
+	^(accuracy computeWith: (
 		Dictionary new
 			at: model inputVariableName put: anInput;
-			at: lossFunction expectedVariableName put: anExpectedValues;
-			yourself)
+			at: lossFunction targetInputName put: anExpectedValues;
+			yourself))
+				scalarOutput
 ]
 
 { #category : 'Accessing' }
@@ -55,7 +57,21 @@ NeuralNetworkTrainingSummary >> initializeOf: aModel trainedMinimizing: aLossFun
 	lossFunction := aLossFunction.
 	optimizer := anOptimizer.
 	stopCondition := aStopCondition.
-	historicalTrainingLoss := OrderedCollection new
+	historicalTrainingLoss := OrderedCollection new.
+
+	accuracy :=
+		CategoricalPredictionAccuracy of: model whenExpectedIs: lossFunction targetInputAsLabels
+]
+
+{ #category : 'Compute' }
+NeuralNetworkTrainingSummary >> lossValueWhenPredictingFrom: anInput andExpectedIs: anExpectedValues [
+
+	^(lossFunction computeWith: (
+		Dictionary new
+			at: model inputVariableName put: anInput;
+			at: lossFunction targetInputName put: anExpectedValues;
+			yourself))
+				scalarOutput
 ]
 
 { #category : 'Accessing' }

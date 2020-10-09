@@ -40,12 +40,6 @@ CategoricalCrossEntropy >> currentComputation [
 	^currentComputation
 ]
 
-{ #category : 'Accessing' }
-CategoricalCrossEntropy >> expectedVariableName [
-
-	^labelProbabilities operationName
-]
-
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 CategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedProbabilityIs: anExpectedTensor [
@@ -77,4 +71,16 @@ CategoricalCrossEntropy >> mean [
 CategoricalCrossEntropy >> printOn: aStream [
 
 	aStream nextPutAll: 'Categorical Cross Entropy' 
+]
+
+{ #category : 'Accessing' }
+CategoricalCrossEntropy >> targetInput [
+
+	^labelProbabilities
+]
+
+{ #category : 'Accessing' }
+CategoricalCrossEntropy >> targetInputAsLabels [
+
+	^self targetInput argMaxOnRows
 ]

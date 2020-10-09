@@ -42,12 +42,6 @@ SparseCategoricalCrossEntropy >> currentComputation [
 	^unscaledLogits currentComputation
 ]
 
-{ #category : 'Accessing' }
-SparseCategoricalCrossEntropy >> expectedVariableName [
-
-	^labels operationName
-]
-
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SparseCategoricalCrossEntropy >> initializeNamed: anOperationName of: aLogitsTensor whenExpectedIs: anExpectedTensor [
@@ -78,4 +72,16 @@ SparseCategoricalCrossEntropy >> mean [
 SparseCategoricalCrossEntropy >> printOn: aStream [
 
 	aStream nextPutAll: 'Sparse Categorical Cross Entropy'
+]
+
+{ #category : 'Accessing' }
+SparseCategoricalCrossEntropy >> targetInput [
+
+	^labels
+]
+
+{ #category : 'Accessing' }
+SparseCategoricalCrossEntropy >> targetInputAsLabels [
+
+	^labels
 ]

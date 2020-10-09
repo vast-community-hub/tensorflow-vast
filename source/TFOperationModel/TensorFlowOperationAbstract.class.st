@@ -153,6 +153,12 @@ TensorFlowOperationAbstract >> outputShape [
 	^self value outputShape
 ]
 
+{ #category : 'Accessing' }
+TensorFlowOperationAbstract >> outputType [
+
+	^self value outputType
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TensorFlowOperationAbstract >> print: aFormulaOrTensor formattedOn: aStream [

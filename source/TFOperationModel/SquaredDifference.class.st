@@ -19,12 +19,6 @@ SquaredDifference >> currentComputation [
 	^value currentComputation
 ]
 
-{ #category : 'Initialization' }
-SquaredDifference >> expectedVariableName [
-
-	^expectedValue operationName
-]
-
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SquaredDifference >> initializeBetween: aValue and: anotherValue [
@@ -39,4 +33,16 @@ SquaredDifference >> initializeBetween: aValue and: anotherValue [
 SquaredDifference >> mean [
 
 	^MeanSquaredError named: 'MSE' meanOf: self
+]
+
+{ #category : 'Initialization' }
+SquaredDifference >> targetInput [
+
+	^expectedValue
+]
+
+{ #category : 'Accessing' }
+SquaredDifference >> targetInputAsLabels [
+
+	^expectedValue argMaxOnRows
 ]

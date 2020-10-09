@@ -103,7 +103,7 @@ NeuralNetworkTrainer >> train: aModel toFitPredictionFrom: anInstanceCollection 
 				feedingInputsWith: (
 					Dictionary new
 						at: aModel inputVariableName put: anInstanceCollection;
-						at: loss expectedVariableName put: aTarget;
+						at: loss targetInputName put: aTarget;
 						yourself)]
 ]
 

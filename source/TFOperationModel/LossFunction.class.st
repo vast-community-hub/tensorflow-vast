@@ -5,7 +5,19 @@ Class {
 }
 
 { #category : 'Accessing' }
-LossFunction >> expectedVariableName [
+LossFunction >> targetInput [
 
 	self subclassResponsibility
+]
+
+{ #category : 'Accessing' }
+LossFunction >> targetInputAsLabels [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Accessing' }
+LossFunction >> targetInputName [
+
+	^self targetInput operationName
 ]

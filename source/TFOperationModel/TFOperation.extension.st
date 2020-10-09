@@ -4,6 +4,13 @@ Extension {
 
 { #category : '*TFOperationModel',
  #vaCategories : ['accessing'] }
+TFOperation >> castedTo: aType [
+
+	^self castTo: aType
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['accessing'] }
 TFOperation >> computeEagerly [
 
 	^graph runOutput: self firstOutput
@@ -41,9 +48,7 @@ TFOperation >> outputOn: aGraph [
  #vaCategories : ['accessing'] }
 TFOperation >> outputShape [
 
-	^(graph rankOf: self firstOutput) negative
-		ifTrue: [#()]
-		ifFalse: [graph shapeOf: self firstOutput]
+	^self firstOutput shape
 ]
 
 { #category : '*TFOperationModel',

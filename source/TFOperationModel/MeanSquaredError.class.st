@@ -37,18 +37,24 @@ MeanSquaredError >> currentComputation [
 	^value currentComputation
 ]
 
-{ #category : 'Accessing' }
-MeanSquaredError >> expectedVariableName [
-
-	^squareDifference expectedVariableName
-]
-
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 MeanSquaredError >> initializeNamed: anOperationName meanOf: aSquareDifference [
 
 	squareDifference := aSquareDifference.
 	value := ReduceMean named: anOperationName ofValuesIn: aSquareDifference
+]
+
+{ #category : 'Accessing' }
+MeanSquaredError >> targetInput [
+
+	^squareDifference targetInput
+]
+
+{ #category : 'Accessing' }
+MeanSquaredError >> targetInputAsLabels [
+
+	^squareDifference targetInputAsLabels
 ]
 
 { #category : 'Initialization' }

@@ -18,19 +18,13 @@ CrossEntropyMean >> backpropagatedGradient [
 
 	^ElementWiseDivision
 		of: crossEntropy backpropagatedGradient
-		and: ((ReduceSum valuesIn: crossEntropy shape) castedTo: TFTensor typeFloat)
+		and: (crossEntropy shape sumElements castedTo: TFTensor typeFloat)
 ]
 
 { #category : 'Accessing' }
 CrossEntropyMean >> currentComputation [
 
 	^crossEntropy currentComputation
-]
-
-{ #category : 'Accessing' }
-CrossEntropyMean >> expectedVariableName [
-
-	^crossEntropy expectedVariableName
 ]
 
 { #category : 'Initialization',
@@ -46,4 +40,16 @@ CrossEntropyMean >> printOn: aStream [
 
 
 	aStream nextPutAll: ('<1p> (Reduced to scalar with mean)' expandMacrosWith: crossEntropy)
+]
+
+{ #category : 'Accessing' }
+CrossEntropyMean >> targetInput [
+
+	^crossEntropy targetInput
+]
+
+{ #category : 'Accessing' }
+CrossEntropyMean >> targetInputAsLabels [
+
+	^crossEntropy targetInputAsLabels
 ]

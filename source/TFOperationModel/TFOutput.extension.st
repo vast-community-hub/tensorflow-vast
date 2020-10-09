@@ -15,3 +15,17 @@ TFOutput >> outputOn: aGraph [
 
 	^self
 ]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['accessing'] }
+TFOutput >> rank [
+
+	^graph rankOf: self
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['accessing'] }
+TFOutput >> shape [
+
+	^self rank negative ifTrue: [#()] ifFalse: [graph shapeOf: self]
+]
