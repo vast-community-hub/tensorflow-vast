@@ -14,6 +14,12 @@ ModelUpdater class >> updating: aModel toMinimize: aLossFunction using: anOptimi
 	^self new initializeUpdating: aModel toMinimize: aLossFunction using: anOptimizer
 ]
 
+{ #category : 'Accessing' }
+ModelUpdater >> currentComputation [
+
+	^value currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ModelUpdater >> initializeOptimizationsToMinimize: aTrainableVariableCollection [

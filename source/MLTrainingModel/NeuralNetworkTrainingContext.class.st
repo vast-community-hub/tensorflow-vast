@@ -27,15 +27,16 @@ NeuralNetworkTrainingContext >> addMetricValued: aValue to: aMetricName [
 ]
 
 { #category : 'Computing' }
-NeuralNetworkTrainingContext >> computeOptimizationToFitPredictionFrom: anInstanceCollection to: aTarget [
+NeuralNetworkTrainingContext >> computeOptimizationToFitTo: aSampleDataset [
 
 	| loss trainingInputs |
 
-	trainingInputs :=
-		Dictionary new
-			at: model inputVariableName put: anInstanceCollection;
-			at: optimization lossToMinimize targetInputName put: aTarget;
-			yourself.
+	aSampleDataset withTrainingDatasetDo: [:features :target |
+		trainingInputs :=
+			Dictionary new
+				at: model inputVariableName put: features;
+				at: optimization lossToMinimize targetInputName put: target;
+				yourself].
 	loss := optimization computeWith: trainingInputs.
 
 	self addMetricValued: loss scalarOutput to: self trainingLossMetricKey.

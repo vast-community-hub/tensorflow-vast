@@ -100,11 +100,20 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 ]
 
 { #category : 'Training' }
+NeuralNetworkTrainer >> train: aModel toFit: aDataset [
+
+	^self train: aModel doing: [:context | context computeOptimizationToFitTo: aDataset]
+]
+
+{ #category : 'Training' }
 NeuralNetworkTrainer >> train: aModel toFitPredictionFrom: anInstanceCollection to: aTarget [
 
 	^self
 		train: aModel
-		doing: [:context | context computeOptimizationToFitPredictionFrom: anInstanceCollection to: aTarget]
+		toFit: (
+			SampleDataset new
+				bindTrainingSetTo: anInstanceCollection andLabelsTo: aTarget;
+				yourself)
 ]
 
 { #category : 'Configuring' }

@@ -1,6 +1,9 @@
 Class {
 	#name : 'IdentityTransformation',
 	#superclass : 'TensorFlowOperationAbstract',
+	#instVars : [
+		'currentComputation'
+	],
 	#category : 'TFOperationModel'
 }
 
@@ -27,12 +30,19 @@ IdentityTransformation class >> operationType [
 	^'Identity'
 ]
 
+{ #category : 'Accessing' }
+IdentityTransformation >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 IdentityTransformation >> initializeNamed: anOperationName of: aTensor describedBy: aBlock [
 
+	currentComputation := aTensor currentComputation.
 	value :=
-		aTensor currentComputation
+		currentComputation
 			newOperationOf: self class operationType
 			namePrefixed: anOperationName
 			withAll: (Array with: aTensor)

@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.31',
-						#ts : 3779861037
+						#versionName : '1.32',
+						#ts : 3779874038
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3779872396,
+		#ts : 3779874070,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -33,8 +33,8 @@
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
-				#versionName : '0.14',
-				#ts : 3779740618
+				#versionName : '0.15',
+				#ts : 3779873800
 			},
 			{
 				#name : 'MLNeuralNetworkModel',
@@ -48,12 +48,12 @@
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : '1.11',
-				#ts : 3779867805
+				#versionName : '1.12',
+				#ts : 3779873800
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.23'
+		#versionName : '0.24'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.23',
-						#ts : 3779872396
+						#versionName : '0.24',
+						#ts : 3779874070
 					},
 					{
 						#name : 'SUnit',
@@ -73,7 +73,7 @@
 				]
 			}
 		],
-		#ts : 3779872407,
+		#ts : 3779874081,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -99,12 +99,12 @@
 			},
 			{
 				#name : 'MLTrainingModelTests',
-				#versionName : '1.11',
-				#ts : 3779870613
+				#versionName : '1.12',
+				#ts : 3779874964
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.22'
+		#versionName : '0.23'
 	},
 	{
 		#conditions : [
@@ -252,7 +252,7 @@
 				]
 			}
 		],
-		#ts : 3779861037,
+		#ts : 3779874038,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -288,8 +288,8 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1.25',
-				#ts : 3779861023
+				#versionName : '1.26',
+				#ts : 3779873800
 			},
 			{
 				#name : 'TFOperationModelTests',
@@ -343,7 +343,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.31'
+		#versionName : '1.32'
 	},
 	{
 		#conditions : [
