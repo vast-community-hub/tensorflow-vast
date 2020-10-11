@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : 'Testing' }
-TrainingStopCondition >> isModelWellTrainedAccording: aTrainingSummary [
+TrainingStopCondition >> isModelWellTrainedAccording: aTrainingContext [
 
 	self subclassResponsibility
 ]

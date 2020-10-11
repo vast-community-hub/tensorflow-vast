@@ -22,9 +22,9 @@ CompletedNumberOfTraining >> initializeAfter: aTrainingNumber [
 ]
 
 { #category : 'Testing' }
-CompletedNumberOfTraining >> isModelWellTrainedAccording: aTrainingSummary [
+CompletedNumberOfTraining >> isModelWellTrainedAccording: aTrainingContext [
 
-	^stopTrainingEpoch <= aTrainingSummary totalNumberOfEpochs
+	^stopTrainingEpoch <= aTrainingContext totalNumberOfEpochs
 ]
 
 { #category : 'Printing' }

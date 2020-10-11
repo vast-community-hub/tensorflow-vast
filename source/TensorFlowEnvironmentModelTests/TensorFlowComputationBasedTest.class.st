@@ -35,6 +35,15 @@ TensorFlowComputationBasedTest >> assert: anOperationCollection hasTheSameOperat
 			self assert: anOperation value equals: anotherOperation value]
 ]
 
+{ #category : 'Asserting',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: aNumberArray isArrayCloseTo: anExpectedArray [
+
+	aNumberArray
+		with: anExpectedArray
+		do: [:number :expected | self assert: number closeTo: expected]
+]
+
 { #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar [

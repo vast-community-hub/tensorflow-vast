@@ -8,7 +8,14 @@ Class {
   #vaVisibility : 'private' }
 TrainingMinimizingMeanSquaredErrorTest >> expectedAccuracyAfterOneEpoch [
 
-	^0.5
+	^#(0.5)
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingMinimizingMeanSquaredErrorTest >> expectedAccuracyThroughTenEpochs [
+
+	^#(0.5 0.5 0.5 0.75 1 1 1 1 1 1)
 ]
 
 { #category : 'Accessing',
@@ -23,6 +30,15 @@ TrainingMinimizingMeanSquaredErrorTest >> expectedLogitsAfterOneEpoch [
 TrainingMinimizingMeanSquaredErrorTest >> expectedLossAfterOneEpoch [
 
 	^0.193613
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingMinimizingMeanSquaredErrorTest >> expectedLossValueThroughTenEpochs [
+
+	^#(0.26500004529953003 0.19361251592636108 0.1633041501045227 0.14681315422058105
+	0.13540230691432953 0.12621885538101196 0.11828607320785522 0.11123108863830566
+	0.10488058626651764 0.09913133084774017)
 ]
 
 { #category : 'Accessing',

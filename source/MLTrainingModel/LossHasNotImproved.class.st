@@ -22,10 +22,10 @@ LossHasNotImproved >> initializeMoreThan: aDelta [
 ]
 
 { #category : 'Testing' }
-LossHasNotImproved >> isModelWellTrainedAccording: aTrainingSummary [
+LossHasNotImproved >> isModelWellTrainedAccording: aTrainingContext [
 
-	^aTrainingSummary totalNumberOfEpochs > 1 and: [| lastLosses |
-		lastLosses := aTrainingSummary historicalTrainingLoss last: 2.
+	^aTrainingContext totalNumberOfEpochs > 1 and: [| lastLosses |
+		lastLosses := aTrainingContext historicalTrainingLoss last: 2.
 		lastLosses first - lastLosses last < delta]
 ]
 

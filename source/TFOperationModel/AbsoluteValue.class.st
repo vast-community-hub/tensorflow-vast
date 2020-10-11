@@ -26,6 +26,12 @@ AbsoluteValue class >> operationType [
 	^'Abs'
 ]
 
+{ #category : 'Accessing' }
+AbsoluteValue >> currentComputation [
+
+	^value currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 AbsoluteValue >> initializeNamed: aName of: anOperation [

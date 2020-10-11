@@ -21,9 +21,9 @@ LossReachedMinimum >> initializeLowerThan: aLossValue [
 ]
 
 { #category : 'Testing' }
-LossReachedMinimum >> isModelWellTrainedAccording: aTrainingSummary [
+LossReachedMinimum >> isModelWellTrainedAccording: aTrainingContext [
 
-	^aTrainingSummary historicalTrainingLoss last < minimumLoss
+	^aTrainingContext historicalTrainingLoss last < minimumLoss
 ]
 
 { #category : 'Printing' }

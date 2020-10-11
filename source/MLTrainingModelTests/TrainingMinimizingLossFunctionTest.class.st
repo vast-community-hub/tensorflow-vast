@@ -19,6 +19,13 @@ TrainingMinimizingLossFunctionTest >> expectedAccuracyAfterOneEpoch [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
+TrainingMinimizingLossFunctionTest >> expectedAccuracyThroughTenEpochs [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedLabels [
 
 	^#(0 1 0 0) asInt32Tensor
@@ -34,6 +41,13 @@ TrainingMinimizingLossFunctionTest >> expectedLogitsAfterOneEpoch [
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedLossAfterOneEpoch [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingMinimizingLossFunctionTest >> expectedLossValueThroughTenEpochs [
 
 	self subclassResponsibility
 ]
@@ -99,11 +113,24 @@ TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
 
 	self
-		assertOutputOf: (
-			summary
-				accuracyValueWhenPredictingFrom: self inputTensor
-				andExpectedIs: self targetTensor)
-		isFloatScalarCloseTo: self expectedAccuracyAfterOneEpoch
+		assert: summary historicalTrainingAccuracy
+		isArrayCloseTo: self expectedAccuracyAfterOneEpoch
+]
+
+{ #category : 'Tests' }
+TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
+
+	| model summary |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		self neuralNetworkTrainer
+			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+
+	self
+		assert: summary historicalTrainingAccuracy
+		isArrayCloseTo: self expectedAccuracyThroughTenEpochs
 ]
 
 { #category : 'Tests' }
@@ -140,6 +167,22 @@ TrainingMinimizingLossFunctionTest >> testLossValueAfterOneEpoch [
 		assertOutputOf:
 			(summary lossValueWhenPredictingFrom: self inputTensor andExpectedIs: self targetTensor)
 		isFloatScalarCloseTo: self expectedLossAfterOneEpoch
+]
+
+{ #category : 'Tests' }
+TrainingMinimizingLossFunctionTest >> testLossValueThroughTenEpochs [
+
+	| model summary |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		self neuralNetworkTrainer
+			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+
+	self
+		assert: summary historicalTrainingLoss
+		isArrayCloseTo: self expectedLossValueThroughTenEpochs
 ]
 
 { #category : 'Tests' }

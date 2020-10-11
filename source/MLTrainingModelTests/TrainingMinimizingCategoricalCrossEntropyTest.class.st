@@ -8,7 +8,14 @@ Class {
   #vaVisibility : 'private' }
 TrainingMinimizingCategoricalCrossEntropyTest >> expectedAccuracyAfterOneEpoch [
 
-	^0.5
+	^#(0.5)
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingMinimizingCategoricalCrossEntropyTest >> expectedAccuracyThroughTenEpochs [
+
+	^#(0.5 0.5 0.5 0.5 0.5 0.5 0.75 0.75 0.75 0.75)
 ]
 
 { #category : 'Accessing',
@@ -23,6 +30,14 @@ TrainingMinimizingCategoricalCrossEntropyTest >> expectedLogitsAfterOneEpoch [
 TrainingMinimizingCategoricalCrossEntropyTest >> expectedLossAfterOneEpoch [
 
 	^0.822441
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingMinimizingCategoricalCrossEntropyTest >> expectedLossValueThroughTenEpochs [
+
+	^#(0.8468599915504456 0.8224405646324158 0.8024106025695801 0.7854786515235901 0.7707569003105164
+	0.7576471567153931 0.7457488179206848 0.7347933053970337 0.7245980501174927 0.7150363326072693)
 ]
 
 { #category : 'Accessing',

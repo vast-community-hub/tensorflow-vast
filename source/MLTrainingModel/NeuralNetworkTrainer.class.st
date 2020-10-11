@@ -70,26 +70,21 @@ NeuralNetworkTrainer >> stopTrainingWhen: aStopCondition [
   #vaVisibility : 'private' }
 NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
-	| loss optimization trainingNumber summary |
+	| loss optimization trainingNumber context |
 
 	loss := lossBuilder value: (LossBuilder for: aModel logits).
 	optimization := ModelUpdater updating: aModel toMinimize: loss using: optimizer.
-	summary :=
-		NeuralNetworkTrainingSummary
-			of: aModel
-			trainedMinimizing: loss
-			using: optimizer
-			until: stopCondition.
+	context := NeuralNetworkTrainingContext optimizing: aModel using: optimization.
 	trainingNumber := 0.
 
-	afterTrainingCallback value: trainingNumber value: summary.
+	afterTrainingCallback value: trainingNumber value: context.
 	[
-		summary addLossAfter: [aTraining value: loss value: optimization].
+		aTraining value: context.
 		trainingNumber := trainingNumber + 1.
-		afterTrainingCallback value: trainingNumber value: summary.
-		stopCondition isModelWellTrainedAccording: summary]
+		afterTrainingCallback value: trainingNumber value: context.
+		stopCondition isModelWellTrainedAccording: context]
 			whileFalse.
-	^summary
+	^NeuralNetworkTrainingSummary regarding: context stoppedAfter: stopCondition
 ]
 
 { #category : 'Training' }
@@ -97,14 +92,7 @@ NeuralNetworkTrainer >> train: aModel toFitPredictionFrom: anInstanceCollection 
 
 	^self
 		train: aModel
-		doing: [:loss :optimization |
-			tf
-				compute: optimization
-				feedingInputsWith: (
-					Dictionary new
-						at: aModel inputVariableName put: anInstanceCollection;
-						at: loss targetInputName put: aTarget;
-						yourself)]
+		doing: [:context | context computeOptimizationToFitPredictionFrom: anInstanceCollection to: aTarget]
 ]
 
 { #category : 'Configuring' }
