@@ -5,31 +5,22 @@ Class {
 		'model',
 		'optimization',
 		'accuracy',
-		'metricsDuringTrainings'
+		'metricsDuringTrainings',
+		'metricTrackers'
 	],
 	#category : 'MLTrainingModel'
 }
 
 { #category : 'Instance Creation' }
-NeuralNetworkTrainingContext class >> optimizing: aModel using: anOptimization [
+NeuralNetworkTrainingContext class >> optimizing: aModel using: anOptimization trackingMetricsWith: aMetricTrackerCollection [
 
-	^self new initializeOptimizing: aModel using: anOptimization
+	^self new
+		initializeOptimizing: aModel
+		using: anOptimization
+		trackingMetricsWith: aMetricTrackerCollection
 ]
 
-{ #category : 'Computing',
-  #vaVisibility : 'private' }
-NeuralNetworkTrainingContext >> accuracyValueWhenPredictingFrom: anInput andExpectedIs: anExpectedValues [
-
-	^(accuracy computeWith: (
-		Dictionary new
-			at: model inputVariableName put: anInput;
-			at: optimization lossToMinimize targetInputName put: anExpectedValues;
-			yourself))
-				scalarOutput
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
+{ #category : 'Accessing' }
 NeuralNetworkTrainingContext >> addMetricValued: aValue to: aMetricName [
 
 	(metricsDuringTrainings at: aMetricName ifAbsentPut: [OrderedCollection new]) add: aValue
@@ -38,45 +29,39 @@ NeuralNetworkTrainingContext >> addMetricValued: aValue to: aMetricName [
 { #category : 'Computing' }
 NeuralNetworkTrainingContext >> computeOptimizationToFitPredictionFrom: anInstanceCollection to: aTarget [
 
-	| loss |
+	| loss trainingInputs |
 
-	loss :=
-		model currentComputation
-			compute: optimization
-			feedingInputsWith: (
-				Dictionary new
-					at: model inputVariableName put: anInstanceCollection;
-					at: optimization lossToMinimize targetInputName put: aTarget;
-					yourself).
-	self
-		addMetricValued: loss scalarOutput to: 'training-loss';
-		addMetricValued:
-				(self accuracyValueWhenPredictingFrom: anInstanceCollection andExpectedIs: aTarget)
-			to: 'training-accuracy'.
+	trainingInputs :=
+		Dictionary new
+			at: model inputVariableName put: anInstanceCollection;
+			at: optimization lossToMinimize targetInputName put: aTarget;
+			yourself.
+	loss := optimization computeWith: trainingInputs.
+
+	self addMetricValued: loss scalarOutput to: self trainingLossMetricKey.
+	metricTrackers do: [:tracker | tracker measureMetricConsidering: trainingInputs within: self].
+
 	^loss
 ]
 
 { #category : 'Accessing' }
 NeuralNetworkTrainingContext >> historicalTrainingLoss [
 
-	^self metricKnownAs: 'training-loss'
+	^self metricKnownAs: self trainingLossMetricKey
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-NeuralNetworkTrainingContext >> initializeOptimizing: aPredictionModel using: anOptimization [
+NeuralNetworkTrainingContext >> initializeOptimizing: aPredictionModel using: anOptimization trackingMetricsWith: aMetricTrackerCollection [
 
 	model := aPredictionModel.
 	optimization := anOptimization.
-	accuracy :=
-		CategoricalPredictionAccuracy
-			of: model
-			whenExpectedIs: optimization lossToMinimize targetInputAsLabels.
+	metricTrackers := aMetricTrackerCollection.
 	metricsDuringTrainings :=
 		Dictionary new
-			at: 'training-loss' put: OrderedCollection new;
-			at: 'training-accuracy' put: OrderedCollection new;
-			yourself
+			at: self trainingLossMetricKey put: OrderedCollection new;
+			yourself.
+	metricTrackers do: [:each | each prepareMetricsWithin: self]
 ]
 
 { #category : 'Computing' }
@@ -124,4 +109,10 @@ NeuralNetworkTrainingContext >> printTrainingDescriptionOn: aStream [
 NeuralNetworkTrainingContext >> totalNumberOfEpochs [
 
 	^self historicalTrainingLoss size
+]
+
+{ #category : 'Initialization' }
+NeuralNetworkTrainingContext >> trainingLossMetricKey [
+
+	^'training-loss'
 ]

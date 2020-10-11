@@ -6,7 +6,8 @@ Class {
 		'stopCondition',
 		'afterTrainingCallback',
 		'optimizer',
-		'tf'
+		'tf',
+		'metricTrackers'
 	],
 	#category : 'MLTrainingModel'
 }
@@ -29,6 +30,7 @@ NeuralNetworkTrainer >> afterEveryTrainingDo: aBlock [
 NeuralNetworkTrainer >> initializeOn: aTensorFlowComputation [
 
 	tf := aTensorFlowComputation.
+	metricTrackers := OrderedCollection new.
 
 	self afterEveryTrainingDo: [:iter :summary | ]
 ]
@@ -66,6 +68,12 @@ NeuralNetworkTrainer >> stopTrainingWhen: aStopCondition [
 	stopCondition := aStopCondition
 ]
 
+{ #category : 'Configuring' }
+NeuralNetworkTrainer >> trackMetricWith: aMetricTracker [
+
+	metricTrackers add: aMetricTracker
+]
+
 { #category : 'Training',
   #vaVisibility : 'private' }
 NeuralNetworkTrainer >> train: aModel doing: aTraining [
@@ -74,7 +82,11 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
 	loss := lossBuilder value: (LossBuilder for: aModel logits).
 	optimization := ModelUpdater updating: aModel toMinimize: loss using: optimizer.
-	context := NeuralNetworkTrainingContext optimizing: aModel using: optimization.
+	context :=
+		NeuralNetworkTrainingContext
+			optimizing: aModel
+			using: optimization
+			trackingMetricsWith: metricTrackers.
 	trainingNumber := 0.
 
 	afterTrainingCallback value: trainingNumber value: context.

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentComputation'
 	],
-	#category : 'MLTrainingModel'
+	#category : 'MLTrainingMetricModel'
 }
 
 { #category : 'Instance Creation' }

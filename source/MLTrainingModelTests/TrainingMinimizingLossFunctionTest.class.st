@@ -12,20 +12,6 @@ TrainingMinimizingLossFunctionTest class >> isAbstract [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-TrainingMinimizingLossFunctionTest >> expectedAccuracyAfterOneEpoch [
-
-	self subclassResponsibility
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-TrainingMinimizingLossFunctionTest >> expectedAccuracyThroughTenEpochs [
-
-	self subclassResponsibility
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedLabels [
 
 	^#(0 1 0 0) asInt32Tensor
@@ -99,38 +85,6 @@ TrainingMinimizingLossFunctionTest >> neuralNetworkTrainer [
 TrainingMinimizingLossFunctionTest >> targetTensor [
 
 	self subclassResponsibility
-]
-
-{ #category : 'Tests' }
-TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
-
-	| model summary |
-
-	model := self modelWithTwoOutputUnits.
-	summary :=
-		self neuralNetworkTrainer
-			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
-
-	self
-		assert: summary historicalTrainingAccuracy
-		isArrayCloseTo: self expectedAccuracyAfterOneEpoch
-]
-
-{ #category : 'Tests' }
-TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
-
-	| model summary |
-
-	model := self modelWithTwoOutputUnits.
-	summary :=
-		self neuralNetworkTrainer
-			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
-
-	self
-		assert: summary historicalTrainingAccuracy
-		isArrayCloseTo: self expectedAccuracyThroughTenEpochs
 ]
 
 { #category : 'Tests' }

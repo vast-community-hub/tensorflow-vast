@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3779861048,
+		#ts : 3779872396,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -42,13 +42,18 @@
 				#ts : 3776804301
 			},
 			{
+				#name : 'MLTrainingMetricModel',
+				#versionName : '0.1',
+				#ts : 3779869808
+			},
+			{
 				#name : 'MLTrainingModel',
-				#versionName : '1.9',
-				#ts : 3779730277
+				#versionName : '1.11',
+				#ts : 3779867805
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.22'
+		#versionName : '0.23'
 	},
 	{
 		#conditions : [
@@ -57,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.22',
-						#ts : 3779861048
+						#versionName : '0.23',
+						#ts : 3779872396
 					},
 					{
 						#name : 'SUnit',
@@ -68,7 +73,7 @@
 				]
 			}
 		],
-		#ts : 3779861057,
+		#ts : 3779872407,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -88,13 +93,18 @@
 				#ts : 3775641097
 			},
 			{
+				#name : 'MLTrainingMetricModelTests',
+				#versionName : '0.1',
+				#ts : 3779870631
+			},
+			{
 				#name : 'MLTrainingModelTests',
-				#versionName : '1.10',
-				#ts : 3779741787
+				#versionName : '1.11',
+				#ts : 3779870613
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.21'
+		#versionName : '0.22'
 	},
 	{
 		#conditions : [

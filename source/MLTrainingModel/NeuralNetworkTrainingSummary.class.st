@@ -15,12 +15,6 @@ NeuralNetworkTrainingSummary class >> regarding: aTrainingContext stoppedAfter: 
 ]
 
 { #category : 'Accessing' }
-NeuralNetworkTrainingSummary >> historicalTrainingAccuracy [
-
-	^trainingContext metricKnownAs: 'training-accuracy'
-]
-
-{ #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> historicalTrainingLoss [
 
 	^trainingContext historicalTrainingLoss

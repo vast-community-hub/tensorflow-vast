@@ -1,7 +1,7 @@
 Class {
 	#name : 'CategoricalPredictionAccuracyTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'MLTrainingModelTests'
+	#category : 'MLTrainingMetricModelTests'
 }
 
 { #category : 'Test' }

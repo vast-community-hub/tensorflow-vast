@@ -6,20 +6,6 @@ Class {
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-TrainingMinimizingSparseCategoricalCrossEntropyTest >> expectedAccuracyAfterOneEpoch [
-
-	^#(0.25)
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-TrainingMinimizingSparseCategoricalCrossEntropyTest >> expectedAccuracyThroughTenEpochs [
-
-	^#(0.25 0.5 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75)
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
 TrainingMinimizingSparseCategoricalCrossEntropyTest >> expectedLogitsAfterOneEpoch [
 
 	^#((0.3259797 0.67402035) (0.34054536 0.6594547) (0.3436969 0.65630317) (0.40511099 0.59488904))
