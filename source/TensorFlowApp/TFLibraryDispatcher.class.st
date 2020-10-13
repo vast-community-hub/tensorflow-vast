@@ -1408,6 +1408,11 @@ TFLibraryDispatcher >> callTF_SetAttrIntWith: desc with: attr_name with: value [
   #vaVisibility : 'private' }
 TFLibraryDispatcher >> callTF_SetAttrShapeListWith: desc with: attr_name with: dims with: num_dims with: num_shapes [
 
+"`dims` and `num_dims` must point to arrays of length `num_shapes`.
+Set `num_dims[i]` to -1 to represent 'unknown rank'.  
+Otherwise, `dims[i]` points to an array of length `num_dims[i]`.  
+`dims[i][j]` must be >= -1, with -1 meaning 'unknown dimension'."
+
 	^callEngine
 		call: TF_SetAttrShapeList
 		with: desc
@@ -1420,6 +1425,11 @@ TFLibraryDispatcher >> callTF_SetAttrShapeListWith: desc with: attr_name with: d
 { #category : 'Functions',
   #vaVisibility : 'private' }
 TFLibraryDispatcher >> callTF_SetAttrShapeWith: desc with: attr_name with: dims with: num_dims [
+
+" 
+Set `num_dims` to -1 to represent 'unknown rank'.
+Otherwise, `dims` points to an array of length `num_dims`.  
+`dims[i]` must be >= -1, with -1 meaning 'unknown dimension'."
 
 	^callEngine call: TF_SetAttrShape with: desc with: attr_name asPSZ with: dims with: num_dims
 ]

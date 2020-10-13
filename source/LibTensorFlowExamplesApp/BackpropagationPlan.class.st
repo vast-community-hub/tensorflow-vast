@@ -80,7 +80,7 @@ BackpropagationPlan >> initializeVariables [
 
 	random := EsRandom new.
 	initialWeights := (1 to: 4) collect: [:unused | random next].
-	initialWeights := TFTensor fromFloats: initialWeights shape: #(2 2).
+	initialWeights := TFTensor fromFloats: initialWeights shape: (TensorShape matrixSized: 2 by: 2).
 
 	weights := graph variable: 'weights' initialValue: initialWeights
 ]

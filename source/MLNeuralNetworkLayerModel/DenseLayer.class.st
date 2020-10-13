@@ -61,7 +61,7 @@ DenseLayer >> calculateValueUsing: aBiasSpec [
 				on: self currentComputation
 				named: 'bias'
 				of: aBiasSpec variableType
-				shaped: (Array with: outputSize)
+				shaped: (TensorShape vectorSized: outputSize)
 				initializedWith: aBiasSpec variableInitializer.
 		trainableVariables add: bias.
 		output := output biasedBy: bias].
@@ -100,7 +100,7 @@ DenseLayer >> initializeWeightFrom: aVariableSpec [
 			on: self currentComputation
 			named: 'weight'
 			of: aVariableSpec variableType
-			shaped: (Array with: inputSize with: outputSize)
+			shaped: (TensorShape matrixSized: inputSize by: outputSize)
 			initializedWith: aVariableSpec variableInitializer.
 
 	trainableVariables add: weights

@@ -51,7 +51,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar
 	self
 		assert: anOutput
 		isOf: TFTensor typeFloat
-		with: #()
+		with: TensorShape scalar
 		comparedTo: (Array with: aScalar)
 		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
@@ -80,7 +80,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerMatrixCloseTo: aFloa
 	self
 		assert: anOutput
 		isOf: TFTensor typeInt32
-		with: (Array with: aFloatMatrix size with: columns)
+		with: (TensorShape matrixSized: aFloatMatrix size by: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
@@ -92,7 +92,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerVectorEqualsTo: anEx
 	self
 		assert: anOutput
 		isOf: TFTensor typeInt32
-		with: (Array with: anExpectedArray size)
+		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]
@@ -104,7 +104,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerVectorEqualsTo:
 	self
 		assert: anOutput
 		isOf: TFTensor typeInt64
-		with: (Array with: anExpectedArray size)
+		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]
@@ -133,7 +133,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isMatrixTyped: aType closeTo:
 	self
 		assert: anOutput
 		isOf: aType
-		with: (Array with: anExpectedMatrix size with: columns)
+		with: (TensorShape matrixSized: anExpectedMatrix size by: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
@@ -166,7 +166,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isVectorTyped: aType closeTo:
 	self
 		assert: anOutput
 		isOf: aType
-		with: (Array with: anExpectedArray size)
+		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
 		complying: [:actual :expected | self assert: actual closeTo: expected]
 ]
@@ -206,7 +206,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerScalarEqu
 	self
 		assert: anOperation compute
 		isOf: TFTensor typeInt32
-		with: #()
+		with: TensorShape scalar
 		comparedTo: (Array with: aScalar)
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]

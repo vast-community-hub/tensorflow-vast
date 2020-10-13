@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.32',
-						#ts : 3779874038
+						#versionName : '1.33',
+						#ts : 3779951714
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3779874070,
+		#ts : 3779951714,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -33,8 +33,8 @@
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
-				#versionName : '0.15',
-				#ts : 3779873800
+				#versionName : '0.16',
+				#ts : 3779951621
 			},
 			{
 				#name : 'MLNeuralNetworkModel',
@@ -53,7 +53,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.24'
+		#versionName : '0.25'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.24',
-						#ts : 3779874070
+						#versionName : '0.25',
+						#ts : 3779951714
 					},
 					{
 						#name : 'SUnit',
@@ -73,24 +73,24 @@
 				]
 			}
 		],
-		#ts : 3779874081,
+		#ts : 3779951714,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'FeedforwardNeuralNetworkModelTests',
-				#versionName : '0.9',
-				#ts : 3776263114
+				#versionName : '0.10',
+				#ts : 3779951621
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModelTests',
-				#versionName : '0.10',
-				#ts : 3776804301
+				#versionName : '0.11',
+				#ts : 3779951621
 			},
 			{
 				#name : 'MLNeuralNetworkModelTests',
-				#versionName : '0.5',
-				#ts : 3775641097
+				#versionName : '0.6',
+				#ts : 3779996445
 			},
 			{
 				#name : 'MLTrainingMetricModelTests',
@@ -104,7 +104,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.23'
+		#versionName : '0.24'
 	},
 	{
 		#conditions : [
@@ -191,7 +191,7 @@
 				]
 			}
 		],
-		#ts : 3778431281,
+		#ts : 3779951699,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -202,8 +202,8 @@
 			},
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : 'commit.d6493f2 - 0.3',
-				#ts : 3761742735
+				#versionName : '0.32',
+				#ts : 3779996445
 			},
 			{
 				#name : 'TensorFlowApp',
@@ -217,13 +217,13 @@
 			},
 			{
 				#name : 'TensorFlowKernelApp',
-				#versionName : '0.31',
-				#ts : 3777757608
+				#versionName : '0.32',
+				#ts : 3779951575
 			},
 			{
 				#name : 'TensorFlowTestsApp',
-				#versionName : '0.36',
-				#ts : 3764363024
+				#versionName : '0.32',
+				#ts : 3779996445
 			},
 			{
 				#name : 'TensorFlowVASTApp',
@@ -237,7 +237,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.8'
+		#versionName : '0.64.9'
 	},
 	{
 		#conditions : [
@@ -246,13 +246,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.8',
-						#ts : 3778431281
+						#versionName : '0.64.9',
+						#ts : 3779951699
 					}
 				]
 			}
 		],
-		#ts : 3779874038,
+		#ts : 3779951714,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -263,13 +263,13 @@
 			},
 			{
 				#name : 'TensorFlowEnvironmentModel',
-				#versionName : '1.15',
-				#ts : 3775426046
+				#versionName : '1.16',
+				#ts : 3779996445
 			},
 			{
 				#name : 'TensorFlowEnvironmentModelTests',
-				#versionName : '1.20',
-				#ts : 3779741830
+				#versionName : '1.21',
+				#ts : 3779951621
 			},
 			{
 				#name : 'TFOperationGradientFailingModelTests',
@@ -288,13 +288,13 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1.26',
-				#ts : 3779873800
+				#versionName : '1.27',
+				#ts : 3779916424
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '1.24',
-				#ts : 3778654095
+				#versionName : '1.27',
+				#ts : 3779951621
 			},
 			{
 				#name : 'TFOptimizerModel',
@@ -343,7 +343,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.32'
+		#versionName : '1.33'
 	},
 	{
 		#conditions : [
@@ -367,13 +367,13 @@
 					},
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.8',
-						#ts : 3778431281
+						#versionName : '0.64.9',
+						#ts : 3779951699
 					}
 				]
 			}
 		],
-		#ts : 3779861087,
+		#ts : 3779951714,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -384,6 +384,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.4'
+		#versionName : ''
 	}
 ]

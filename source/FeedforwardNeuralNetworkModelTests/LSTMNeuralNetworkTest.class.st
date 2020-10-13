@@ -41,5 +41,5 @@ LSTMNeuralNetworkTest >> testPredictFrom [
 
 	prediction := nn predictFrom: images.
 
-	self assert: prediction shape equals: #(2 1)
+	self assert: prediction shape equals: (TensorShape matrixSized: 2 by: 1)
 ]

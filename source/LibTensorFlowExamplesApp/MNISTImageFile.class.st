@@ -44,7 +44,7 @@ MNISTImageFile class >> trainName [
 { #category : 'converting' }
 MNISTImageFile >> asTensor [
 
-	^TFTensor fromFloats: items shape: (Array with: count with: rows * columns)
+	^TFTensor fromFloats: items shape: (TensorShape matrixSized: count by: rows * columns)
 ]
 
 { #category : 'accessing' }

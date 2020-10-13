@@ -25,3 +25,9 @@ SequenceableCollection >> asInt32Tensor [
 SequenceableCollection >> asInt64Tensor [
 	^ TFTensor fromInt64s: self
 ]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['TensorFlow-Kernel'] }
+SequenceableCollection >> asTensorShape [
+	^ TensorShape withDimensionsSized: self
+]

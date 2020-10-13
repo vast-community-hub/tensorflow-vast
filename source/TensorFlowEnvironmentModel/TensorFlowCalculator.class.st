@@ -65,7 +65,7 @@ TensorFlowCalculator >> constant: aNumber [
   #vaVisibility : 'private' }
 TensorFlowCalculator >> coordinatesOf: aShape [
 
-	^aShape isEmpty ifTrue: [#()] ifFalse: [self coordinatesOfNotEmpty: aShape]
+	^aShape representsScalar ifTrue: [#()] ifFalse: [self coordinatesOfNotEmpty: aShape]
 ]
 
 { #category : 'Accessing',
@@ -74,7 +74,7 @@ TensorFlowCalculator >> coordinatesOfNotEmpty: aShape [
 
 	| prefixes |
 
-	prefixes := (1 to: aShape first) collect: [:prefix | OrderedCollection with: prefix - 1].
+	prefixes := (1 to: aShape dimensionSizes first) collect: [:prefix | OrderedCollection with: prefix - 1].
 	^aShape size = 1
 		ifTrue: [prefixes]
 		ifFalse: [self coordinatesOfNotOneDimensional: aShape after: prefixes]
@@ -86,7 +86,7 @@ TensorFlowCalculator >> coordinatesOfNotOneDimensional: aShape after: aPrefixCol
 
 	| suffixes |
 
-	suffixes := self coordinatesOf: aShape allButFirst.
+	suffixes := self coordinatesOf: (TensorShape withDimensionsSized: aShape dimensionSizes allButFirst).
 	^aPrefixCollection
 		inject: OrderedCollection new
 		into: [:coordinates :prefix |

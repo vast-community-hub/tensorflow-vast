@@ -70,8 +70,9 @@ DenseLayerBuilder >> build [
 	| numberOfInputFeatures |
 	" Assume input is a matrix of shape (rows x columns), then the second 
 	 dimenssion is the number of input features "
-	numberOfInputFeatures := inputSize ifNil: [input outputShape second] ifNotNil: [inputSize].
-	
+	numberOfInputFeatures :=
+		inputSize ifNil: [input outputShape numberOfFeatures] ifNotNil: [inputSize].
+
 	^DenseLayer
 		receiving: input
 		featuresOfInput: numberOfInputFeatures

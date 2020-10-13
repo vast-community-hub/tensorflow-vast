@@ -63,7 +63,7 @@ SequentialModelBuilderTest >> testOneLayerInitializedRandomly [
 	result := model predictFrom: self inputWithThreeFeatures.
 
 	self assert: result type equals: TFTensor typeFloat.
-	self assert: result shape equals: #(4 2)
+	self assert: result shape equals: (TensorShape matrixSized: 4 by: 2)
 ]
 
 { #category : 'Tests' }

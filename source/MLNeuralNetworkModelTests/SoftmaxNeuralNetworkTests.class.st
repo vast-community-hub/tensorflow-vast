@@ -15,7 +15,7 @@ SoftmaxNeuralNetworkTests >> testMNISTSoftMaxForwardGraph [
 			Array
 				with: (ByteArray new: mnist inputSize)
 				with: (ByteArray new: mnist inputSize withAll: 1)).
-	self assert: #(2) equals: result shape.
+	self assert: (TensorShape vectorSized: 2) equals: result shape.
 	self assert: (result allInt32s first closeTo: 0).
 	self assert: (result allInt32s second closeTo: 0)
 ]
@@ -35,12 +35,12 @@ SoftmaxNeuralNetworkTests >> testMNISTSoftMaxLossGraph [
 			andCompareTo: #(1 2).
 
 	prediction := results at: 'inference/prediction'.
-	self assert: #(2) equals: prediction shape.
+	self assert: (TensorShape vectorSized: 2) equals: prediction shape.
 	self assert: prediction asNumbers first equals: 0.
 	self assert: prediction asNumbers second equals: 0.
 
 	loss := results at: 'loss/Mean'.
-	self assert: #() equals: loss shape.
+	self assert: TensorShape scalar equals: loss shape.
 	self assert: loss allFloats sum abs > 0
 ]
 

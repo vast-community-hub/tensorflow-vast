@@ -156,7 +156,7 @@ TensorFlowOperationsTest >> testGraphZeros [
 	session := TFSession on: graph.
 	result := session runOutput: (zeros output: 0).
 	values := result allFloats.
-	self assert: #(100 100 10) equals: result shape.
+	self assert: #(100 100 10) asTensorShape equals: result shape.
 	self assert: 100 * 100 * 10 equals: values size.
 	self assert: 0 equals: values min.
 	self assert: 0 equals: values max
@@ -642,10 +642,10 @@ TensorFlowOperationsTest >> testOperationMeanOn [
 				at: 3 put: (mean01 output: 0);
 				at: 4 put: (meanNone output: 0);
 				yourself).	" mean01bis output: 0}."
-	self assert: #(2) equals: results first shape.
-	self assert: #(3) equals: results second shape.
-	self assert: #() equals: results third shape.
-	self assert: #(3 2) equals: results fourth shape.
+	self assert: (TensorShape vectorSized: 2) equals: results first shape.
+	self assert: (TensorShape vectorSized: 3) equals: results second shape.
+	self assert: TensorShape scalar equals: results third shape.
+	self assert: (TensorShape matrixSized: 3 by: 2) equals: results fourth shape.
 	self assertAll: #(2.1 1.2) closeTo: results first allFloats.
 	self assertAll: #(1.15 2.15 1.65) closeTo: results second allFloats.
 	self assertAll: #(1.65) closeTo: results third allFloats.
@@ -857,10 +857,7 @@ TensorFlowOperationsTest >> testOperationShape [
 	session := TFSession on: graph.
 	result := session runOutput: shape.
 	self
-		assert:
-			((Array new: 1)
-				at: 1 put: template rank;
-				yourself)
+		assert: (TensorShape vectorSized: template rank)
 		equals: result shape.
 	self assert: #(1 1 2 1 3) equals: result asNumbers
 ]
@@ -981,12 +978,12 @@ TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogits [
 				at: 2 put: (xentropy output: 1);
 				yourself).
 	loss := results first.
-	self assert: #(3) equals: loss shape.
+	self assert: #(3) asTensorShape equals: loss shape.
 	self assert: (loss allFloats first between: 1 and: 1.5).
 	self assert: (loss allFloats second between: 1 and: 1.5).
 	self assert: (loss allFloats third between: 1 and: 1.2).
 	gradient := results second.
-	self assert: #(3 7) equals: gradient shape.
+	self assert: (TensorShape matrixSized: 3 by: 7) equals: gradient shape.
 	lastVector := gradient allFloats last: 7.
 	self assert: lastVector last < 0.
 	lastVector allButLast do: [ :x | self assert: x > 0 ]
@@ -1010,12 +1007,12 @@ TensorFlowOperationsTest >> testOperationSparseSoftmaxCrossEntropyWithLogitsUseO
 				at: 2 put: (xentropy useOutput: 1) firstOutput;
 				yourself).
 	loss := results first.
-	self assert: #(3) equals: loss shape.
+	self assert: (TensorShape vectorSized: 3) equals: loss shape.
 	self assert: (loss allFloats first between: 1 and: 1.5).
 	self assert: (loss allFloats second between: 1 and: 1.5).
 	self assert: (loss allFloats third between: 1 and: 1.2).
 	gradient := results second.
-	self assert: #(3 7) equals: gradient shape.
+	self assert: (TensorShape matrixSized: 3 by: 7) equals: gradient shape.
 	lastVector := gradient allFloats last: 7.
 	self assert: lastVector last < 0.
 	lastVector allButLast do: [ :x | self assert: x > 0 ]

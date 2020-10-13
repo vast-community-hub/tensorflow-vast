@@ -208,7 +208,7 @@ TensorFlowExamplesTest >> testMNIST3LayersNNForwardGraph [
 			Array
 				with: (ByteArray new: mnist inputSize withAll:  2)
 				with: (ByteArray new: mnist inputSize withAll:  1)).
-	self assert: #(2) equals: result shape.
+	self assert: #(2) asTensorShape equals: result shape.
 	first := result asNumbers first.
 	second := result asNumbers second.
 	self assert: (0 <= first and: [first < 10]).
@@ -238,12 +238,12 @@ TensorFlowExamplesTest >> testMNIST3LayersNNLossGraph [
 					with: (ByteArray new: mnist inputSize)
 					with: (ByteArray new: mnist inputSize withAll: 1))
 			andCompareTo: #(1 2).
-	self assert: #(2) equals: results first shape.
+	self assert: #(2) asTensorShape equals: results first shape.
 	first := results first asNumbers first.
 	second := results first asNumbers second.
 	self assert: (0 <= first and: [first < 10]).
 	self assert: (0 <= second and: [second < 10]).
-	self assert: #() equals: results second shape.
+	self assert: TensorShape scalar equals: results second shape.
 	self assert: results second asNumbers > 0
 ]
 
@@ -262,7 +262,7 @@ TensorFlowExamplesTest >> testMNISTSoftMaxForwardGraph [
 			Array
 				with: (ByteArray new: mnist inputSize)
 				with: (ByteArray new: mnist inputSize withAll: 1)).
-	self assert: #(2) equals: result shape.
+	self assert: #(2) asTensorShape equals: result shape.
 	self assert: (result allInt32s first closeTo: 0).
 	self assert: (result allInt32s second closeTo: 0)
 ]
@@ -284,10 +284,10 @@ TensorFlowExamplesTest >> testMNISTSoftMaxLossGraph [
 					with: (ByteArray new: mnist inputSize)
 					with: (ByteArray new: mnist inputSize withAll: 1))
 			andCompareTo: #(1 2).
-	self assert: #(2) equals: results first shape.
+	self assert: #(2) asTensorShape equals: results first shape.
 	self assert: results first asNumbers first equals: 0.
 	self assert: results first asNumbers second equals: 0.
-	self assert: #() equals: results second shape.
+	self assert: TensorShape scalar equals: results second shape.
 	self assert: results second allFloats sum abs > 0
 ]
 

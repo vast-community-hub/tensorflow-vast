@@ -7,16 +7,15 @@ Class {
 { #category : 'Tests' }
 TestTFEnums >> testDataTypeEnum [
 	"Test TF_DataTypeSize function with enum args"
-	
-	| sz |
 
-	sz := self dispatcher callTF_DataTypeSizeWith: TF_UINT8.
-	self assert: sz equals: 1.
-	
-	sz := self dispatcher callTF_DataTypeSizeWith: TF_INT16.
-	self assert: sz equals: 2.
-	
-	sz := self dispatcher callTF_DataTypeSizeWith: TF_INT32.
-	self assert: sz equals: 4.
-	
+	Dictionary new
+		at: TFTensor typeFloat put: 4;
+		at: TFTensor typeInt64 put: 8;
+		at: TFTensor typeInt32 put: 4;
+		at: TFTensor typeDouble put: 8;
+		at: TFTensor typeBoolean put: 1;
+		at: TFTensor typeUInt8 put: 1;
+		at: TFTensor typeVariant put: 0;
+		keysAndValuesDo: [:type :expectedType |
+			self assert: (TensorFlowCAPI current sizeOfDataType: type) equals: expectedType]
 ]

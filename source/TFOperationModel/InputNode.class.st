@@ -27,7 +27,7 @@ InputNode class >> on: aComputation named: anInputName of: aType sized: aNumberO
 		on: aComputation
 		named: anInputName
 		of: aType
-		shaped: (Array with: -1 with: aNumberOfFeatures)
+		shaped: (TensorShape unknownBatchSizeWith: aNumberOfFeatures)
 ]
 
 { #category : 'Accessing' }

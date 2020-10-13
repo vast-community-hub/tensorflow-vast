@@ -27,5 +27,5 @@ TFOutput >> rank [
  #vaCategories : ['accessing'] }
 TFOutput >> shape [
 
-	^self rank negative ifTrue: [#()] ifFalse: [graph shapeOf: self]
+	^self rank negative ifTrue: [TensorShape scalar] ifFalse: [graph shapeOf: self]
 ]

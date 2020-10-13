@@ -70,15 +70,33 @@ TFOperationDescription >> at: attribute putInt: value [
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['attributes'] }
-TFOperationDescription >> at: attribute putShape: anIntegerArray [
+TFOperationDescription >> at: attribute putShape: aTensorShape [
 	| status value |
-	value := Int64Array externalFromArray: anIntegerArray.
+	value := aTensorShape asInt64Array.
 	status := TFStatus create.
 	self library
 		description: self
 		set: attribute asAsciiZ
 		toShape: value
-		size: anIntegerArray size.
+		size: aTensorShape size.
+	status check
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
+TFOperationDescription >> at: aString putShapes: aListOfShapes [
+
+	| status shapes shapeSizes |
+
+	shapes := aListOfShapes collect: [:shape | shape asInt64Array].
+	shapeSizes := aListOfShapes collect: #size.
+	status := TFStatus create.
+	self library
+		description: self
+		set: aString
+		toShapes: (TFInputArray externalFromArray: shapes)
+		sizesOfEach: (Int64Array externalFromArray: shapeSizes)
+		size: aListOfShapes size.
 	status check
 ]
 
@@ -135,6 +153,21 @@ TFOperationDescription >> at: attribute putTensor: aTFTensor [
  #vaCategories : ['attributes'] }
 TFOperationDescription >> at: attribute putType: value [
 	self library description: self set: attribute asAsciiZ toType: value
+]
+
+{ #category : '*TensorFlowKernelApp',
+ #vaCategories : ['attributes'] }
+TFOperationDescription >> at: anAttributeName putTypes: aListOfTypes [
+
+	| status |
+
+	status := TFStatus create.
+	self library
+		description: self
+		set: anAttributeName
+		toTypes: (Int64Array externalFromArray: aListOfTypes)
+		size: aListOfTypes size.
+	status check
 ]
 
 { #category : '*TensorFlowKernelApp',

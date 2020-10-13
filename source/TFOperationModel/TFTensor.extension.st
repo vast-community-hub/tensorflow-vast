@@ -35,21 +35,10 @@ TFTensor class >> descriptionOf: aType [
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
-TFTensor >> isMatrix [
-	^self rank = 2
-]
-
-{ #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
+ #vaCategories : ['Accessing'],
+  #vaVisibility : 'private' }
 TFTensor >> isScalar [
 	^self rank = 0
-]
-
-{ #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
-TFTensor >> isVector [
-	^self rank = 1
 ]
 
 { #category : '*TFOperationModel',
@@ -71,11 +60,7 @@ TFTensor >> printOn: aStream [
  #vaCategories : ['Accessing'] }
 TFTensor >> shapeDescription [
 
-	self isScalar ifTrue: [^'Scalar'].
-	self isVector ifTrue: [^'Vector size <1p>' expandMacrosWith: self shape any].
-	self isMatrix
-		ifTrue: [^'<1p>x<2p> matrix' expandMacrosWith: self shape first with: self shape second].
-	^'<1p>' expandMacrosWith: self shape
+	^self shape description
 ]
 
 { #category : '*TFOperationModel',

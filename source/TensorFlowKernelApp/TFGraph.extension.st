@@ -477,7 +477,7 @@ TFGraph >> shapeOf: aTFOutputOrInput [
 		status: status.
 	status check.
 	answer := (1 to: size) collect: [ :i | value at: i ].
-	^ answer
+	^ answer asTensorShape
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -566,7 +566,7 @@ TFGraph >> variable: nameString type: typeInteger shape: anArray [
 		described: [ :description | 
 			description
 				at: 'dtype' putType: typeInteger;
-				at: 'shape' putShape: anArray ]
+				at: 'shape' putShape: anArray asTensorShape ]
 ]
 
 { #category : '*TensorFlowKernelApp',

@@ -15,7 +15,7 @@ Rectified3LayerNeuralNetworkTest >> testMNIST3LayersNNForwardGraph [
 			Array
 				with: (ByteArray new: nn inputSize withAll: 2)
 				with: (ByteArray new: nn inputSize withAll: 1)).
-	self assert: #(2) equals: result shape.
+	self assert: (TensorShape vectorSized: 2) equals: result shape.
 	first := result asNumbers first.
 	second := result asNumbers second.
 	self assert: (0 <= first and: [first < 10]).
@@ -40,14 +40,14 @@ Rectified3LayerNeuralNetworkTest >> testMNIST3LayersNNLossGraph [
 			andCompareTo: #(1 2).
 
 	prediction := results at: 'prediction'.
-	self assert: #(2) equals: prediction shape.
+	self assert: (TensorShape vectorSized: 2) equals: prediction shape.
 	first := prediction asNumbers first.
 	second := prediction asNumbers second.
 	self assert: (0 <= first and: [first < 10]).
 	self assert: (0 <= second and: [second < 10]).
 
 	loss := results at: 'loss/Mean'.
-	self assert: #() equals: loss shape.
+	self assert: TensorShape scalar equals: loss shape.
 	self assert: loss asNumbers > 0
 
 

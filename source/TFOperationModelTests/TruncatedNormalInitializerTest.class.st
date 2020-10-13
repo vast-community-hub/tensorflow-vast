@@ -15,9 +15,9 @@ TruncatedNormalInitializerTest >> testUsingSeed [
 			on: tf
 			named: 'input'
 			of: TFTensor typeFloat
-			shaped: #(2 3)
+			shaped: (TensorShape matrixSized: 2 by: 3)
 			initializedWith: initializer.
-			
+
 	self
 		assertOutputOf: variable
 		isMatrixCloseTo: (

@@ -448,7 +448,7 @@ TFOperation >> shapeAt: nameString [
 		status: status.
 	status check.
 	answer := (1 to: size) collect: [ :i | value at: i ].
-	^ answer
+	^ answer asTensorShape
 ]
 
 { #category : '*TensorFlowKernelApp',

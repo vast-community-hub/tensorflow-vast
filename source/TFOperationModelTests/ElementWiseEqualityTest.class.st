@@ -21,7 +21,7 @@ ElementWiseEqualityTest >> assertOutputOf: anOperation isBooleanMatrixEqualTo: a
 	self
 		assert: (tf compute: anOperation)
 		isOf: TFTensor typeBoolean
-		with: (Array with: anExpectedMatrix size with: columns)
+		with: (TensorShape matrixSized: anExpectedMatrix size by: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]
@@ -33,7 +33,7 @@ ElementWiseEqualityTest >> assertOutputOf: anOperation isBooleanVectorEqualTo: a
 	self
 		assert: (tf compute: anOperation)
 		isOf: TFTensor typeBoolean
-		with: (Array with: aVectorOfBooleans size)
+		with: (TensorShape vectorSized: aVectorOfBooleans size)
 		comparedTo: aVectorOfBooleans
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]

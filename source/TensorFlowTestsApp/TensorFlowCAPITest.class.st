@@ -76,8 +76,8 @@ TensorFlowCAPITest >> assertTensor: aTFTensor streamEquals: tensorArray [
 { #category : 'testing strings' }
 TensorFlowCAPITest >> assertTensorFromStrings: strings shape: shape [
 	| tensor |
-	tensor := TFTensor fromStrings: strings shape: shape.
-	self assert: shape equals: tensor shape.
+	tensor := TFTensor fromStrings: strings shape: shape asTensorShape.
+	self assert: shape asTensorShape equals: tensor shape.
 	self assert: strings equals: tensor allStrings
 ]
 
@@ -473,13 +473,13 @@ TensorFlowCAPITest >> testArrayFromStream [
 	| t template array |
 	t := 1.0 asTensor.
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17) readStream.
-	array := t arrayFromStream: template reset shape: #(10).
+	array := t arrayFromStream: template reset shape: #(10) asTensorShape.
 	self assert: #(1 2 3 4 5 6 7 8 9 10) equals: array.
-	array := t arrayFromStream: template reset shape: #(2 8).
+	array := t arrayFromStream: template reset shape: #(2 8) asTensorShape.
 	self
 		assert: #(#(1 2 3 4 5 6 7 8) #(9 10 11 12 13 14 15 16))
 		equals: array.
-	array := t arrayFromStream: template reset shape: #(2 4 2).
+	array := t arrayFromStream: template reset shape: #(2 4 2) asTensorShape.
 	self
 		assert: #(#(#(1 2) #(3 4) #(5 6) #(7 8)) #(#(9 10) #(11 12) #(13 14) #(15 16)))
 		equals: array
@@ -487,11 +487,12 @@ TensorFlowCAPITest >> testArrayFromStream [
 
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testAsBooleanTensor [
-	self testAsBooleanTensor: true shape: #().
-	self testAsBooleanTensor: #(true false true false) shape: #(4).
+
+	self testAsBooleanTensor: true shape: TensorShape scalar.
+	self testAsBooleanTensor: #(true false true false) shape: (TensorShape vectorSized: 4).
 	self
-		testAsBooleanTensor: #(#(true false true false) #(false true false true))
-		shape: #(2 4)
+		testAsBooleanTensor: #((true false true false) (false true false true))
+		shape: (TensorShape matrixSized: 2 by: 4)
 ]
 
 { #category : 'testing tensor' }
@@ -647,7 +648,7 @@ TensorFlowCAPITest >> testAttrGetInt [
 TensorFlowCAPITest >> testAttrGetShape [
 	| graph op |
 	graph := TFGraph create.
-	op := graph variable: 'in' type: TFTensor typeDouble shape: #(1 2 3).
+	op := graph variable: 'in' type: TFTensor typeDouble shape: (TensorShape withDimensionsSized: #(1 2 3)).
 	self assert: (op shapeAt: 'shape') equals: #(1 2 3)
 ]
 
@@ -772,15 +773,16 @@ TensorFlowCAPITest >> testAttrSetShape [
 
 { #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShape: anIntegerArray [
-	| graph op |
+	| graph op shape |
 	graph := TFGraph create.
+	shape := anIntegerArray asTensorShape. 
 	op := graph
 		newOperation: 'Placeholder'
 		named: 'const'
 		described: [ :description | 
-			description at: 'shape' putShape: anIntegerArray.
+			description at: 'shape' putShape: shape.
 			description at: 'dtype' putType: TFTensor typeInt64 ].
-	self assert: (op shapeAt: 'shape') equals: anIntegerArray
+	self assert: (op shapeAt: 'shape') equals: shape 
 ]
 
 { #category : 'testing operation' }
@@ -1227,7 +1229,7 @@ TensorFlowCAPITest >> testGetAttrMetadataInt [
 { #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataShape [
 	| graph op template metadata |
-	template := #(1 2 3 4 5).
+	template := #(1 2 3 4 5) asTensorShape.
 	graph := TFGraph create.
 	op := graph
 		newOperation: 'Placeholder'
@@ -1274,7 +1276,7 @@ TensorFlowCAPITest >> testGetAttrMetadataTensor [
 { #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataType [
 	| graph op template metadata |
-	template := #(1 2 3 4 5).
+	template := #(1 2 3 4 5) asTensorShape.
 	graph := TFGraph create.
 	op := graph
 		newOperation: 'Placeholder'
@@ -2103,7 +2105,7 @@ TensorFlowCAPITest >> testOutputDims [
 TensorFlowCAPITest >> testPlaceholderType: type [
 	| graph var session result tensor abs |
 	graph := TFGraph create.
-	tensor := TFTensor type: type shape: #().
+	tensor := TFTensor type: type shape: TensorShape scalar.
 	var := graph placeholder: 'var' type: type.
 	abs := graph
 		newOperation: 'Abs'
@@ -2459,13 +2461,13 @@ TensorFlowCAPITest >> testShapeOfOutputSet [
 		described: [ :description | 
 			description
 				at: 'dtype' putType: TFTensor typeInt64;
-				at: 'shape' putShape: #(3 -1 -1) ].
+				at: 'shape' putShape: #(3 -1 -1) asTensorShape].
 	output := var output: 0.
 	shape := graph shapeOf: output.
-	self assert: shape equals: #(3 -1 -1).
+	self assert: shape equals: #(3 -1 -1) asTensorShape.
 	graph shapeOf: output set: #(-1 3 -1).
 	shape := graph shapeOf: output.
-	self assert: shape equals: #(3 3 -1)
+	self assert: shape equals: #(3 3 -1) asTensorShape
 ]
 
 { #category : 'testing operation' }
@@ -2689,15 +2691,15 @@ TensorFlowCAPITest >> testTensorArrayNumbersAt [
 TensorFlowCAPITest >> testTensorAsNumbers [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
-	tensor := TFTensor fromFloats: template shape: #(16).
+	tensor := TFTensor fromFloats: template shape: #(16) asTensorShape.
 	array := tensor asNumbers.
 	self assert: template equals: array.
-	tensor := TFTensor fromFloats: template shape: #(2 8).
+	tensor := TFTensor fromFloats: template shape: #(2 8) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(1 2 3 4 5 6 7 8) #(9 10 11 12 13 14 15 16))
 		equals: array.
-	tensor := TFTensor fromFloats: template shape: #(2 4 2).
+	tensor := TFTensor fromFloats: template shape: #(2 4 2) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(#(1 2) #(3 4) #(5 6) #(7 8)) #(#(9 10) #(11 12) #(13 14) #(15 16)))
@@ -2708,15 +2710,15 @@ TensorFlowCAPITest >> testTensorAsNumbers [
 TensorFlowCAPITest >> testTensorAsNumbersFloats [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
-	tensor := TFTensor fromFloats: template shape: #(16).
+	tensor := TFTensor fromFloats: template shape: #(16) asTensorShape.
 	array := tensor asNumbers.
 	self assert: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16) equals: array.
-	tensor := TFTensor fromFloats: template shape: #(2 8).
+	tensor := TFTensor fromFloats: template shape: #(2 8) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(1 2 3 4 5 6 7 8) #(9 10 11 12 13 14 15 16))
 		equals: array.
-	tensor := TFTensor fromFloats: template shape: #(2 4 2).
+	tensor := TFTensor fromFloats: template shape: #(2 4 2) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(#(1 2) #(3 4) #(5 6) #(7 8)) #(#(9 10) #(11 12) #(13 14) #(15 16)))
@@ -2727,15 +2729,15 @@ TensorFlowCAPITest >> testTensorAsNumbersFloats [
 TensorFlowCAPITest >> testTensorAsNumbersInt32 [
 	| tensor template array |
 	template := #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16).
-	tensor := TFTensor fromInt32s: template shape: #(16).
+	tensor := TFTensor fromInt32s: template shape: #(16) asTensorShape.
 	array := tensor asNumbers.
 	self assert: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16) equals: array.
-	tensor := TFTensor fromInt32s: template shape: #(2 8).
+	tensor := TFTensor fromInt32s: template shape: #(2 8) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(1 2 3 4 5 6 7 8) #(9 10 11 12 13 14 15 16))
 		equals: array.
-	tensor := TFTensor fromInt32s: template shape: #(2 4 2).
+	tensor := TFTensor fromInt32s: template shape: #(2 4 2) asTensorShape.
 	array := tensor asNumbers.
 	self
 		assert: #(#(#(1 2) #(3 4) #(5 6) #(7 8)) #(#(9 10) #(11 12) #(13 14) #(15 16)))
@@ -2778,14 +2780,14 @@ TensorFlowCAPITest >> testTensorAsStream [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorByteSize [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3).
+	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3) asTensorShape.
 	self assert: tensor byteSize equals: 8 * 2 * 3
 ]
 
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorData [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3).
+	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3) asTensorShape.
 	self assert: tensor rank equals: 2.
 	self deny: tensor isNull.
 	self deny: tensor isUndefined
@@ -2849,7 +2851,7 @@ TensorFlowCAPITest >> testTensorFromDoublesOutOfRangeForFloats [
 TensorFlowCAPITest >> testTensorFromDoublesShape [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 1.1).
-	tensor := TFTensor fromDoubles: template shape: #(2 2).
+	tensor := TFTensor fromDoubles: template shape: #(2 2) asTensorShape.
 	values := tensor allElements.
 	self assert: tensor shape equals: #(2 2).
 	self assert: tensor size equals: 4.
@@ -2960,7 +2962,7 @@ TensorFlowCAPITest >> testTensorFromFloatsScalar [
 TensorFlowCAPITest >> testTensorFromFloatsShape [
 	| tensor template values |
 	template := #(1.23456 0.0 -1.234567 1.1).
-	tensor := TFTensor fromFloats: template shape: #(2 2).
+	tensor := TFTensor fromFloats: template shape: #(2 2) asTensorShape.
 	values := tensor allFloats.
 	self assert: tensor shape equals: #(2 2).
 	self assert: tensor size equals: 4.
@@ -2975,7 +2977,7 @@ TensorFlowCAPITest >> testTensorFromFloatsShapeUndefinedSize [
 	| template |
 	template := #(1.23456 0.0 -1.234567 1.1).
 	self
-		should: [ TFTensor fromFloats: template shape: #(2 2 -1) ]
+		should: [ TFTensor fromFloats: template shape: #(2 2 -1) asTensorShape ]
 		raiseError: 'Inferred size and real size don''t match.'
 ]
 
@@ -3017,10 +3019,10 @@ TensorFlowCAPITest >> testTensorFromInt32s [
 TensorFlowCAPITest >> testTensorFromInt32Shape [
 	| tensor template values |
 	template := #(123456 0 -1234567 11).
-	tensor := TFTensor fromInt32s: template shape: #(2 2).
+	tensor := TFTensor fromInt32s: template shape: #(2 2) asTensorShape.
 	values := tensor allFloats.
 	self assert: tensor type equals: TFTensor typeInt32.
-	self assert: tensor shape equals: #(2 2).
+	self assert: tensor shape equals: #(2 2) asTensorShape.
 	self assert: tensor size equals: 4.
 	self assert: tensor byteSize equals: tensor size * 4.
 	template
@@ -3061,10 +3063,10 @@ TensorFlowCAPITest >> testTensorFromInt64s [
 TensorFlowCAPITest >> testTensorFromInt64Shape [
 	| tensor template values |
 	template := #(123456 0 -1234567 11).
-	tensor := TFTensor fromInt64s: template shape: #(2 2).
+	tensor := TFTensor fromInt64s: template shape: #(2 2) asTensorShape.
 	values := tensor allFloats.
 	self assert: tensor type equals: TFTensor typeInt64.
-	self assert: tensor shape equals: #(2 2).
+	self assert: tensor shape equals: #(2 2) asTensorShape.
 	self assert: tensor size equals: 4.
 	self assert: tensor byteSize equals: tensor size * 8.
 	template
@@ -3095,7 +3097,7 @@ TensorFlowCAPITest >> testTensorFromStrings [
 	template := #(#('hola manola' 'te traje una lola') #('pamela' 'que pandulce!') #('habia una vez' 'truz')).
 	flatten := TFTensor elementsOf: template.
 	tensor := TFTensor fromStrings: template.
-	self assert: #(3 2) equals: tensor shape.
+	self assert: #(3 2) asTensorShape equals: tensor shape.
 	self assert: flatten equals: tensor allStrings
 ]
 
@@ -3112,7 +3114,7 @@ TensorFlowCAPITest >> testTensorFromStringsShape [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorNewScalar [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #().
+	tensor := TFTensor type: TFTensor typeInt64 shape: TensorShape scalar.
 	tensor ignoreFinalization.
 	self deny: tensor isNull.
 	tensor delete.
@@ -3122,7 +3124,7 @@ TensorFlowCAPITest >> testTensorNewScalar [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape: anArray [
 	| tensor shape size |
-	tensor := TFTensor type: TFTensor typeInt64 shape: anArray.
+	tensor := TFTensor type: TFTensor typeInt64 shape: anArray asTensorShape.
 	self assert: tensor rank equals: anArray size.
 	1 to: anArray size do: [:index |
 		self assert: (tensor sizeOn: index - 1) equals: (anArray at: index)].
@@ -3157,9 +3159,9 @@ TensorFlowCAPITest >> testTensorShape2D [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorType [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #().
+	tensor := TFTensor type: TFTensor typeInt64 shape: TensorShape scalar.
 	self assert: tensor type equals: tensor class typeInt64.
-	tensor := TFTensor type: TFTensor typeFloat shape: #().
+	tensor := TFTensor type: TFTensor typeFloat shape: TensorShape scalar.
 	self assert: tensor type equals: tensor class typeFloat
 ]
 

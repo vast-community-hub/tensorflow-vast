@@ -133,6 +133,17 @@ TensorFlowCAPI >> description: aTFOperationDescription set: aString toShape: anI
 ]
 
 { #category : 'operation description' }
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toShapes: dims sizesOfEach: num_dims size: num_shapes [
+
+	^self dispatcher
+		callTF_SetAttrShapeListWith: aTFOperationDescription
+		with: anAttributeName
+		with: dims
+		with: num_dims
+		with: num_shapes
+]
+
+{ #category : 'operation description' }
 TensorFlowCAPI >> description: aTFOperationDescription set: nameString toString: valueString size: size [
 	"	<cdecl: void 'TF_SetAttrString' (TFOperationDescription* char* char* ulonglong)>"
 	^ self dispatcher callTF_SetAttrStringWith: aTFOperationDescription with: nameString with: valueString with: size
@@ -154,6 +165,16 @@ TensorFlowCAPI >> description: aTFOperationDescription set: aString toTensor: aT
 TensorFlowCAPI >> description: aTFOperationDescription set: aString toType: anInt [
 	^ self dispatcher callTF_SetAttrTypeWith: aTFOperationDescription with: aString  with: anInt
 
+]
+
+{ #category : 'operation description' }
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTypes: values size: size [
+
+	^self dispatcher
+		callTF_SetAttrTypeListWith: aTFOperationDescription
+		with: anAttributeName
+		with: values
+		with: size
 ]
 
 { #category : 'operation description' }
@@ -496,6 +517,12 @@ TensorFlowCAPI >> sessionOptions: aTFSessionOptions setTarget: anExternalString 
 { #category : 'status' }
 TensorFlowCAPI >> setStatus: aTFStatus code: anInteger message: anExternalString [
 	^ self dispatcher callTF_SetStatusWith: aTFStatus with: anInteger with: anExternalString
+]
+
+{ #category : 'utils' }
+TensorFlowCAPI >> sizeOfDataType: aDataType [
+
+	^self dispatcher callTF_DataTypeSizeWith: aDataType
 ]
 
 { #category : 'strings' }

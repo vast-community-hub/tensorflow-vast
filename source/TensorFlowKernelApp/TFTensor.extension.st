@@ -124,7 +124,7 @@ TFTensor class >> fromNumbers: values type: type [
 TFTensor class >> fromNumbers: values type: type shape: shape [
 	| answer size count |
 	size := self sizeOf: values.
-	count := shape inject: 1 into: [ :a :b | a * b ].
+	count := shape totalAmountOfElements.
 	count = size
 		ifFalse: [ Error signal: 'Inferred size and real size don''t match.' ].
 	answer := self type: type shape: shape.
@@ -137,8 +137,7 @@ TFTensor class >> fromNumbers: values type: type shape: shape [
 TFTensor class >> fromString: aString [
 	| answer bytesize |
 	bytesize := TensorFlowCAPI current stringEncodedSize: aString.
-	bytesize := bytesize.
-	answer := self type: self typeString shape: #() bytesize: bytesize.
+	answer := self type: self typeString shape: TensorShape scalar bytesize: bytesize.
 	TensorFlowCAPI current
 		stringEncode: aString
 		to: answer data
@@ -149,12 +148,8 @@ TFTensor class >> fromString: aString [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['instance creation'] }
 TFTensor class >> fromStringArray: aStringArray [
-	^ self
-		fromStrings: aStringArray
-		shape:
-			((Array new: 1)
-				at: 1 put: aStringArray size;
-				yourself)
+
+	^self fromStrings: aStringArray shape: (TensorShape vectorSized: aStringArray size)
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -185,9 +180,10 @@ TFTensor class >> fromStringArray: aStringArray shape: shape [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['instance creation'] }
 TFTensor class >> fromStrings: aStringArray [
-	^ self
+
+	^self
 		fromStrings: aStringArray
-		shape: (TFTensor shapeOf: aStringArray) allButLast
+		shape: (self shapeOf: aStringArray) dimensionSizes allButLast asTensorShape
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -199,23 +195,28 @@ TFTensor class >> fromStrings: strings shape: shape [
 ]
 
 { #category : '*TensorFlowKernelApp',
+ #vaCategories : ['instance creation'] }
+TFTensor class >> fromVariants: value [
+
+	| shape |
+
+	shape := self shapeOf: value.
+	^self fromNumbers: value type: self typeVariant shape: shape
+]
+
+{ #category : '*TensorFlowKernelApp',
  #vaCategories : ['types'] }
 TFTensor class >> getterBlockFor: type [
-	TFTensor typeInt32 = type
-		ifTrue: [ ^ [ :data :offset | data int32At: offset-1 ] ].
-	TFTensor typeInt64 = type
-		ifTrue: [ ^ [ :data :offset | data int64At: offset-1 ] ].
-	TFTensor typeFloat = type
-		ifTrue: [ ^ [ :data :offset | data float32At: offset-1 ] ].
-	TFTensor typeDouble = type
-		ifTrue: [ ^ [ :data :offset | data float64At: offset-1 ] ].
-	TFTensor typeBoolean = type
-		ifTrue: [ ^ [ :data :offset | data bool8At: offset-1 ] ].
-	TFTensor typeUInt8 = type
-		ifTrue: [ ^ [ :data :offset | data uint8At: offset-1 ] ].
-	^ self shouldBeImplemented.
-	
-	
+
+	self typeInt32 = type ifTrue: [^[:data :offset | data int32At: offset - 1]].
+	self typeInt64 = type ifTrue: [^[:data :offset | data int64At: offset - 1]].
+	self typeFloat = type ifTrue: [^[:data :offset | data float32At: offset - 1]].
+	self typeDouble = type ifTrue: [^[:data :offset | data float64At: offset - 1]].
+	self typeBoolean = type ifTrue: [^[:data :offset | data bool8At: offset - 1]].
+	self typeUInt8 = type ifTrue: [^[:data :offset | data uint8At: offset - 1]].
+	^self shouldBeImplemented
+
+
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -251,83 +252,41 @@ TFTensor class >> rankOf: aMultidimensionalTensor [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['types'] }
 TFTensor class >> setterBlockFor: type [
-	TFTensor typeInt32 = type
-		ifTrue: [ ^ [ :data :offset :value | data int32At: offset-1 put: value ] ].
-	TFTensor typeInt64 = type
-		ifTrue: [ ^ [ :data :offset :value | data int64At: offset-1 put: value ] ].
-	TFTensor typeFloat = type
-		ifTrue: [ ^ [ :data :offset :value | data float32At: offset-1 put: value asFloat] ].
-	TFTensor typeDouble = type
-		ifTrue: [ ^ [ :data :offset :value | data float64At: offset-1 put: value ] ].
-	TFTensor typeBoolean = type
-		ifTrue: [ ^ [ :data :offset :value | data bool8At: offset-1 put: value ] ].
-	TFTensor typeUInt8 = type
-		ifTrue: [ ^ [ :data :offset :value | data uint8At: offset-1 put: value ] ].
-	^ self shouldBeImplemented
+
+	self typeInt32 = type ifTrue: [^[:data :offset :value | data int32At: offset - 1 put: value]].
+	self typeInt64 = type ifTrue: [^[:data :offset :value | data int64At: offset - 1 put: value]].
+	self typeFloat = type
+		ifTrue: [^[:data :offset :value | data float32At: offset - 1 put: value asFloat]].
+	self typeDouble = type ifTrue: [^[:data :offset :value | data float64At: offset - 1 put: value]].
+	self typeBoolean = type ifTrue: [^[:data :offset :value | data bool8At: offset - 1 put: value]].
+	self typeUInt8 = type ifTrue: [^[:data :offset :value | data uint8At: offset - 1 put: value]].
+	self typeVariant = type
+		ifTrue: [
+			^[:data :offset :value |
+				data pointerAt: (offset - 1) * ExternalWordArray fixedSize put: value]].
+	^self shouldBeImplemented
 ]
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['utils'] }
 TFTensor class >> shapeOf: aMultidimensionalTensor [
-	^ aMultidimensionalTensor isCollection
-		ifTrue: [ aMultidimensionalTensor isEmpty
-				ifTrue: [ #(0) ]
-				ifFalse: [ ((Array new: 1)
-						at: 1 put: aMultidimensionalTensor size;
-						yourself) , (self shapeOf: aMultidimensionalTensor first) ] ]
-		ifFalse: [ #() ]
+
+	^aMultidimensionalTensor isCollection
+		ifTrue: [
+			aMultidimensionalTensor isEmpty
+				ifTrue: [TensorShape vectorSized: 0]
+				ifFalse: [
+					TensorShape withDimensionsSized: (
+						(Array with: aMultidimensionalTensor size) ,
+							(self shapeOf: aMultidimensionalTensor first) dimensionSizes)]]
+		ifFalse: [TensorShape scalar]
 ]
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['types'] }
-TFTensor class >> sizeForType: anInteger [
-	self typeFloat = anInteger
-		ifTrue: [ ^ 4 ].
-	self typeInt64 = anInteger
-		ifTrue: [ ^ 8 ].
-	self typeInt32 = anInteger
-		ifTrue: [ ^ 4 ].
-	self typeDouble = anInteger
-		ifTrue: [ ^ 8 ].
-	self typeBoolean = anInteger
-		ifTrue: [ ^ 1 ].
-	self typeUInt8 = anInteger
-		ifTrue: [ ^ 1 ].
+TFTensor class >> sizeForType: aTypeNumber [
 
-	"
-8
-		UInt8 4
-		Int8 6
-		QInt8 11
-		QUInt8 12
-
-16
-		Int16 5
-		BFloat16 14
-		QInt16 15
-		QUInt16 16
-		UInt16 17
-		Half 19
-
-32
-		Float 1
-		Int32 3
-		QInt32 13
-
-64
-		Double 2
-		Complex64 8
-		Int64 9
-
-128
-		Complex128 18
-
-		String 7
-		Resource 20).
-
-		Bool 10
-"
-	^ self shouldBeImplemented
+	^TensorFlowCAPI current sizeOfDataType: aTypeNumber
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -349,7 +308,7 @@ TFTensor class >> sizeOfString: aString [
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['instance creation'] }
-TFTensor class >> type: anInteger shape: anIntegerArray [
+TFTensor class >> type: anInteger shape: aTensorShape [
 	" I understand dimenssions are:
 		#()		-> Scalar
 		#(7)		-> Unidimensional array of 7 elements
@@ -360,10 +319,8 @@ TFTensor class >> type: anInteger shape: anIntegerArray [
 
 	| bytesize elementSize |
 	elementSize := self sizeForType: anInteger.
-	bytesize := anIntegerArray
-		inject: elementSize
-		into: [ :prev :each | prev * each ].
-	^ self type: anInteger shape: anIntegerArray bytesize: bytesize
+	bytesize := aTensorShape totalAmountOfElements * elementSize.
+	^ self type: anInteger shape: aTensorShape bytesize: bytesize
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -378,7 +335,7 @@ TFTensor class >> type: anInteger shape: anIntegerArray bytesize: bytesizeIntege
 	"
 
 	| externalized answer |
-	externalized := Int64Array externalFromArray: anIntegerArray.
+	externalized := anIntegerArray asInt64Array.
 	answer := TensorFlowCAPI current
 		allocateTensorType: anInteger
 		shape: externalized
@@ -509,6 +466,12 @@ TFTensor class >> typeUInt8 [
 ]
 
 { #category : '*TensorFlowKernelApp',
+ #vaCategories : ['types'] }
+TFTensor class >> typeVariant [
+	^21
+]
+
+{ #category : '*TensorFlowKernelApp',
  #vaCategories : ['converting'] }
 TFTensor >> allElements [
 	^ self asStream contents
@@ -551,17 +514,16 @@ TFTensor >> allStrings [
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['converting'] }
 TFTensor >> arrayFromStream: strm shape: shape [
-	^ shape isEmpty
-		ifTrue: [ strm next ]
-		ifFalse: [ | first tail |
-			first := shape first.
-			tail := shape allButFirst.
-			Array
-				streamContents: [ :answer | 
-					first
-						timesRepeat: [ | next |
-							next := self arrayFromStream: strm shape: tail.
-							answer nextPut: next ] ] ]
+
+	^shape representsScalar
+		ifTrue: [strm next]
+		ifFalse: [| first tail |
+			first := shape dimensionSizes first.
+			tail := TensorShape withDimensionsSized: shape dimensionSizes allButFirst.
+			Array streamContents: [:answer |
+				first timesRepeat: [| next |
+					next := self arrayFromStream: strm shape: tail.
+					answer nextPut: next]]]
 ]
 
 { #category : '*TensorFlowKernelApp',
@@ -647,19 +609,31 @@ TFTensor >> rank [
 ]
 
 { #category : '*TensorFlowKernelApp',
+ #vaCategories : ['Accessing'] }
+TFTensor >> scalarOutput [
+
+	self isScalar ifTrue: [^self allElements any].
+
+	AssertionFailure signal: 'This tensor is not a scalar'
+]
+
+{ #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
 TFTensor >> shape [
+
 	| answer count |
+
 	count := self rank.
 	answer := WriteStream on: (Array new: count).
-	1 to: count do: [ :i | answer nextPut: (self sizeOn: i - 1) ].
-	^ answer contents
+	1 to: count do: [:i | answer nextPut: (self sizeOn: i - 1)].
+	^TensorShape withDimensionsSized: answer contents
 ]
 
 { #category : '*TensorFlowKernelApp',
  #vaCategories : ['accessing'] }
 TFTensor >> size [
-	^ self shape inject: 1 into: [ :prev :next | prev * next ]
+
+	^self shape totalAmountOfElements
 ]
 
 { #category : '*TensorFlowKernelApp',
