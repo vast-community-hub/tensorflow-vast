@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.33',
-						#ts : 3779951714
+						#versionName : '1.34',
+						#ts : 3780404313
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3779951714,
+		#ts : 3780404313,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -53,7 +53,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.25'
+		#versionName : '0.26'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.25',
-						#ts : 3779951714
+						#versionName : '0.26',
+						#ts : 3780404313
 					},
 					{
 						#name : 'SUnit',
@@ -73,7 +73,7 @@
 				]
 			}
 		],
-		#ts : 3779951714,
+		#ts : 3780404313,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -104,7 +104,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.24'
+		#versionName : '0.25'
 	},
 	{
 		#conditions : [
@@ -191,7 +191,7 @@
 				]
 			}
 		],
-		#ts : 3779951699,
+		#ts : 3780404290,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -222,8 +222,8 @@
 			},
 			{
 				#name : 'TensorFlowTestsApp',
-				#versionName : '0.32',
-				#ts : 3779996445
+				#versionName : '0.33',
+				#ts : 3780404331
 			},
 			{
 				#name : 'TensorFlowVASTApp',
@@ -237,7 +237,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.9'
+		#versionName : '0.64.10'
 	},
 	{
 		#conditions : [
@@ -246,13 +246,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.9',
-						#ts : 3779951699
+						#versionName : '0.64.10',
+						#ts : 3780404290
 					}
 				]
 			}
 		],
-		#ts : 3779951714,
+		#ts : 3780404313,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -293,8 +293,8 @@
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '1.27',
-				#ts : 3779951621
+				#versionName : '1.28',
+				#ts : 3780404331
 			},
 			{
 				#name : 'TFOptimizerModel',
@@ -343,7 +343,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.33'
+		#versionName : '1.34'
 	},
 	{
 		#conditions : [
@@ -367,8 +367,8 @@
 					},
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.9',
-						#ts : 3779951699
+						#versionName : '0.64.10',
+						#ts : 3780404290
 					}
 				]
 			}
@@ -384,6 +384,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : ''
+		#versionName : '1.5'
 	}
 ]

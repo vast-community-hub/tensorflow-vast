@@ -36,16 +36,16 @@ ReciprocalTest >> testIntegerScalarReciprocal [
 	self
 		assert: [tf compute: reciprocal]
 		raisesExceptionWith:
-			'INVALID_ARGUMENT: No OpKernel was registered to support Op ''Reciprocal'' used by {{node recip}}with these attrs: [T=DT_INT32]
-Registered devices: [CPU]
-Registered kernels:
-  device=''CPU''; T in [DT_FLOAT]
-  device=''CPU''; T in [DT_HALF]
-  device=''CPU''; T in [DT_DOUBLE]
-  device=''CPU''; T in [DT_COMPLEX64]
-  device=''CPU''; T in [DT_COMPLEX128]
-
-	 [[recip]]'
+			'INVALID_ARGUMENT: 2 root error(s) found.
+  (0) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.
+	 [[{{node recip}}]]
+	 [[recip]]
+	 [[recip/_3]]
+  (1) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.
+	 [[{{node recip}}]]
+	 [[recip]]
+0 successful operations.
+0 derived errors ignored.'
 ]
 
 { #category : 'Tests' }

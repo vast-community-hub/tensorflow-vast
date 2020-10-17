@@ -3179,12 +3179,11 @@ TensorFlowCAPITest >> testTensorTypes [
 
 { #category : 'testing library' }
 TensorFlowCAPITest >> testVersion [
+
 	| version |
+
 	version := library version.
-	self
-		assert:
-			(#('0.11.head' '0.12.0' '0.12.head' '1.0.0-alpha' '1.0.0' '1.14.0' '1.13.1')
-				includes: version)
+	self assert: version equals: '2.3.1'
 ]
 
 { #category : 'testing graph' }
