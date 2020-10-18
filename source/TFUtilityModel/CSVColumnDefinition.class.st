@@ -26,6 +26,12 @@ CSVColumnDefinition class >> nullableTyped: aTensorType defaultTo: aDefaultValue
 	^self containing: (TFTensor fromNumbers: (Array with: aDefaultValue) type: aTensorType)
 ]
 
+{ #category : 'Accessing' }
+CSVColumnDefinition >> columnDataType [
+	
+	^definition type
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 CSVColumnDefinition >> initializeContaining: aTensor [

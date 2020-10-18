@@ -87,6 +87,18 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerMatrixCloseTo: aFloa
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isIntegerScalarEqualTo: aScalar [
+
+	self
+		assert: anOutput
+		isOf: TFTensor typeInt32
+		with: TensorShape scalar
+		comparedTo: (Array with: aScalar)
+		complying: [:actual :expected | self assert: actual equals: expected]
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isIntegerVectorEqualsTo: anExpectedArray [
 
 	self
@@ -94,6 +106,18 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerVectorEqualsTo: anEx
 		isOf: TFTensor typeInt32
 		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
+		complying: [:actual :expected | self assert: actual equals: expected]
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerScalarEqualsTo: anInteger [
+
+	self
+		assert: anOutput
+		isOf: TFTensor typeInt64
+		with: TensorShape scalar
+		comparedTo: (Array with: anInteger)
 		complying: [:actual :expected | self assert: actual equals: expected]
 ]
 
@@ -180,6 +204,18 @@ TensorFlowComputationBasedTest >> assert: aBlock raisesExceptionWith: aDescripti
 
 { #category : 'Test Support',
   #vaVisibility : 'private' }
+TensorFlowComputationBasedTest >> assertOutputOf: anOperation isAStringEqualTo: aString [
+
+	| output |
+
+	output := tf compute: anOperation.
+	self assert: output type equals: TFTensor typeString.
+	self assert: output shape equals: TensorShape scalar.
+	self assert: output allStrings any equals: aString
+]
+
+{ #category : 'Test Support',
+  #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: aTFOperation isFloatScalarCloseTo: aScalar [
 
 	self assert: (tf compute: aTFOperation) isFloatScalarCloseTo: aScalar
@@ -203,12 +239,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerMatrixClo
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertOutputOf: anOperation isIntegerScalarEqualTo: aScalar [
 
-	self
-		assert: anOperation compute
-		isOf: TFTensor typeInt32
-		with: TensorShape scalar
-		comparedTo: (Array with: aScalar)
-		complying: [:actual :expected | self assert: actual equals: expected]
+	self assert: anOperation compute isIntegerScalarEqualTo: aScalar
 ]
 
 { #category : 'Test Support',

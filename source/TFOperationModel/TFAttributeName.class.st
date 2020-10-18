@@ -5,15 +5,39 @@ Class {
 }
 
 { #category : 'Accessing' }
+TFAttributeName class >> container [
+
+	^'container'
+]
+
+{ #category : 'Accessing' }
 TFAttributeName class >> dataType [
 
 	^'dtype' 
 ]
 
 { #category : 'Accessing' }
+TFAttributeName class >> outputShapes [
+
+	^'output_shapes'
+]
+
+{ #category : 'Accessing' }
+TFAttributeName class >> outputTypes [
+
+	^'output_types'
+]
+
+{ #category : 'Accessing' }
 TFAttributeName class >> shape [
 
 	^'shape'
+]
+
+{ #category : 'Accessing' }
+TFAttributeName class >> sharedName [
+
+	^'shared_name'
 ]
 
 { #category : 'Accessing' }

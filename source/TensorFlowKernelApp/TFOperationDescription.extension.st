@@ -88,14 +88,14 @@ TFOperationDescription >> at: aString putShapes: aListOfShapes [
 
 	| status shapes shapeSizes |
 
-	shapes := aListOfShapes collect: [:shape | shape asInt64Array].
-	shapeSizes := aListOfShapes collect: #size.
+	shapes := aListOfShapes collect: #asInt64Array.
+	shapeSizes := aListOfShapes collect: #rank.
 	status := TFStatus create.
 	self library
 		description: self
-		set: aString
-		toShapes: (TFInputArray externalFromArray: shapes)
-		sizesOfEach: (Int64Array externalFromArray: shapeSizes)
+		set: aString asAsciiZ
+		toShapes: (Int64Array externalFromArray: shapes)
+		sizesOfEach: (Int32Array externalFromArray: shapeSizes)
 		size: aListOfShapes size.
 	status check
 ]
@@ -165,7 +165,7 @@ TFOperationDescription >> at: anAttributeName putTypes: aListOfTypes [
 	self library
 		description: self
 		set: anAttributeName
-		toTypes: (Int64Array externalFromArray: aListOfTypes)
+		toTypes: (Int32Array externalFromArray: aListOfTypes)
 		size: aListOfTypes size.
 	status check
 ]
