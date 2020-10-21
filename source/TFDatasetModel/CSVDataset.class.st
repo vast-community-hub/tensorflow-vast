@@ -3,8 +3,7 @@ Class {
 	#superclass : 'Dataset',
 	#instVars : [
 		'currentComputation',
-		'outputTypes',
-		'outputShapes'
+		'outputDomains'
 	],
 	#category : 'TFDatasetModel'
 }
@@ -36,12 +35,17 @@ CSVDataset class >> on: aTensorFlowComputation named: aDatasetName from: aFileNa
 		using: aParsingConfiguration
 ]
 
+{ #category : 'Accessing' }
+CSVDataset >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 CSVDataset >> initializeOn: aTensorFlowComputation named: aDatasetName from: aFilename withColumnsDefinedBy: aColumnDefinitionCollection using: aParsingConfiguration [
 
-	outputTypes := aColumnDefinitionCollection collect: #columnDataType.
-	outputShapes := Array new: aColumnDefinitionCollection size withAll: TensorShape scalar.
+	outputDomains := aColumnDefinitionCollection collect: #columnDomain.
 	currentComputation := aTensorFlowComputation.
 	value :=
 		currentComputation
@@ -57,18 +61,12 @@ CSVDataset >> initializeOn: aTensorFlowComputation named: aDatasetName from: aFi
 					addInputs: (
 						aColumnDefinitionCollection
 							collect: [:column | column outputOn: currentComputation]);
-					at: TFAttributeName outputTypes putTypes: outputTypes;
-					at: TFAttributeName outputShapes putShapes: outputShapes]
+					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
+					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }
-CSVDataset >> outputShapes [
+CSVDataset >> outputDomains [
 
-	^outputShapes
-]
-
-{ #category : 'Accessing' }
-CSVDataset >> outputTypes [
-
-	^outputTypes
+	^outputDomains
 ]

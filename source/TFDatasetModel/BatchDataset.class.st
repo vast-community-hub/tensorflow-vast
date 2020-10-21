@@ -3,29 +3,29 @@ Class {
 	#superclass : 'Dataset',
 	#instVars : [
 		'outputTypes',
-		'outputShapes'
+		'outputShapes',
+		'outputDomains'
 	],
 	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }
-BatchDataset class >> splitting: aDataset in: aBatchSize outputsTyped: aTypeCollection shaped: aShapeCollection [
+BatchDataset class >> splitting: aDataset in: aBatchSize withOutputIn: aTensorDomain [
 
-	^self new
-		initializeSplitting: aDataset
-		in: aBatchSize
-		outputsTyped: aTypeCollection
-		shaped: aShapeCollection
+	^self splitting: aDataset in: aBatchSize withOutputsIn: (Array with: aTensorDomain)
+]
 
+{ #category : 'Instance Creation' }
+BatchDataset class >> splitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection [
 
+	^self new initializeSplitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-BatchDataset >> initializeSplitting: aDataset in: aBatchSize outputsTyped: aTypeCollection shaped: aShapeCollection [
+BatchDataset >> initializeSplitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection [
 
-	outputTypes := aTypeCollection.
-	outputShapes := aShapeCollection.
+	outputDomains := aTensorDomainCollection.
 
 	value :=
 		aDataset currentComputation
@@ -34,18 +34,12 @@ BatchDataset >> initializeSplitting: aDataset in: aBatchSize outputsTyped: aType
 			withAll: (Array with: aDataset with: aBatchSize asInt64Tensor)
 			describedBy: [:description |
 				description
-					at: TFAttributeName outputTypes putTypes: outputTypes;
-					at: TFAttributeName outputShapes putShapes: outputShapes]
+					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
+					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }
-BatchDataset >> outputShapes [
+BatchDataset >> outputDomains [
 
-	^outputShapes
-]
-
-{ #category : 'Accessing' }
-BatchDataset >> outputTypes [
-
-	^outputTypes
+	^outputDomains
 ]

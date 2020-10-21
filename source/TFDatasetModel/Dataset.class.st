@@ -1,17 +1,27 @@
 Class {
 	#name : 'Dataset',
 	#superclass : 'TensorFlowOperationAbstract',
+	#instVars : [
+		'cardinality'
+	],
 	#category : 'TFDatasetModel'
 }
 
 { #category : 'Accessing' }
-Dataset >> outputShapes [
+Dataset >> cardinality [
 
-	self subclassResponsibility
+	cardinality isNil
+		ifTrue: [
+			cardinality :=
+				self currentComputation
+					newOperationOf: 'DatasetCardinality'
+					namePrefixed: 'cardinality'
+					with: self].
+	^cardinality
 ]
 
 { #category : 'Accessing' }
-Dataset >> outputTypes [
+Dataset >> outputDomains [
 
 	self subclassResponsibility
 ]

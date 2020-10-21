@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFUtilityModel',
-	#vaPrerequisites : ['TFOperationModel']
+	#vaPrerequisites : ['TFDatasetModel']
 }

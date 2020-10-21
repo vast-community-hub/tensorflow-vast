@@ -6,39 +6,39 @@ Class {
 		'iterator',
 		'initializer',
 		'next',
-		'outputTypes',
-		'outputShapes'
+		'outputDomains',
+		'dataset'
 	],
 	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }
-DatasetIterator class >> on: aComputation iterating: aDataset knowingOutputIsTyped: aType withShape: aShape [
+DatasetIterator class >> on: aComputation iterating: aDataset [
 
-	^self
-		on: aComputation
-		iterating: aDataset
-		knowingOutputsAreTyped: (Array with: aType)
-		withShape: (Array with: aShape)
-]
-
-{ #category : 'Instance Creation' }
-DatasetIterator class >> on: aComputation iterating: aDataset knowingOutputsAreTyped: aType withShape: aShape [
-
-	^self new
-		initializeOn: aComputation
-		iterating: aDataset
-		knowingOutputsAreTyped: aType
-		withShape: aShape
+	^self new initializeOn: aComputation iterating: aDataset
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-DatasetIterator >> initializeOn: aComputation iterating: aDataset knowingOutputsAreTyped: aTypeCollection withShape: aShapeCollection [
+DatasetIterator >> initializeIterator [
+
+	initializer :=
+		tf
+			newOperationOf: 'MakeIterator'
+			namePrefixed: 'MakeIterator'
+			withAll: (Array with: dataset with: iterator)
+			describedBy: [:description | ].
+			
+	self reset
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+DatasetIterator >> initializeOn: aComputation iterating: aDataset [
 
 	tf := aComputation.
-	outputTypes := aDataset outputTypes.
-	outputShapes := aDataset outputShapes.
+	dataset := aDataset.
+	outputDomains := dataset outputDomains.
 	iterator :=
 		tf
 			newOperationOf: 'IteratorV2'
@@ -48,16 +48,9 @@ DatasetIterator >> initializeOn: aComputation iterating: aDataset knowingOutputs
 				description
 					at: TFAttributeName sharedName putString: 'shared-name';
 					at: TFAttributeName container putString: 'container';
-					at: TFAttributeName outputTypes putTypes: outputTypes;
-					at: TFAttributeName outputShapes putShapes: outputShapes].
-
-	initializer :=
-		tf
-			newOperationOf: 'MakeIterator'
-			namePrefixed: 'MakeIterator'
-			withAll: (Array with: aDataset with: iterator)
-			describedBy: [:description | ].
-	tf createSessionAndRun: initializer
+					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
+					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)].
+	self initializeIterator
 ]
 
 { #category : 'Accessing' }
@@ -71,15 +64,32 @@ DatasetIterator >> next [
 				withAll: (Array with: iterator)
 				describedBy: [:description |
 					description
-						at: TFAttributeName outputTypes putTypes: outputTypes;
-						at: TFAttributeName outputShapes putShapes: outputShapes]].
+						at: TFAttributeName outputTypes
+							putTypes: (self outputDomains collect: #type);
+						at: TFAttributeName outputShapes
+							putShapes: (self outputDomains collect: #shape)]].
 
-	^outputTypes size = 1
+	^self outputDomains size = 1
 		ifTrue: [tf compute: next]
-		ifFalse: [
-			tf
-				createSessionAndCompute:
-					((1 to: outputTypes size) collect: [:i | next output: i - 1])
-				feeding: Dictionary new
-				with: Dictionary new]
+		ifFalse: [| outputPtr |
+			outputPtr :=
+				tf
+					createSessionAndCompute:
+						((1 to: self outputDomains size) collect: [:i | next output: i - 1])
+					feeding: Dictionary new
+					with: Dictionary new.
+			(1 to: self outputDomains size) collect: [:i | outputPtr at: i]]
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+DatasetIterator >> outputDomains [
+
+	^dataset outputDomains
+]
+
+{ #category : 'Initialization' }
+DatasetIterator >> reset [
+
+	tf createSessionAndRun: initializer
 ]

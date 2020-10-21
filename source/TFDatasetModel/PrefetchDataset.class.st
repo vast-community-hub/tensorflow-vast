@@ -2,47 +2,55 @@ Class {
 	#name : 'PrefetchDataset',
 	#superclass : 'Dataset',
 	#instVars : [
-		'outputTypes',
-		'outputShapes'
+		'currentComputation',
+		'outputDomains'
 	],
 	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }
-PrefetchDataset class >> prefetchingElementsIn: aDataset withBufferSized: aBufferSize outputsTyped: aTypeCollection shaped: aShapeCollection [
+PrefetchDataset class >> prefetchingElementsIn: aDataset onBufferSized: aBufferSize withOutputIn: aTensorDomain [
+
+	^self
+		prefetchingElementsIn: aDataset
+		onBufferSized: aBufferSize
+		withOutputsIn: (Array with: aTensorDomain)
+]
+
+{ #category : 'Instance Creation' }
+PrefetchDataset class >> prefetchingElementsIn: aDataset onBufferSized: aBufferSize withOutputsIn: aTensorDomainCollection [
 
 	^self new
 		initializePrefetchingElementsIn: aDataset
-		withBufferSized: aBufferSize
-		outputsTyped: aTypeCollection
-		shaped: aShapeCollection
+		onBufferSized: aBufferSize
+		withOutputsIn: aTensorDomainCollection
+]
+
+{ #category : 'Accessing' }
+PrefetchDataset >> currentComputation [
+
+	^currentComputation
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-PrefetchDataset >> initializePrefetchingElementsIn: aDataset withBufferSized: aBufferSize outputsTyped: aTypeCollection shaped: aShapeCollection [
+PrefetchDataset >> initializePrefetchingElementsIn: aDataset onBufferSized: aBufferSize withOutputsIn: aTensorDomainCollection [
 
-	outputTypes := aTypeCollection.
-	outputShapes := aShapeCollection.
+	currentComputation := aDataset currentComputation.
+	outputDomains := aTensorDomainCollection.
 	value :=
-		aDataset currentComputation
+		currentComputation
 			newOperationOf: 'PrefetchDataset'
 			namePrefixed: 'PrefetchDataset'
 			withAll: (Array with: aDataset with: aBufferSize asInt64Tensor)
 			describedBy: [:description |
 				description
-					at: TFAttributeName outputTypes putTypes: outputTypes;
-					at: TFAttributeName outputShapes putShapes: outputShapes]
+					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
+					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }
-PrefetchDataset >> outputShapes [
+PrefetchDataset >> outputDomains [
 
-	^outputShapes
-]
-
-{ #category : 'Accessing' }
-PrefetchDataset >> outputTypes [
-
-	^outputTypes
+	^outputDomains
 ]

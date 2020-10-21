@@ -8,36 +8,21 @@ Class {
   #vaVisibility : 'private' }
 RandomDatasetTest >> datasetWithRandomFloatScalars [
 
-	^RandomDataset
-		on: tf
-		withSeed: 0
-		and: 1
-		outputsTyped: (Array with: TFTensor typeFloat)
-		shaped: (Array with: TensorShape scalar)
+	^RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: TensorDomain ofFloatScalar
 ]
 
 { #category : 'Tests',
   #vaVisibility : 'private' }
 RandomDatasetTest >> datasetWithRandomFloatVectors [
 
-	^RandomDataset
-		on: tf
-		withSeed: 0
-		and: 1
-		outputsTyped: (Array with: TFTensor typeFloat)
-		shaped: (Array with: (TensorShape vectorSized: 3))
+	^RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: (TensorDomain ofFloatVectorSized: 3)
 ]
 
 { #category : 'Tests',
   #vaVisibility : 'private' }
 RandomDatasetTest >> datasetWithRandomIntegerScalars [
 
-	^RandomDataset
-		on: tf
-		withSeed: 0
-		and: 1
-		outputsTyped: (Array with: TFTensor typeInt32)
-		shaped: (Array with: TensorShape scalar)
+	^RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: TensorDomain ofIntegerScalar
 ]
 
 { #category : 'Tests' }
@@ -46,16 +31,11 @@ RandomDatasetTest >> testIterateThroughDatasetWithFloatScalars [
 	| dataset iterator |
 
 	dataset := self datasetWithRandomFloatScalars.
-
 	self assertDatasetHasExpectedOutput: dataset.
-
-	iterator :=
-		DatasetIterator
-			on: tf
-			iterating: dataset
-			knowingOutputIsTyped: TFTensor typeInt64
-			withShape: TensorShape scalar.
-
+	
+	iterator := DatasetIterator on: tf iterating: dataset.
+	
+	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.
@@ -72,16 +52,11 @@ RandomDatasetTest >> testIterateThroughDatasetWithFloatVectors [
 	| dataset iterator |
 
 	dataset := self datasetWithRandomFloatVectors.
-
 	self assertDatasetHasExpectedOutput: dataset.
-
-	iterator :=
-		DatasetIterator
-			on: tf
-			iterating: dataset
-			knowingOutputIsTyped: TFTensor typeInt64
-			withShape: TensorShape scalar.
-
+	
+	iterator := DatasetIterator on: tf iterating: dataset.
+	
+	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.
@@ -98,16 +73,11 @@ RandomDatasetTest >> testIterateThroughDatasetWithIntegerScalars [
 	| dataset iterator |
 
 	dataset := self datasetWithRandomIntegerScalars.
-
 	self assertDatasetHasExpectedOutput: dataset.
-
-	iterator :=
-		DatasetIterator
-			on: tf
-			iterating: dataset
-			knowingOutputIsTyped: TFTensor typeInt64
-			withShape: TensorShape scalar.
-
+	
+	iterator := DatasetIterator on: tf iterating: dataset.
+	
+	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.

@@ -1,6 +1,9 @@
 Class {
 	#name : 'TextDataset',
 	#superclass : 'Dataset',
+	#instVars : [
+		'currentComputation'
+	],
 	#category : 'TFDatasetModel'
 }
 
@@ -31,10 +34,17 @@ TextDataset class >> on: aComputation readingFrom: aFileName withBufferSized: aB
 		withBufferSized: aBufferSize
 ]
 
+{ #category : 'Accessing' }
+TextDataset >> currentComputation [
+
+	^currentComputation
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 TextDataset >> initializeOn: aComputation readingFrom: aFileName compressedWith: aCompressionType withBufferSized: aBufferSize [
 
+	currentComputation := aComputation.
 	value :=
 		aComputation
 			newOperationOf: 'TextLineDataset'
@@ -52,13 +62,7 @@ TextDataset >> initializeOn: aComputation readingFrom: aFileName compressedWith:
 ]
 
 { #category : 'Accessing' }
-TextDataset >> outputShapes [
+TextDataset >> outputDomains [
 
-	^Array with: TensorShape scalar
-]
-
-{ #category : 'Accessing' }
-TextDataset >> outputTypes [
-
-	^Array with: TFTensor typeString
+	^Array with: (TensorDomain of: TFTensor typeString withShape: TensorShape scalar)
 ]

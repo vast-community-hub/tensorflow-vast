@@ -5,6 +5,21 @@ Class {
 }
 
 { #category : 'Tests' }
+PrefetchDatasetTest >> testCardinality [
+
+	| input_dataset dataset |
+
+	input_dataset := self datasetWithOneFloatVector.
+	dataset :=
+		PrefetchDataset
+			prefetchingElementsIn: input_dataset
+			onBufferSized: 2
+			withOutputIn: (TensorDomain ofFloatVectorSized: 4).
+
+	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 1
+]
+
+{ #category : 'Tests' }
 PrefetchDatasetTest >> testIterateThroughDatasetWithOneFloatMatrix [
 
 	| input_dataset dataset iterator |
@@ -13,19 +28,12 @@ PrefetchDatasetTest >> testIterateThroughDatasetWithOneFloatMatrix [
 	dataset :=
 		PrefetchDataset
 			prefetchingElementsIn: input_dataset
-			withBufferSized: 2
-			outputsTyped: (Array with: TFTensor typeFloat)
-			shaped: (Array with: (TensorShape matrixSized: 2 by: 4)).
+			onBufferSized: 2
+			withOutputIn: (TensorDomain ofFloatMatrixSized: 2 by: 4).
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	iterator :=
-		DatasetIterator
-			on: tf
-			iterating: dataset
-			knowingOutputIsTyped: TFTensor typeFloat
-			withShape: (TensorShape matrixSized: 2 by: 4).
-
+	iterator := DatasetIterator on: tf iterating: dataset.
 	self assertOutputOf: iterator next isMatrixCloseTo: #((0 1 2 3) (9 8 7 6)).
 	self assertReachedEnd: iterator
 ]
@@ -39,19 +47,12 @@ PrefetchDatasetTest >> testIterateThroughDatasetWithOneFloatVector [
 	dataset :=
 		PrefetchDataset
 			prefetchingElementsIn: input_dataset
-			withBufferSized: 2
-			outputsTyped: (Array with: TFTensor typeFloat)
-			shaped: (Array with: (TensorShape vectorSized: 4)).
-			
+			onBufferSized: 2
+			withOutputIn: (TensorDomain ofFloatVectorSized: 4).
+
 	self assertDatasetHasExpectedOutput: dataset.
-	
-	iterator :=
-		DatasetIterator
-			on: tf
-			iterating: dataset
-			knowingOutputIsTyped: TFTensor typeFloat
-			withShape: (TensorShape vectorSized: 4).
-			
+
+	iterator := DatasetIterator on: tf iterating: dataset.
 	self assertOutputOf: iterator next isFloatVectorCloseTo: #(0 1 2 3).
 	self assertReachedEnd: iterator
 ]

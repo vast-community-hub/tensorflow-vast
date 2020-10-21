@@ -27,9 +27,9 @@ CSVColumnDefinition class >> nullableTyped: aTensorType defaultTo: aDefaultValue
 ]
 
 { #category : 'Accessing' }
-CSVColumnDefinition >> columnDataType [
-	
-	^definition type
+CSVColumnDefinition >> columnDomain [
+
+	^TensorDomain of: definition type withShape: TensorShape scalar
 ]
 
 { #category : 'Initialization',
