@@ -84,8 +84,8 @@ ConstantNode >> currentComputation [
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 ConstantNode >> initializeOn: aComputation named: aName with: aTFTensor wrappedWith: aWrapper [
-	
-	currentComputation := aComputation. 
+
+	currentComputation := aComputation.
 	value :=
 		aWrapper value: (
 			aComputation
@@ -93,6 +93,6 @@ ConstantNode >> initializeOn: aComputation named: aName with: aTFTensor wrappedW
 				namePrefixed: aName
 				withAll: #()
 				describedBy: [:description |
-					description at: TFAttributeName dataType putType: aTFTensor type.
-					description at: TFAttributeName value putTensor: aTFTensor])
+					description atDataTypePut: aTFTensor type.
+					description atValuePut: aTFTensor])
 ]

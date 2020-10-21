@@ -40,7 +40,7 @@ MatrixMultiplication class >> of: aLeftOperand andTransposed: aRightOperand [
 		named: self operationType
 		of: aLeftOperand
 		and: aRightOperand
-		customizedBy: [:d | d at: TFAttributeName transposeB putBoolean: true]
+		customizedBy: [:d | d atTransposeBPut: true]
 ]
 
 { #category : 'Instance Creation' }
@@ -50,7 +50,7 @@ MatrixMultiplication class >> ofTransposed: aLeftOperand and: aRightOperand [
 		named: self operationType
 		of: aLeftOperand
 		and: aRightOperand
-		customizedBy: [:d | d at: TFAttributeName transposeA putBoolean: true]
+		customizedBy: [:d | d atTransposeAPut: true]
 ]
 
 { #category : 'Instance Creation' }
@@ -62,8 +62,8 @@ MatrixMultiplication class >> ofTransposed: aLeftOperand andTransposed: aRightOp
 		and: aRightOperand
 		customizedBy: [:d |
 			d
-				at: TFAttributeName transposeA putBoolean: true;
-				at: TFAttributeName transposeB putBoolean: true]
+				atTransposeAPut: true;
+				atTransposeBPut: true]
 ]
 
 { #category : 'Accessing',

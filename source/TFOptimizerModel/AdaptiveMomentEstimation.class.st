@@ -84,7 +84,7 @@ AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 				add: epsilon;
 				add: aGradient;
 				yourself)
-		describedBy: [:d | d at: TFAttributeName useNesterov putBoolean: useNesterov]
+		describedBy: [:d | d atUseNesterovPut: useNesterov]
 ]
 
 { #category : 'Initialization',
@@ -97,7 +97,7 @@ AdaptiveMomentEstimation >> initializeScalingBy: aLearningRate decayingFirstMome
 	epsilon := anEpsilonValue.
 	useNesterov := false.
 	meanGradientByVariable := Dictionary new.
-	gradientVarianceByVariable := Dictionary new
+	gradientVarianceByVariable := Dictionary new 
 ]
 
 { #category : 'Accessing',
@@ -140,5 +140,5 @@ AdaptiveMomentEstimation >> uncenteredVarianceGradientOf: aVariable [
 { #category : 'Configuring' }
 AdaptiveMomentEstimation >> useNesterovUpdate [
 
-	useNesterov := true
+	useNesterov := true 
 ]

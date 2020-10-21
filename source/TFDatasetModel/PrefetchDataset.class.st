@@ -45,8 +45,8 @@ PrefetchDataset >> initializePrefetchingElementsIn: aDataset onBufferSized: aBuf
 			withAll: (Array with: aDataset with: aBufferSize asInt64Tensor)
 			describedBy: [:description |
 				description
-					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
-					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
+					atOutputTypesPut: (outputDomains collect: #type);
+					atOutputShapesPut: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }

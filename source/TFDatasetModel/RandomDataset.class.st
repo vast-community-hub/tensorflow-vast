@@ -46,10 +46,8 @@ RandomDataset >> initializeOn: aTensorFlowComputation withSeed: aSeed1 and: aSee
 			withAll: (Array with: aSeed1 asInt64Tensor with: aSeed2 asInt64Tensor)
 			describedBy: [:description |
 				description
-					at: TFAttributeName outputTypes
-						putTypes: (aTensorDomainCollection collect: #type);
-					at: TFAttributeName outputShapes
-						putShapes: (aTensorDomainCollection collect: #shape)].
+					atOutputTypesPut: (aTensorDomainCollection collect: #type);
+					atOutputShapesPut: (aTensorDomainCollection collect: #shape)].
 	outputDomains := aTensorDomainCollection collect: [:domain | TensorDomain ofLargeIntegerScalar]
 ]
 

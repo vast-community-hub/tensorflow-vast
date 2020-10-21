@@ -46,8 +46,8 @@ CSVToTensorParserConfiguration class >> linesIncludesHeaders: aBoolean [
 CSVToTensorParserConfiguration >> applyTo: anOperationDescription [
 
 	anOperationDescription
-		at: 'field_delim' putString: delimiter;
-		at: 'na_value' putString: notANumberValue
+		atFieldDelimiterPut: delimiter;
+		atNotAvailableValuePut: notANumberValue
 ]
 
 { #category : 'Initialization',

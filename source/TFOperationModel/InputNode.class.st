@@ -39,7 +39,7 @@ InputNode >> currentComputation [
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 InputNode >> initializeOn: aTensorFlowComputation named: aName of: aType shaped: aShape [
-	
+
 	currentComputation := aTensorFlowComputation.
 	value :=
 		aTensorFlowComputation
@@ -47,8 +47,8 @@ InputNode >> initializeOn: aTensorFlowComputation named: aName of: aType shaped:
 			namePrefixed: aName
 			withAll: #()
 			describedBy: [:description |
-				description at: TFAttributeName dataType putType: aType.
-				aShape ifNotNil: [description at: TFAttributeName shape putShape: aShape]]
+				description atDataTypePut: aType.
+				aShape ifNotNil: [description atShapePut: aShape]]
 ]
 
 { #category : 'Accessing',

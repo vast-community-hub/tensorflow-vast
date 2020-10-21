@@ -61,8 +61,8 @@ CSVDataset >> initializeOn: aTensorFlowComputation named: aDatasetName from: aFi
 					addInputs: (
 						aColumnDefinitionCollection
 							collect: [:column | column outputOn: currentComputation]);
-					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
-					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
+					atOutputTypesPut: (outputDomains collect: #type);
+					atOutputShapesPut: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }

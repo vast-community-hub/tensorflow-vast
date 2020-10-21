@@ -75,7 +75,7 @@ TensorDataset >> initializeOn: aTensorFlowComputation containing: aTensorCollect
 			describedBy: [:description |
 				description
 					addInputs: (aTensorCollection collect: [:tensor | tensor value firstOutput]);
-					at: TFAttributeName outputShapes putShapes: outputShapes]
+					atOutputShapesPut: outputShapes]
 ]
 
 { #category : 'Accessing' }

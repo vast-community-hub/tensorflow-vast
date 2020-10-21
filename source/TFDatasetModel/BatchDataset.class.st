@@ -34,8 +34,8 @@ BatchDataset >> initializeSplitting: aDataset in: aBatchSize withOutputsIn: aTen
 			withAll: (Array with: aDataset with: aBatchSize asInt64Tensor)
 			describedBy: [:description |
 				description
-					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
-					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)]
+					atOutputTypesPut: (outputDomains collect: #type);
+					atOutputShapesPut: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }

@@ -46,10 +46,10 @@ DatasetIterator >> initializeOn: aComputation iterating: aDataset [
 			withAll: #()
 			describedBy: [:description |
 				description
-					at: TFAttributeName sharedName putString: 'shared-name';
-					at: TFAttributeName container putString: 'container';
-					at: TFAttributeName outputTypes putTypes: (outputDomains collect: #type);
-					at: TFAttributeName outputShapes putShapes: (outputDomains collect: #shape)].
+					atSharedNamePut: 'shared-name';
+					atContainerPut: 'container';
+					atOutputTypesPut: (outputDomains collect: #type);
+					atOutputShapesPut: (outputDomains collect: #shape)].
 	self initializeIterator
 ]
 
@@ -64,10 +64,8 @@ DatasetIterator >> next [
 				withAll: (Array with: iterator)
 				describedBy: [:description |
 					description
-						at: TFAttributeName outputTypes
-							putTypes: (self outputDomains collect: #type);
-						at: TFAttributeName outputShapes
-							putShapes: (self outputDomains collect: #shape)]].
+						atOutputTypesPut: (self outputDomains collect: #type);
+						atOutputShapesPut: (self outputDomains collect: #shape)]].
 
 	^self outputDomains size = 1
 		ifTrue: [tf compute: next]

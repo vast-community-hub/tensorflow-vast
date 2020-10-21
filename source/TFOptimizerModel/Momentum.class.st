@@ -51,7 +51,7 @@ Momentum >> apply: aGradient to: aVariable [
 				add: aGradient;
 				add: momentum;
 				yourself)
-		describedBy: [:d | d at: TFAttributeName useNesterov putBoolean: useNesterov]
+		describedBy: [:d | d atUseNesterovPut: useNesterov]
 ]
 
 { #category : 'Initialization',
