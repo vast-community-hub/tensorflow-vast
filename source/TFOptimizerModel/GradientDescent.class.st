@@ -17,7 +17,7 @@ GradientDescent class >> named: anOperationName scalingBy: aLearningRate [
 { #category : 'Instance Creation' }
 GradientDescent class >> new [
 
-	^self scalingBy: 0.001
+	^self scalingBy: 0.01
 ]
 
 { #category : 'Instance Creation' }

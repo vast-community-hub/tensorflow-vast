@@ -3,10 +3,26 @@ Class {
 	#superclass : 'OptimizationAlgorithm',
 	#instVars : [
 		'learningRate',
-		'accumulatorByVariable'
+		'accumulatorByVariable',
+		'epsilonValue',
+		'initialAccumulatorValue'
 	],
 	#category : 'TFOptimizerModel'
 }
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveGradient class >> defaultEpsilonValue [
+
+	^1e-07
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveGradient class >> defaultInitialAccumulatorValue [
+
+	^0.1
+]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
@@ -18,13 +34,28 @@ AdaptiveGradient class >> defaultLearningRate [
 { #category : 'Instance Creation' }
 AdaptiveGradient class >> new [
 
-	^self scalingBy: self defaultLearningRate
+	^self
+		scalingBy: self defaultLearningRate
+		startingAccumulatorWith: self defaultInitialAccumulatorValue
+		usingForNumericalStability: self defaultEpsilonValue
 ]
 
 { #category : 'Instance Creation' }
 AdaptiveGradient class >> scalingBy: aLearningRate [
 
-	^super new initializeScalingBy: aLearningRate
+	^self
+		scalingBy: aLearningRate
+		startingAccumulatorWith: self defaultInitialAccumulatorValue
+		usingForNumericalStability: self defaultEpsilonValue
+]
+
+{ #category : 'Instance Creation' }
+AdaptiveGradient class >> scalingBy: aLearningRate startingAccumulatorWith: anAccumulatatorInitialValue usingForNumericalStability: anEpsilonValue [
+
+	^super new
+		initializeScalingBy: aLearningRate
+		startingAccumulatorWith: anAccumulatatorInitialValue
+		usingForNumericalStability: anEpsilonValue
 ]
 
 { #category : 'Accessing',
@@ -37,7 +68,9 @@ AdaptiveGradient >> accumulatorFor: aVariable [
 			VariableNode
 				on: aVariable currentComputation
 				named: 'accum'
-				filledWithZerosLike: aVariable]
+				of: aVariable value outputType
+				shaped: aVariable value outputShape
+				initializedWith: (ConstantInitializer with: initialAccumulatorValue)]
 ]
 
 { #category : 'Applying' }
@@ -47,13 +80,14 @@ AdaptiveGradient >> apply: aGradient to: aVariable [
 
 	tf := aVariable currentComputation.
 	^tf
-		newOperationOf: 'ApplyAdagrad'
+		newOperationOf: 'ApplyAdagradV2'
 		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
 			(OrderedCollection new)
 				add: aVariable;
 				add: (self accumulatorFor: aVariable);
 				add: learningRate;
+				add: epsilonValue; 
 				add: aGradient;
 				yourself)
 		describedBy: [:d | ]
@@ -61,9 +95,11 @@ AdaptiveGradient >> apply: aGradient to: aVariable [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-AdaptiveGradient >> initializeScalingBy: aLearningRate [
+AdaptiveGradient >> initializeScalingBy: aLearningRate startingAccumulatorWith: anAccumulatatorInitialValue usingForNumericalStability: anEpsilonValue [
 
 	learningRate := aLearningRate.
+	initialAccumulatorValue := anAccumulatatorInitialValue.
+	epsilonValue := anEpsilonValue.
 	accumulatorByVariable := Dictionary new
 ]
 

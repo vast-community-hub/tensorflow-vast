@@ -17,28 +17,32 @@ AdaptiveGradientTest >> testAppliedToVector [
 			apply: (tf constantWith: grad asFloatTensor)
 			to: (tf variableNamed: 'var' with: parameter asFloatTensor).
 
-	self assertOutputOf: optimizer isFloatVectorCloseTo: #(0.999 1.99899)
+	self assertOutputOf: optimizer isFloatVectorCloseTo: #(0.999 1.999)
 ]
 
 { #category : 'Tests' }
 AdaptiveGradientTest >> testAppliedTwice [
 
-	| parameter grad optimizer optimization accum |
-
+	| parameter grad optimizer optimization accum epsilon lr |
+	
+	accum := AdaptiveGradient defaultInitialAccumulatorValue. 
+	epsilon := AdaptiveGradient defaultEpsilonValue. 
+	lr := AdaptiveGradient defaultLearningRate. 
+	
 	parameter := 1.0.
 	grad := Float pi.
-	optimizer := AdaptiveGradient scalingBy: 0.02.
+	optimizer := AdaptiveGradient new.
 	optimization :=
 		optimizer
 			apply: (tf constantWith: grad)
 			to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	accum := grad * grad.
-	parameter := parameter - (0.02 * grad / accum sqrt).
+	accum := accum + (grad * grad) + epsilon.
+	parameter := parameter - (lr * grad / accum sqrt).
 	self assertOutputOf: optimization isFloatScalarCloseTo: parameter.
 
-	accum := accum + (grad * grad).
-	parameter := parameter - (0.02 * grad / accum sqrt).
+	accum := accum + (grad * grad) + epsilon.
+	parameter := parameter - (lr * grad / accum sqrt).
 	self assertOutputOf: optimization isFloatScalarCloseTo: parameter
 ]
 
@@ -51,7 +55,7 @@ AdaptiveGradientTest >> testAppliedTwiceToDifferentParameters [
 	parameter2 := #(1.5 2.0).
 	grad1 := Float pi.
 	grad2 := Array with: Float pi / 2 with: Float pi * 2.
-	optimizer := AdaptiveGradient scalingBy: 0.02.
+	optimizer := AdaptiveGradient scalingBy: 0.02 startingAccumulatorWith: 0.0 usingForNumericalStability: 0.0.
 
 	param1optimization :=
 		optimizer
@@ -77,21 +81,28 @@ AdaptiveGradientTest >> testAppliedTwiceToDifferentParameters [
 { #category : 'Tests' }
 AdaptiveGradientTest >> testAppliedTwiceToSameVariable [
 
-	| parameter grad optimization accum |
+	| parameter grad optimization accum epsilon lr |
+
+	accum := 0.02.
+	epsilon := 1e-6.
+	lr := 0.9.
 
 	parameter := 1.0.
 	grad := Float pi.
 	optimization :=
-		(AdaptiveGradient scalingBy: 0.02)
-			apply: (tf constantWith: grad)
-			to: (tf variableNamed: 'var' with: parameter asTensor).
+		(AdaptiveGradient
+			scalingBy: lr
+			startingAccumulatorWith: accum
+			usingForNumericalStability: epsilon)
+				apply: (tf constantWith: grad)
+				to: (tf variableNamed: 'var' with: parameter asTensor).
 
-	accum := (grad * grad).
-	parameter := parameter - (0.02 * grad / accum sqrt).
+	accum := accum + (grad * grad) + epsilon.
+	parameter := parameter - (lr * grad / accum sqrt).
 	self assertOutputOf: optimization isFloatScalarCloseTo: parameter.
 
-	accum := accum + (grad * grad).
-	parameter := parameter - (0.02 * grad / accum sqrt).
+	accum := accum + (grad * grad) + epsilon.
+	parameter := parameter - (lr * grad / accum sqrt).
 	self assertOutputOf: optimization isFloatScalarCloseTo: parameter
 ]
 

@@ -241,7 +241,9 @@ DenseLayerTest >> testDenseLayerAsInputOfOtherLayer [
 					of: TFTensor typeFloat
 					initializedWith: (ConstantInitializer with: #((-2.5) (-5.2)) asFloatTensor))
 			biasSpecifiedBy: (
-				VariableNodeSpecification of: TFTensor typeFloat initializedWith: ZeroInitializer new).
+				VariableNodeSpecification
+					of: TFTensor typeFloat
+					initializedWith: ConstantInitializer withZeros).
 
 	logicStatements := #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor.
 	result :=

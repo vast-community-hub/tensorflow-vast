@@ -39,6 +39,7 @@ TensorFlowComputationBasedTest >> assert: anOperationCollection hasTheSameOperat
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: aNumberArray isArrayCloseTo: anExpectedArray [
 
+	aNumberArray size = anExpectedArray size ifFalse: [self fail: 'Sizes don''t match'].
 	aNumberArray
 		with: anExpectedArray
 		do: [:number :expected | self assert: number closeTo: expected]

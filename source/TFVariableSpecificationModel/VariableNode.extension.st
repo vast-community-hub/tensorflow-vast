@@ -11,7 +11,7 @@ VariableNode class >> on: aComputation named: aName filledWithZerosLike: anOpera
 		named: aName
 		of: anOperation value outputType
 		shaped: anOperation value outputShape
-		initializedWith: ZeroInitializer new
+		initializedWith: ConstantInitializer withZeros
 ]
 
 { #category : '*TFVariableSpecificationModel',
