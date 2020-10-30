@@ -175,8 +175,8 @@
 				#requiredMaps : [
 					{
 						#name : 'z.ST: SUnit',
-						#versionName : 'V 9.2.1  [457]',
-						#ts : 3761144594
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768827234
 					},
 					{
 						#name : 'ENVY/Image Examples',
