@@ -259,3 +259,11 @@ TensorFlowApp class >> _PRAGMA_TensorFlowFunctions [
 
 
 ]
+
+{ #category : 'Tonel-Metadata' }
+TensorFlowApp class >> loaded [
+	"Send #initializeOnLoad to every class defined in this subapplication that implements it."
+
+	defined do: [:aClass |
+		(aClass class canUnderstand: #initializeAfterLoad) ifTrue: [aClass initializeAfterLoad]]
+]
