@@ -113,8 +113,8 @@
 				#requiredMaps : [
 					{
 						#name : 'ENVY/Image Crypto',
-						#versionName : 'V 9.2.1  [457]',
-						#ts : 3756557909
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768747006
 					},
 					{
 						#name : 'ENVY/Image Socket Framework',
@@ -123,8 +123,8 @@
 					},
 					{
 						#name : 'ENVY/Image SCI',
-						#versionName : 'V 9.2.1  [457]',
-						#ts : 3760690886
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768025709
 					},
 					{
 						#name : 'Server Smalltalk - Kernel',
@@ -417,6 +417,46 @@
 				#condition : 'true',
 				#requiredMaps : [
 					{
+						#name : 'ENVY/Image Crypto',
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768747006
+					},
+					{
+						#name : 'ENVY/Image Socket Framework',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3726400313
+					},
+					{
+						#name : 'ENVY/Image SCI',
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768025709
+					},
+					{
+						#name : 'Server Smalltalk - Kernel',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3720784238
+					},
+					{
+						#name : 'Server Smalltalk - TCP Communications',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3749992240
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3745762738
+					},
+					{
+						#name : 'Platform Portability',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3746251879
+					},
+					{
+						#name : 'Seaside Core',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3739694899
+					},
+					{
 						#name : 'Javascript Core',
 						#versionName : 'V 9.0.0  [453]',
 						#ts : 3679137047
@@ -425,11 +465,6 @@
 						#name : 'Seaside Development',
 						#versionName : 'V 9.2.0  [453]',
 						#ts : 3732358329
-					},
-					{
-						#name : 'Seaside Core',
-						#versionName : 'V 9.2.0  [453]',
-						#ts : 3739694899
 					},
 					{
 						#name : 'TensorFlow',

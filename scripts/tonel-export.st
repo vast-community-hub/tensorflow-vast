@@ -1,6 +1,13 @@
-writer := TonelWriter new.
-writer 
+TonelWriter new
+	dontClearSourcesDirectory;
+	useLfEOL;
+	addLatestConfigurationMapNamed: 'Machine Learning TF | Runtime';
+	addLatestConfigurationMapNamed: 'Machine Learning TF | Development';
+	addLatestConfigurationMapNamed: 'Machine Learning TF | Experimental';
+	addLatestConfigurationMapNamed: 'Pharo Compatibility | Runtime';
+	addLatestConfigurationMapNamed: 'Pharo Compatibility | Development';
 	addLatestConfigurationMapNamed: 'TensorFlow';
-	addApplicationsFromConfigurationMaps.
-writer writeProjectInto: ((CfsPath named: CfsDirectoryDescriptor getcwd) append: '..\tonel-repos\tensorflow-vast').
-
+	addLatestConfigurationMapNamed: 'TensorFlow | Environment';
+	addLatestConfigurationMapNamed: 'TensorFlow | Visualization';
+	addApplicationsFromConfigurationMaps;
+	writeProjectInto: ((CfsPath named: CfsDirectoryDescriptor getcwd) append: 'tensorflow-vast').
