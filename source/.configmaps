@@ -112,6 +112,62 @@
 				#condition : 'true',
 				#requiredMaps : [
 					{
+						#name : 'ENVY/Image Crypto',
+						#versionName : 'V 9.2.1  [457]',
+						#ts : 3756557909
+					},
+					{
+						#name : 'ENVY/Image Socket Framework',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3726400313
+					},
+					{
+						#name : 'ENVY/Image SCI',
+						#versionName : 'V 9.2.1  [457]',
+						#ts : 3760690886
+					},
+					{
+						#name : 'Server Smalltalk - Kernel',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3720784238
+					},
+					{
+						#name : 'Server Smalltalk - TCP Communications',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3749992240
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3745762738
+					},
+					{
+						#name : 'Machine Learning TF | Runtime',
+						#versionName : '0.30',
+						#ts : 3781112981
+					}
+				]
+			}
+		],
+		#ts : 3781601530,
+		#comment : '',
+		#formatVersion : '1.1',
+		#applications : OrderedCollection [
+			{
+				#name : 'DatasetProviderModel',
+				#versionName : '0.1',
+				#ts : 3779873800
+			}
+		],
+		#name : 'Machine Learning TF | Experimental',
+		#versionName : '0.1'
+	},
+	{
+		#conditions : [
+			{
+				#condition : 'true',
+				#requiredMaps : [
+					{
 						#name : 'ENVY/Image Base',
 						#versionName : 'V 9.2.1  [457]',
 						#ts : 3760602652
