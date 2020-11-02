@@ -11,6 +11,14 @@ OptimizationAlgorithm >> apply: aGradient to: aVariable [
 ]
 
 { #category : 'Applying' }
+OptimizationAlgorithm >> considerCurrentEpochIn: aVariable [
+
+
+	" Optimizers should reimplement this method if they wanna do something 
+	with the current epoch " 
+]
+
+{ #category : 'Applying' }
 OptimizationAlgorithm >> shortName [
 
 	self subclassResponsibility

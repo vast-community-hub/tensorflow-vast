@@ -5,10 +5,13 @@ Class {
 		'learningRate',
 		'epsilon',
 		'useNesterov',
-		'meanGradientByVariable',
-		'gradientVarianceByVariable',
 		'firstMomentDecayingRate',
-		'secondMomentoDecayingRate'
+		'secondMomentDecayingRate',
+		'secondMomentDecayingRatePowered',
+		'firstMomentDecayingRatePowered',
+		'variableGradientsMean',
+		'variableGradientsVariance',
+		'timestep'
 	],
 	#category : 'TFOptimizerModel'
 }
@@ -64,27 +67,63 @@ AdaptiveMomentEstimation class >> scalingBy: aLearningRate decayingFirstMomentBy
 { #category : 'Applying' }
 AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 
-	| timestep |
+	| currentComputation |
 
-	timestep := 1. " When should it be updated? "
-
-	^aVariable currentComputation
+	currentComputation := aVariable currentComputation.
+	^currentComputation
 		newOperationOf: 'ApplyAdam'
 		namePrefixed: ('Optimization_<1s>' expandMacrosWith: aVariable operationName)
 		withAll: (
-			(OrderedCollection new)
+			OrderedCollection new
 				add: aVariable;
-				add: (self meanGradientOf: aVariable);
-				add: (self uncenteredVarianceGradientOf: aVariable);
-				add: (firstMomentDecayingRate raisedTo: timestep);
-				add: (secondMomentoDecayingRate raisedTo: timestep);
+				add: (self gradientsMeanOf: aVariable);
+				add: (self gradientsUncenteredVarianceOf: aVariable);
+				add: (self firstMomentDecayingRatePoweredOn: currentComputation);
+				add: (self secondMomentDecayingRatePoweredOn: currentComputation);
 				add: learningRate;
 				add: firstMomentDecayingRate;
-				add: secondMomentoDecayingRate;
+				add: secondMomentDecayingRate;
 				add: epsilon;
 				add: aGradient;
 				yourself)
 		describedBy: [:d | d atUseNesterovPut: useNesterov]
+]
+
+{ #category : 'Configuring' }
+AdaptiveMomentEstimation >> considerCurrentEpochIn: aVariable [
+
+
+	timestep := aVariable
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> firstMomentDecayingRatePoweredOn: currentComputation [
+
+	firstMomentDecayingRatePowered ifNil: [
+		firstMomentDecayingRatePowered :=
+			(currentComputation floatConstantWith: firstMomentDecayingRate) raisedTo: timestep].
+	^firstMomentDecayingRatePowered
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> gradientsMeanOf: aVariable [
+
+	^variableGradientsMean
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'm' filledWithZerosLike: aVariable]
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> gradientsUncenteredVarianceOf: aVariable [
+
+	^variableGradientsVariance
+		at: aVariable
+		ifAbsentPut: [
+			VariableNode on: aVariable currentComputation named: 'v' filledWithZerosLike: aVariable]
 ]
 
 { #category : 'Initialization',
@@ -93,21 +132,12 @@ AdaptiveMomentEstimation >> initializeScalingBy: aLearningRate decayingFirstMome
 
 	learningRate := aLearningRate.
 	firstMomentDecayingRate := aBeta1Factor.
-	secondMomentoDecayingRate := aBeta2Factor.
+	secondMomentDecayingRate := aBeta2Factor.
 	epsilon := anEpsilonValue.
 	useNesterov := false.
-	meanGradientByVariable := Dictionary new.
-	gradientVarianceByVariable := Dictionary new 
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-AdaptiveMomentEstimation >> meanGradientOf: aVariable [
-
-	^meanGradientByVariable
-		at: aVariable
-		ifAbsentPut: [
-			VariableNode on: aVariable currentComputation named: 'm' filledWithZerosLike: aVariable]
+	variableGradientsMean := Dictionary new.
+	variableGradientsVariance := Dictionary new.
+	timestep := 1 asFloatTensor
 ]
 
 { #category : 'Printing' }
@@ -117,24 +147,24 @@ AdaptiveMomentEstimation >> printOn: aStream [
 		'Adam (learning rate: <1p>; beta1: <2p>; beta2: <3p>; epsilon: <4p>)'
 			expandMacrosWith: learningRate
 			with: firstMomentDecayingRate
-			with: secondMomentoDecayingRate
+			with: secondMomentDecayingRate
 			with: epsilon asFloat)
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+AdaptiveMomentEstimation >> secondMomentDecayingRatePoweredOn: currentComputation [
+
+	secondMomentDecayingRatePowered ifNil: [
+		secondMomentDecayingRatePowered :=
+			(currentComputation floatConstantWith: secondMomentDecayingRate) raisedTo: timestep].
+	^secondMomentDecayingRatePowered
 ]
 
 { #category : 'Accessing' }
 AdaptiveMomentEstimation >> shortName [
 
 	^'Adam'
-]
-
-{ #category : 'Accessing',
-  #vaVisibility : 'private' }
-AdaptiveMomentEstimation >> uncenteredVarianceGradientOf: aVariable [
-
-	^gradientVarianceByVariable
-		at: aVariable
-		ifAbsentPut: [
-			VariableNode on: aVariable currentComputation named: 'v' filledWithZerosLike: aVariable]
 ]
 
 { #category : 'Configuring' }

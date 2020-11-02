@@ -78,8 +78,13 @@ NeuralNetworkTrainer >> trackMetricWith: aMetricTracker [
   #vaVisibility : 'private' }
 NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
-	| loss optimization trainingNumber context |
+	| loss optimization currentEpoch epoch context incrementEpoch |
 
+	currentEpoch := 0.
+	epoch := VariableNode on: aModel currentComputation named: 'currentEpoch' with: 1 asFloatTensor.
+	incrementEpoch := epoch += 1 asFloatTensor.
+
+	optimizer considerCurrentEpochIn: epoch.
 	loss := lossBuilder value: (LossBuilder for: aModel logits).
 	optimization := ModelUpdater updating: aModel toMinimize: loss using: optimizer.
 	context :=
@@ -87,13 +92,13 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 			optimizing: aModel
 			using: optimization
 			trackingMetricsWith: metricTrackers.
-	trainingNumber := 0.
 
-	afterTrainingCallback value: trainingNumber value: context.
+	afterTrainingCallback value: currentEpoch value: context.
 	[
 		aTraining value: context.
-		trainingNumber := trainingNumber + 1.
-		afterTrainingCallback value: trainingNumber value: context.
+		currentEpoch := currentEpoch + 1.
+		optimization currentComputation compute: incrementEpoch.
+		afterTrainingCallback value: currentEpoch value: context.
 		stopCondition isModelWellTrainedAccording: context]
 			whileFalse.
 	^NeuralNetworkTrainingSummary regarding: context stoppedAfter: stopCondition
