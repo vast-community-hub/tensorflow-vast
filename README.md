@@ -33,7 +33,7 @@ VA Smalltalk needed version is 9.2.2 or above and we have only tested on TensorF
 
 - Download the [9.2.2 from Instantiations](https://www.instantiations.com/products/vasmalltalk/download.html). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
 - Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
-- For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed.
+- For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed. If you still have troubles trying to load TensorFlow lib in VAST, read [this](https://dev.to/martinezpeck/dll-hell-tips-tricks-to-avoid-it-in-vast-27gm) and [this](https://dev.to/martinezpeck/troubleshooting-applications-running-on-windows-107m) blog post to help debugging the situation. 
 - Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
 - Add `TENSORFLOW_LIB` key/value under `[PlatformLibrary Name Mappings]` section in `abt.ini` file. Some examples:
 ```
