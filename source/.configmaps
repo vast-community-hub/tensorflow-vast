@@ -1,24 +1,58 @@
 [
 	{
-		#applications : [
-			'TensorFlowApp' : '0.4.19',
-			'TensorFlowExamplesApp' : '1.28',
-			'TensorFlowKernelApp' : '0.24',
-			'TensorFlowTestsApp' : '0.33',
-			'TensorFlowVASTApp' : '1.0',
-			'TestTensorFlowApp' : '0.17'
-		],
 		#conditions : [
 			{
 				#condition : 'true',
 				#requiredMaps : [
-					'z.ST: SUnit' : 'V 9.2.0  [437]',
-					'ENVY/Image Examples' : 'V 9.1.0  [453]'
+					{
+						#name : 'z.ST: SUnit',
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3768827234
+					},
+					{
+						#name : 'ENVY/Image Examples',
+						#versionName : 'V 9.2.0  [416]',
+						#ts : 3704527564
+					}
 				]
 			}
 		],
+		#ts : 3782371250,
+		#comment : '',
+		#formatVersion : '1.1',
+		#applications : OrderedCollection [
+			{
+				#name : 'TensorFlowApp',
+				#versionName : '0.4.19',
+				#ts : 3750324707
+			},
+			{
+				#name : 'TensorFlowExamplesApp',
+				#versionName : '1.28',
+				#ts : 3750325202
+			},
+			{
+				#name : 'TensorFlowKernelApp',
+				#versionName : '0.24',
+				#ts : 3750323993
+			},
+			{
+				#name : 'TensorFlowTestsApp',
+				#versionName : '0.33',
+				#ts : 3750325250
+			},
+			{
+				#name : 'TensorFlowVASTApp',
+				#versionName : '1.0',
+				#ts : 3745056139
+			},
+			{
+				#name : 'TestTensorFlowApp',
+				#versionName : '0.17',
+				#ts : 3750325281
+			}
+		],
 		#name : 'TensorFlow',
-		#versionName : '0.64',
-		#comment : ''
+		#versionName : '0.65'
 	}
 ]
