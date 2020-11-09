@@ -1,6 +1,7 @@
+| writer path |
+path := (CfsPath named: '<insert path to root tensorflow-vast local repo here>').
 writer := TonelWriter new.
-writer 
+writer
 	addLatestConfigurationMapNamed: 'TensorFlow';
 	addApplicationsFromConfigurationMaps.
-writer writeProjectInto: ((CfsPath named: CfsDirectoryDescriptor getcwd) append: '..\tonel-repos\tensorflow-vast').
-
+writer writeProjectInto: path.

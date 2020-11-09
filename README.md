@@ -25,13 +25,13 @@ TensorFlow is a Google open source machine learning library for research and pro
 
 Currently we tested this wrapper on Linux and Windows, both on x86 and x64. In addition, we tested on ARM (Raspberry Pi 3B+ and Raspbian Buster), ARM64 (Rock64 and Armbian Buster) and ARM64 with GPU support (Nvidia Jetson Nano).
 
-VA Smalltalk needed version is 9.2 or above and we have only tested on TensorFlow versions 1.13.x and 1.14.x.
+VA Smalltalk needed version is 9.2.2 or above and we have only tested on TensorFlow versions 1.13.x and 1.14.x.
 
 
 
 ## Installation
 
-- Download the [9.2 ECAP 3 or newer from Instantiations](https://www.instantiations.com/ecap/). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
+- Download the [9.2.2 from Instantiations](https://www.instantiations.com/products/vasmalltalk/download.html). If any of the following steps cannot be achieved, it might be due to last minute changes in the TensorFlow configuration maps and/or improvements on the VAST VM or the base library. Please contact us for an up-to-date download.
 - Install [TensorFlow for C](https://www.tensorflow.org/install/lang_c) for your operating system (download one of the tested versions).
 - For Windows installations, make sure [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://aka.ms/vs/15/release/VC_redist.x64.exe) is installed.
 - Ensure tensorflow shared library (`.so` or `.dll`) is findable by OS lookup procedure or reference full path in VAST ini file.
@@ -43,10 +43,24 @@ TENSORFLOW_LIB=/home/mpeck/Instantiations/TensorFlow/libtensorflow-cpu-linux-x86
 TENSORFLOW_LIB=c:\Users\mpeck\Documents\Instantiations\tensorflow.dll
 TENSORFLOW_LIB=z:\Instantiations\TensorFlow\libtensorflow-cpu-windows-x86_64-1.13.1\lib\tensorflow.dll
 ```
+- Install Tonel support in your development image following [this guide](https://github.com/vasmalltalk/tonel-vast#installation).
 - Clone this repository.
-- From the configuration map browser, import all versions of the `TensorFlow` map from `envy/TensorFlow.dat`. Then "Load With Required Maps" the latest version of it.
-- Run SUnit Suite for all `TensorFlow` map (right click on the map -> `Test Loaded Applications`). You should see around 260 unit tests and most of them passing. As of this writing, VAST 9.2 ECAP 3 + TensorFlow CM 0.45, in Windows 7, achieves 215 tests passing, 3 expected failures, 40 errors and 1 freezes and crashes image (`TestTFBuffer>>#testNewFree`).
-- Explore the [documentation](docs/).
+- The easiest and recommended approach is to install TensorFlow for VASAT is via a script:
+
+```smalltalk
+| loader path |
+path := (CfsPath named: '<insert path to root tensorflow-vast local repo here>').
+loader := TonelLoader readFromPath: path.
+loader
+	beUnattended; "do not prompt and use all defaults"
+	useGitVersion.
+loader loadAllMapsWithRequiredMaps.
+```
+
+Or you can load the Configuration Map `TensorFlow` from the context menu of the Configuration Maps Browser: `"Import"` -> `"Load Configuration Maps from Tonel repository..."` -> select path to root `tensorflow-vast` local repo. This will open a dialog and will use convenient defaults for the load. Refer to [its documentation](https://github.com/instantiations/tonel-vast#using-gui-menus) for more details.
+
+- Optionally run the SUnit tests included in the map `TensorFlow` to ensure correct installation. One easy way is to right-click on the `TensorFlow` map name in the Name pane (as opposed to version pane) and then select `Test Loaded Applications`.
+
 
 
 ## Examples
