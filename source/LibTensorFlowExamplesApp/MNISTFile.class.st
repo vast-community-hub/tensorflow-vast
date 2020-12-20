@@ -8,7 +8,8 @@ Class {
 	#category : 'LibTensorFlowExamplesApp'
 }
 
-{ #category : 'private' }
+{ #category : 'private',
+  #vaVisibility : 'private' }
 MNISTFile class >> download: aName [
 "The following source failed to compile (all double quotes have been doubled):
 
@@ -65,7 +66,8 @@ MNISTFile class >> new [
 	^super new initialize
 ]
 
-{ #category : 'private' }
+{ #category : 'private',
+  #vaVisibility : 'private' }
 MNISTFile class >> printHumanReadableSize: aTotalNumber [
 	| humanReadable length unit |
 	length := ((aTotalNumber decimalDigitLength / 3) truncated) - 1 max: 0.

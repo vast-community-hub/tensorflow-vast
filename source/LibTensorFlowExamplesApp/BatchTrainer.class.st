@@ -29,7 +29,8 @@ BatchTrainer >> initialize [
 	self use3Layers
 ]
 
-{ #category : 'private' }
+{ #category : 'private',
+  #vaVisibility : 'private' }
 BatchTrainer >> predict: images andCompareTo: labels [
 	| equals result |
 	result := (plan predict: images) asNumbers.
@@ -63,7 +64,8 @@ BatchTrainer >> train [
 	(1 to: labelSet count -1 by: batchSize) do: [:index| self trainAt: index].
 ]
 
-{ #category : 'private' }
+{ #category : 'private',
+  #vaVisibility : 'private' }
 BatchTrainer >> trainAt: index [
 	| images labels loss report result |
 	images := imageSet bytesAt: index take: batchSize.

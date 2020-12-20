@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorboardWebViews',
-	#vaPrerequisites : ['JavascriptCoreApp','SeasideDevelopmentApp','SeasideEnvironmentApp','TensorFlowApp']
+	#vaPrerequisites : ['JavascriptCoreApp','SeasideComponentApp','SeasideDevelopmentApp','SeasideEnvironmentApp','TensorFlowApp']
 }

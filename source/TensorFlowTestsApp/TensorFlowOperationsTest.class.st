@@ -38,7 +38,8 @@ TensorFlowOperationsTest >> expectedFailures [
 	)
 ]
 
-{ #category : 'private' }
+{ #category : 'private',
+  #vaVisibility : 'private' }
 TensorFlowOperationsTest >> percentile: percent from: collection [
 	| position sorted |
 	position := (collection size * percent) ceiling.

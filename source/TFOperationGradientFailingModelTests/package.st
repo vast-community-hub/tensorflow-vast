@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFOperationGradientFailingModelTests',
-	#vaPrerequisites : ['TFOperationGradientModelTests','TFOperationModelTests']
+	#vaPrerequisites : ['TFOperationGradientModelTests']
 }
