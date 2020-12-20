@@ -10,18 +10,11 @@ BatchDatasetTest >> testIterateThroughDatasetWithOneFloatMatrixInBatchesOfOne [
 	| dataset batch iterator |
 
 	dataset := self datasetWithOneFloatMatrix.
-	batch :=
-		BatchDataset
-			splitting: dataset
-			in: 1
-			withOutputIn: (
-				TensorDomain
-					of: TFTensor typeFloat
-					withShape: (TensorShape withDimensionsSized: #(-1 2 4))).
+	batch := dataset inBatchesOf: 1.
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	iterator := DatasetIterator on: tf iterating: batch.
+	iterator := batch newIterator.
 	self
 		assert: iterator next
 		isOf: TFTensor typeFloat
@@ -38,16 +31,11 @@ BatchDatasetTest >> testIterateThroughDatasetWithOneFloatVectorInBatchesOfOne [
 	| dataset batch iterator |
 
 	dataset := self datasetWithOneFloatVector.
-	batch :=
-		BatchDataset
-			splitting: dataset
-			in: 1
-			withOutputIn: (
-				TensorDomain of: TFTensor typeFloat withShape: (TensorShape unknownBatchSizeWith: 4)).
+	batch := dataset inBatchesOf: 1.
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	iterator := DatasetIterator on: tf iterating: batch.
+	iterator := batch newIterator.
 
 	self assertOutputOf: iterator next isMatrixCloseTo: #((0 1 2 3)).
 	self assertReachedEnd: iterator
@@ -59,16 +47,11 @@ BatchDatasetTest >> testIterateThroughDatasetWithOneFloatVectorInBatchesOfTwo [
 	| dataset batch iterator |
 
 	dataset := self datasetWithOneFloatVector.
-	batch :=
-		BatchDataset
-			splitting: dataset
-			in: 2
-			withOutputIn: (
-				TensorDomain of: TFTensor typeFloat withShape: (TensorShape unknownBatchSizeWith: 4)).
+	batch := dataset inBatchesOf: 2.
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	iterator := DatasetIterator on: tf iterating: batch.
+	iterator := batch newIterator.
 	self assertOutputOf: iterator next isMatrixCloseTo: #((0 1 2 3)).
 	self assertReachedEnd: iterator
 ]

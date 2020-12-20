@@ -74,3 +74,24 @@ TensorDomain >> type [
 
 	^type
 ]
+
+{ #category : 'Accessing' }
+TensorDomain >> withNewUnknownDimension [
+
+	^TensorDomain
+		of: self type
+		withShape: (
+			TensorShape withDimensionsSized: (
+				OrderedCollection new
+					add: -1;
+					addAll: self shape dimensionSizes;
+					asArray))
+]
+
+{ #category : 'Accessing' }
+TensorDomain >> withSlicedShape [
+
+	^TensorDomain
+		of: self type
+		withShape: (TensorShape withDimensionsSized: self shape dimensionSizes allButFirst)
+]

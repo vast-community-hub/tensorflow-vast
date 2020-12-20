@@ -4,31 +4,32 @@ Class {
 	#instVars : [
 		'outputTypes',
 		'outputShapes',
-		'outputDomains'
+		'outputDomains',
+		'currentComputation'
 	],
 	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }
-BatchDataset class >> splitting: aDataset in: aBatchSize withOutputIn: aTensorDomain [
+BatchDataset class >> splitting: aDataset in: aBatchSize [
 
-	^self splitting: aDataset in: aBatchSize withOutputsIn: (Array with: aTensorDomain)
+	^self new initializeSplitting: aDataset in: aBatchSize
 ]
 
-{ #category : 'Instance Creation' }
-BatchDataset class >> splitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection [
+{ #category : 'Accessing' }
+BatchDataset >> currentComputation [
 
-	^self new initializeSplitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection
+	^currentComputation
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-BatchDataset >> initializeSplitting: aDataset in: aBatchSize withOutputsIn: aTensorDomainCollection [
+BatchDataset >> initializeSplitting: aDataset in: aBatchSize [
 
-	outputDomains := aTensorDomainCollection.
-
+	currentComputation := aDataset currentComputation.
+	outputDomains := aDataset outputDomains collect: #withNewUnknownDimension.
 	value :=
-		aDataset currentComputation
+		currentComputation
 			newOperationOf: 'BatchDataset'
 			namePrefixed: 'BatchDataset'
 			withAll: (Array with: aDataset with: aBatchSize asInt64Tensor)

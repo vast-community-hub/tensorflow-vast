@@ -1,49 +1,63 @@
 Class {
 	#name : 'TextDatasetTest',
 	#superclass : 'DatasetTest',
+	#instVars : [
+		'fileName',
+		'dataset'
+	],
 	#category : 'TFDatasetModelTests'
 }
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TextDatasetTest >> setUp [
+
+	super setUp. 
+	
+	fileName := 'test-dataset.csv'.
+
+]
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TextDatasetTest >> setUpTextDatasetOnFile: aFileName [
+
+	fileName asFileReference writeStreamDo: [:stream |
+		stream
+			nextPutAll: '1,2,3,4';
+			cr;
+			nextPutAll: 'you''ve got the wrong dude'].
+
+	dataset := TextDataset on: tf readingFrom: fileName withBufferSized: 8 * 1024 * 1024.
+]
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TextDatasetTest >> tearDown [
+
+	super tearDown.
+
+	fileName asFileReference delete
+]
 
 { #category : 'Tests' }
 TextDatasetTest >> testCardinality [
 
-	| fileName |
+	self setUpTextDatasetOnFile: fileName.
 
-	fileName := 'testIterateThroughDataset.csv'.
-
-	[| dataset |
-		fileName asFileReference writeStreamDo: [:stream |
-			stream
-				nextPutAll: '1,2,3,4';
-				cr;
-				nextPutAll: 'you''ve got the wrong dude'].
-
-		dataset := TextDataset on: tf readingFrom: fileName withBufferSized: 8 * 1024 * 1024.
-
-		self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -2]
-			ensure: [fileName asFileReference delete]
+	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -2
 ]
 
 { #category : 'Tests' }
 TextDatasetTest >> testIterateThroughDatasetWithOneFloatVector [
 
-	| fileName |
+	| iterator |
 
-	fileName := 'testIterateThroughDataset.csv'.
+	self setUpTextDatasetOnFile: fileName.
+	self assertDatasetHasExpectedOutput: dataset.
 
-	[| dataset iterator |
-		fileName asFileReference writeStreamDo: [:stream |
-			stream
-				nextPutAll: '1,2,3,4';
-				cr;
-				nextPutAll: 'you''ve got the wrong dude'].
-				
-		dataset := TextDataset on: tf readingFrom: fileName withBufferSized: 8 * 1024 * 1024.
-		self assertDatasetHasExpectedOutput: dataset.
-		
-		iterator := DatasetIterator on: tf iterating: dataset.
-		self assertOutputOf: iterator next isAStringEqualTo: '1,2,3,4'.
-		self assertOutputOf: iterator next isAStringEqualTo: 'you''ve got the wrong dude'.
-		self assertReachedEnd: iterator]
-			ensure: [fileName asFileReference delete]
+	iterator := dataset newIterator.
+	self assertOutputOf: iterator next isAStringEqualTo: '1,2,3,4'.
+	self assertOutputOf: iterator next isAStringEqualTo: 'you''ve got the wrong dude'.
+	self assertReachedEnd: iterator
 ]

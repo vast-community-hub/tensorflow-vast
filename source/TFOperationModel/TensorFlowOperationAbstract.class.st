@@ -141,6 +141,12 @@ TensorFlowOperationAbstract >> outputDimensions [
 	^self value outputDimensions
 ]
 
+{ #category : 'Accessing' }
+TensorFlowOperationAbstract >> outputDomain [
+
+	^TensorDomain of: self value outputType withShape: self value outputShape
+]
+
 { #category : 'Accessing - TF Operation' }
 TensorFlowOperationAbstract >> outputOn: aGraph [
 

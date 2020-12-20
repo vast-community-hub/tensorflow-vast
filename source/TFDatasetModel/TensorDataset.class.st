@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'currentComputation',
 		'outputShapes',
-		'outputTypes'
+		'outputTypes',
+		'outputDomains'
 	],
 	#category : 'TFDatasetModel'
 }
@@ -12,46 +13,32 @@ Class {
 { #category : 'Instance Creation' }
 TensorDataset class >> on: aComputation containing: aTensor [
 
-	^self
-		on: aComputation
-		containing: (Array with: aTensor)
-		withOutputsShaped: (Array with: aTensor outputShape)
+	^self on: aComputation containingAll: (Array with: aTensor)
 ]
 
 { #category : 'Instance Creation' }
-TensorDataset class >> on: aTensorFlowComputation containing: aTensorCollection sliced: aBoolean withOutputsShaped: anTypeCollection [
+TensorDataset class >> on: aComputation containingAll: aTensorCollection [
 
-	^self new
-		initializeOn: aTensorFlowComputation
-		containing: aTensorCollection
-		sliced: aBoolean
-		withOutputsShaped: anTypeCollection
+	^self on: aComputation containingAll: aTensorCollection sliced: false
+]
+
+{ #category : 'Instance Creation',
+  #vaVisibility : 'private' }
+TensorDataset class >> on: aTensorFlowComputation containingAll: aTensorCollection sliced: aBoolean [
+
+	^self new initializeOn: aTensorFlowComputation containingAll: aTensorCollection sliced: aBoolean
 ]
 
 { #category : 'Instance Creation' }
-TensorDataset class >> on: aComputation containing: aTensorCollection withOutputsShaped: aShapeCollection [
+TensorDataset class >> on: aComputation slicing: aTensor [
 
-	^self
-		on: aComputation
-		containing: aTensorCollection
-		sliced: false
-		withOutputsShaped: aShapeCollection
+	^self on: aComputation slicingAll: (Array with: aTensor)
 ]
 
 { #category : 'Instance Creation' }
-TensorDataset class >> on: aComputation slicing: aTensorCollection withOutputShaped: aShape [
+TensorDataset class >> on: aTensorFlowComputation slicingAll: aTensorCollection [
 
-	^self on: aComputation slicing: aTensorCollection withOutputsShaped: (Array with: aShape)
-]
-
-{ #category : 'Instance Creation' }
-TensorDataset class >> on: aComputation slicing: aTensorCollection withOutputsShaped: aShapeCollection [
-
-	^self
-		on: aComputation
-		containing: aTensorCollection
-		sliced: true
-		withOutputsShaped: aShapeCollection
+	^self new initializeOn: aTensorFlowComputation containingAll: aTensorCollection sliced: true
 ]
 
 { #category : 'Accessing' }
@@ -62,25 +49,32 @@ TensorDataset >> currentComputation [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TensorDataset >> initializeOn: aTensorFlowComputation containing: aTensorCollection sliced: aBoolean withOutputsShaped: aShapeCollection [
+TensorDataset >> initializeOn: aTensorFlowComputation containingAll: aTensorCollection sliced: aBoolean [
 
-	outputShapes := aShapeCollection.
-	outputTypes := aTensorCollection collect: #outputType.
+	| opType |
+
+	aBoolean
+		ifTrue: [
+			opType := 'TensorSliceDataset'.
+			outputDomains :=
+				aTensorCollection collect: [:tensor | tensor outputDomain withSlicedShape]]
+		ifFalse: [
+			opType := 'TensorDataset'.
+			outputDomains := aTensorCollection collect: #outputDomain].
 	currentComputation := aTensorFlowComputation.
 	value :=
 		currentComputation
-			newOperationOf: (aBoolean ifTrue: ['TensorSliceDataset'] ifFalse: ['TensorDataset'])
+			newOperationOf: opType
 			namePrefixed: 'Dataset'
 			withAll: #()
 			describedBy: [:description |
 				description
 					addInputs: (aTensorCollection collect: [:tensor | tensor value firstOutput]);
-					atOutputShapesPut: outputShapes]
+					atOutputShapesPut: (outputDomains collect: #shape)]
 ]
 
 { #category : 'Accessing' }
 TensorDataset >> outputDomains [
 
-	^(1 to: outputTypes size)
-		collect: [:i | TensorDomain of: (outputTypes at: i) withShape: (outputShapes at: i)]
+	^outputDomains
 ]
