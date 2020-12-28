@@ -52,6 +52,42 @@ NeuralNetworkTrainerTest >> testAfterTrainingCallback [
 ]
 
 { #category : 'Tests' }
+NeuralNetworkTrainerTest >> testNoOptimizationSet [
+
+	| model |
+
+	model := self modelWithTwoOutputUnits.
+
+	self
+		should: [
+			(NeuralNetworkTrainer on: tf)
+				stopTrainingWhen: (LossHasNotImproved moreThan: 0.005);
+				train: model
+					toFitPredictionFrom: self logictStatements
+					to: self expectedProbabilityByLabel]
+		raise: AssertionFailure
+		withDescription: 'Need to configure an optimization algorithm before training'
+]
+
+{ #category : 'Tests' }
+NeuralNetworkTrainerTest >> testStopConditionMustBeSetBeforeTraining [
+
+	| model |
+
+	model := self modelWithTwoOutputUnits.
+
+	self
+		should: [
+			(NeuralNetworkTrainer on: tf)
+				minimizeCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
+				train: model
+					toFitPredictionFrom: self logictStatements
+					to: self expectedProbabilityByLabel]
+		raise: AssertionFailure
+		withDescription: 'Need to configure a stop condition before training'
+]
+
+{ #category : 'Tests' }
 NeuralNetworkTrainerTest >> testStopTrainingAfterLossHasNotImprovedADelta [
 
 	| model summary |

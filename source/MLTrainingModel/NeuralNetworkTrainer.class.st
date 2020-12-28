@@ -25,6 +25,16 @@ NeuralNetworkTrainer >> afterEveryTrainingDo: aBlock [
 	afterTrainingCallback := aBlock
 ]
 
+{ #category : 'Asserting',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainer >> assertReadyToStartTraining [
+
+	stopCondition isNil
+		ifTrue: [AssertionFailure signal: 'Need to configure a stop condition before training']. 
+	optimizer isNil 
+		ifTrue: [AssertionFailure signal: 'Need to configure an optimization algorithm before training']. 
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 NeuralNetworkTrainer >> initializeOn: aTensorFlowComputation [
@@ -80,6 +90,7 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
 	| loss optimization currentEpoch epoch context incrementEpoch |
 
+	self assertReadyToStartTraining.
 	currentEpoch := 0.
 	epoch := VariableNode on: aModel currentComputation named: 'currentEpoch' with: 1 asFloatTensor.
 	incrementEpoch := epoch += 1 asFloatTensor.

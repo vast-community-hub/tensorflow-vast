@@ -27,6 +27,7 @@ SequentialModelBuilder >> addDenseLayerSized: anOutputSize builtWith: aBlock [
 
 	input := layers isEmpty ifTrue: [tf floatInputNamed: 'input'] ifFalse: [layers last].
 	layerBuilder := DenseLayerBuilder ofSize: anOutputSize receiving: input.
+	layers isEmpty ifFalse: [layerBuilder makeInputSizeOptional].
 	aBlock value: layerBuilder.
 	self addLayer: layerBuilder build
 ]

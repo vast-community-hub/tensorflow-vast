@@ -7,7 +7,8 @@ Class {
 		'weightSpecification',
 		'activation',
 		'input',
-		'biasSpecification'
+		'biasSpecification',
+		'inputSizeAsserter'
 	],
 	#category : 'MLNeuralNetworkLayerModel'
 }
@@ -72,6 +73,7 @@ DenseLayerBuilder >> build [
 	| numberOfInputFeatures |
 	" Assume input is a matrix of shape (rows x columns), then the second 
 	 dimenssion is the number of input features "
+	inputSizeAsserter value. 
 	numberOfInputFeatures :=
 		inputSize ifNil: [input outputShape numberOfFeatures] ifNotNil: [inputSize].
 
@@ -93,6 +95,8 @@ DenseLayerBuilder >> initializeOfSize: aNumberOfOutputFeatures receiving: anInpu
 
 	inputSize := nil.
 	activation := nil.
+	inputSizeAsserter := [
+		inputSize isNil ifTrue: [AssertionFailure signal: #'Input size must be defined!']].
 	self weightInitializedRandomly.
 	self biasInitializedToZero
 ]
@@ -103,10 +107,18 @@ DenseLayerBuilder >> inputSize: aNumberOfInputFeatures [
 	inputSize := aNumberOfInputFeatures
 ]
 
+{ #category : 'Configuring' }
+DenseLayerBuilder >> makeInputSizeOptional [
+
+	inputSizeAsserter := []
+
+	
+]
+
 { #category : 'Configuring - Weight' }
 DenseLayerBuilder >> weightInitializedRandomly [
 
-	self weightInitializedWith: TruncatedNormalInitializer new
+	self weightInitializedWith: GlorotUniformInitializer new
 ]
 
 { #category : 'Configuring - Weight' }

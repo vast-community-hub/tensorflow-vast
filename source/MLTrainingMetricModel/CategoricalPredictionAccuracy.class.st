@@ -2,7 +2,8 @@ Class {
 	#name : 'CategoricalPredictionAccuracy',
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
-		'currentComputation'
+		'prediction',
+		'target'
 	],
 	#category : 'MLTrainingMetricModel'
 }
@@ -25,6 +26,8 @@ CategoricalPredictionAccuracy >> initializeOf: aPrediction whenExpectedIs: aTarg
 
 	| predictionsMatches |
 
+	prediction := aPrediction.
+	target := aTarget.
 	predictionsMatches :=
 		(aPrediction comparedWith: (aTarget castedTo: aPrediction outputType))
 			castedTo: TFTensor typeFloat.
