@@ -4,10 +4,28 @@ Class {
 	#instVars : [
 		'mean',
 		'standardDeviation',
-		'seeds'
+		'tensorGenerator'
 	],
 	#category : 'TFVariableSpecificationModel'
 }
+
+{ #category : 'Instance Creation' }
+TruncatedNormalInitializer class >> centeredOn: aMeanValue spreadedBy: aStandardDeviation withSeed: anIntegerSeed [
+
+	^self
+		generatingValuesCenteredOn: aMeanValue
+		spreadedBy: aStandardDeviation
+		with: (DeterministicSeedTensorGenerator fixedTo: anIntegerSeed)
+]
+
+{ #category : 'Instance Creation' }
+TruncatedNormalInitializer class >> centereredOn: aMeanValue spreadedBy: aStandardDeviation [
+
+	^self
+		generatingValuesCenteredOn: aMeanValue
+		spreadedBy: aStandardDeviation
+		with: RandomSeedTensorGenerator new
+]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
@@ -20,71 +38,64 @@ TruncatedNormalInitializer class >> defaultMean [
   #vaVisibility : 'private' }
 TruncatedNormalInitializer class >> defaultStandardDeviation [
 
-	^1.0
+	^0.05
 ]
 
 { #category : 'Instance Creation' }
 TruncatedNormalInitializer class >> deviatedBy: aStandardDeviation [
 
-	^self meanOn: self defaultMean deviatedBy: aStandardDeviation
+	^self centereredOn: self defaultMean spreadedBy: aStandardDeviation
 ]
 
 { #category : 'Instance Creation' }
-TruncatedNormalInitializer class >> deviatedBy: aStandardDeviation withSeeds: aSeedsArray [
+TruncatedNormalInitializer class >> generatingValuesCenteredOn: aMeanValue spreadedBy: aStandardDeviation with: aTensorGenerator [
 
-	^self meanOn: self defaultMean deviatedBy: aStandardDeviation withSeeds: aSeedsArray
-]
-
-{ #category : 'Instance Creation' }
-TruncatedNormalInitializer class >> meanOn: aMeanValue deviatedBy: aStandardDeviation [
-
-	^self meanOn: aMeanValue deviatedBy: aStandardDeviation withSeeds: nil
-]
-
-{ #category : 'Instance Creation' }
-TruncatedNormalInitializer class >> meanOn: aMeanValue deviatedBy: aStandardDeviation withSeeds: aSeedsArray [
-
-	^super new initializeMeanOn: aMeanValue deviatedBy: aStandardDeviation withSeeds: aSeedsArray
+	^super new
+		initializeGeneratingValuesCenteredOn: aMeanValue
+		spreadedBy: aStandardDeviation
+		with: aTensorGenerator
 ]
 
 { #category : 'Instance Creation' }
 TruncatedNormalInitializer class >> new [
 
-	^self meanOn: self defaultMean deviatedBy: self defaultStandardDeviation
+	^self centereredOn: self defaultMean spreadedBy: self defaultStandardDeviation
 ]
 
 { #category : 'Instance Creation' }
-TruncatedNormalInitializer class >> withSeeds: aSeedsArray [
+TruncatedNormalInitializer class >> spreadedBy: aStandardDeviation withSeed: anIntegerSeed [
 
-	^self meanOn: self defaultMean deviatedBy: self defaultStandardDeviation withSeeds: aSeedsArray
+	^self
+		generatingValuesCenteredOn: self defaultMean
+		spreadedBy: aStandardDeviation
+		with: (DeterministicSeedTensorGenerator fixedTo: anIntegerSeed)
+]
+
+{ #category : 'Instance Creation' }
+TruncatedNormalInitializer class >> withSeed: anIntegerSeed [
+
+	^self
+		generatingValuesCenteredOn: self defaultMean
+		spreadedBy: self defaultStandardDeviation
+		with: (DeterministicSeedTensorGenerator fixedTo: anIntegerSeed)
 ]
 
 { #category : 'Evaluating' }
 TruncatedNormalInitializer >> applyTo: aTFVariable [
 
-	| graph shape initialValue rnd devTensor meanTensor |
-
-	graph := aTFVariable graph.
-	shape := graph shapeOf: aTFVariable firstOutput.
-
-	rnd :=
-		seeds
-			ifNil: [graph truncatedNormalRandomShaped: shape]
-			ifNotNil: [graph statelessNormalRandomShaped: shape withSeeds: seeds].
-
-	meanTensor := graph const: mean asTensor.
-	devTensor := graph const: standardDeviation asTensor.
-
-	initialValue := (ElementWiseMultiplication of: rnd and: devTensor) + meanTensor.
-
-	aTFVariable assign: initialValue value
+	aTFVariable assign: (
+		tensorGenerator
+			truncatedNormalTensorOn: aTFVariable graph
+			shaped: aTFVariable outputShape
+			centeredOn: mean
+			spreadedBy: standardDeviation)
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-TruncatedNormalInitializer >> initializeMeanOn: aMeanValue deviatedBy: aStandardDeviation withSeeds: aSeedsArray [
+TruncatedNormalInitializer >> initializeGeneratingValuesCenteredOn: aMeanValue spreadedBy: aStandardDeviation with: aTensorGenerator [
 
 	mean := aMeanValue.
 	standardDeviation := aStandardDeviation.
-	seeds := aSeedsArray
+	tensorGenerator := aTensorGenerator
 ]

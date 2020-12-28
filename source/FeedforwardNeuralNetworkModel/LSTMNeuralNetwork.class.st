@@ -56,7 +56,7 @@ LSTMNeuralNetwork >> initializeFeedforward [
 
 	| random |
 
-	random := TruncatedNormalInitializer withSeeds: #(0 1).
+	random := TruncatedNormalInitializer withSeed: 1.
 	modelOutput :=
 		(SequentialModelBuilder on: tf)
 			addDenseLayerSized: 3

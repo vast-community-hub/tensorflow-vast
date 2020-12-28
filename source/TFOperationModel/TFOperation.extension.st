@@ -39,6 +39,13 @@ TFOperation >> outputDimensions [
 
 { #category : '*TFOperationModel',
  #vaCategories : ['accessing'] }
+TFOperation >> outputDomain [
+
+	^TensorDomain of: self outputType withShape: self outputShape
+]
+
+{ #category : '*TFOperationModel',
+ #vaCategories : ['accessing'] }
 TFOperation >> outputOn: aGraph [
 
 	^self firstOutput

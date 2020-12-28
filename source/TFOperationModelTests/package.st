@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFOperationModelTests',
-	#vaPrerequisites : ['TensorFlowEnvironmentModelTests','TFVariableSpecificationModel']
+	#vaPrerequisites : ['TensorFlowEnvironmentModelTests','TFOperationModel']
 }

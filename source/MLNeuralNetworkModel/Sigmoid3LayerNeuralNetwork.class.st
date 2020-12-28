@@ -101,7 +101,7 @@ Sigmoid3LayerNeuralNetwork >> predictFrom: aFeatureTensor andCompareTo: anExpect
   #vaVisibility : 'private' }
 Sigmoid3LayerNeuralNetwork >> randomInitializerFor: anAmountOfFeatures [
 
-	^TruncatedNormalInitializer deviatedBy: 1.0 / anAmountOfFeatures sqrt withSeeds: #(0 1)
+	^TruncatedNormalInitializer spreadedBy: 1.0 / anAmountOfFeatures sqrt withSeed: 1
 ]
 
 { #category : 'Computing' }

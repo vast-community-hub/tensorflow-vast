@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.39',
-						#ts : 3785880702
+						#versionName : '1.40',
+						#ts : 3786570486
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,14 +17,14 @@
 				]
 			}
 		],
-		#ts : 3785880722,
+		#ts : 3786570528,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'FeedforwardNeuralNetworkModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772267
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569036
 			},
 			{
 				#name : 'MLNeuralNetworkExamples',
@@ -33,27 +33,27 @@
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772258
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569041
 			},
 			{
 				#name : 'MLNeuralNetworkModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772265
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569045
 			},
 			{
 				#name : 'MLTrainingMetricModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772269
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569045
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772262
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569045
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.31'
+		#versionName : '0.32'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.31',
-						#ts : 3785880722
+						#versionName : '0.32',
+						#ts : 3786570528
 					},
 					{
 						#name : 'SUnit',
@@ -73,14 +73,14 @@
 				]
 			}
 		],
-		#ts : 3785880744,
+		#ts : 3786570551,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'FeedforwardNeuralNetworkModelTests',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772270
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569039
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModelTests',
@@ -99,12 +99,12 @@
 			},
 			{
 				#name : 'MLTrainingModelTests',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772273
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786569045
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.30'
+		#versionName : '0.31'
 	},
 	{
 		#conditions : [
@@ -143,13 +143,13 @@
 					},
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.31',
-						#ts : 3785880722
+						#versionName : '0.32',
+						#ts : 3786570528
 					}
 				]
 			}
 		],
-		#ts : 3785880737,
+		#ts : 3786570544,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -160,7 +160,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.2'
+		#versionName : '0.3'
 	},
 	{
 		#conditions : [
@@ -308,7 +308,7 @@
 				]
 			}
 		],
-		#ts : 3785880702,
+		#ts : 3786570486,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -354,13 +354,13 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : 'df8d906-new-modem',
-				#ts : 3785880647
+				#versionName : 'df8d906-new-moden',
+				#ts : 3786568661
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772240
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786527642
 			},
 			{
 				#name : 'TFOptimizerModel',
@@ -404,12 +404,17 @@
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772239
+				#versionName : 'df8d906-new-modem',
+				#ts : 3786527695
+			},
+			{
+				#name : 'TFVariableSpecificationModelTests',
+				#versionName : '1.0',
+				#ts : 3786551118
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.39'
+		#versionName : '1.40'
 	},
 	{
 		#conditions : [
