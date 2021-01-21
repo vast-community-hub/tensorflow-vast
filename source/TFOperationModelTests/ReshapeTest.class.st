@@ -10,7 +10,7 @@ ReshapeTest >> testOperationName [
 	| tensor newShape |
 
 	tensor := tf integerConstantWith: #((1 3) (3 2)).
-	newShape := tf integerConstantWith: #(4).
+	newShape := TensorShape vectorSized: 4.
 
 	self assert: (Reshape of: tensor to: newShape) isNamedInGraphAs: 'Reshape'.
 	self assert: (Reshape of: tensor to: newShape) isNamedInGraphAs: 'Reshape_1'.
@@ -24,7 +24,7 @@ ReshapeTest >> testReshapeFailsWhenDimensionsDoesntMatch [
 	| tensor newShape |
 
 	tensor := tf integerConstantWith: #(1 3 3 2).
-	newShape := tf integerConstantWith: #(2 1).
+	newShape := TensorShape matrixSized: 2 by: 1.
 
 	self
 		assert: [Reshape named: 'reshape' of: tensor to: newShape]
@@ -38,8 +38,8 @@ ReshapeTest >> testReshapeMatrixToVector [
 	| tensor newShape |
 
 	tensor := tf integerConstantWith: #((1 3) (3 2)).
-	newShape := tf integerConstantWith: #(4).
-	
+	newShape := TensorShape vectorSized: 4.
+
 	self assertOutputOf: (tensor reshapeTo: newShape) isIntegerVectorEqualsTo: #(1 3 3 2)
 ]
 
@@ -49,11 +49,9 @@ ReshapeTest >> testReshapeVectorToHorizontalVector [
 	| tensor newShape |
 
 	tensor := tf integerConstantWith: #(1 3 3 2).
-	newShape := tf integerConstantWith: #(4 1).
-	
-	self
-		assertOutputOf: (tensor reshapeTo: newShape)
-		isIntegerMatrixCloseTo: #((1) (3) (3) (2))
+	newShape := TensorShape matrixSized: 4 by: 1.
+
+	self assertOutputOf: (tensor reshapeTo: newShape) isIntegerMatrixCloseTo: #((1) (3) (3) (2))
 ]
 
 { #category : 'Test' }
@@ -62,7 +60,7 @@ ReshapeTest >> testReshapeVectorToMatrix [
 	| tensor newShape |
 
 	tensor := tf integerConstantWith: #(1 3 3 2).
-	newShape := tf integerConstantWith: #(2 2).
-	
+	newShape := TensorShape matrixSized: 2 by: 2.
+
 	self assertOutputOf: (tensor reshapeTo: newShape) isIntegerMatrixCloseTo: #((1 3) (3 2))
 ]

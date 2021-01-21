@@ -43,3 +43,18 @@ Dataset >> prefetchingInBufferSized: aBufferSize [
 
 	^PrefetchDataset prefetchingElementsIn: self onBufferSized: 2 withOutputsIn: self outputDomains
 ]
+
+{ #category : 'Accessing' }
+Dataset >> shuffled [
+
+	^ShuffledDataset shuffling: self buffering: 1024 asInt64Tensor
+]
+
+{ #category : 'Accessing' }
+Dataset >> shuffledWithSeed: anIntegerSeed [
+
+	^ShuffledDataset
+		shuffling: self
+		buffering: 1024 asInt64Tensor
+		withSeed: anIntegerSeed asInt64Tensor
+]

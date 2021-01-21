@@ -5,7 +5,7 @@ Class {
 		'type',
 		'shape'
 	],
-	#category : 'TFDatasetModel'
+	#category : 'TFOperationModel'
 }
 
 { #category : 'Instance Creation' }
