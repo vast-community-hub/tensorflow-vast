@@ -35,19 +35,6 @@ DatasetProvider class >> new [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-DatasetProvider >> create: aClassType fromFileNamed: aString [
-
-	| file reader |
-
-	file := aString asPath.
-	file exists ifFalse: [AssertionFailure signal: (#'Can''t find %1' bindWith: file asString)].
-	file readStreamDo: [:compressed |
-		reader := IdxReader onStream: compressed contents gzipDecompress readStream.
-		^aClassType fromReader: reader]
-]
-
-{ #category : 'Initialization',
-  #vaVisibility : 'private' }
 DatasetProvider >> download: aRemoteFileUrl to: aTargetDirectory [
 
 	aTargetDirectory exists
@@ -83,9 +70,9 @@ DatasetProvider >> initializeFashionDataset [
 	| baseUrl baseDirectory |
 
 	baseUrl := 'https://storage.googleapis.com/tensorflow/tf-keras-datasets/'.
-	baseDirectory := './datasets/mnist-fashion' asFileReference.
+	baseDirectory := './datasets/fashion-mnist' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
-
+	
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
 		add: 'train-images-idx3-ubyte.gz';
@@ -95,29 +82,15 @@ DatasetProvider >> initializeFashionDataset [
 			self
 				download: ('<1s><2s>' expandMacrosWith: baseUrl with: fileName)
 				to: (baseDirectory extend: ('/<1s>' expandMacrosWith: fileName))].
-
+				
 	fashionDataset :=
 		SampleDataset new
 			bindTrainingSetTo: (
-					(self
-						create: MNISTImageFile
-						fromFileNamed: (baseDirectory extend: '/train-images-idx3-ubyte.gz'))
-							transformFeaturesDoing: [:item | item / 255];
-							yourself)
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/train-images-idx3-ubyte.gz'))
 				andLabelsTo: (
-					self
-						create: MNISTLabelFile
-						fromFileNamed: (baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
-			bindValidationSetTo: (
-					(self
-						create: MNISTImageFile
-						fromFileNamed: (baseDirectory extend: '/t10k-images-idx3-ubyte.gz'))
-							transformFeaturesDoing: [:item | item / 255];
-							yourself)
-				andLabelsTo: (
-					self
-						create: MNISTLabelFile
-						fromFileNamed: (baseDirectory extend: '/t10k-labels-idx1-ubyte.gz'));
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
 			yourself
 ]
 
@@ -130,7 +103,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 	baseUrl := 'http://yann.lecun.com/exdb/mnist/'.
 	baseDirectory := './datasets/mnist-handwritten/' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
-
+	
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
 		add: 'train-images-idx3-ubyte.gz';
@@ -140,25 +113,21 @@ DatasetProvider >> initializeHandwrittenDataset [
 			self
 				download: ('<1s><2s>' expandMacrosWith: baseUrl with: fileName)
 				to: (baseDirectory extend: ('/<1s>' expandMacrosWith: fileName))].
-
+				
 	handwrittenDigitsDataset :=
 		SampleDataset new
 			bindTrainingSetTo: (
-					self
-						create: MNISTImageFile
-						fromFileNamed: (baseDirectory extend: '/train-images-idx3-ubyte.gz'))
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/train-images-idx3-ubyte.gz'))
 				andLabelsTo: (
-					self
-						create: MNISTLabelFile
-						fromFileNamed: (baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
 			bindTestingSetTo: (
-					self
-						create: MNISTImageFile
-						fromFileNamed: (baseDirectory extend: '/t10k-images-idx3-ubyte.gz'))
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/t10k-images-idx3-ubyte.gz'))
 				andLabelsTo: (
-					self
-						create: MNISTLabelFile
-						fromFileNamed: (baseDirectory extend: '/t10k-labels-idx1-ubyte.gz'));
+					self tensorFromFileNamed:
+						(baseDirectory extend: '/t10k-labels-idx1-ubyte.gz'));
 			yourself
 ]
 
@@ -172,4 +141,19 @@ DatasetProvider >> shakespeareText [
 					'https://storage.googleapis.com/download.tensorflow.org/data/shakespeare.txt'
 				to: './datasets/shakespeare.txt' asFileReference].
 	^shakespeareText
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+DatasetProvider >> tensorFromFileNamed: aString [
+
+	| file reader |
+
+	file := aString asPath.
+	file exists ifFalse: [AssertionFailure signal: (#'Can''t find %1' bindWith: file asString)].
+	file readStreamDo: [:compressed |
+		reader := IdxReader onStream: compressed contents gzipDecompress readStream.
+		^TFTensor
+			fromInt32s: reader next
+			shape: (TensorShape withDimensionsSized: reader dimensionSizes)]
 ]

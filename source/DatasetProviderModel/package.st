@@ -1,4 +1,4 @@
 Package {
 	#name : 'DatasetProviderModel',
-	#vaPrerequisites : ['LibTensorFlowExamplesApp','MLTrainingModel','SstHttpCommunications']
+	#vaPrerequisites : ['CgExamples','IdxReaderApp','MLTrainingModel','SstHttpCommunications']
 }
