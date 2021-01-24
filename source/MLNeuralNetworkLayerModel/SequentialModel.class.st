@@ -62,7 +62,7 @@ SequentialModel >> printOn: aStream [
 	aStream nextPutAll: ('Sequential Model with <1p> layer' expandMacrosWith: layers size).
 	layers size > 1 ifTrue: [aStream nextPut: $s].
 	aStream cr.
-	layers do: [:layer | aStream print: layer] separatedBy: [aStream crlf]
+	layers do: [:layer | aStream print: layer] separatedBy: [aStream cr]
 ]
 
 { #category : 'Accessing' }

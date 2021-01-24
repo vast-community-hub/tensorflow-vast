@@ -7,7 +7,7 @@ Class {
 { #category : 'Accessing' }
 DatasetTest class >> isAbstract [
 
-	^self sunitName = #DatasetTest
+	^self name = #DatasetTest
 ]
 
 { #category : 'Tests',

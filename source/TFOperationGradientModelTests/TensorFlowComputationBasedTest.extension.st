@@ -11,8 +11,8 @@ TensorFlowComputationBasedTest >> assert: anOperation isNotDifferentiableRespect
 		should: [anOperation partialDerivativeWithRespectTo: anInput]
 		raise: Error
 		withDescription: (
-			'INVALID_ARGUMENT: Cannot compute the partial derivative for node ''%1'' as it''s unreachable from the output node(s).'
-				bindWith: anInput operationName)
+			'INVALID_ARGUMENT: Cannot compute the partial derivative for node ''<1s>'' as it''s unreachable from the output node(s).'
+				expandMacrosWith: anInput operationName)
 ]
 
 { #category : '*TFOperationGradientModelTests',

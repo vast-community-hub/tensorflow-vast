@@ -103,7 +103,7 @@ CSVDatasetTest >> tearDown [
 	
 	super tearDown. 
 	
-	fileName asFileReference delete
+	fileName asFileReference deleteIfAbsent: []
 ]
 
 { #category : 'Tests' }

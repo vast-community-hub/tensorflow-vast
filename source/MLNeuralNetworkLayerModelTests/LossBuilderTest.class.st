@@ -4,6 +4,17 @@ Class {
 	#category : 'MLNeuralNetworkLayerModelTests'
 }
 
+{ #category : 'Test - Optimizer',
+  #vaVisibility : 'private' }
+LossBuilderTest >> gradientDescentOf: aLossFunction withRespectTo: aVariable [
+
+	| gradOutput grad |
+
+	grad := aLossFunction partialDerivativeWithRespectTo: aVariable.
+	gradOutput := grad valueWithRespectTo: aVariable.
+	^(GradientDescent scalingBy: 0.2) apply: gradOutput to: aVariable
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 LossBuilderTest >> inputAndExpectedLabels [
@@ -170,14 +181,13 @@ LossBuilderTest >> testMeanSquaredErrorWithoutReducingGradient [
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingCategoricalCrossEntropy [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss := (LossBuilder for: self modelWithTwoOutputUnits) buildCategoricalCrossEntropy.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedProbabilities.
-
+	
 	self
 		assertOutputOf: weight
 		isMatrixCloseTo: #(
@@ -188,17 +198,16 @@ LossBuilderTest >> testOptimizeModelMinimizingCategoricalCrossEntropy [
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingCategoricalCrossEntropyWithoutReducing [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss :=
 		(LossBuilder for: self modelWithTwoOutputUnits)
 			withoutReducing;
 			buildCategoricalCrossEntropy.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedProbabilities.
-
+	
 	self
 		assertOutputOf: weight
 		isMatrixCloseTo: #(
@@ -209,45 +218,42 @@ LossBuilderTest >> testOptimizeModelMinimizingCategoricalCrossEntropyWithoutRedu
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingMeanSquaredError [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss := (LossBuilder for: self modelWithTwoOutputUnits) buildMeanSquaredError.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedProbabilities.
-
+	
 	self assertOutputOf: weight isMatrixCloseTo: #((-0.02 -0.08) (0.03 -0.03) (0.02 -0.07))
 ]
 
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingMeanSquaredErrorWithoutReducing [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss :=
 		(LossBuilder for: self modelWithTwoOutputUnits)
 			withoutReducing;
 			buildSquaredError.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedProbabilities.
-
+	
 	self assertOutputOf: weight isMatrixCloseTo: #((-0.16 -0.64) (0.24 -0.24) (0.16 -0.56))
 ]
 
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingSparseCategoricalCrossEntropy [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss := (LossBuilder for: self modelWithTwoOutputUnits) buildSparseCategoricalCrossEntropy.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedLabels.
-
+	
 	self
 		assertOutputOf: weight
 		isMatrixCloseTo: #(
@@ -258,15 +264,14 @@ LossBuilderTest >> testOptimizeModelMinimizingSparseCategoricalCrossEntropy [
 { #category : 'Test - Optimizer' }
 LossBuilderTest >> testOptimizeModelMinimizingSparseCategoricalCrossEntropyWithoutReducing [
 
-	| loss weight grads optimize |
+	| loss weight optimize |
 
 	loss :=
 		(LossBuilder for: self modelWithTwoOutputUnits)
 			withoutReducing;
 			buildSparseCategoricalCrossEntropy.
 	weight := self weight.
-	grads := loss partialDerivativeWithRespectTo: weight.
-	optimize := (GradientDescent scalingBy: 0.2) apply: grads to: weight.
+	optimize := self gradientDescentOf: loss withRespectTo: weight.
 	tf compute: optimize feedingInputsWith: self inputAndExpectedLabels.
 	
 	self

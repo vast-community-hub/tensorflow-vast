@@ -74,8 +74,8 @@ DatasetIterator >> next [
 				tf
 					createSessionAndCompute:
 						((1 to: self outputDomains size) collect: [:i | next output: i - 1])
-					feeding: Dictionary new
-					with: Dictionary new.
+					feeding: #()
+					with: #().
 			(1 to: self outputDomains size) collect: [:i | outputPtr at: i]]
 ]
 

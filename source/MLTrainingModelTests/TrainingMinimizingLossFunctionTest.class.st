@@ -7,7 +7,7 @@ Class {
 { #category : 'Not categorized' }
 TrainingMinimizingLossFunctionTest class >> isAbstract [
 
-	^self sunitName = #TrainingMinimizingLossFunctionTest
+	^self name = #TrainingMinimizingLossFunctionTest
 ]
 
 { #category : 'Accessing',

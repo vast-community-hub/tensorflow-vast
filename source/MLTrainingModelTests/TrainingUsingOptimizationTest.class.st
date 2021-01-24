@@ -7,7 +7,7 @@ Class {
 { #category : 'Accessing' }
 TrainingUsingOptimizationTest class >> isAbstract [
 
-	^self sunitName = #TrainingUsingOptimizationTest
+	^self name = #TrainingUsingOptimizationTest
 ]
 
 { #category : 'Accessing',

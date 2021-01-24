@@ -25,7 +25,7 @@ TextDatasetTest >> setUpTextDatasetOnFile: aFileName [
 	fileName asFileReference writeStreamDo: [:stream |
 		stream
 			nextPutAll: '1,2,3,4';
-			cr;
+			crlf;
 			nextPutAll: 'you''ve got the wrong dude'].
 
 	dataset := TextDataset on: tf readingFrom: fileName withBufferSized: 8 * 1024 * 1024.
