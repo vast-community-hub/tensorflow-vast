@@ -163,3 +163,11 @@ Collection >> sum [
 	sum := self inject: sample into: [:accum :each | accum + each].
 	^sum - sample
 ]
+
+{ #category : '*PharoCompatibilityModel',
+ #vaCategories : ['Squeak Family compatibility'] }
+Collection >> with: aCollection collect: twoArgumentsBlock [
+	| other |
+	other := ReadStream on: aCollection.
+	^ self collect: [:each | twoArgumentsBlock value: each value: other next]
+]

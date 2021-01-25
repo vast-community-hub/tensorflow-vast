@@ -268,38 +268,28 @@
 			},
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772198
+				#versionName : '1.0',
+				#ts : 3788971449
 			},
 			{
-				#name : 'TensorFlowApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772176
+				#name : 'TensorFlowCore',
+				#versionName : '1.0',
+				#ts : 3788971273
+			},
+			{
+				#name : 'TensorFlowCoreTests',
+				#versionName : '1.0',
+				#ts : 3788971856
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772216
-			},
-			{
-				#name : 'TensorFlowKernelApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772186
-			},
-			{
-				#name : 'TensorFlowTestsApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772205
+				#versionName : '1.0',
+				#ts : 3788971954
 			},
 			{
 				#name : 'TensorFlowVASTApp',
 				#versionName : 'df8d906-new-model',
 				#ts : 3781772218
-			},
-			{
-				#name : 'TestTensorFlowApp',
-				#versionName : 'df8d906-new-model',
-				#ts : 3781772204
 			}
 		],
 		#name : 'TensorFlow',

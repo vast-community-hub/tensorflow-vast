@@ -25,7 +25,7 @@ TFGraph >> storeAsFunctionNamed: aString outputing: anOutputsArray [
 			consideringInputs: self allInputs
 			consideringOutputs: anOutputsArray
 			consideringNames: nil
-			withOptions: TFFunctionOptions externalNew
+			withOptions: TFStructure externalNew
 			description: 'my_description'
 			status: status.
 	status check.

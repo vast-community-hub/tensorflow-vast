@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowExamplesApp',
-	#vaPrerequisites : ['CgExamples','TensorFlowTestsApp','WbKernel']
+	#vaPrerequisites : ['CgExamples','TensorFlowCore','WbKernel']
 }
