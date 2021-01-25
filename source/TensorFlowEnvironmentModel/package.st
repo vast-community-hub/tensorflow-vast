@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowEnvironmentModel',
-	#vaPrerequisites : ['TensorFlowKernelApp']
+	#vaPrerequisites : ['TensorFlowCore']
 }

@@ -1,4 +1,4 @@
 Package {
 	#name : 'LibTensorFlowExamplesApp',
-	#vaPrerequisites : ['IdxReaderApp','TensorFlowKernelApp']
+	#vaPrerequisites : ['IdxReaderApp','TensorFlowCore']
 }

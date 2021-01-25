@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFTensorModifierModel',
-	#vaPrerequisites : ['TensorFlowApp']
+	#vaPrerequisites : ['TensorFlowCore']
 }
