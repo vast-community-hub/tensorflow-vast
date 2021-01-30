@@ -38,15 +38,7 @@ DatasetProvider class >> new [
 DatasetProvider >> download: aRemoteFileUrl to: aTargetDirectory [
 
 	aTargetDirectory exists
-		ifTrue: [aTargetDirectory readStreamDo: [:stream | ^stream contents]]
-		ifFalse: [| byteMessage result |
-
-			byteMessage := SstHttpClient fetch: aRemoteFileUrl.
-			result :=
-				aTargetDirectory
-					writeStreamDo: [:stream | stream nextPutAll: byteMessage basicContents].
-			result ifNil: [AssertionFailure signal: 'File could not be downloaded'].
-			^result]
+		ifFalse: [PublicResourceDownloader new downloadFileAt: aRemoteFileUrl to: aTargetDirectory]
 ]
 
 { #category : 'Accessing - MNIST' }
@@ -72,7 +64,7 @@ DatasetProvider >> initializeFashionDataset [
 	baseUrl := 'https://storage.googleapis.com/tensorflow/tf-keras-datasets/'.
 	baseDirectory := './datasets/fashion-mnist' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
-	
+
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
 		add: 'train-images-idx3-ubyte.gz';
@@ -81,16 +73,18 @@ DatasetProvider >> initializeFashionDataset [
 		do: [:fileName |
 			self
 				download: ('<1s><2s>' expandMacrosWith: baseUrl with: fileName)
-				to: (baseDirectory extend: ('/<1s>' expandMacrosWith: fileName))].
-				
+				to: baseDirectory / fileName].
+
 	fashionDataset :=
 		SampleDataset new
 			bindTrainingSetTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/train-images-idx3-ubyte.gz'))
+					self
+						tensorTyped: TFTensor typeFloat
+						fromFileNamed: baseDirectory / 'train-images-idx3-ubyte.gz')
 				andLabelsTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
+					self
+						tensorTyped: TFTensor typeInt32
+						fromFileNamed: baseDirectory / 'train-labels-idx1-ubyte.gz');
 			yourself
 ]
 
@@ -103,7 +97,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 	baseUrl := 'http://yann.lecun.com/exdb/mnist/'.
 	baseDirectory := './datasets/mnist-handwritten/' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
-	
+
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
 		add: 'train-images-idx3-ubyte.gz';
@@ -112,22 +106,26 @@ DatasetProvider >> initializeHandwrittenDataset [
 		do: [:fileName |
 			self
 				download: ('<1s><2s>' expandMacrosWith: baseUrl with: fileName)
-				to: (baseDirectory extend: ('/<1s>' expandMacrosWith: fileName))].
-				
+				to: baseDirectory / ('<1s>' expandMacrosWith: fileName)].
+
 	handwrittenDigitsDataset :=
 		SampleDataset new
 			bindTrainingSetTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/train-images-idx3-ubyte.gz'))
+					self
+						tensorTyped: TFTensor typeFloat
+						fromFileNamed: baseDirectory / 'train-images-idx3-ubyte.gz')
 				andLabelsTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/train-labels-idx1-ubyte.gz'));
+					self
+						tensorTyped: TFTensor typeInt32
+						fromFileNamed: baseDirectory / 'train-labels-idx1-ubyte.gz');
 			bindTestingSetTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/t10k-images-idx3-ubyte.gz'))
+					self
+						tensorTyped: TFTensor typeFloat
+						fromFileNamed: baseDirectory / 't10k-images-idx3-ubyte.gz')
 				andLabelsTo: (
-					self tensorFromFileNamed:
-						(baseDirectory extend: '/t10k-labels-idx1-ubyte.gz'));
+					self
+						tensorTyped: TFTensor typeInt32
+						fromFileNamed: baseDirectory / 't10k-labels-idx1-ubyte.gz');
 			yourself
 ]
 
@@ -145,15 +143,16 @@ DatasetProvider >> shakespeareText [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-DatasetProvider >> tensorFromFileNamed: aString [
+DatasetProvider >> tensorTyped: aTensorType fromFileNamed: aString [
 
 	| file reader |
 
-	file := aString asPath.
+	file := aString asFileReference.
 	file exists ifFalse: [AssertionFailure signal: (#'Can''t find %1' bindWith: file asString)].
 	file readStreamDo: [:compressed |
 		reader := IdxReader onStream: compressed contents gzipDecompress readStream.
 		^TFTensor
-			fromInt32s: reader next
+			fromNumbers: reader next
+			type: aTensorType
 			shape: (TensorShape withDimensionsSized: reader dimensionSizes)]
 ]

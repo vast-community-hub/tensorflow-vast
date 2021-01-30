@@ -4,6 +4,14 @@ Extension {
 
 { #category : '*PharoCompatibilityModel',
  #vaCategories : ['CFS-API'] }
+CfsPath >> / aString [
+
+
+	^ self extend: ('/%1' bindWith: aString)
+]
+
+{ #category : '*PharoCompatibilityModel',
+ #vaCategories : ['CFS-API'] }
 CfsPath >> asFileReference [
 
 	^self asPath

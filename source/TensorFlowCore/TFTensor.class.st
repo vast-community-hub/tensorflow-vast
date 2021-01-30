@@ -32,10 +32,11 @@ TFTensor class >> elementsOf: aMultidimensionalTensor [
 ]
 
 { #category : 'utils' }
-TFTensor class >> elementsOf: tensorArray do: oneArgBlock [
-	^ (tensorArray isCollection and: [ tensorArray isString not ])
-		ifTrue: [ tensorArray do: [ :each | self elementsOf: each do: oneArgBlock ] ]
-		ifFalse: [ oneArgBlock value: tensorArray ]
+TFTensor class >> elementsOf: aTensorCollectionOrElement do: oneArgBlock [
+
+	^(aTensorCollectionOrElement isCollection and: [aTensorCollectionOrElement isString not])
+		ifTrue: [aTensorCollectionOrElement do: [:each | self elementsOf: each do: oneArgBlock]]
+		ifFalse: [oneArgBlock value: aTensorCollectionOrElement value]
 ]
 
 { #category : 'instance creation' }
