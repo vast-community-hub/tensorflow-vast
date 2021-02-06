@@ -111,7 +111,7 @@ CSVDatasetTest >> testCardinality [
 
 	self setUpCSVDatasetOnFile: fileName.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -2
+	self assert: dataset isCardinalityUndefined
 ]
 
 { #category : 'Tests' }
@@ -177,6 +177,18 @@ CSVDatasetTest >> testCSVDatasetInBatchesOf2 [
 	self assert: (next at: 4) isIntegerVectorEqualsTo: #(4 1).
 
 	self assertReachedEnd: iterator
+]
+
+{ #category : 'Tests' }
+CSVDatasetTest >> testIterateUsingDo [
+
+	self setUpCSVDatasetOnFile: fileName.
+
+	self assert: dataset isCardinalityUndefined.
+	self
+		iterateThrough: dataset
+		collecting: [:item | item]
+		thenDo: [:foundElements | self assert: foundElements isEmpty]
 ]
 
 { #category : 'Tests' }

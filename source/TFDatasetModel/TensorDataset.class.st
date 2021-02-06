@@ -1,10 +1,8 @@
 Class {
 	#name : 'TensorDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
 		'currentComputation',
-		'outputShapes',
-		'outputTypes',
 		'outputDomains'
 	],
 	#category : 'TFDatasetModel'

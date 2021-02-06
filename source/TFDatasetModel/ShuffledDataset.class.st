@@ -1,6 +1,6 @@
 Class {
 	#name : 'ShuffledDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
 		'currentComputation',
 		'outputDomains'

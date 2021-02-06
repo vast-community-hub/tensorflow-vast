@@ -2,7 +2,6 @@ Class {
 	#name : 'GlorotNormalInitializer',
 	#superclass : 'VariableNodeInitializer',
 	#instVars : [
-		'seed',
 		'tensorGenerator'
 	],
 	#category : 'TFVariableSpecificationModel'

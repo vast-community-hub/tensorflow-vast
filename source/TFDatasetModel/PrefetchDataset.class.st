@@ -1,6 +1,6 @@
 Class {
 	#name : 'PrefetchDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
 		'currentComputation',
 		'outputDomains'

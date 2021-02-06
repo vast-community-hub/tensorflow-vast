@@ -45,7 +45,9 @@ TextDatasetTest >> testCardinality [
 
 	self setUpTextDatasetOnFile: fileName.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -2
+	self
+		assert: dataset isCardinalityUndefined;
+		assert: dataset cardinality equals: -2
 ]
 
 { #category : 'Tests' }
@@ -60,4 +62,17 @@ TextDatasetTest >> testIterateThroughDatasetWithOneFloatVector [
 	self assertOutputOf: iterator next isAStringEqualTo: '1,2,3,4'.
 	self assertOutputOf: iterator next isAStringEqualTo: 'you''ve got the wrong dude'.
 	self assertReachedEnd: iterator
+]
+
+{ #category : 'Tests' }
+TextDatasetTest >> testIterateUsingDo [
+
+	self setUpTextDatasetOnFile: fileName.
+	self assertDatasetHasExpectedOutput: dataset.
+
+	self assert: dataset isCardinalityUndefined.
+	self
+		iterateThrough: dataset
+		collecting: [:tensor | tensor]
+		thenDo: [:foundElements | self assert: foundElements isEmpty]
 ]

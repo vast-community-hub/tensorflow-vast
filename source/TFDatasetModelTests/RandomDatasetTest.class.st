@@ -11,10 +11,10 @@ RandomDatasetTest >> testIterateThroughDatasetWithFloatScalars [
 
 	dataset := RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: TensorDomain ofFloatScalar.
 	self assertDatasetHasExpectedOutput: dataset.
-	
+
 	iterator := dataset newIterator.
-	
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
+
+	self assert: dataset isCardinalityUndefined.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.
@@ -30,12 +30,13 @@ RandomDatasetTest >> testIterateThroughDatasetWithFloatVectors [
 
 	| dataset iterator |
 
-	dataset := RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: (TensorDomain ofFloatVectorSized: 3).
+	dataset :=
+		RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: (TensorDomain ofFloatVectorSized: 3).
 	self assertDatasetHasExpectedOutput: dataset.
-	
+
 	iterator := dataset newIterator.
-	
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
+
+	self assert: dataset isCardinalityUndefined.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.
@@ -56,7 +57,7 @@ RandomDatasetTest >> testIterateThroughDatasetWithIntegerScalars [
 
 	iterator := dataset newIterator.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: -1.
+	self assert: dataset isCardinalityUndefined.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2219120097.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 4035800746.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 253345875.
@@ -65,4 +66,19 @@ RandomDatasetTest >> testIterateThroughDatasetWithIntegerScalars [
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 3653729773.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 2120669524.
 	self assert: (tf compute: iterator next) isLargeIntegerScalarEqualsTo: 1835372352
+]
+
+{ #category : 'Tests' }
+RandomDatasetTest >> testIterateUsingDo [
+
+	| dataset |
+
+	dataset := RandomDataset on: tf withSeed: 0 and: 1 withOutputIn: TensorDomain ofFloatScalar.
+	self assertDatasetHasExpectedOutput: dataset.
+
+	self assert: dataset isCardinalityUndefined.
+	self
+		iterateThrough: dataset
+		collecting: [:item | item]
+		thenDo: [:foundElements | self assert: foundElements isEmpty]
 ]

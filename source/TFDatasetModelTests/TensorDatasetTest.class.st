@@ -19,7 +19,7 @@ TensorDatasetTest >> testIterateThenReset [
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 4.
+	self assert: dataset cardinality equals: 4.
 	iterator := dataset newIterator.
 	next := iterator next.
 	self assert: (next at: 1) isFloatScalarCloseTo: 0.
@@ -54,7 +54,7 @@ TensorDatasetTest >> testIterateThroughDatasetWithOneFloatMatrix [
 
 	iterator := dataset newIterator.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 1.
+	self assert: dataset cardinality equals: 1.
 	self assertOutputOf: iterator next isMatrixCloseTo: #((0 1 2 3) (9 8 7 6)).
 	self assertReachedEnd: iterator
 ]
@@ -69,7 +69,7 @@ TensorDatasetTest >> testIterateThroughDatasetWithOneFloatVector [
 
 	iterator := dataset newIterator.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 1.
+	self assert: dataset cardinality equals: 1.
 	self assertOutputOf: iterator next isFloatVectorCloseTo: #(0 1 2 3).
 	self assertReachedEnd: iterator
 ]
@@ -85,7 +85,7 @@ TensorDatasetTest >> testIterateThroughSlicedDatasetWithOneFloatMatrix [
 
 	iterator := dataset newIterator.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 2.
+	self assert: dataset cardinality equals: 2.
 	self assertOutputOf: iterator next isFloatVectorCloseTo: #(0 1 2 3).
 	self assertOutputOf: iterator next isFloatVectorCloseTo: #(9 8 7 6).
 	self assertReachedEnd: iterator
@@ -102,7 +102,7 @@ TensorDatasetTest >> testIterateThroughSlicedDatasetWithOneFloatVector [
 
 	iterator := dataset newIterator.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 4.
+	self assert: dataset cardinality equals: 4.
 	self assertOutputOf: iterator next isFloatScalarCloseTo: 0.
 	self assertOutputOf: iterator next isFloatScalarCloseTo: 1.
 	self assertOutputOf: iterator next isFloatScalarCloseTo: 2.
@@ -125,7 +125,7 @@ TensorDatasetTest >> testIterateThroughSlicedDatasetWithTwoFloatVectors [
 
 	self assertDatasetHasExpectedOutput: dataset.
 
-	self assert: (tf compute: dataset cardinality) isLargeIntegerScalarEqualsTo: 4.
+	self assert: dataset cardinality equals: 4.
 	iterator := dataset newIterator.
 	next := iterator next.
 	self assert: (next at: 1) isFloatScalarCloseTo: 0.
@@ -140,4 +140,35 @@ TensorDatasetTest >> testIterateThroughSlicedDatasetWithTwoFloatVectors [
 	self assert: (next at: 1) isFloatScalarCloseTo: 3.
 	self assert: (next at: 2) isFloatScalarCloseTo: 6.
 	self assertReachedEnd: iterator
+]
+
+{ #category : 'Tests' }
+TensorDatasetTest >> testIterateUsingDo [
+
+	| dataset |
+
+	dataset :=
+		TensorDataset
+			on: tf
+			slicingAll: (
+				Array
+					with: (tf integerConstantWith: #(0 1 2 3))
+					with: (tf integerConstantWith: #(9 8 7 6))).
+
+	self assertDatasetHasExpectedOutput: dataset.
+
+	self assert: dataset cardinality equals: 4.
+	self
+		iterateThrough: dataset
+		collecting: [:tensor | tensor collect: #scalarOutput]
+		thenDo: [:foundElements |
+			self
+				assert: foundElements
+				equals: (
+					OrderedCollection new
+						add: #(0 9);
+						add: #(1 8);
+						add: #(2 7);
+						add: #(3 6);
+						yourself)]
 ]

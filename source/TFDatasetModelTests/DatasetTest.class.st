@@ -54,3 +54,14 @@ DatasetTest >> datasetWithOneFloatVector [
 
 	^TensorDataset on: tf containing: input
 ]
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+DatasetTest >> iterateThrough: aDataset collecting: aCollectBlock thenDo: aDoBlock [
+
+	| foundElements |
+
+	foundElements := OrderedCollection new.
+	aDataset do: [:each | foundElements add: (aCollectBlock value: each)].
+	aDoBlock value: foundElements
+]

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TextDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
 		'currentComputation'
 	],

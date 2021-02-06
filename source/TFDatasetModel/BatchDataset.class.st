@@ -1,9 +1,7 @@
 Class {
 	#name : 'BatchDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
-		'outputTypes',
-		'outputShapes',
 		'outputDomains',
 		'currentComputation'
 	],

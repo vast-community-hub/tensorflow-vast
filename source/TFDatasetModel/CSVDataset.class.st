@@ -1,6 +1,6 @@
 Class {
 	#name : 'CSVDataset',
-	#superclass : 'Dataset',
+	#superclass : 'DatasetComputationAware',
 	#instVars : [
 		'currentComputation',
 		'outputDomains'
