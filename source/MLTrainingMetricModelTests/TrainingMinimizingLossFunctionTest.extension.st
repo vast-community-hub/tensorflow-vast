@@ -53,3 +53,21 @@ TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 		assert: summary historicalTrainingAccuracy
 		isArrayCloseTo: self expectedAccuracyThroughTenEpochs
 ]
+
+{ #category : '*MLTrainingMetricModelTests',
+ #vaCategories : ['Tests'] }
+TrainingMinimizingLossFunctionTest >> testEpochDuration [
+
+	| model summary durations |
+
+	model := self modelWithTwoOutputUnits.
+	summary :=
+		self neuralNetworkTrainer
+			trackMetricWith: EpochDurationTracker new;
+			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+
+	durations := summary metricKnownAs: EpochDurationTracker metricKey.
+	self assert: durations size equals: 10.
+	self assert: (durations conform: [:duration | duration >= 0])
+]

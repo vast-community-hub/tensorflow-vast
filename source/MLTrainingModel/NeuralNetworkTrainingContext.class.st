@@ -37,11 +37,12 @@ NeuralNetworkTrainingContext >> computeOptimizationToFitTo: aSampleDataset [
 				at: model inputVariableName put: features;
 				at: optimization lossToMinimize targetInputName put: target;
 				yourself].
+
+	metricTrackers do: [:tracker | tracker measureMetricBeforeEpochWith: trainingInputs within: self].
 	loss := optimization computeWith: trainingInputs.
-
+	metricTrackers do: [:tracker | tracker measureMetricAfterEpochWith: trainingInputs within: self].
 	self addMetricValued: loss scalarOutput to: self trainingLossMetricKey.
-	metricTrackers do: [:tracker | tracker measureMetricConsidering: trainingInputs within: self].
-
+	
 	^loss
 ]
 

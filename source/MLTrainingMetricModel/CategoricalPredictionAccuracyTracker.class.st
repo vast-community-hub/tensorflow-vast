@@ -14,11 +14,19 @@ CategoricalPredictionAccuracyTracker class >> metricKey [
 ]
 
 { #category : 'Processing' }
-CategoricalPredictionAccuracyTracker >> measureMetricConsidering: aTrainingEpochInput within: aTrainingContext [
+CategoricalPredictionAccuracyTracker >> measureMetricAfterEpochWith: aTrainingEpochInput within: aTrainingContext [
 
 	aTrainingContext
 		addMetricValued: (accuracy computeWith: aTrainingEpochInput) scalarOutput
 		to: self class metricKey
+]
+
+{ #category : 'Processing' }
+CategoricalPredictionAccuracyTracker >> measureMetricBeforeEpochWith: aTrainingEpochInput within: aTrainingContext [
+
+	" do nothing "
+
+
 ]
 
 { #category : 'Preprocessing' }

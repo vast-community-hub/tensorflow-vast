@@ -92,8 +92,7 @@ AdaptiveMomentEstimation >> apply: aGradient to: aVariable [
 { #category : 'Configuring' }
 AdaptiveMomentEstimation >> considerCurrentEpochIn: aVariable [
 
-
-	timestep := aVariable
+	timestep := aVariable castedTo: TFTensor typeFloat
 ]
 
 { #category : 'Accessing',

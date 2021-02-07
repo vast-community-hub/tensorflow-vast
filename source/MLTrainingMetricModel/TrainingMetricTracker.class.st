@@ -5,7 +5,13 @@ Class {
 }
 
 { #category : 'Processing' }
-TrainingMetricTracker >> measureMetricConsidering: aTrainingEpochInput within: aTrainingContext [
+TrainingMetricTracker >> measureMetricAfterEpochWith: aTrainingEpochInput within: aTrainingContext [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Processing' }
+TrainingMetricTracker >> measureMetricBeforeEpochWith: aTrainingEpochInput within: aTrainingContext [
 
 	self subclassResponsibility
 ]
