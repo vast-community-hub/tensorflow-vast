@@ -1,4 +1,4 @@
 Package {
 	#name : 'DatasetProviderModel',
-	#vaPrerequisites : ['CgExamples','IdxReaderApp','MLTrainingModel','SstHttpCommunications']
+	#vaPrerequisites : ['CgExamples','IdxReaderApp','MLTrainingModel','SstHttpCommunications','TFDatasetModel']
 }

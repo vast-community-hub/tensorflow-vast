@@ -16,7 +16,6 @@ TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingCategoricalCross
 			train: model toFit: self inputDatasetWithLabelsProbabilities.
 
 	durations := summary metricKnownAs: EpochDurationTracker metricKey.
-	summary inspect. 
 	self assert: durations size equals: 10.
 	self assert: (durations conform: [:duration | duration >= 0])
 ]
@@ -35,7 +34,6 @@ TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingMeanSquaredError
 			train: model toFit: self inputDatasetWithLabelsProbabilities.
 
 	durations := summary metricKnownAs: EpochDurationTracker metricKey.
-	summary inspect. 
 	self assert: durations size equals: 10.
 	self assert: (durations conform: [:duration | duration >= 0])
 ]
@@ -54,7 +52,6 @@ TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingSparseCategorica
 			train: model toFit: self inputDatasetWithLabels.
 
 	durations := summary metricKnownAs: EpochDurationTracker metricKey.
-	summary inspect. 
 	self assert: durations size equals: 10.
 	self assert: (durations conform: [:duration | duration >= 0])
 ]

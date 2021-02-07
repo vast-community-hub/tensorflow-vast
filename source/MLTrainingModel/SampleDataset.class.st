@@ -7,8 +7,7 @@ Class {
 		'validationSet',
 		'validationLabels',
 		'testingSet',
-		'testingLabels',
-		'batchSize'
+		'testingLabels'
 	],
 	#category : 'MLTrainingModel'
 }
@@ -51,32 +50,13 @@ SampleDataset >> initialize [
 	validationLabels := nil.
 
 	testingSet := nil.
-	testingLabels := nil. 
-	
-	self splittedInBatchesOf: 32
-]
-
-{ #category : 'Configuring' }
-SampleDataset >> splittedInBatchesOf: anAmountOfInstances [
-	
-	batchSize := anAmountOfInstances
+	testingLabels := nil
 ]
 
 { #category : 'Accessing' }
 SampleDataset >> withTestingDatasetDo: aBlock [
 
 	testingSet isNil ifFalse: [aBlock value: testingSet value: testingLabels]
-]
-
-{ #category : 'Accessing' }
-SampleDataset >> withTrainingBatchesDo: aBlock [
-
-	self withTrainingDatasetDo: [:features :labels |
-		(1 to: features size by: batchSize) do: [:index | | upperBound |
-			upperBound := (index + batchSize - 1) min: features size.
-			aBlock
-				value: (features copyFrom: index to: upperBound)
-				value: (labels copyFrom: index to: upperBound)]]
 ]
 
 { #category : 'Accessing' }

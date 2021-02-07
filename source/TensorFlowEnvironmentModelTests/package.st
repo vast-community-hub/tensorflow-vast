@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowEnvironmentModelTests',
-	#vaPrerequisites : ['TensorFlowEnvironmentModel']
+	#vaPrerequisites : ['SUnit','TensorFlowEnvironmentModel']
 }

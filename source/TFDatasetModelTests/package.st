@@ -1,4 +1,4 @@
 Package {
 	#name : 'TFDatasetModelTests',
-	#vaPrerequisites : ['TensorFlowEnvironmentModelTests','TFUtilityModel']
+	#vaPrerequisites : ['MLTrainingModel','TensorFlowEnvironmentModelTests','TFUtilityModel']
 }

@@ -199,6 +199,12 @@ TensorFlowOperationAbstract >> relu [
 	^RectifiedLinear activating: self
 ]
 
+{ #category : 'Accessing' }
+TensorFlowOperationAbstract >> reshapeFlattened [
+
+	^self reshapeTo: self outputShape flattened
+]
+
 { #category : 'Operations' }
 TensorFlowOperationAbstract >> reshapeTo: aNewShape [
 
