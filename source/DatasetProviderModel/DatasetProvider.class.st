@@ -49,6 +49,17 @@ DatasetProvider >> fashionDataset [
 ]
 
 { #category : 'Accessing - MNIST' }
+DatasetProvider >> fashionDatasetOn: aTensorFlowComputation [
+
+	^(SampleDatasetComputationAware
+		on: aTensorFlowComputation
+		transformingFeaturesWith: [:features | features reshapeFlattened / 255.0]
+		transformingLabelsWith: [:labels | labels]
+		applying: [:dataset | dataset inBatchesOf: 32])
+			bindSetsFrom: self fashionDataset
+]
+
+{ #category : 'Accessing - MNIST' }
 DatasetProvider >> handwrittenDigitsDataset [
 
 	handwrittenDigitsDataset ifNil: [self initializeHandwrittenDataset].
@@ -81,7 +92,7 @@ DatasetProvider >> initializeFashionDataset [
 					self
 						tensorTyped: TFTensor typeFloat
 						fromFileNamed: baseDirectory / 'train-images-idx3-ubyte.gz')
-				andLabelsTo: (
+				withLabels: (
 					self
 						tensorTyped: TFTensor typeInt32
 						fromFileNamed: baseDirectory / 'train-labels-idx1-ubyte.gz');
@@ -114,7 +125,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 					self
 						tensorTyped: TFTensor typeFloat
 						fromFileNamed: baseDirectory / 'train-images-idx3-ubyte.gz')
-				andLabelsTo: (
+				withLabels: (
 					self
 						tensorTyped: TFTensor typeInt32
 						fromFileNamed: baseDirectory / 'train-labels-idx1-ubyte.gz');
@@ -122,7 +133,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 					self
 						tensorTyped: TFTensor typeFloat
 						fromFileNamed: baseDirectory / 't10k-images-idx3-ubyte.gz')
-				andLabelsTo: (
+				withLabels: (
 					self
 						tensorTyped: TFTensor typeInt32
 						fromFileNamed: baseDirectory / 't10k-labels-idx1-ubyte.gz');

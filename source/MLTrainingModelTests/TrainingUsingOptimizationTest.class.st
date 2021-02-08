@@ -51,7 +51,7 @@ TrainingUsingOptimizationTest >> inputDatasetWithLabels [
 
 	^SampleDataset new
 		bindTrainingSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
-			andLabelsTo: self expectedLabels;
+			withLabels: self expectedLabels;
 		yourself
 ]
 
@@ -61,7 +61,7 @@ TrainingUsingOptimizationTest >> inputDatasetWithLabelsProbabilities [
 
 	^SampleDataset new
 		bindTrainingSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
-			andLabelsTo: self expectedProbabilityByLabel;
+			withLabels: self expectedProbabilityByLabel;
 		yourself
 ]
 

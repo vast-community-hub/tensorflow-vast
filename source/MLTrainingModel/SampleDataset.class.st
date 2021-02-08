@@ -19,21 +19,21 @@ SampleDataset class >> new [
 ]
 
 { #category : 'Configuring' }
-SampleDataset >> bindTestingSetTo: aTrainingSet andLabelsTo: aLabelsSet [
+SampleDataset >> bindTestingSetTo: aTrainingSet withLabels: aLabelsSet [
 
 	testingSet := aTrainingSet.
 	testingLabels := aLabelsSet
 ]
 
 { #category : 'Configuring' }
-SampleDataset >> bindTrainingSetTo: aTrainingSet andLabelsTo: aLabelsSet [
+SampleDataset >> bindTrainingSetTo: aTrainingSet withLabels: aLabelsSet [
 
 	trainingSet := aTrainingSet.
 	trainingLabels := aLabelsSet
 ]
 
 { #category : 'Configuring' }
-SampleDataset >> bindValidationSetTo: aValidationSet andLabelsTo: aLabelsSet [
+SampleDataset >> bindValidationSetTo: aValidationSet withLabels: aLabelsSet [
 
 	validationSet := aValidationSet.
 	validationLabels := aLabelsSet

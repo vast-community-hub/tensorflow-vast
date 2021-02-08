@@ -118,17 +118,6 @@ NeuralNetworkTrainer >> train: aModel toFit: aDataset [
 	^self train: aModel doing: [:context | context computeOptimizationToFitTo: aDataset]
 ]
 
-{ #category : 'Training' }
-NeuralNetworkTrainer >> train: aModel toFitPredictionFrom: anInstanceCollection to: aTarget [
-
-	^self
-		train: aModel
-		toFit: (
-			SampleDataset new
-				bindTrainingSetTo: anInstanceCollection andLabelsTo: aTarget;
-				yourself)
-]
-
 { #category : 'Configuring' }
 NeuralNetworkTrainer >> trainingIterations: aTrainingTimes [
 

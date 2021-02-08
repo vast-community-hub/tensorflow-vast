@@ -26,6 +26,16 @@ SampleDatasetComputationAware class >> on: aTensorFlowComputation [
 ]
 
 { #category : 'Instance Creation' }
+SampleDatasetComputationAware class >> on: aTensorFlowComputation applying: aDatasetTransformation [
+
+	^self
+		on: aTensorFlowComputation
+		transformingFeaturesWith: self identityTransformation
+		transformingLabelsWith: self identityTransformation
+		applying: aDatasetTransformation
+]
+
+{ #category : 'Instance Creation' }
 SampleDatasetComputationAware class >> on: aTensorFlowComputation transformingFeaturesWith: aFeaturesTransformation [
 
 	^self

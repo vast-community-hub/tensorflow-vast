@@ -80,9 +80,9 @@ SampleDatasetComputationAwareTest >> testBindFromSampleDataset [
 	set :=
 		SampleDataset new
 			bindTrainingSetTo: #(((1 1) (1 1)) ((2 2) (2 2)) ((3 3) (3 3))) asFloatTensor
-				andLabelsTo: #(1 2 3) asInt32Tensor;
+				withLabels: #(1 2 3) asInt32Tensor;
 			bindValidationSetTo: #(((4 4) (4 4)) ((5 5) (5 5)) ((6 6) (6 6))) asFloatTensor
-				andLabelsTo: #(4 5 6) asInt32Tensor;
+				withLabels: #(4 5 6) asInt32Tensor;
 			yourself.
 
 	adapter :=

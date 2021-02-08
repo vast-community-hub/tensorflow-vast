@@ -29,7 +29,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 		self neuralNetworkTrainer
 			trackMetricWith: CategoricalPredictionAccuracyTracker new; 
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+			train: model toFit: self trainingDataset.
 
 	self
 		assert: summary historicalTrainingAccuracy
@@ -47,7 +47,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 		self neuralNetworkTrainer
 			trackMetricWith: CategoricalPredictionAccuracyTracker new;
 			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+			train: model toFit: self trainingDataset.
 
 	self
 		assert: summary historicalTrainingAccuracy
@@ -65,9 +65,19 @@ TrainingMinimizingLossFunctionTest >> testEpochDuration [
 		self neuralNetworkTrainer
 			trackMetricWith: EpochDurationTracker new;
 			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+			train: model toFit: self trainingDataset.
 
 	durations := summary metricKnownAs: EpochDurationTracker metricKey.
 	self assert: durations size equals: 10.
 	self assert: (durations conform: [:duration | duration >= 0])
+]
+
+{ #category : '*MLTrainingMetricModelTests',
+ #vaCategories : ['Accessing'],
+  #vaVisibility : 'private' }
+TrainingMinimizingLossFunctionTest >> trainingDataset [
+
+	^SampleDataset new
+		bindTrainingSetTo: self inputTensor withLabels: self targetTensor;
+		yourself
 ]

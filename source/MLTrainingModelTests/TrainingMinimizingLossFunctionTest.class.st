@@ -95,7 +95,7 @@ TrainingMinimizingLossFunctionTest >> testLogitsAfterOneEpoch [
 	model := self modelWithTwoOutputUnits.
 	self neuralNetworkTrainer
 		stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-		train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+		train: model toFit: self trainingDataset.
 
 	self
 		assert: (
@@ -115,7 +115,7 @@ TrainingMinimizingLossFunctionTest >> testLossValueAfterOneEpoch [
 	summary :=
 		self neuralNetworkTrainer
 			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+			train: model toFit: self trainingDataset.
 
 	self
 		assertOutputOf:
@@ -132,7 +132,7 @@ TrainingMinimizingLossFunctionTest >> testLossValueThroughTenEpochs [
 	summary :=
 		self neuralNetworkTrainer
 			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
-			train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+			train: model toFit: self trainingDataset.
 
 	self
 		assert: summary historicalTrainingLoss
@@ -147,7 +147,7 @@ TrainingMinimizingLossFunctionTest >> testWeightAfterOneEpoch [
 	model := self modelWithTwoOutputUnits.
 	self neuralNetworkTrainer
 		stopTrainingWhen: (CompletedNumberOfTraining after: 1);
-		train: model toFitPredictionFrom: self inputTensor to: self targetTensor.
+		train: model toFit: self trainingDataset.
 
 	self
 		assertOutputOf: model trainableVariables first
