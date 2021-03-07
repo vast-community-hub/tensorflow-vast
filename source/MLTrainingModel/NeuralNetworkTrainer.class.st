@@ -42,7 +42,7 @@ NeuralNetworkTrainer >> initializeOn: aTensorFlowComputation [
 	tf := aTensorFlowComputation.
 	metricTrackers := OrderedCollection new.
 
-	self afterEveryTrainingDo: [:iter :summary | ]
+	self afterEveryTrainingDo: [:context | ]
 ]
 
 { #category : 'Configuring' }
@@ -88,25 +88,22 @@ NeuralNetworkTrainer >> trackMetricWith: aMetricTracker [
   #vaVisibility : 'private' }
 NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
-	| loss optimization currentEpoch context |
+	| loss context |
 
 	self assertReadyToStartTraining.
-	currentEpoch := CurrentEpochHolder on: aModel currentComputation.
 
-	optimizer considerCurrentEpochIn: currentEpoch asVariable.
 	loss := lossBuilder value: (LossBuilder for: aModel logits).
-	optimization := ModelUpdater updating: aModel toMinimize: loss using: optimizer.
 	context :=
 		NeuralNetworkTrainingContext
 			optimizing: aModel
-			using: optimization
+			minimizing: loss
+			using: optimizer
 			trackingMetricsWith: metricTrackers.
 
-	afterTrainingCallback value: currentEpoch value value: context.
+	afterTrainingCallback value: context.
 	[
 		aTraining value: context.
-		currentEpoch increment.
-		afterTrainingCallback value: currentEpoch value value: context.
+		afterTrainingCallback value: context.
 		stopCondition isModelWellTrainedAccording: context]
 			whileFalse.
 	^NeuralNetworkTrainingSummary regarding: context stoppedAfter: stopCondition

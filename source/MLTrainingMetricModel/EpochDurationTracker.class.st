@@ -3,10 +3,17 @@ Class {
 	#superclass : 'TrainingMetricTracker',
 	#instVars : [
 		'measuredTimes',
-		'timestampAtStart'
+		'timestampAtStart',
+		'stepsDurations'
 	],
 	#category : 'MLTrainingMetricModel'
 }
+
+{ #category : 'Accessing' }
+EpochDurationTracker class >> averageStepDurationMetricKey [
+
+	^'average-step-duration'
+]
 
 { #category : 'Accessing' }
 EpochDurationTracker class >> metricKey [
@@ -15,16 +22,29 @@ EpochDurationTracker class >> metricKey [
 ]
 
 { #category : 'Processing' }
-EpochDurationTracker >> measureMetricAfterEpochWith: aTrainingEpochInput within: aTrainingContext [
+EpochDurationTracker >> measureMetricAfterEpochWithin: aTrainingContext [
+
+	aTrainingContext addMetricValued: stepsDurations mean to: self class averageStepDurationMetricKey.
+	aTrainingContext addMetricValued: stepsDurations sum to: self class metricKey
+]
+
+{ #category : 'Processing' }
+EpochDurationTracker >> measureMetricAfterStepWith: aTrainingEpochInput within: aTrainingContext [
 
 	| timestampAtEnd |
 
 	timestampAtEnd := DateAndTime now asMilliseconds.
-	aTrainingContext addMetricValued: (timestampAtEnd - timestampAtStart) to: self class metricKey
+	stepsDurations add: (timestampAtEnd - timestampAtStart)
 ]
 
 { #category : 'Processing' }
-EpochDurationTracker >> measureMetricBeforeEpochWith: aDictionary within: aNeuralNetworkTrainingContext [
+EpochDurationTracker >> measureMetricBeforeEpochWithin: aNeuralNetworkTrainingContext [
+
+	stepsDurations := OrderedCollection new
+]
+
+{ #category : 'Processing' }
+EpochDurationTracker >> measureMetricBeforeStepWith: aTrainingEpochInput within: aTrainingContext [
 
 	timestampAtStart := DateAndTime now asMilliseconds
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : 'CategoricalPredictionAccuracyTracker',
 	#superclass : 'TrainingMetricTracker',
 	#instVars : [
-		'accuracy'
+		'accuracy',
+		'accuraciesDuringOneEpoch'
 	],
 	#category : 'MLTrainingMetricModel'
 }
@@ -14,16 +15,25 @@ CategoricalPredictionAccuracyTracker class >> metricKey [
 ]
 
 { #category : 'Processing' }
-CategoricalPredictionAccuracyTracker >> measureMetricAfterEpochWith: aTrainingEpochInput within: aTrainingContext [
+CategoricalPredictionAccuracyTracker >> measureMetricAfterEpochWithin: aTrainingContext [
 
-	aTrainingContext
-		addMetricValued: (accuracy computeWith: aTrainingEpochInput) scalarOutput
-		to: self class metricKey
+	aTrainingContext addMetricValued: accuraciesDuringOneEpoch mean to: self class metricKey
+]
+
+{ #category : 'Preprocessing' }
+CategoricalPredictionAccuracyTracker >> measureMetricAfterStepWith: aTrainingEpochInput within: aTrainingContext [
+
+	accuraciesDuringOneEpoch add: (accuracy computeWith: aTrainingEpochInput) scalarOutput
 ]
 
 { #category : 'Processing' }
-CategoricalPredictionAccuracyTracker >> measureMetricBeforeEpochWith: aTrainingEpochInput within: aTrainingContext [
+CategoricalPredictionAccuracyTracker >> measureMetricBeforeEpochWithin: aTrainingContext [
 
+	accuraciesDuringOneEpoch := OrderedCollection new
+]
+
+{ #category : 'Preprocessing' }
+CategoricalPredictionAccuracyTracker >> measureMetricBeforeStepWith: aTrainingEpochInput within: aTrainingContext [
 	" do nothing "
 
 

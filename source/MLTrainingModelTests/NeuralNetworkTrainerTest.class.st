@@ -35,20 +35,22 @@ NeuralNetworkTrainerTest >> modelWithTwoOutputUnits [
 { #category : 'Tests' }
 NeuralNetworkTrainerTest >> testAfterTrainingCallback [
 
-	| model runs |
+	| model runs summary |
 
 	runs := 0.
 	model := self modelWithTwoOutputUnits.
 
-	(NeuralNetworkTrainer on: tf)
-		minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
-		stopTrainingWhen: (CompletedNumberOfTraining after: 10);
-		afterEveryTrainingDo: [:iter :summary |
-			runs := runs + 1.
-			self assert: summary totalNumberOfEpochs equals: iter];
-		train: model toFit: self trainingDatasetWithLabels.
+	summary :=
+		(NeuralNetworkTrainer on: tf)
+			minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
+			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			afterEveryTrainingDo: [:context |
+				runs := runs + 1.
+				self assert: context epochsTrained equals: runs];
+			train: model toFit: self trainingDatasetWithLabels.
 
-	self assert: runs equals: 11
+	self assert: runs equals: 11.
+	self assert: summary epochsTrained equals: 10
 ]
 
 { #category : 'Tests' }
@@ -95,7 +97,7 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossHasNotImprovedADelta [
 			stopTrainingWhen: (LossHasNotImproved moreThan: 0.005);
 			train: model toFit: self trainingDatasetWithLabelProbabilities.
 
-	self assert: summary totalNumberOfEpochs equals: 25
+	self assert: summary epochsTrained equals: 25
 ]
 
 { #category : 'Tests' }
@@ -110,7 +112,7 @@ NeuralNetworkTrainerTest >> testStopTrainingAfterLossReachedAMinimum [
 			stopTrainingWhen: (LossReachedMinimum lowerThan: 0.5);
 			train: model toFit: self trainingDatasetWithLabelProbabilities.
 
-	self assert: summary totalNumberOfEpochs equals: 67.
+	self assert: summary epochsTrained equals: 67.
 	self assert: (summary historicalTrainingLoss at: 66) > 0.5.
 	self assert: (summary historicalTrainingLoss at: 67) <= 0.5
 ]

@@ -1,7 +1,8 @@
 Class {
 	#name : 'DatasetComputationAware',
-	#superclass : 'TensorFlowOperationAbstract',
+	#superclass : 'Object',
 	#instVars : [
+		'value',
 		'cardinality'
 	],
 	#category : 'TFDatasetModel'
@@ -19,6 +20,12 @@ DatasetComputationAware >> cardinality [
 					with: self.
 			cardinality := (self currentComputation compute: op) scalarOutput].
 	^cardinality
+]
+
+{ #category : 'Accessing' }
+DatasetComputationAware >> currentComputation [
+
+	self subclassResponsibility
 ]
 
 { #category : 'Enumerating' }
@@ -54,6 +61,12 @@ DatasetComputationAware >> outputDomains [
 	self subclassResponsibility
 ]
 
+{ #category : 'Accessing' }
+DatasetComputationAware >> outputOn: aGraph [
+
+	^self value outputOn: aGraph
+]
+
 { #category : 'Converting' }
 DatasetComputationAware >> prefetchingInBufferSized: aBufferSize [
 
@@ -73,4 +86,10 @@ DatasetComputationAware >> shuffledWithSeed: anIntegerSeed [
 		shuffling: self
 		buffering: 1024 asInt64Tensor
 		withSeed: anIntegerSeed asInt64Tensor
+]
+
+{ #category : 'Accessing' }
+DatasetComputationAware >> value [
+
+	^value
 ]

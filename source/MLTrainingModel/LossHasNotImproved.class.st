@@ -24,7 +24,7 @@ LossHasNotImproved >> initializeMoreThan: aDelta [
 { #category : 'Testing' }
 LossHasNotImproved >> isModelWellTrainedAccording: aTrainingContext [
 
-	^aTrainingContext totalNumberOfEpochs > 1 and: [| lastLosses |
+	^aTrainingContext epochsTrained > 2 and: [| lastLosses |
 		lastLosses := aTrainingContext historicalTrainingLoss last: 2.
 		lastLosses first - lastLosses last < delta]
 ]

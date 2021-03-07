@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.43',
-						#ts : 3790177674
+						#versionName : '1.44',
+						#ts : 3792572178
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3790177684,
+		#ts : 3792572267,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -43,17 +43,17 @@
 			},
 			{
 				#name : 'MLTrainingMetricModel',
-				#versionName : '1.0',
-				#ts : 3790085930
+				#versionName : '1.1',
+				#ts : 3792571119
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3790164672
+				#versionName : '1.1',
+				#ts : 3792571519
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.35'
+		#versionName : '0.36'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.35',
-						#ts : 3790177684
+						#versionName : '0.36',
+						#ts : 3792572267
 					},
 					{
 						#name : 'SUnit',
@@ -73,7 +73,7 @@
 				]
 			}
 		],
-		#ts : 3790177692,
+		#ts : 3792572363,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -94,17 +94,17 @@
 			},
 			{
 				#name : 'MLTrainingMetricModelTests',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3790164693
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3792566735
 			},
 			{
 				#name : 'MLTrainingModelTests',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3790164695
+				#versionName : '1.1',
+				#ts : 3792571549
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.34'
+		#versionName : '0.35'
 	},
 	{
 		#conditions : [
@@ -143,13 +143,13 @@
 					},
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.35',
-						#ts : 3790177684
+						#versionName : '0.36',
+						#ts : 3792572267
 					}
 				]
 			}
 		],
-		#ts : 3790178260,
+		#ts : 3792572376,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -160,8 +160,8 @@
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3790173972
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3792571107
 			},
 			{
 				#name : 'TensorFlowFunctionExtensions',
@@ -175,7 +175,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.6'
+		#versionName : '0.7'
 	},
 	{
 		#conditions : [
@@ -313,7 +313,7 @@
 				]
 			}
 		],
-		#ts : 3790177674,
+		#ts : 3792572178,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -334,8 +334,8 @@
 			},
 			{
 				#name : 'TFDatasetModel',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3790173928
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3792571567
 			},
 			{
 				#name : 'TFDatasetModelTests',
@@ -369,8 +369,8 @@
 			},
 			{
 				#name : 'TFOptimizerModel',
-				#versionName : '1.0',
-				#ts : 3790097439
+				#versionName : '1.1',
+				#ts : 3792571590
 			},
 			{
 				#name : 'TFOptimizerModelTests',
@@ -419,7 +419,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.43'
+		#versionName : '1.44'
 	},
 	{
 		#conditions : [

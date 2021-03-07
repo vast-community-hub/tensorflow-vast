@@ -24,6 +24,13 @@ TrainingUsingOptimizationTest >> expectedLossWhenMinimizingCategoricalCrossEntro
 	self subclassResponsibility
 ]
 
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> expectedLossWhenMinimizingCategoricalCrossEntropyInBatches [
+
+	self subclassResponsibility
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> expectedLossWhenMinimizingMeanSquaredError [
@@ -33,7 +40,21 @@ TrainingUsingOptimizationTest >> expectedLossWhenMinimizingMeanSquaredError [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> expectedLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntropy [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntropyInBatches [
 
 	self subclassResponsibility
 ]
@@ -87,6 +108,26 @@ TrainingUsingOptimizationTest >> optimizationAlgorithm [
 ]
 
 { #category : 'Tests' }
+TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEntropyInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self inputDatasetWithLabels.
+
+	summary :=
+		self trainerMinimizingSparseCategoricalCrossEntropy
+			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
+]
+
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testMinimizingCategoricalCrossEntropy [
 
 	| model summary |
@@ -100,6 +141,27 @@ TrainingUsingOptimizationTest >> testMinimizingCategoricalCrossEntropy [
 	self
 		assert: summary historicalTrainingLoss
 		isArrayCloseTo: self expectedLossWhenMinimizingCategoricalCrossEntropy
+]
+
+{ #category : 'Tests' }
+TrainingUsingOptimizationTest >> testMinimizingCategoricalCrossEntropyInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self inputDatasetWithLabelsProbabilities.
+
+	summary :=
+		self trainerMinimizingCategoricalCrossEntropy
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self
+		assert: summary historicalTrainingLoss
+		isArrayCloseTo: self expectedLossWhenMinimizingCategoricalCrossEntropyInBatches
 ]
 
 { #category : 'Tests' }
@@ -119,6 +181,27 @@ TrainingUsingOptimizationTest >> testMinimizingMeanSquaredError [
 ]
 
 { #category : 'Tests' }
+TrainingUsingOptimizationTest >> testMinimizingMeanSquaredErrorInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self inputDatasetWithLabelsProbabilities.
+
+	summary :=
+		self trainerMinimizingMeanSquaredError
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self
+		assert: summary historicalTrainingLoss
+		isArrayCloseTo: self expectedLossWhenMinimizingMeanSquaredErrorInBatches
+]
+
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testMinimizingSparseCategoricalCrossEntropy [
 
 	| model summary |
@@ -132,6 +215,27 @@ TrainingUsingOptimizationTest >> testMinimizingSparseCategoricalCrossEntropy [
 	self
 		assert: summary historicalTrainingLoss
 		isArrayCloseTo: self expectedLossWhenMinimizingSparseCategoricalCrossEntropy
+]
+
+{ #category : 'Tests' }
+TrainingUsingOptimizationTest >> testMinimizingSparseCategoricalCrossEntropyInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self inputDatasetWithLabels.
+
+	summary :=
+		self trainerMinimizingSparseCategoricalCrossEntropy
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self
+		assert: summary historicalTrainingLoss
+		isArrayCloseTo: self expectedLossWhenMinimizingSparseCategoricalCrossEntropyInBatches
 ]
 
 { #category : 'Accessing',

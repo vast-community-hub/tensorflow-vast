@@ -5,7 +5,9 @@ Class {
 		'currentComputation',
 		'epochValue',
 		'epochVariable',
-		'incrementEpoch'
+		'incrementEpoch',
+		'trainingStepVariable',
+		'incrementTrainingStep'
 	],
 	#category : 'MLTrainingModel'
 }
@@ -16,17 +18,22 @@ CurrentEpochHolder class >> on: aTensorFlowComputation [
 	^self new initializeOn: aTensorFlowComputation
 ]
 
-{ #category : 'Converting' }
+{ #category : 'Accessing' }
 CurrentEpochHolder >> asVariable [
 
 	^epochVariable
 ]
 
-{ #category : 'Initialization' }
+{ #category : 'Incrementing' }
 CurrentEpochHolder >> increment [
 
-	epochValue := epochValue + 1.
 	currentComputation compute: incrementEpoch
+]
+
+{ #category : 'Incrementing' }
+CurrentEpochHolder >> incrementTrainingStep [
+
+	currentComputation compute: incrementTrainingStep
 ]
 
 { #category : 'Initialization',
@@ -34,13 +41,22 @@ CurrentEpochHolder >> increment [
 CurrentEpochHolder >> initializeOn: aTensorFlowComputation [
 
 	currentComputation := aTensorFlowComputation.
-	epochValue := 0.
 	epochVariable := VariableNode on: currentComputation named: 'currentEpoch' with: 1 asInt64Tensor.
-	incrementEpoch := epochVariable += 1 asInt64Tensor
+	incrementEpoch := epochVariable += 1 asInt64Tensor.
+
+	trainingStepVariable :=
+		VariableNode on: currentComputation named: 'trainingStep' with: 1 asInt64Tensor.
+	incrementTrainingStep := trainingStepVariable += 1 asInt64Tensor
 ]
 
-{ #category : 'Initialization' }
+{ #category : 'Accessing' }
+CurrentEpochHolder >> trainingStepAsVariable [
+
+	^trainingStepVariable
+]
+
+{ #category : 'Accessing' }
 CurrentEpochHolder >> value [
 
-	^epochValue
+	^(currentComputation compute: self asVariable) scalarOutput
 ]

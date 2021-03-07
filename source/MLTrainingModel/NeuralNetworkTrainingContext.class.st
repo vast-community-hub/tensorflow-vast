@@ -4,19 +4,20 @@ Class {
 	#instVars : [
 		'model',
 		'optimization',
-		'accuracy',
 		'metricsDuringTrainings',
-		'metricTrackers'
+		'metricTrackers',
+		'currentEpoch'
 	],
 	#category : 'MLTrainingModel'
 }
 
 { #category : 'Instance Creation' }
-NeuralNetworkTrainingContext class >> optimizing: aModel using: anOptimization trackingMetricsWith: aMetricTrackerCollection [
+NeuralNetworkTrainingContext class >> optimizing: aPredictionModel minimizing: aLossFunction using: anOptimizer trackingMetricsWith: aMetricTrackerCollection [
 
 	^self new
-		initializeOptimizing: aModel
-		using: anOptimization
+		initializeOptimizing: aPredictionModel
+		minimizing: aLossFunction
+		using: anOptimizer
 		trackingMetricsWith: aMetricTrackerCollection
 ]
 
@@ -29,21 +30,35 @@ NeuralNetworkTrainingContext >> addMetricValued: aValue to: aMetricName [
 { #category : 'Computing' }
 NeuralNetworkTrainingContext >> computeOptimizationToFitTo: aSampleDataset [
 
-	| loss trainingInputs |
+	| losses loss trainingInputs |
 
+	losses := OrderedCollection new.
+	metricTrackers do: [:tracker | tracker measureMetricBeforeEpochWithin: self].
 	aSampleDataset withTrainingDatasetDo: [:features :target |
 		trainingInputs :=
 			Dictionary new
 				at: model inputVariableName put: features;
 				at: optimization lossToMinimize targetInputName put: target;
-				yourself].
+				yourself.
+		metricTrackers
+			do: [:tracker | tracker measureMetricBeforeStepWith: trainingInputs within: self].
+		losses add: (optimization computeWith: trainingInputs) scalarOutput.
+		currentEpoch incrementTrainingStep.
+		metricTrackers
+			do: [:tracker | tracker measureMetricAfterStepWith: trainingInputs within: self]].
 
-	metricTrackers do: [:tracker | tracker measureMetricBeforeEpochWith: trainingInputs within: self].
-	loss := optimization computeWith: trainingInputs.
-	metricTrackers do: [:tracker | tracker measureMetricAfterEpochWith: trainingInputs within: self].
-	self addMetricValued: loss scalarOutput to: self trainingLossMetricKey.
-	
+	loss := losses mean.
+	currentEpoch increment.
+	metricTrackers do: [:tracker | tracker measureMetricAfterEpochWithin: self].
+	self addMetricValued: loss to: self trainingLossMetricKey.
+
 	^loss
+]
+
+{ #category : 'Accessing' }
+NeuralNetworkTrainingContext >> epochsTrained [
+
+	^currentEpoch value
 ]
 
 { #category : 'Accessing' }
@@ -54,16 +69,32 @@ NeuralNetworkTrainingContext >> historicalTrainingLoss [
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-NeuralNetworkTrainingContext >> initializeOptimizing: aPredictionModel using: anOptimization trackingMetricsWith: aMetricTrackerCollection [
+NeuralNetworkTrainingContext >> initializeMetricsTrackedBy: aMetricTrackerCollection [
 
-	model := aPredictionModel.
-	optimization := anOptimization.
 	metricTrackers := aMetricTrackerCollection.
 	metricsDuringTrainings :=
-		Dictionary new
+		(Dictionary new)
 			at: self trainingLossMetricKey put: OrderedCollection new;
 			yourself.
 	metricTrackers do: [:each | each prepareMetricsWithin: self]
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainingContext >> initializeOptimizationUsing: anOptimizer minimizing: aLossFunction [
+
+	anOptimizer considerCurrentEpochIn: currentEpoch.
+	optimization := ModelUpdater updating: model toMinimize: aLossFunction using: anOptimizer
+]
+
+{ #category : 'Initialization',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainingContext >> initializeOptimizing: aPredictionModel minimizing: aLossFunction using: anOptimizer trackingMetricsWith: aMetricTrackerCollection [
+
+	model := aPredictionModel.
+	currentEpoch := CurrentEpochHolder on: model currentComputation.
+	self initializeOptimizationUsing: anOptimizer minimizing: aLossFunction.
+	self initializeMetricsTrackedBy: aMetricTrackerCollection
 ]
 
 { #category : 'Computing' }
@@ -108,12 +139,6 @@ NeuralNetworkTrainingContext >> printTrainingDescriptionOn: aStream [
 ]
 
 { #category : 'Accessing' }
-NeuralNetworkTrainingContext >> totalNumberOfEpochs [
-
-	^self historicalTrainingLoss size
-]
-
-{ #category : 'Initialization' }
 NeuralNetworkTrainingContext >> trainingLossMetricKey [
 
 	^'training-loss'

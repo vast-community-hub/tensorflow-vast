@@ -13,10 +13,10 @@ TrainingSummaryMetricsDumper >> dumpMetricsIn: aTrainingSummary knownAs: aMetric
 			tab].
 	aStream cr.
 
-	1 to: aTrainingSummary totalNumberOfEpochs do: [:i |
+	1 to: aTrainingSummary epochsTrained do: [:i |
 		aMetricKeyCollection do: [:metricKey |
 			aStream
-				nextPutAll: (aTrainingSummary metricKnownAs: metricKey);
+				print: ((aTrainingSummary metricKnownAs: metricKey) at: i);
 				tab].
 		aStream cr]
 

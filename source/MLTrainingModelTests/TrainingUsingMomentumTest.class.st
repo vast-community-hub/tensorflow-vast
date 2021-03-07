@@ -11,6 +11,12 @@ TrainingUsingMomentumTest >> expectedLossWhenMinimizingCategoricalCrossEntropy [
 	^#(0.846859931945801 0.84673154354095 0.846487581729889 0.84614038467407 0.845700562000275)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingMomentumTest >> expectedLossWhenMinimizingCategoricalCrossEntropyInBatches [
+
+	^#(0.846796 0.846275 0.845369 0.844159 0.842708)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingMomentumTest >> expectedLossWhenMinimizingMeanSquaredError [
@@ -20,9 +26,22 @@ TrainingUsingMomentumTest >> expectedLossWhenMinimizingMeanSquaredError [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
+TrainingUsingMomentumTest >> expectedLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(0.26488 0.263229 0.260271 0.256324 0.251661)
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TrainingUsingMomentumTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntropy [
 
 	^#(0.887488 0.886846 0.885629 0.883899 0.88171)
+]
+
+{ #category : 'Accessing' }
+TrainingUsingMomentumTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntropyInBatches [
+
+	^#(0.887404 0.884977 0.880603 0.874698 0.867613)
 ]
 
 { #category : 'Accessing',

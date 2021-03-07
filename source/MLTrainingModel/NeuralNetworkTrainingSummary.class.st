@@ -15,6 +15,12 @@ NeuralNetworkTrainingSummary class >> regarding: aTrainingContext stoppedAfter: 
 ]
 
 { #category : 'Accessing' }
+NeuralNetworkTrainingSummary >> epochsTrained [
+
+	^trainingContext epochsTrained - 1
+]
+
+{ #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> historicalTrainingLoss [
 
 	^trainingContext historicalTrainingLoss
@@ -41,12 +47,5 @@ NeuralNetworkTrainingSummary >> printOn: aStream [
 	aStream
 		nextPutAll: ('Stop Condition: <1p>' expandMacrosWith: stopCondition);
 		cr.
-	aStream
-		nextPutAll: ('Current number of epochs run: <1p>' expandMacrosWith: self totalNumberOfEpochs)
-]
-
-{ #category : 'Accessing' }
-NeuralNetworkTrainingSummary >> totalNumberOfEpochs [
-
-	^trainingContext totalNumberOfEpochs
+	aStream nextPutAll: ('Current number of epochs run: <1p>' expandMacrosWith: self epochsTrained)
 ]
