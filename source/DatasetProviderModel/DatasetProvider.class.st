@@ -96,6 +96,14 @@ DatasetProvider >> initializeFashionDataset [
 					self
 						tensorTyped: TFTensor typeInt32
 						fromFileNamed: baseDirectory / 'train-labels-idx1-ubyte.gz');
+			bindValidationSetTo: (
+					self
+						tensorTyped: TFTensor typeFloat
+						fromFileNamed: baseDirectory / 't10k-images-idx3-ubyte.gz')
+				withLabels: (
+					self
+						tensorTyped: TFTensor typeInt32
+						fromFileNamed: baseDirectory / 't10k-labels-idx1-ubyte.gz');
 			yourself
 ]
 

@@ -49,6 +49,12 @@ CurrentEpochHolder >> initializeOn: aTensorFlowComputation [
 	incrementTrainingStep := trainingStepVariable += 1 asInt64Tensor
 ]
 
+{ #category : 'Printing' }
+CurrentEpochHolder >> printOn: aStream [
+
+	aStream nextPutAll: ('Epoch: <1p>' expandMacrosWith: self value)
+]
+
 { #category : 'Accessing' }
 CurrentEpochHolder >> trainingStepAsVariable [
 

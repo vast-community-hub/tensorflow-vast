@@ -44,6 +44,13 @@ TrainingUsingGradientDescentTest >> expectedLossWhenMinimizingSparseCategoricalC
 	^#(0.88665 0.874014 0.861818 0.850049 0.838693)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingGradientDescentTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(4.36017443736394e-1 4.32377288738887e-1 4.29051756858826e-1 4.26015466451645e-1
+	4.23245092233022e-1)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingGradientDescentTest >> optimizationAlgorithm [

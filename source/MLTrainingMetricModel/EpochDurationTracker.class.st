@@ -2,7 +2,6 @@ Class {
 	#name : 'EpochDurationTracker',
 	#superclass : 'TrainingMetricTracker',
 	#instVars : [
-		'measuredTimes',
 		'timestampAtStart',
 		'stepsDurations'
 	],
@@ -22,31 +21,34 @@ EpochDurationTracker class >> metricKey [
 ]
 
 { #category : 'Processing' }
-EpochDurationTracker >> measureMetricAfterEpochWithin: aTrainingContext [
+EpochDurationTracker >> measureMetricDuring: aFittingStage onEpochEndWithin: aTrainingContext [
 
-	aTrainingContext addMetricValued: stepsDurations mean to: self class averageStepDurationMetricKey.
-	aTrainingContext addMetricValued: stepsDurations sum to: self class metricKey
+	aTrainingContext
+		addMetricValued: stepsDurations mean
+		during: aFittingStage
+		to: self class averageStepDurationMetricKey.
+	aTrainingContext
+		addMetricValued: stepsDurations sum
+		during: aFittingStage
+		to: self class metricKey
 ]
 
 { #category : 'Processing' }
-EpochDurationTracker >> measureMetricAfterStepWith: aTrainingEpochInput within: aTrainingContext [
-
-	| timestampAtEnd |
-
-	timestampAtEnd := DateAndTime now asMilliseconds.
-	stepsDurations add: (timestampAtEnd - timestampAtStart)
-]
-
-{ #category : 'Processing' }
-EpochDurationTracker >> measureMetricBeforeEpochWithin: aNeuralNetworkTrainingContext [
+EpochDurationTracker >> measureMetricDuring: aFittingStage onEpochStartWithin: aTrainingContext [
 
 	stepsDurations := OrderedCollection new
 ]
 
 { #category : 'Processing' }
-EpochDurationTracker >> measureMetricBeforeStepWith: aTrainingEpochInput within: aTrainingContext [
+EpochDurationTracker >> measureMetricDuring: aFittingStage onStepEndUsing: aTrainingEpochInput within: aTrainingContext [
 
-	timestampAtStart := DateAndTime now asMilliseconds
+	stepsDurations add: self timestampNow - timestampAtStart
+]
+
+{ #category : 'Processing' }
+EpochDurationTracker >> measureMetricDuring: aFittingStage onStepStartUsing: aStepInput within: aTrainingContext [
+
+	timestampAtStart := self timestampNow
 ]
 
 { #category : 'Preprocessing' }
@@ -54,4 +56,11 @@ EpochDurationTracker >> prepareMetricsWithin: aNeuralNetworkTrainingContext [
 	" do nothing "
 
 
+]
+
+{ #category : 'Processing',
+  #vaVisibility : 'private' }
+EpochDurationTracker >> timestampNow [
+
+	^DateAndTime now asMilliseconds
 ]

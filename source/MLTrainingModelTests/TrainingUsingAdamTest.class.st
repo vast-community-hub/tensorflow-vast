@@ -44,6 +44,13 @@ TrainingUsingAdamTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntropy
 	^#(0.886843 0.883549 0.880392 0.87724 0.874098)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingAdamTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(4.38309023777644e-1 0.43689235051473 4.35552855332692e-1 4.34258788824081e-1
+	4.32999461889267e-1)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingAdamTest >> optimizationAlgorithm [

@@ -5,25 +5,25 @@ Class {
 }
 
 { #category : 'Processing' }
-TrainingMetricTracker >> measureMetricAfterEpochWithin: aTrainingContext [
-
-	self subclassResponsibility
-]
-
-{ #category : 'Preprocessing' }
-TrainingMetricTracker >> measureMetricAfterStepWith: aTrainingEpochInput within: aTrainingContext [
+TrainingMetricTracker >> measureMetricDuring: aFittingStage onEpochEndWithin: aTrainingContext [
 
 	self subclassResponsibility
 ]
 
 { #category : 'Processing' }
-TrainingMetricTracker >> measureMetricBeforeEpochWithin: aTrainingContext [
+TrainingMetricTracker >> measureMetricDuring: aFittingStage onEpochStartWithin: aTrainingContext [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'Preprocessing' }
-TrainingMetricTracker >> measureMetricBeforeStepWith: aTrainingEpochInput within: aTrainingContext [
+{ #category : 'Processing' }
+TrainingMetricTracker >> measureMetricDuring: aFittingStage onStepEndUsing: aStepInput within: aTrainingContext [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Processing' }
+TrainingMetricTracker >> measureMetricDuring: aFittingStage onStepStartUsing: aStepInput within: aTrainingContext [
 
 	self subclassResponsibility
 ]

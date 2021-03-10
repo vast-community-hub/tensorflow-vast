@@ -44,6 +44,13 @@ TrainingUsingAdagradTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntr
 	^#(0.887241 0.885236 0.883753 0.88252 0.881443)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingAdagradTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(4.39144601424535e-1 4.38521802425385e-1 4.38010483980179e-1 4.37567869822184e-1
+	4.37172889709473e-1)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingAdagradTest >> optimizationAlgorithm [

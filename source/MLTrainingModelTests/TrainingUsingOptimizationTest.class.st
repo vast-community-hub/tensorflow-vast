@@ -68,11 +68,38 @@ TrainingUsingOptimizationTest >> expectedProbabilityByLabel [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	self subclassResponsibility
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> expectedValidationProbabilityByLabel [
+
+	^#((0 1) (1 0) (1 0) (0 1) (1 0)) asFloatTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> featuresDataset [
+
+	^#((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+TrainingUsingOptimizationTest >> featuresValidationSet [
+
+	^#((1 0 1) (1 0 0) (0 1 0) (1 1 0) (0 0 0)) asFloatTensor
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> inputDatasetWithLabels [
 
-	^SampleDataset new
-		bindTrainingSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
-			withLabels: self expectedLabels;
+	^(SampleDataset new)
+		bindTrainingSetTo: self featuresDataset withLabels: self expectedLabels;
 		yourself
 ]
 
@@ -80,9 +107,8 @@ TrainingUsingOptimizationTest >> inputDatasetWithLabels [
   #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> inputDatasetWithLabelsProbabilities [
 
-	^SampleDataset new
-		bindTrainingSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
-			withLabels: self expectedProbabilityByLabel;
+	^(SampleDataset new)
+		bindTrainingSetTo: self featuresDataset withLabels: self expectedProbabilityByLabel;
 		yourself
 ]
 
@@ -105,26 +131,6 @@ TrainingUsingOptimizationTest >> modelWithTwoOutputUnits [
 TrainingUsingOptimizationTest >> optimizationAlgorithm [
 
 	self subclassResponsibility
-]
-
-{ #category : 'Tests' }
-TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEntropyInBatches [
-
-	| model summary inputInBatches |
-
-	model := self modelWithTwoOutputUnits.
-
-	inputInBatches :=
-		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
-			bindSetsFrom: self inputDatasetWithLabels.
-
-	summary :=
-		self trainerMinimizingSparseCategoricalCrossEntropy
-			trackMetricWith: CategoricalPredictionAccuracyTracker new;
-			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
-			train: model toFit: inputInBatches.
-
-	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
 ]
 
 { #category : 'Tests' }
@@ -236,6 +242,30 @@ TrainingUsingOptimizationTest >> testMinimizingSparseCategoricalCrossEntropyInBa
 	self
 		assert: summary historicalTrainingLoss
 		isArrayCloseTo: self expectedLossWhenMinimizingSparseCategoricalCrossEntropyInBatches
+]
+
+{ #category : 'Tests' }
+TrainingUsingOptimizationTest >> testValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindTrainingFeaturesTo: self featuresDataset withLabels: self expectedProbabilityByLabel;
+			bindValidationFeaturesTo: self featuresValidationSet
+				withLabels: self expectedValidationProbabilityByLabel;
+			yourself.
+
+	summary :=
+		self trainerMinimizingMeanSquaredError
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self
+		assert: (summary validationMetricKnownAs: 'loss')
+		isArrayCloseTo: self expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches
 ]
 
 { #category : 'Accessing',

@@ -6,12 +6,19 @@ Extension {
  #vaCategories : ['Accessing'] }
 NeuralNetworkTrainingSummary >> historicalTrainingAccuracy [
 
-	^self metricKnownAs: CategoricalPredictionAccuracyTracker metricKey
+	^self trainingMetricKnownAs: CategoricalPredictionAccuracyTracker metricKey
 ]
 
 { #category : '*MLTrainingMetricModel',
  #vaCategories : ['Accessing'] }
-NeuralNetworkTrainingSummary >> metricKnownAs: aMetricKey [
+NeuralNetworkTrainingSummary >> trainingMetricKnownAs: aMetricKey [
 
-	^trainingContext metricKnownAs: aMetricKey
+	^trainingContext trainingMetricKnownAs: aMetricKey
+]
+
+{ #category : '*MLTrainingMetricModel',
+ #vaCategories : ['Accessing'] }
+NeuralNetworkTrainingSummary >> validationMetricKnownAs: aMetricKey [
+
+	^trainingContext validationMetricKnownAs: aMetricKey
 ]

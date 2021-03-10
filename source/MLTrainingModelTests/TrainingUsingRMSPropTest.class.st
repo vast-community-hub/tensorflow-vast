@@ -44,6 +44,13 @@ TrainingUsingRMSPropTest >> expectedLossWhenMinimizingSparseCategoricalCrossEntr
 	^#(0.885448 0.877409 0.872078 0.867611 0.863616)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingRMSPropTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(4.36394661664963e-1 4.34151113033295e-1 4.32353754838308e-1 4.30793096621831e-1
+	4.29382711648941e-1)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingRMSPropTest >> optimizationAlgorithm [

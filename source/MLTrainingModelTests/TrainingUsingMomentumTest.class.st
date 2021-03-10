@@ -44,6 +44,13 @@ TrainingUsingMomentumTest >> expectedLossWhenMinimizingSparseCategoricalCrossEnt
 	^#(0.887404 0.884977 0.880603 0.874698 0.867613)
 ]
 
+{ #category : 'Accessing' }
+TrainingUsingMomentumTest >> expectedValidationLossWhenMinimizingMeanSquaredErrorInBatches [
+
+	^#(4.39283033212026e-1 4.37936892112096e-1 4.36114301284154e-1 4.33948844671249e-1
+	4.31553939978282e-1)
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingUsingMomentumTest >> optimizationAlgorithm [

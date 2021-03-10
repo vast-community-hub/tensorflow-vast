@@ -3,19 +3,21 @@ Extension {
 }
 
 { #category : '*MLTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+ #vaCategories : ['Tests'],
+  #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> assertConsistencyInDurationsTrackedFor: summary [
 
 	| stepAvgDurations epochDurations |
 
-	epochDurations := summary metricKnownAs: EpochDurationTracker metricKey.
-	stepAvgDurations := summary metricKnownAs: EpochDurationTracker averageStepDurationMetricKey.
-	
+	epochDurations := summary trainingMetricKnownAs: EpochDurationTracker metricKey.
+	stepAvgDurations :=
+		summary trainingMetricKnownAs: EpochDurationTracker averageStepDurationMetricKey.
+
 	self assert: epochDurations size equals: 10.
 	self assert: (epochDurations conform: [:duration | duration >= 0]).
 	self assert: stepAvgDurations size equals: 10.
 	self assert: (stepAvgDurations conform: [:duration | duration >= 0]).
-	
+
 	epochDurations
 		with: stepAvgDurations
 		do: [:epochDuration :stepAvgDuration |
@@ -62,6 +64,27 @@ TrainingUsingOptimizationTest >> testAccuracyMinimizingMeanSquaredErrorInBatches
 			train: model toFit: inputInBatches.
 
 	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.5 0.5 0.5 0.5 0.5)
+]
+
+{ #category : '*MLTrainingMetricModelTests',
+ #vaCategories : ['Tests'] }
+TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEntropyInBatches [
+
+	| model summary inputInBatches |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self inputDatasetWithLabels.
+
+	summary :=
+		self trainerMinimizingSparseCategoricalCrossEntropy
+			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			stopTrainingWhen: (CompletedNumberOfTraining after: 5);
+			train: model toFit: inputInBatches.
+
+	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
 ]
 
 { #category : '*MLTrainingMetricModelTests',

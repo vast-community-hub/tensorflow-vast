@@ -7,6 +7,6 @@ Extension {
 NeuralNetworkTrainingContext >> buildCategoricalPredictionAccuracy [
 
 	^CategoricalPredictionAccuracy
-		of: model
+		of: modelToTrain
 		whenExpectedIs: optimization lossToMinimize targetInputAsLabels
 ]

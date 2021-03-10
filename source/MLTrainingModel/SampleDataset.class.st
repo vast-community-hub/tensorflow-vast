@@ -39,6 +39,18 @@ SampleDataset >> bindValidationSetTo: aValidationSet withLabels: aLabelsSet [
 	validationLabels := aLabelsSet
 ]
 
+{ #category : 'Testing' }
+SampleDataset >> hasTrainingSetConfigured [
+
+	^trainingSet isNil not
+]
+
+{ #category : 'Testing' }
+SampleDataset >> hasValidationSetConfigured [
+
+	^validationSet isNil not
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SampleDataset >> initialize [
