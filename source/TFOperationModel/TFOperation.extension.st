@@ -34,7 +34,7 @@ TFOperation >> operationName [
  #vaCategories : ['accessing'] }
 TFOperation >> outputDimensions [
 
-	^graph outputDimenssionsCount: self firstOutput
+	^graph outputDimensionsCount: self firstOutput
 ]
 
 { #category : '*TFOperationModel',

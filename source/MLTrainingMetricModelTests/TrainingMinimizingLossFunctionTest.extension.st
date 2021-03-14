@@ -90,7 +90,7 @@ TrainingMinimizingLossFunctionTest >> testFittingLogger [
 		stopTrainingWhen: (CompletedNumberOfTraining after: 2);
 		train: model toFit: inputInBatches.
 
-	self assert: (stream contents subStrings: Character lf) size equals: 25
+	self assert: (stream contents subStrings: String crlf) size equals: 25
 ]
 
 { #category : '*MLTrainingMetricModelTests',

@@ -104,6 +104,18 @@ SampleDatasetComputationAware >> bindValidationFeaturesTo: aFeaturesTensor withL
 				slicingAll: (Array with: featuresNode with: labelsNode))
 ]
 
+{ #category : 'Testing' }
+SampleDatasetComputationAware >> hasTrainingSetConfigured [
+
+	^trainingDataset isNil not
+]
+
+{ #category : 'Testing' }
+SampleDatasetComputationAware >> hasValidationSetConfigured [
+
+	^validationDataset isNil not
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 SampleDatasetComputationAware >> initializeOn: aTensorFlowComputation transformingFeaturesWith: aFeaturesTransformation transformingLabelsWith: aLabelsTransformation applying: aDatasetTransformation [
@@ -124,15 +136,17 @@ SampleDatasetComputationAware >> withTrainingBatchesDo: aTwoArgBlock [
 { #category : 'Accessing' }
 SampleDatasetComputationAware >> withTrainingDatasetDo: aTwoArgBlock [
 
-	trainingDataset ifNotNil: [:dataset |
-		dataset
-			do: [:batchSample | aTwoArgBlock value: (batchSample at: 1) value: (batchSample at: 2)]]
+	self hasTrainingSetConfigured
+		ifTrue: [
+			trainingDataset do: [:batchSample |
+				aTwoArgBlock value: (batchSample at: 1) value: (batchSample at: 2)]]
 ]
 
 { #category : 'Accessing' }
 SampleDatasetComputationAware >> withValidationDatasetDo: aTwoArgBlock [
 
-	validationDataset ifNotNil: [:dataset |
-		dataset
-			do: [:batchSample | aTwoArgBlock value: (batchSample at: 1) value: (batchSample at: 2)]]
+	self hasValidationSetConfigured
+		ifTrue: [
+			validationDataset do: [:batchSample |
+				aTwoArgBlock value: (batchSample at: 1) value: (batchSample at: 2)]]
 ]
