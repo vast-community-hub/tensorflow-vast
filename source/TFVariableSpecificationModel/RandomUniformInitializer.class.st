@@ -80,12 +80,13 @@ RandomUniformInitializer class >> withSeed: anIntegerSeed [
 ]
 
 { #category : 'Applying' }
-RandomUniformInitializer >> applyTo: aTFVariable [
+RandomUniformInitializer >> applyTo: aVariableNode [
 
-	aTFVariable assign: (
+
+	aVariableNode assign: (
 		tensorGenerator
-			uniformTensorOn: aTFVariable graph
-			shaped: aTFVariable outputShape
+			uniformTensorOn: aVariableNode currentComputation
+			shaped: aVariableNode outputShape
 			boundedBetween: minimumValue
 			and: maximumValue)
 ]

@@ -6,26 +6,32 @@ Class {
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-RandomSeedTensorGenerator >> truncatedNormalTensorOn: aGraph shaped: aTensorShape [
+RandomSeedTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape [
+
 
 	| shape |
 
-	shape := aGraph const: aTensorShape dimensionSizes asInt32Tensor.
-	
-	^shape
-		unaryOp: 'TruncatedNormal'
-		described: [:description | description atDataTypePut: TFTensor typeFloat]
+	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
+
+	^ aComputation
+		newOperationOf: 'TruncatedNormal'
+		namePrefixed: 'TruncatedNormal'
+		withAll: ( Array with: shape )
+		describedBy: [ :description | description atDataTypePut: TFTensor typeFloat ]
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-RandomSeedTensorGenerator >> uniformTensorOn: aGraph shaped: aTensorShape [
+RandomSeedTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
+
 
 	| shape |
 
-	shape := aGraph const: aTensorShape dimensionSizes asInt32Tensor.
-	
-	^shape
-		unaryOp: 'RandomUniform'
-		described: [:description | description atDataTypePut: TFTensor typeFloat]
+	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
+
+	^ aComputation
+		newOperationOf: 'RandomUniform'
+		namePrefixed: 'RandomUniform'
+		withAll: ( Array with: shape )
+		describedBy: [ :description | description atDataTypePut: TFTensor typeFloat ]
 ]

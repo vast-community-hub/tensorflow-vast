@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : 'Evaluating' }
-VariableNodeInitializer >> applyTo: aVariable [
+VariableNodeInitializer >> applyTo: aVariableNode [
 	
 	self subclassResponsibility
 	

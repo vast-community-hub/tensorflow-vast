@@ -4,7 +4,8 @@ Extension {
 
 { #category : '*TFOperationModel',
  #vaCategories : ['TensorFlow-Kernel'] }
-Number >> outputOn: aGraph [
+Number >> outputOn: aComputation [
 
-	^(self asOperationOn: aGraph) firstOutput
+
+	^ ( self asOperationOn: aComputation ) value firstOutput
 ]

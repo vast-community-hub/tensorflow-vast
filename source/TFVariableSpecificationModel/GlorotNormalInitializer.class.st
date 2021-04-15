@@ -27,10 +27,14 @@ GlorotNormalInitializer class >> withSeed: anIntegerSeed [
 ]
 
 { #category : 'Applying' }
-GlorotNormalInitializer >> applyTo: aTFVariable [
+GlorotNormalInitializer >> applyTo: aVariableNode [
 
-	aTFVariable assign: (
-		tensorGenerator glorotNormalTensorOn: aTFVariable graph shaped: aTFVariable outputShape)
+
+	aVariableNode
+		assign:
+			( tensorGenerator
+				glorotNormalTensorOn: aVariableNode currentComputation
+				shaped: aVariableNode outputShape )
 ]
 
 { #category : 'Initialization',

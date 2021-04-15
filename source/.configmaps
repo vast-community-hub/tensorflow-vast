@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.46',
-						#ts : 3793188961
+						#versionName : '1.47',
+						#ts : 3795539758
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3793188985,
+		#ts : 3795539779,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -38,8 +38,8 @@
 			},
 			{
 				#name : 'MLNeuralNetworkModel',
-				#versionName : 'df8d906-new-modem',
-				#ts : 3786569045
+				#versionName : 'df8d906-new-moden',
+				#ts : 3795888463
 			},
 			{
 				#name : 'MLTrainingMetricModel',
@@ -53,7 +53,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.38'
+		#versionName : '0.39'
 	},
 	{
 		#conditions : [
@@ -62,8 +62,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.38',
-						#ts : 3793188985
+						#versionName : '0.39',
+						#ts : 3795539779
 					},
 					{
 						#name : 'SUnit',
@@ -73,7 +73,7 @@
 				]
 			}
 		],
-		#ts : 3793188992,
+		#ts : 3795539773,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -104,7 +104,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.37'
+		#versionName : '0.38'
 	},
 	{
 		#conditions : [
@@ -143,20 +143,20 @@
 					},
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.38',
-						#ts : 3793188985
+						#versionName : '0.39',
+						#ts : 3795539779
 					}
 				]
 			}
 		],
-		#ts : 3793189201,
+		#ts : 3795539776,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'DatasetProviderModel',
-				#versionName : 'df8d906-new-model - 1.5',
-				#ts : 3792689391
+				#versionName : 'df8d906-new-model - 1.6',
+				#ts : 3795539747
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
@@ -175,7 +175,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.9'
+		#versionName : '0.10'
 	},
 	{
 		#conditions : [
@@ -262,7 +262,7 @@
 				]
 			}
 		],
-		#ts : 3793188948,
+		#ts : 3795539751,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -273,18 +273,18 @@
 			},
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : '1.0',
-				#ts : 3788971449
+				#versionName : '1.1',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3793188939
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TensorFlowCoreTests',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3793188939
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
@@ -298,7 +298,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.13'
+		#versionName : '0.64.14'
 	},
 	{
 		#conditions : [
@@ -307,13 +307,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.13',
-						#ts : 3793188948
+						#versionName : '0.64.14',
+						#ts : 3795539751
 					}
 				]
 			}
 		],
-		#ts : 3793188961,
+		#ts : 3795539758,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -324,8 +324,8 @@
 			},
 			{
 				#name : 'TensorFlowEnvironmentModel',
-				#versionName : '1.0',
-				#ts : 3788971465
+				#versionName : '1.1',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TensorFlowEnvironmentModelTests',
@@ -359,8 +359,8 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : 'df8d906-new-model - 1.4',
-				#ts : 3793188939
+				#versionName : 'df8d906-new-model - 1.5',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TFOperationModelTests',
@@ -409,8 +409,8 @@
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : 'df8d906-new-moden',
-				#ts : 3790075340
+				#versionName : 'df8d906-new-modeo',
+				#ts : 3795539747
 			},
 			{
 				#name : 'TFVariableSpecificationModelTests',
@@ -419,7 +419,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.46'
+		#versionName : '1.47'
 	},
 	{
 		#conditions : [

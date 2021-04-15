@@ -367,7 +367,7 @@ TFGraph >> operationsSelect: conditionBlock thenDo: actionBlock [
 ]
 
 { #category : 'outputs' }
-TFGraph >> outputDimenssionsCount: aTFOutput [
+TFGraph >> outputDimensionsCount: aTFOutput [
 	| status answer |
 	status := TFStatus create.
 	answer := self library

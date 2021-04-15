@@ -20,12 +20,13 @@ ConstantInitializer class >> withZeros [
 ]
 
 { #category : 'Evaluating' }
-ConstantInitializer >> applyTo: aTFVariable [
+ConstantInitializer >> applyTo: aVariableNode [
 
-	aTFVariable assign: (
+
+	aVariableNode assign: (
 		(initialValue isA: TFTensor)
-			ifTrue: [initialValue value asOperationOn: aTFVariable graph]
-			ifFalse: [(ConstantNode like: aTFVariable filledWith: initialValue) value])
+			ifTrue: [initialValue value asOperationOn: aVariableNode currentComputation]
+			ifFalse: [(ConstantNode like: aVariableNode filledWith: initialValue) value])
 ]
 
 { #category : 'Initialization',

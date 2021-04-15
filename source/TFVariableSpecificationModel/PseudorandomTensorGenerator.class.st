@@ -23,18 +23,18 @@ PseudorandomTensorGenerator >> glorotFactorBasedOn: aTensorShape [
 ]
 
 { #category : 'Accessing' }
-PseudorandomTensorGenerator >> glorotNormalTensorOn: aGraph shaped: aTensorShape [
+PseudorandomTensorGenerator >> glorotNormalTensorOn: aComputation shaped: aTensorShape [
 
 	| scale stddev |
 
 	scale := self glorotFactorBasedOn: aTensorShape.
 	stddev := scale sqrt / 0.87962566103423978. " Constant from https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/init_ops_v2.py#L593 "
 	
-	^self truncatedNormalTensorOn: aGraph shaped: aTensorShape centeredOn: 0 spreadedBy: stddev
+	^self truncatedNormalTensorOn: aComputation shaped: aTensorShape centeredOn: 0 spreadedBy: stddev
 ]
 
 { #category : 'Accessing' }
-PseudorandomTensorGenerator >> glorotUniformTensorOn: aGraph shaped: aTensorShape [
+PseudorandomTensorGenerator >> glorotUniformTensorOn: aComputation shaped: aTensorShape [
 
 	| scale stddev |
 
@@ -42,7 +42,7 @@ PseudorandomTensorGenerator >> glorotUniformTensorOn: aGraph shaped: aTensorShap
 	stddev := (3 * scale) sqrt.
 	
 	^self
-		uniformTensorOn: aGraph
+		uniformTensorOn: aComputation
 		shaped: aTensorShape
 		boundedBetween: stddev negated
 		and: stddev
@@ -50,45 +50,48 @@ PseudorandomTensorGenerator >> glorotUniformTensorOn: aGraph shaped: aTensorShap
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-PseudorandomTensorGenerator >> rescale: aTensor centeredTo: aMeanValue spreadedBy: aStandardDeviation on: aGraph [
+PseudorandomTensorGenerator >> rescale: aTensor centeredTo: aMeanValue spreadedBy: aStandardDeviation on: aComputation [
+
 
 	| stddev mean |
 
-	mean := aGraph const: aMeanValue asFloatTensor.
-	stddev := aGraph const: aStandardDeviation asFloatTensor.
-	^((ElementWiseMultiplication of: aTensor and: stddev) + mean) value
+	mean := ConstantNode on: aComputation with: aMeanValue asFloatTensor.
+	stddev := ConstantNode on: aComputation with: aStandardDeviation asFloatTensor.
+	^ ( ElementWiseMultiplication of: aTensor and: stddev ) + mean
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-PseudorandomTensorGenerator >> truncatedNormalTensorOn: aGraph shaped: aTensorShape [
+PseudorandomTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape [
 
 	self subclassResponsibility
 ]
 
 { #category : 'Accessing' }
-PseudorandomTensorGenerator >> truncatedNormalTensorOn: aGraph shaped: aTensorShape centeredOn: aMeanValue spreadedBy: aStandardDeviation [
+PseudorandomTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape centeredOn: aMeanValue spreadedBy: aStandardDeviation [
+
 
 	^self
-		rescale: (self truncatedNormalTensorOn: aGraph shaped: aTensorShape)
+		rescale: (self truncatedNormalTensorOn: aComputation shaped: aTensorShape)
 		centeredTo: aMeanValue
 		spreadedBy: aStandardDeviation
-		on: aGraph
+		on: aComputation
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-PseudorandomTensorGenerator >> uniformTensorOn: aGraph shaped: aTensorShape [
+PseudorandomTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
+
 
 	self subclassResponsibility
 ]
 
 { #category : 'Accessing' }
-PseudorandomTensorGenerator >> uniformTensorOn: aGraph shaped: aTensorShape boundedBetween: aMinimumValue and: aMaximumValue [
+PseudorandomTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape boundedBetween: aMinimumValue and: aMaximumValue [
 
 	^self
-		rescale: (self uniformTensorOn: aGraph shaped: aTensorShape)
+		rescale: (self uniformTensorOn: aComputation shaped: aTensorShape)
 		centeredTo: aMinimumValue
 		spreadedBy: (aMaximumValue - aMinimumValue)
-		on: aGraph
+		on: aComputation
 ]

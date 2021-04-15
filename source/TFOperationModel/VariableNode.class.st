@@ -2,7 +2,8 @@ Class {
 	#name : 'VariableNode',
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
-		'currentComputation'
+		'currentComputation',
+		'currentValueAssigned'
 	],
 	#category : 'TFOperationModel'
 }
@@ -29,6 +30,17 @@ VariableNode class >> on: aComputation named: aName of: aType shaped: aShape ini
 		initializedWith: aVariableInitializer
 ]
 
+{ #category : 'Configuring' }
+VariableNode >> assign: anOperation [
+
+
+	currentValueAssigned := currentComputation
+		newOperationOf: 'Assign'
+		namePrefixed: self operationName , '_initializer'
+		with: self 
+		with: anOperation
+]
+
 { #category : 'Accessing' }
 VariableNode >> currentComputation [
 
@@ -49,7 +61,7 @@ VariableNode >> initializeOn: aTensorFlowComputation named: aName of: aType shap
 				description
 					atDataTypePut: aType;
 					atShapePut: aShape].
-	aVariableInitializer applyTo: value
+	aVariableInitializer applyTo: self
 ]
 
 { #category : 'Accessing',

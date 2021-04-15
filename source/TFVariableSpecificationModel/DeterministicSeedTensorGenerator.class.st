@@ -22,28 +22,32 @@ DeterministicSeedTensorGenerator >> initializeFixedTo: anIntegerSeed [
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-DeterministicSeedTensorGenerator >> truncatedNormalTensorOn: aGraph shaped: aTensorShape [
+DeterministicSeedTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape [
+
 
 	| shape seeds |
 
-	shape := aGraph const: aTensorShape dimensionSizes asInt32Tensor.
-	seeds := aGraph const: (Array with: seed with: 0) asInt32Tensor.
-	^shape
-		binaryOp: 'StatelessTruncatedNormal'
-		with: seeds
-		described: [:description | description atDataTypePut: TFTensor typeFloat]
+	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
+	seeds := ConstantNode on: aComputation with: ( Array with: seed with: 0 ) asInt32Tensor.
+	^ aComputation
+		newOperationOf: 'StatelessTruncatedNormal'
+		namePrefixed: 'StatelessTruncatedNormal'
+		withAll: ( Array with: shape with: seeds )
+		describedBy: [ :description | description atDataTypePut: TFTensor typeFloat ]
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
-DeterministicSeedTensorGenerator >> uniformTensorOn: aGraph shaped: aTensorShape [
+DeterministicSeedTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
+
 
 	| shape seeds |
 
-	shape := aGraph const: aTensorShape dimensionSizes asInt32Tensor.
-	seeds := aGraph const: (Array with: seed with: 0) asInt32Tensor.
-	^shape
-		binaryOp: 'StatelessRandomUniform'
-		with: seeds
-		described: [:description | description atDataTypePut: TFTensor typeFloat]
+	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
+	seeds := ConstantNode on: aComputation with: (Array with: seed with: 0) asInt32Tensor.
+	^ aComputation 
+		newOperationOf: 'StatelessRandomUniform'
+		namePrefixed: 'StatelessRandomUniform'
+		withAll: (Array with: shape with: seeds)
+		describedBy: [:description | description atDataTypePut: TFTensor typeFloat] 
 ]

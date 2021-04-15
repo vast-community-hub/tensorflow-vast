@@ -81,12 +81,13 @@ TruncatedNormalInitializer class >> withSeed: anIntegerSeed [
 ]
 
 { #category : 'Evaluating' }
-TruncatedNormalInitializer >> applyTo: aTFVariable [
+TruncatedNormalInitializer >> applyTo: aVariableNode [
 
-	aTFVariable assign: (
+
+	aVariableNode assign: (
 		tensorGenerator
-			truncatedNormalTensorOn: aTFVariable graph
-			shaped: aTFVariable outputShape
+			truncatedNormalTensorOn: aVariableNode currentComputation
+			shaped: aVariableNode outputShape
 			centeredOn: mean
 			spreadedBy: standardDeviation)
 ]

@@ -30,6 +30,12 @@ NeuralNetworkBuilder >> buildBasedOn: aModel toFitPredictionFrom: aFeaturesColle
 		doing: [:trainedModel | aModel updateWeightsToFitPredictionFrom: aFeaturesCollection to: aTarget]
 ]
 
+{ #category : 'Accessing' }
+NeuralNetworkBuilder >> epochsTrained [
+
+	^epoch
+]
+
 { #category : 'Processing',
   #vaVisibility : 'private' }
 NeuralNetworkBuilder >> initialize [
@@ -43,12 +49,6 @@ NeuralNetworkBuilder >> initialize [
 NeuralNetworkBuilder >> stopTrainingWhen: aStopCondition [
 
 	stopCondition := aStopCondition
-]
-
-{ #category : 'Not categorized' }
-NeuralNetworkBuilder >> totalNumberOfEpochs [
-
-	^epoch
 ]
 
 { #category : 'Processing',
