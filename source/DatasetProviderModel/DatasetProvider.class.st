@@ -72,7 +72,7 @@ DatasetProvider >> initializeFashionDataset [
 
 	| baseUrl baseDirectory |
 
-	baseUrl := 'https://storage.googleapis.com/tensorflow/tf-keras-datasets/'.
+	baseUrl := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-fashion/'.
 	baseDirectory := './datasets/fashion-mnist' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
 
@@ -113,7 +113,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 
 	| baseUrl baseDirectory |
 
-	baseUrl := 'http://yann.lecun.com/exdb/mnist/'.
+	baseUrl := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-handwritten/'.
 	baseDirectory := './datasets/mnist-handwritten/' asFileReference.
 	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
 
