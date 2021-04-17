@@ -7,9 +7,10 @@ Class {
 	#category : 'TensorFlowCoreTests'
 }
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> addGraphTwoInputsInt64 [
-	| graph in1 in2 |
+	"| graph in1 in2 |
 	graph := TFGraph create.
 	in1 := graph placeholder: 'in1' type: TFTensor typeInt64.
 	in2 := graph placeholder: 'in2' type: TFTensor typeInt64.
@@ -18,17 +19,27 @@ TensorFlowCAPITest >> addGraphTwoInputsInt64 [
 		described: [ :description | 
 			description addInput: (in1 output: 0).
 			description addInput: (in2 output: 0) ].
-	^ graph
+	^ graph"
+
+	^TFGraph fromString:
+		#[10 46 10 3 105 110 49 18 11 80 108 97 99 101 104 111 108 100 101 114 42 13 10 5 115 104 97
+		112 101 18 4 58 2 24 1 42 11 10 5 100 116 121 112 101 18 2 48 9 10 46 10 3 105 110 50 18 11
+		80 108 97 99 101 104 111 108 100 101 114 42 13 10 5 115 104 97 112 101 18 4 58 2 24 1 42 11
+		10 5 100 116 121 112 101 18 2 48 9 10 29 10 3 97 100 100 18 3 65 100 100 26 3 105 110 49 26 3
+		105 110 50 42 7 10 1 84 18 2 48 9 18 0 34 3 8 184 3]
+			asString
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'test support',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertElementsOf: tensorArray are: allElementsArray [
 	self
 		assert: allElementsArray
 		equals: (TFTensor elementsOf: tensorArray)
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'testing tensor',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertRankOf: aMultidimensionalTensor is: anInteger [
 	| rank |
 	rank := TFTensor rankOf: aMultidimensionalTensor.
@@ -39,7 +50,8 @@ TensorFlowCAPITest >> assertRankOf: aMultidimensionalTensor is: anInteger [
 				, anInteger printString
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'testing tensor',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertShapeOf: aMultidimensionalTensor is: anArray [
 	| shape |
 	shape := TFTensor shapeOf: aMultidimensionalTensor.
@@ -50,7 +62,8 @@ TensorFlowCAPITest >> assertShapeOf: aMultidimensionalTensor is: anArray [
 				, anArray printString
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'testing tensor',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertSizeOf: aMultidimensionalTensor is: anInteger [
 	| size |
 	size := TFTensor sizeOf: aMultidimensionalTensor.
@@ -61,19 +74,22 @@ TensorFlowCAPITest >> assertSizeOf: aMultidimensionalTensor is: anInteger [
 				, anInteger printString
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'testing tensor',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertTensor: aTFTensor elementsEquals: tensorArray [
 	self assert: aTFTensor allElements equals: tensorArray
 ]
 
-{ #category : 'testing tensor' }
+{ #category : 'testing tensor',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertTensor: aTFTensor streamEquals: tensorArray [
 	| strm |
 	strm := aTFTensor asStream.
 	tensorArray do: [ :each | self assert: each equals: strm next ]
 ]
 
-{ #category : 'testing strings' }
+{ #category : 'testing strings',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> assertTensorFromStrings: strings shape: shape [
 	| tensor |
 	tensor := TFTensor fromStrings: strings shape: shape asTensorShape.
@@ -81,94 +97,8 @@ TensorFlowCAPITest >> assertTensorFromStrings: strings shape: shape [
 	self assert: strings equals: tensor allStrings
 ]
 
-{ #category : 'graphs' }
-TensorFlowCAPITest >> asStringGraphType: type [
-	| graph in |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: type.
-	graph
-		asString: 'out'
-		described: [ :description | description addInput: (in output: 0) ].
-	^ graph
-]
-
-{ #category : 'graphs' }
-TensorFlowCAPITest >> concatGraphInputList [
-	| graph in1 in2 concat dimension dimensionValue inputs |
-	graph := TFGraph create.
-	dimensionValue := TFTensor fromInt32: 0.
-	dimension := graph const: 'const' value: dimensionValue.
-	in1 := graph placeholder: 'in1' type: TFTensor typeInt64.
-	in2 := graph placeholder: 'in2' type: TFTensor typeInt64.
-	inputs := Array with: (in1 output: 0) with: (in2 output: 0).
-	concat := graph
-		concat: 'concat'
-		described: [ :description | 
-			description addInput: (dimension output: 0).
-			description addInputs: inputs.
-			description at: 'N' putInt: 2.
-			description at: 'T' putType: TFTensor typeInt64 ].
-	concat.
-	^ graph
-]
-
-{ #category : 'graphs' }
-TensorFlowCAPITest >> concatGraphInputListNoSizeNoType [
-	| graph in1 in2 concat dimension dimensionValue inputs |
-	graph := TFGraph create.
-	dimensionValue := TFTensor fromInt32: 0.
-	dimension := graph const: 'const' value: dimensionValue.
-	in1 := graph placeholder: 'in1' type: TFTensor typeInt64.
-	in2 := graph placeholder: 'in2' type: TFTensor typeInt64.
-	inputs := Array with: (in1 output: 0) with: (in2 output: 0).
-	concat := graph
-		concat: 'concat'
-		described: [ :description | 
-			description addInput: (dimension output: 0).
-			description addInputs: inputs ].
-	concat.
-	^ graph
-]
-
-{ #category : 'graphs' }
-TensorFlowCAPITest >> concatGraphInputListWrongSize [
-	| graph in1 in2 concat dimension dimensionValue inputs |
-	graph := TFGraph create.
-	dimensionValue := TFTensor fromInt32: 0.
-	dimension := graph const: 'const' value: dimensionValue.
-	in1 := graph placeholder: 'in1' type: TFTensor typeInt64.
-	in2 := graph placeholder: 'in2' type: TFTensor typeInt64.
-	inputs := Array with: (in1 output: 0) with: (in2 output: 0).
-	concat := graph
-		concat: 'concat'
-		described: [ :description | 
-			description addInput: (dimension output: 0).
-			description addInputs: inputs.
-			description at: 'N' putInt: 0 ].
-	concat.
-	^ graph
-]
-
-{ #category : 'graphs' }
-TensorFlowCAPITest >> concatGraphInputListWrongType [
-	| graph in1 in2 concat dimension dimensionValue inputs |
-	graph := TFGraph create.
-	dimensionValue := TFTensor fromInt32: 0.
-	dimension := graph const: 'const' value: dimensionValue.
-	in1 := graph placeholder: 'in1' type: TFTensor typeInt64.
-	in2 := graph placeholder: 'in2' type: TFTensor typeInt64.
-	inputs := Array with: (in1 output: 0) with: (in2 output: 0).
-	concat := graph
-		concat: 'concat'
-		described: [ :description | 
-			description addInput: (dimension output: 0).
-			description addInputs: inputs.
-			description at: 'T' putType: TFTensor typeInt32 ].
-	concat.
-	^ graph
-]
-
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constant2x2FloatGraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -180,12 +110,14 @@ TensorFlowCAPITest >> constant2x2FloatGraphDef [
 		asString
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constant2x2FloatGraphFromDef [
 	^ TFGraph fromString: self constant2x2FloatGraphDef
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantFloatGraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -197,12 +129,14 @@ TensorFlowCAPITest >> constantFloatGraphDef [
 		asString
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantFloatGraphFromDef [
 	^ TFGraph fromString: self constantFloatGraphDef
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantInt32GraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -214,24 +148,14 @@ TensorFlowCAPITest >> constantInt32GraphDef [
 		asString
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantInt32GraphFromDef [
 	^ TFGraph fromString: self constantInt32GraphDef
 ]
 
-{ #category : 'graphs' }
-TensorFlowCAPITest >> constantInt64Graph [
-	| graph operation constant |
-	graph := TFGraph create.
-	constant := TFTensor fromInt64: 16r4242424242424242.
-	self
-		shouldnt: [ operation := graph const: 'a' value: constant ]
-		raise: Error.
-	self deny: operation isNull.
-	^ graph
-]
-
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantInt64GraphDef [
 	" This GraphDef corresponds to simple Graph, defined as
 	
@@ -247,38 +171,20 @@ TensorFlowCAPITest >> constantInt64GraphDef [
 	"
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> constantInt64GraphFromDef [
 	^ TFGraph fromString: self constantInt64GraphDef
 ]
 
-{ #category : 'graphs' }
-TensorFlowCAPITest >> decodeCSVGraphDefaults: anArrayOfTFTensors [
-	| graph records defaults |
-	graph := TFGraph create.
-	records := (graph placeholder: 'records' type: TFTensor typeString)
-		output: 0.
-	defaults := Array new: anArrayOfTFTensors size.
-	1 to: anArrayOfTFTensors size do: [:index |
-			| one |
-			one := (graph const: 'default' , index printString value: (anArrayOfTFTensors at: index))
-				output: 0.
-			defaults at: index put: one ].
-	graph
-		newOperation: 'DecodeCSV'
-		named: 'output'
-		described: [ :description | 
-			description addInput: records.
-			description addInputs: defaults ].
-	^ graph
-]
-
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> emptyGraph [
 	^ TFGraph fromString: self emptyGraphDef
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> emptyGraphDef [
 	" This GraphDef corresponds to an Empty Graph (no operations), saved as ProtoBuf "
 
@@ -286,7 +192,8 @@ TensorFlowCAPITest >> emptyGraphDef [
 		asString
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialization',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> expectedFailures [
 	^ #(
 		testGraphDeletionDoesntBreakOperations
@@ -295,18 +202,8 @@ TensorFlowCAPITest >> expectedFailures [
 	)
 ]
 
-{ #category : 'graphs' }
-TensorFlowCAPITest >> floatAsStringGraph [
-	| graph const |
-	graph := self constantFloatGraphFromDef.
-	const := graph operationNamed: 'a'.
-	graph
-		asString: 'output'
-		described: [ :description | description addInput: (const output: 0) ].
-	^ graph
-]
-
-{ #category : 'testing tensor' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> get2x2FloatFromGraphDef [
 	| graph session const result |
 	graph := self constant2x2FloatGraphFromDef.
@@ -316,9 +213,10 @@ TensorFlowCAPITest >> get2x2FloatFromGraphDef [
 	^ result
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> mulGraphOneInputInt64 [
-	| graph constant const in |
+	"| graph constant const in |
 	graph := TFGraph create.
 	constant := TFTensor fromInt64: 16r0606060606060606.
 	in := graph placeholder: 'in' type: constant type.
@@ -328,12 +226,21 @@ TensorFlowCAPITest >> mulGraphOneInputInt64 [
 		described: [ :description | 
 			description addInput: (in output: 0).
 			description addInput: (const output: 0) ].
-	^ graph
+	^ graph"
+
+	^TFGraph fromString:
+		#[10 45 10 2 105 110 18 11 80 108 97 99 101 104 111 108 100 101 114 42 13 10 5 115 104 97 112
+		101 18 4 58 2 24 1 42 11 10 5 100 116 121 112 101 18 2 48 9 10 55 10 5 99 111 110 115 116 18
+		5 67 111 110 115 116 42 26 10 5 118 97 108 117 101 18 17 66 15 8 9 18 0 82 9 134 140 152 176
+		224 192 129 131 6 42 11 10 5 100 116 121 112 101 18 2 48 9 10 30 10 3 109 117 108 18 3 77 117
+		108 26 2 105 110 26 5 99 111 110 115 116 42 7 10 1 84 18 2 48 9 18 0 34 3 8 184 3]
+			asByteArray
 ]
 
-{ #category : 'graphs' }
+{ #category : 'graphs',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> mulGraphTwoInputsInt64 [
-	| graph constant const in1 in2 mul1 |
+	"| graph constant const in1 in2 mul1 |
 	graph := TFGraph create.
 	constant := TFTensor fromInt64: 16r0101010101010101.
 	in1 := graph placeholder: 'in1' type: constant type.
@@ -349,45 +256,22 @@ TensorFlowCAPITest >> mulGraphTwoInputsInt64 [
 		described: [ :description | 
 			description addInput: (mul1 output: 0).
 			description addInput: (in2 output: 0) ].
-	^ graph
+	^ graph"
+
+	^TFGraph fromString:
+		#[10 46 10 3 105 110 49 18 11 80 108 97 99 101 104 111 108 100 101 114 42 13 10 5 115 104 97
+		112 101 18 4 58 2 24 1 42 11 10 5 100 116 121 112 101 18 2 48 9 10 46 10 3 105 110 50 18 11
+		80 108 97 99 101 104 111 108 100 101 114 42 13 10 5 115 104 97 112 101 18 4 58 2 24 1 42 11
+		10 5 100 116 121 112 101 18 2 48 9 10 55 10 5 99 111 110 115 116 18 5 67 111 110 115 116 42
+		26 10 5 118 97 108 117 101 18 17 66 15 8 9 18 0 82 9 129 130 132 136 144 160 192 128 1 42 11
+		10 5 100 116 121 112 101 18 2 48 9 10 32 10 4 109 117 108 49 18 3 77 117 108 26 5 99 111 110
+		115 116 26 3 105 110 49 42 7 10 1 84 18 2 48 9 10 31 10 4 109 117 108 50 18 3 77 117 108 26 4
+		109 117 108 49 26 3 105 110 50 42 7 10 1 84 18 2 48 9 18 0 34 3 8 184 3]
+			asString
 ]
 
-{ #category : 'graphs' }
-TensorFlowCAPITest >> mulGraphTwoInputsInt64ConstTensorDeleted [
-	| graph constant const in1 in2 mul1 |
-	graph := TFGraph create.
-	constant := TFTensor fromInt64: 16r2121212121212121.
-	in1 := graph placeholder: 'in1' type: constant type.
-	in2 := graph placeholder: 'in2' type: constant type.
-	const := graph const: 'const' value: constant.
-	constant delete.
-	constant := TFTensor fromInt64: 16r2222222222222222.
-	constant delete.
-	mul1 := graph
-		mul: 'mul1'
-		described: [ :description | 
-			description addInput: (const output: 0).
-			description addInput: (in1 output: 0) ].
-	graph
-		mul: 'mul2'
-		described: [ :description | 
-			description addInput: (mul1 output: 0).
-			description addInput: (in2 output: 0) ].
-	^ graph
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> runFloatAsStringGraph [
-	| session graph output result |
-	graph := self floatAsStringGraph.
-	session := TFSession on: graph.
-	output := graph operationNamed: 'output'.
-	result := session runOperation: output output: (output output: 0).
-	graph delete.
-	^ result
-]
-
-{ #category : 'initialization' }
+{ #category : 'initialization',
+  #vaVisibility : 'private' }
 TensorFlowCAPITest >> setUp [
 	library := TensorFlowCAPI current
 ]
@@ -403,69 +287,6 @@ TensorFlowCAPITest >> tesCloseSessionTwiceNoCrash [
 	session close.
 	session delete.
 	self assert: session isNull
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAddControlInput [
-	| graph in op result |
-	graph := TFGraph create.
-	in := graph const: 'const' value: (TFTensor fromInt64: 12345678).
-	op := graph
-		newOperation: 'Mul'
-		named: 'out'
-		described: [ :description | 
-			description
-				addInput: (in output: 0);
-				addInput: (in output: 0);
-				addControlInput: in].
-	result := (TFSession on: graph) runOutput: (op output: 0).
-	self assert: 12345678 * 12345678 equals: result allInt64s first
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAllInitializers [
-	| graph pisTensor initializers |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	graph variable: 'var1' initialValue: pisTensor.
-	graph variable: 'var2' initialValue: pisTensor.
-	graph variable: 'var3' initialValue: pisTensor.
-	initializers := graph allInitializers.
-	self assert: initializers size = 3.
-	self assert: 'var1_initializer' equals: initializers first name.
-	self assert: 'var2_initializer' equals: initializers second name.
-	self assert: 'var3_initializer' equals: initializers third name
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testAllOperations [
-	| graph pisTensor operations names |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	graph variable: 'var1' initialValue: pisTensor.
-	graph variable: 'var2' initialValue: pisTensor.
-	graph variable: 'var3' initialValue: pisTensor.
-	operations := graph allOperations.
-	self assert: operations size = 9.
-	names := #('var1' 'var1_initialValue' 'var1_initializer' 'var2' 'var2_initialValue' 'var2_initializer' 'var3' 'var3_initialValue' 'var3_initializer').
-	names
-		with: operations
-		do: [ :name :op | self assert: name equals: op name ]
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAllVariables [
-	| graph pisTensor var1 vars var2 var3 |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	var1 := graph variable: 'var1' initialValue: pisTensor.
-	var2 := graph variable: 'var2' initialValue: pisTensor.
-	var3 := graph variable: 'var3' initialValue: pisTensor.
-	vars := graph allVariables.
-	self assert: vars size = 3.
-	self assert: vars first = var1.
-	self assert: vars second = var2.
-	self assert: vars third = var3
 ]
 
 { #category : 'testing tensor' }
@@ -579,191 +400,6 @@ TensorFlowCAPITest >> testAsInt64Tensor: tensorArray shape: shapeArray [
 ]
 
 { #category : 'testing operation' }
-TensorFlowCAPITest >> testAsStringGraphRunOn: tensor [
-	| graph session in out result |
-	graph := self asStringGraphType: tensor type.
-	session := TFSession on: graph.
-	in := graph operationNamed: 'in'.
-	out := graph operationNamed: 'out'.
-	result := session
-		runOperation: out
-		input: (in input: 0)
-		value: tensor
-		output: (out output: 0).
-	graph delete.
-	^ result
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetBoolFalse [
-	" See https://www.tensorflow.org/api_docs/cc/struct/tensorflow/ops/as-string/attrs "
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		asString: 'out'
-		described: [ :description | description addInput: (in output: 0) ].
-	self assert: (op boolAt: 'scientific') equals: false
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetBoolTrue [
-	" see https://www.tensorflow.org/api_docs/cc/struct/tensorflow/ops/gather/attrs "
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeInt32.
-	op := graph
-		newOperation: 'Gather'
-		named: 'out'
-		described: [ :description |
-			description
-				addInput: (in output: 0);
-				addInput: (in output: 0)				].
-	self assert: (op boolAt: 'validate_indices') equals: true
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetFloat [
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeFloat.
-	op := graph
-		newOperation: 'FakeQuantWithMinMaxArgs'
-		named: 'out'
-		described: [ :description | description addInput: (in output: 0) ].
-	self assert: (op floatAt: 'min') equals: -6.0.
-	self assert: (op floatAt: 'max') equals: 6.0
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetInt [
-	| op graph |
-	graph := self concatGraphInputList.
-	op := graph operationNamed: 'concat'.
-	self assert: (op intAt: 'N') equals: 2.
-	graph delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetShape [
-	| graph op |
-	graph := TFGraph create.
-	op := graph variable: 'in' type: TFTensor typeDouble shape: (TensorShape withDimensionsSized: #(1 2 3)).
-	self assert: (op shapeAt: 'shape') equals: #(1 2 3)
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetString [
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description | description addInput: (in output: 0) ].
-	self assert: (op stringAt: 'fill') equals: ''
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetStringNotEmpty [
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description |
-			description
-				at: 'fill' putString: 'hola';
-				addInput: (in output: 0) ].
-	self assert: (op stringAt: 'fill') equals: 'hola'
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetStrings [
-	| graph template in op strings |
-	graph := TFGraph create.
-	template := #('hola' 'como' 'estas?').
-	in := graph const: 'in' value: (TFTensor fromFloats: 1).
-	op := graph
-		newOperation: 'DebugIdentity'
-		named: 'out'
-		described: [ :description | 
-			description at: 'debug_urls' putStrings: template.
-			description addInput: (in output: 0) ].
-	strings := op stringsAt: 'debug_urls'.
-	self assert: template equals: strings
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetTensor [
-	| op graph tensor |
-	graph := self constantInt64Graph.
-	op := graph operationNamed: 'a'.
-	tensor := op tensorAt: 'value'.
-	self assert: tensor type equals: TFTensor typeInt64.
-	self assert: tensor shape equals: #().
-	self assert: tensor allInt64s equals: #(16r4242424242424242).
-	graph delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrGetType [
-	| op graph |
-	graph := self concatGraphInputList.
-	op := graph operationNamed: 'concat'.
-	self assert: (op typeAt: 'T') equals: TFTensor typeInt64.
-	graph delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetBoolFalse [
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeInt32.
-	op := graph
-		newOperation: 'Gather'
-		named: 'out'
-		described: [ :description | 
-			description
-				addInput: (in output: 0);
-				addInput: (in output: 0);
-				at: 'validate_indices' putBoolean: false].
-	self assert: (op boolAt: 'validate_indices') equals: false
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetBoolTrue [
-	| graph in op |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		asString: 'out'
-		described: [ :description | 
-			description at: 'scientific' putBoolean: true.
-			description addInput: (in output: 0) ].
-	self assert: (op boolAt: 'scientific') equals: true
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetFloat [
-	| graph in op min max |
-	min := -1234.5678e10.
-	max := 12345678e-10 asFraction.
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeFloat.
-	op := graph
-		newOperation: 'FakeQuantWithMinMaxArgs'
-		named: 'out'
-		described: [ :description | 
-			description at: 'min' putFloat: min.
-			description at: 'max' putFloat: max.
-			description addInput: (in output: 0) ].
-	self assert: (op floatAt: 'min') closeTo: min.
-	self assert: (op floatAt: 'max') closeTo: max
-]
-
-{ #category : 'testing operation' }
 TensorFlowCAPITest >> testAttrSetShape [
 	self testAttrSetShape: #().
 	self testAttrSetShape: #(16r1234567890ABCDEF).
@@ -816,75 +452,6 @@ TensorFlowCAPITest >> testAttrSetShapeTooLargeTruncated [
 	self assert: (op shapeAt: 'shape') equals: (1 to: size) asArray.
 ]
 
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetString [
-	self testAttrSetString: '1'.
-	self testAttrSetString: '12'.
-	self testAttrSetString: '1234'.
-	self testAttrSetString: '1234567'.
-	self testAttrSetString: '12345678'.
-	self testAttrSetString: '123456789'.
-	self testAttrSetString: ((ByteArray new: 100) atAllPut: 65) asString
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetString: aString [
-	| graph in op copy |
-	graph := TFGraph create.
-	copy := aString asByteArray.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description | 
-			description at: 'fill' putString: copy.
-			description addInput: (in output: 0) ].
-	copy at: 1 put: 65.	"Change Smalltalk String to see if TensorFlow makes a copy"
-	self assert: (op stringAt: 'fill') equals: aString
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetStrings [
-	self testAttrSetStrings: #('file://./TFDebug.log').
-	self
-		testAttrSetStrings: #('file://./TFDebug.log' 'file://./TFDebug.2.log')
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetStrings: aAnArrayOfStrings [
-	| graph template in op |
-	graph := TFGraph create.
-	template := #(#(1 2 3) #(4 5 6) #(7 8 9)).
-	in := graph const: 'in' value: (TFTensor fromFloats: template).
-	op := graph
-		newOperation: 'DebugIdentity'
-		named: 'out'
-		described: [ :description | 
-			description
-				at: 'debug_urls' putStrings: aAnArrayOfStrings;
-				at: 'tensor_name' putString: 'input';
-				addInput: (in output: 0) ].
-	(TFSession on: graph) runOutput: (op output: 0)
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetStringsInvalid [
-	| graph template in notAList |
-	graph := TFGraph create.
-	template := #(#(1 2 3) #(4 5 6) #(7 8 9)).
-	in := graph const: 'in' value: (TFTensor fromFloats: template).
-	notAList := 'INVALID_ARGUMENT: AttrValue had value with type ''list(string)'' when ''string'' expected',
-	String lf, '	 for attr ''tensor_name'''.
-	self
-		should: [ graph
-				newOperation: 'DebugIdentity'
-				named: 'out'
-				described: [ :description | 
-					description at: 'tensor_name' putStrings: #('hola' 'como' 'estas?').
-					description addInput: (in output: 0) ] ]
-		raiseError: notAList
-]
-
 { #category : 'testing buffer' }
 TensorFlowCAPITest >> testBufferDataBytes [
 	| buffer string data |
@@ -917,51 +484,6 @@ TensorFlowCAPITest >> testCloseSession [
 	self shouldnt: [ session close ] raise: Error.
 	self shouldnt: [ session delete ] raise: Error.
 	self assert: session isNull
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testConcatGraphInputList [
-	| wrongSize wrongType |
-	wrongSize := 'INVALID_ARGUMENT: Inconsistent values for attr ''N'' 2 vs. 0 while building NodeDef ''concat'' using Op<name=Concat; signature=concat_dim:int32, values:N*T -> output:T; attr=N:int,min=2; attr=T:type>'.
-	wrongType := 'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_INT64 vs. DT_INT32 while building NodeDef ''concat'' using Op<name=Concat; signature=concat_dim:int32, values:N*T -> output:T; attr=N:int,min=2; attr=T:type>'.
-	self concatGraphInputListNoSizeNoType.
-	self concatGraphInputList.
-	self
-		should: [ self concatGraphInputListWrongSize ]
-		raiseError: wrongSize.
-	self
-		should: [ self concatGraphInputListWrongType ]
-		raiseError: wrongType
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testCreateGraphAddTwoInputs [
-	| graph |
-	graph := self addGraphTwoInputsInt64.
-	graph delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testCreateGraphMulOneInput [
-	| graph input mul |
-	graph := self mulGraphOneInputInt64.
-	self shouldnt: [ input := graph operationNamed: 'in' ] raise: Error.
-	self shouldnt: [ mul := graph operationNamed: 'mul' ] raise: Error.
-	self assert: input name equals: 'in'.
-	self assert: mul name equals: 'mul'.
-	graph delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testDecodeCSVGraphCreate [
-	| defaults |
-	defaults := (Array new: 4)
-		at: 1 put: (TFTensor fromInt64s: #(-1));
-		at: 2 put: (TFTensor fromInt64s: #(-1));
-		at: 3 put: (TFTensor fromInt64s: #(-1));
-		at: 4 put: (TFTensor fromInt64s: #(-1));
-		yourself.
-	self decodeCSVGraphDefaults: defaults
 ]
 
 { #category : 'testing operation' }
@@ -1000,51 +522,6 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunCSV: csvLines [
 				yourself).
 	graph delete.
 	^ (1 to: 4) collect: [ :i | (results at: i) allInt64s ]
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testDecodeCSVGraphRunManyLines [
-	| cols |
-	cols := self
-		testDecodeCSVGraphRunCSV:
-			'1,2,3,4
-	 11,22,33,44
-	 111,222,333,444
-	 1111,2222,3333,4444' lines.
-	self assert: cols first equals: #(1 11 111 1111).
-	self assert: cols second equals: #(2 22 222 2222).
-	self assert: cols third equals: #(3 33 333 3333).
-	self assert: cols fourth equals: #(4 44 444 4444)
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testDecodeCSVGraphRunOneLine [
-	| cols |
-	cols := self
-		testDecodeCSVGraphRunCSV: '11111111111,22222222,33333333,44444444' lines.
-	self assert: cols first equals: #(11111111111).
-	self assert: cols second equals: #(22222222).
-	self assert: cols third equals: #(33333333).
-	self assert: cols fourth equals: #(44444444)
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testDescriptionDevice [
-	| graph in op expected |
-	graph := TFGraph create.
-	in := graph const: 'const' value: (TFTensor fromInt64: 12345678).
-	op := graph
-		newOperation: 'Mul'
-		named: 'out'
-		described: [ :description | 
-			description
-				device: 'anInvalidDevice';
-				addInput: (in output: 0);
-				addInput: (in output: 0) ].
-	expected := 'INVALID_ARGUMENT: Malformed device specification ''anInvalidDevice'''.
-	self
-		should: [ (TFSession on: graph) runOutput: (op output: 0) ]
-		raiseError: expected
 ]
 
 { #category : 'testing device list' }
@@ -1139,141 +616,6 @@ TensorFlowCAPITest >> testExternalizeString [
 ]
 
 { #category : 'testing operation' }
-TensorFlowCAPITest >> testFloatAsStringGraphCreate [
-	self floatAsStringGraph
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testFloatAsStringGraphRun [
-	| result str expected |
-	expected := '0.420000'.
-	result := self runFloatAsStringGraph.
-	self deny: result isNull.
-	self deny: result data isNull.
-	str := result dataBytes.
-	self assert: 8 + 1 + expected size equals: str size.
-	self assert: (str uint64At: 0) equals: 0.
-	self assert: (str at: 9) equals: expected size.
-	self
-		assert: (str memcpyStringFrom: 9 to: expected size + 9 - 1)
-		equals: expected.
-	result delete
-]
-
-{ #category : 'testing tensor' }
-TensorFlowCAPITest >> testGet2x2FloatFromGraphDef [
-	| templates consts |
-	templates := #(-1.1 -2.1 -1.2 -2.2).
-	consts := self get2x2FloatFromGraphDef allFloats.
-	templates
-		with: consts
-		do: [ :temp :const | self assert: temp closeTo: const ]
-]
-
-{ #category : 'testing library' }
-TensorFlowCAPITest >> testGetAllOps [
-	| ops |
-	ops := library getAllOps.
-	self assert: (ops dataBytes asString includesSubString: 'tensor').
-	ops delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataBoolean [
-	| graph in op template metadata |
-	template := '1234567890abc'.
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description | 
-			description at: 'fill' putString: template.
-			description addInput: (in output: 0) ].
-	metadata := op attrMetadata: 'scientific'.
-	self assert: metadata isBoolean.
-	self assert: metadata isList equals: false
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataFloat [
-	| graph in op metadata |
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeFloat.
-	op := graph
-		newOperation: 'FakeQuantWithMinMaxArgs'
-		named: 'out'
-		described: [ :description | description addInput: (in output: 0) ].
-	metadata := op attrMetadata: 'min'.
-	self assert: metadata isFloat.
-	self assert: metadata isList equals: false
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataInt [
-	| graph in op template metadata |
-	template := '1234567890abc'.
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description | 
-			description at: 'fill' putString: template.
-			description addInput: (in output: 0) ].
-	metadata := op attrMetadata: 'precision'.
-	self assert: metadata isInt.
-	self assert: metadata isList equals: false
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataShape [
-	| graph op template metadata |
-	template := #(1 2 3 4 5) asTensorShape.
-	graph := TFGraph create.
-	op := graph
-		newOperation: 'Placeholder'
-		named: 'const'
-		described: [ :description | 
-			description at: 'shape' putShape: template.
-			description at: 'dtype' putType: TFTensor typeInt64 ].
-	metadata := op attrMetadata: 'shape'.
-	self assert: metadata isShape.
-	self assert: metadata isList equals: false.
-	self assert: metadata totalSize equals: template size
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataString [
-	| graph in op template metadata |
-	template := '1234567890abc'.
-	graph := TFGraph create.
-	in := graph placeholder: 'in' type: TFTensor typeDouble.
-	op := graph
-		newOperation: 'AsString'
-		named: 'out'
-		described: [ :description | 
-			description at: 'fill' putString: template.
-			description addInput: (in output: 0) ].
-	self assert: (op stringAt: 'fill') equals: template.
-	metadata := op attrMetadata: 'fill'.
-	self assert: metadata isString.
-	self assert: metadata isList equals: false.
-	self assert: metadata totalSize equals: template size
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGetAttrMetadataTensor [
-	| graph op template metadata |
-	template := #(1 2 3 4 5).
-	graph := TFGraph create.
-	op := graph const: 'const' value: (TFTensor fromInt64s: template).
-	metadata := op attrMetadata: 'value'.
-	self assert: metadata isTensor.
-	self assert: metadata isList equals: false
-]
-
-{ #category : 'testing operation' }
 TensorFlowCAPITest >> testGetAttrMetadataType [
 	| graph op template metadata |
 	template := #(1 2 3 4 5) asTensorShape.
@@ -1309,99 +651,6 @@ TensorFlowCAPITest >> testGetOperationOnEmptyGraph [
 		raiseError: 'Operation not found'
 ]
 
-{ #category : 'testing gradients' }
-TensorFlowCAPITest >> testGradientSimple [
-	| graph x y dy grad |
-	graph := TFGraph fromBlock: [:input |
-		x := input.
-		y := input @* 3.0].
-	dy := graph
-		gradientsOf: (Array with: y firstOutput)
-		withRespectTo: (Array with: x firstOutput).
-	grad := graph
-		runInputs: (Array with: x firstInput)
-		values: (Array with: 7.0 asTensor)
-		outputs: (Array with: dy).
-	
-	self assert: grad first asNumbers equals: 3.0.
-]
-
-{ #category : 'testing gradients' }
-TensorFlowCAPITest >> testGradientTwoInputs [
-	| graph x1 x2 y dy grad |
-	graph := TFGraph fromBlock: [:input1 :input2 |
-		x1 := input1.
-		x2 := input2.
-		y := x1 @* x2].
-	dy := graph
-		gradientsOf: (Array with: y firstOutput)
-		withRespectTo: (Array with: x1 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first).
-	self assert: grad first asNumbers equals: 7.0.
-
-	dy := graph
-		gradientsOf: (Array with: y firstOutput)
-		withRespectTo: (Array with: x2 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first).
-	self assert: grad first asNumbers equals: 3.0.
-
-	dy := graph
-		gradientsOf: (Array with: y firstOutput)
-		withRespectTo: (Array with: x1 firstOutput with: x2 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first with: dy second).
-	self assert: grad first asNumbers equals: 7.0.
-	self assert: grad second asNumbers equals: 3.0.
-]
-
-{ #category : 'testing gradients' }
-TensorFlowCAPITest >> testGradientTwoInputsTwoOutputs [
-	| graph x1 x2 y1 y2 dy grad |
-	graph := TFGraph fromBlock: [:input1 :input2 |
-		x1 := input1.
-		x2 := input2.
-		y1 := x1 @* x2.
-		y2 := x1 + x2].
-		
-	dy := graph
-		gradientsOf: (Array with: y1 firstOutput)
-		withRespectTo: (Array with: x1 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first).
-	self assert: grad first asNumbers equals: 7.0.
-
-	dy := graph
-		gradientsOf: (Array with: y1 firstOutput with: y2 firstOutput)
-		withRespectTo: (Array with: x2 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first).
-	self assert: grad first asNumbers equals: 3.0+1.0.
-
-	dy := graph
-		gradientsOf: (Array with: y1 firstOutput with: y2 firstOutput)
-		withRespectTo: (Array with: x1 firstOutput with: x2 firstOutput).
-	grad := graph
-		runInputs: (Array with: x1 firstInput with: x2 firstInput)
-		values: (Array with: 3.0 asTensor with: 7.0 asTensor)
-		outputs: (Array with: dy first with: dy second).
-	self assert: grad first asNumbers equals: 7.0+1.0.
-	self assert: grad second asNumbers equals: 3.0+1.0.
-	
-	graph writeDefToFileNamed: 'grad.pb'
-]
-
 { #category : 'testing operation' }
 TensorFlowCAPITest >> testGraph: aTFGraph outputType: anInteger [
 	| operation output |
@@ -1409,17 +658,6 @@ TensorFlowCAPITest >> testGraph: aTFGraph outputType: anInteger [
 	output := operation output: 0.
 	self assert: output type equals: anInteger.
 	output free
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testGraphCreationConst [
-	| graph operation |
-	graph := self constantInt64Graph.
-	operation := graph operationNamed: 'a'.
-	self assert: operation type equals: 'Const'.
-	self assert: operation name equals: 'a'.
-	self assert: operation inputsCount equals: 0.
-	self assert: operation outputsCount equals: 1
 ]
 
 { #category : 'testing graph' }
@@ -1487,116 +725,6 @@ TensorFlowCAPITest >> testGraphDeletionDoesntBreakSessions [
 	self deny: results first data isNull.
 	self assert: results first asNumbers equals: 16r4242424242424242.
 	results first delete
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockIdentity [
-	| graph output inputs results |
-	graph := TFGraph fromBlock: [ :a | a ].
-	inputs := graph allInputs
-		collect: [ :placeholder | placeholder input: 0 ].
-	output := graph operationNamed: 'output'.
-	results := (TFSession on: graph)
-		runInputs: inputs
-		values:
-			((Array new: 1)
-				at: 1 put: (TFTensor fromFloats: 3.1415);
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: (output output: 0);
-				yourself).
-	self assert: results first allFloats first closeTo: 3.1415
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockIdentityInstance [
-	| graph output inputs results |
-	graph := TFGraph create.
-	output := graph fromBlock: [ :a | a alias: 'a_1' ].
-	inputs := graph allInputs collect: [ :input | input input: 0 ].
-	results := (TFSession on: graph)
-		runInputs: inputs
-		values:
-			((Array new: 1)
-				at: 1 put: (TFTensor fromFloats: 3.1415);
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: (output output: 0);
-				yourself).
-	self assert: results first allFloats first closeTo: 3.1415
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockSimple [
-	| graph output inputs results |
-	graph := TFGraph fromBlock: [ :a :b | a + b ].
-	inputs := graph allInputs
-		collect: [ :placeholder | placeholder input: 0 ].
-	output := graph operationNamed: 'output'.
-	results := (TFSession on: graph)
-		runInputs: inputs
-		values:
-			((Array new: 2)
-				at: 1 put: (TFTensor fromFloats: 3.1415);
-				at: 2 put: (TFTensor fromFloats: 1.2345);
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: (output output: 0);
-				yourself).
-	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockSimpleInstance [
-	| graph output inputs results |
-	graph := TFGraph create.
-	output := graph fromBlock: [ :a :b | a + b ].
-	inputs := graph allInputs
-		collect: [ :placeholder | placeholder input: 0 ].
-	results := (TFSession on: graph)
-		runInputs: inputs
-		values:
-			((Array new: 2)
-				at: 1 put: (TFTensor fromFloats: 3.1415);
-				at: 2 put: (TFTensor fromFloats: 1.2345);
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: (output output: 0);
-				yourself).
-	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockSimpler [
-	| graph output inputs results |
-	graph := TFGraph fromBlock: [ :a :b | a + b ].
-	inputs := graph allInputs
-		collect: [ :placeholder | placeholder input: 0 ].
-	output := graph operationNamed: 'output'.
-	results := graph
-		runInputs: inputs
-		values: (Array with: 3.1415 asFloatTensor with: 1.2345 asFloatTensor)
-		outputs: (Array with: output firstOutput).
-	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphFromBlockSimplerer [
-	| graph output inputs results |
-	graph := TFGraph fromBlock: [ :a :b |
-		inputs := Array with: a firstInput with: b firstInput.
-		output := a + b ].
-		
-	results := graph
-		runInputs: inputs
-		values: (Array with: 3.1415 asFloatTensor with: 1.2345 asFloatTensor)
-		outputs: (Array with: output firstOutput).
-		
-	self assert: results first allFloats first closeTo: 3.1415 + 1.2345
 ]
 
 { #category : 'testing graph' }
@@ -1685,55 +813,6 @@ TensorFlowCAPITest >> testGraphOperationsSelectEmpty [
 ]
 
 { #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphRunInputsOutputs [
-	| graph output result input |
-	graph := TFGraph create.
-	output := graph
-		fromBlock: [ :a | 
-			input := a.
-			a @* TFTensor pi ].
-	result := graph
-		runInputs:
-			((Array new: 1)
-				at: 1 put: (input input: 0);
-				yourself)
-		values:
-			((Array new: 1)
-				at: 1 put: 7.23 asTensor;
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: output firstOutput;
-				yourself).
-	self assert: Float pi * 7.23 closeTo: result first asNumbers
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphRunOutput [
-	| graph output result |
-	graph := TFGraph create.
-	output := graph const: TFTensor pi.
-	result := graph runOutput: output firstOutput.
-	self assert: Float pi closeTo: result asNumbers
-]
-
-{ #category : 'testing graph' }
-TensorFlowCAPITest >> testGraphRunOutputs [
-	| graph output1 output2 results |
-	graph := TFGraph create.
-	output1 := graph const: TFTensor pi.
-	output2 := output1 @/ 2.0 asTensor.
-	results := graph
-		runOutputs:
-			((Array new: 2)
-				at: 1 put: output1 firstOutput;
-				at: 2 put: output2 firstOutput;
-				yourself).
-	self assert: Float pi closeTo: results first asNumbers.
-	self assert: Float pi / 2 closeTo: results second asNumbers
-]
-
-{ #category : 'testing graph' }
 TensorFlowCAPITest >> testImportBad [
 	| graph buffer |
 	graph := TFGraph create.
@@ -1768,27 +847,6 @@ TensorFlowCAPITest >> testInitializeOn [
 	graph := TFGraph create.
 	session := TFSession on: graph.
 	self shouldnt: [ graph initializeOn: session ] raise: Error
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testInt64AsStringGraph [
-	| result tensor |
-	tensor := TFTensor fromInt64: 101010101.
-	result := self testAsStringGraphRunOn: tensor.
-	self assert: result allStrings first equals: '101010101'.
-	result delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testInt64rrayAsStringGraph [
-	| result tensor strings template |
-	template := #(101010101 -123321 1 2 3 4).
-	tensor := TFTensor fromInt64s: template.
-	result := self testAsStringGraphRunOn: tensor.
-	strings := result allStrings.
-	1 to: strings size do: [:index |
-		self assert: (strings at: index) equals: (template at: index) asString ].
-	result delete
 ]
 
 { #category : 'testing buffer' }
@@ -1857,48 +915,6 @@ TensorFlowCAPITest >> testNewOperationDescription [
 ]
 
 { #category : 'testing operation' }
-TensorFlowCAPITest >> testNewOperationMul [
-	| graph operation a b |
-	graph := TFGraph create.
-	a := graph placeholder: 'a' type: TFTensor typeInt64.
-	b := graph placeholder: 'b' type: TFTensor typeInt64.
-	operation := graph
-		mul: 'aMultiplication'
-		described: [ :description | 
-			description addInputFromOutput: 0 of: a.
-			description addInputFromOutput: 0 of: b ].
-	self assert: operation type equals: 'Mul'.
-	self assert: operation name equals: 'aMultiplication'.
-	self assert: operation inputsCount equals: 2.
-	self assert: operation outputsCount equals: 1.
-	operation := graph operationNamed: 'aMultiplication'.
-	self assert: operation type equals: 'Mul'.
-	self assert: operation name equals: 'aMultiplication'.
-	self assert: operation inputsCount equals: 2.
-	self assert: operation outputsCount equals: 1
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewOperationPlaceholder [
-	| graph operation |
-	graph := TFGraph create.
-	self
-		shouldnt: [ operation := graph
-				placeholder: 'aPlaceholder'
-				type: TFTensor typeInt64 ]
-		raise: Error.
-	self assert: operation type equals: 'Placeholder'.
-	self assert: operation name equals: 'aPlaceholder'.
-	self assert: operation inputsCount equals: 0.
-	self assert: operation outputsCount equals: 1.
-	operation := graph operationNamed: 'aPlaceholder'.
-	self assert: operation type equals: 'Placeholder'.
-	self assert: operation name equals: 'aPlaceholder'.
-	self assert: operation inputsCount equals: 0.
-	self assert: operation outputsCount equals: 1
-]
-
-{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewOperationPlaceholderNoType [
 	| graph noType |
 	noType := 'INVALID_ARGUMENT: NodeDef missing attr ''dtype'' from Op'.
@@ -1940,88 +956,6 @@ TensorFlowCAPITest >> testNewStatus [
 ]
 
 { #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableForTensor [
-	| graph var assign result session pisTensor pis |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	var := graph variable: 'var' forTensor: pisTensor.
-	pis := graph const: 'pis' value: pisTensor.
-	assign := graph
-		newOperation: 'Assign'
-		named: 'assign'
-		described: [ :description | 
-			description
-				addInput: (var output: 0);
-				addInput: (pis output: 0) ].
-	session := TFSession on: graph.
-	session runOutput: (assign output: 0).
-	result := session runOutput: (var output: 0).
-	self assert: result allFloats equals: pisTensor allFloats
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableInitialization [
-	| graph var assign pi result session |
-	graph := TFGraph create.
-	var := graph variable: 'var' type: TFTensor typeFloat shape: #().
-	pi := graph const: 'pi' value: (TFTensor fromFloats: 3.14).
-	assign := graph
-		newOperation: 'Assign'
-		named: 'assign'
-		described: [ :description | 
-			description
-				addInput: (var output: 0);
-				addInput: (pi output: 0) ].
-	session := TFSession on: graph.
-	session runOutput: (assign output: 0).
-	result := session runOutput: (var output: 0).
-	self assert: result allFloats first closeTo: 3.14
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableInitializationNodeNotRun [
-	| graph var pi lastError |
-	graph := TFGraph create.
-	var := graph variable: 'var' type: TFTensor typeFloat shape: #().
-	pi := graph const: 'pi' value: (TFTensor fromFloats: 3.14).
-	graph
-		newOperation: 'Assign'
-		named: 'assign'
-		described: [ :description | 
-			description
-				addInput: var firstOutput;
-				addInput: pi firstOutput ].
-	self
-		should: [(TFSession on: graph) runOutput: var firstOutput]
-		raiseError: 'Attempting to use uninitialized value var'
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableInitialValue [
-	| graph var assign result session pisTensor |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	var := graph variable: 'var' initialValue: pisTensor.
-	assign := graph operationNamed: 'var_initializer'.
-	session := TFSession on: graph.
-	session runOutput: (assign output: 0).
-	result := session runOutput: (var output: 0).
-	self assert: result allFloats equals: pisTensor allFloats
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableInitialValueAutomaticInitialization [
-	| graph var result session pisTensor |
-	graph := TFGraph create.
-	pisTensor := TFTensor fromFloats: #(3.14 3.1415 3.141516).
-	var := graph variable: 'var' initialValue: pisTensor.
-	session := TFSession on: graph.
-	graph initializeOn: session.
-	result := session runOutput: (var output: 0).
-	self assert: result allFloats equals: pisTensor allFloats
-]
-
-{ #category : 'testing operation' }
 TensorFlowCAPITest >> testNewVariableNoAttributes [
 	| graph error |
 	graph := TFGraph create.
@@ -2029,45 +963,6 @@ TensorFlowCAPITest >> testNewVariableNoAttributes [
 	self
 		should: [ graph newOperation: 'Variable' named: 'var' ]
 		raiseError: error
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testNewVariableNoInitialization [
-	| graph var expectedError lastError |
-	graph := TFGraph create.
-	var := graph variable: 'var' type: TFTensor typeFloat shape: #().
-	self
-		should: [(TFSession on: graph) runOutput: var firstOutput]
-		raiseError: 'Attempting to use uninitialized value var'.
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testOperationAsOperationDifferentGraph [
-	| const graph1 graph2 |
-	graph1 := TFGraph create.
-	graph2 := TFGraph create.
-	const := graph1 const: 1.0 asTensor.
-	self
-		should: [ const asOperationOn: graph2 ]
-		raiseError: 'Can''t move an operation to another Graph'
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testOperationAsOperationOk [
-	| const1 const2 graph |
-	graph := TFGraph create.
-	const1 := graph const: 1.0 asTensor.
-	const2 := const1 asOperationOn: graph.
-	self assert: const1 == const2
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testOperationEquals [
-	| graph in1 |
-	graph := TFGraph create.
-	in1 := graph placeholder: 'in1' type: TFTensor typeFloat.
-	self assert: in1 = in1.
-	self deny: in1 = 'in1'
 ]
 
 { #category : 'testing operation' }
@@ -2102,32 +997,6 @@ TensorFlowCAPITest >> testOutputDims [
 ]
 
 { #category : 'testing operation' }
-TensorFlowCAPITest >> testPlaceholderType: type [
-	| graph var session result tensor abs |
-	graph := TFGraph create.
-	tensor := TFTensor type: type shape: TensorShape scalar.
-	var := graph placeholder: 'var' type: type.
-	abs := graph
-		newOperation: 'Abs'
-		named: 'abs'
-		described: [ :description | description addInput: (var output: 0) ].
-	session := TFSession on: graph.
-	result := session
-		runOperation: abs
-		input: (var input: 0)
-		value: tensor
-		output: (abs output: 0).
-	result delete
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testPlaceholderTypes [
-	self testPlaceholderType: TFTensor typeInt64.
-	self testPlaceholderType: TFTensor typeInt32.
-	self testPlaceholderType: TFTensor typeFloat
-]
-
-{ #category : 'testing operation' }
 TensorFlowCAPITest >> testPrintOn [
 	| graph printString |
 	graph := self addGraphTwoInputsInt64.
@@ -2137,17 +1006,6 @@ TensorFlowCAPITest >> testPrintOn [
 	printString := (graph operationNamed: 'add') printString.
 	self assert: (printString includesSubString: 'TFOperation').
 	self assert: (printString  endsWith: '''Add'' ''add''')
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testRankOfOutput [
-	| graph template const rank |
-	graph := TFGraph create.
-	template := TFTensor
-		fromFloats: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6))).
-	const := graph const: 'const' value: template.
-	rank := graph rankOf: (const output: 0).
-	self assert: template shape size equals: rank
 ]
 
 { #category : 'testing tensor' }
@@ -2285,7 +1143,9 @@ TensorFlowCAPITest >> testRunOperationArray [
 
 { #category : 'testing graph' }
 TensorFlowCAPITest >> testSessionDeletionDoesntDeleteGraphs [
+
 	| session graph allocatedObjects |
+
 	graph := TFGraph create.
 	session := TFSession on: graph.
 	session ignoreFinalization.
@@ -2294,12 +1154,15 @@ TensorFlowCAPITest >> testSessionDeletionDoesntDeleteGraphs [
 
 	" Allocate some external objects using the library, if the graph was released, we expect its space to be reused "
 	allocatedObjects := OrderedCollection new: 10.
-	10 timesRepeat: [ allocatedObjects add: TFStatus create ].
+	10 timesRepeat: [allocatedObjects add: TFStatus create].
 	self
-		shouldnt: [ graph placeholder: 'a' type: TFTensor typeInt64 ]
+		shouldnt: [
+			graph
+				newOperation: 'Placeholder'
+				named: 'a'
+				described: [:description | description at: 'dtype' putType: TFTensor typeInt64]]
 		raise: Error
-		description:
-			'The FFI call would crash if the graph was released by deleting the session'
+		description: 'The FFI call would crash if the graph was released by deleting the session'
 ]
 
 { #category : 'testing device list' }
@@ -2426,75 +1289,6 @@ TensorFlowCAPITest >> testShape [
 	self
 		assertShapeOf: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6)) #(#(7) #(8) #(9)))
 		is: #(3 3 1)
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testShapeOfInput [
-	| graph template const shape same |
-	graph := TFGraph create.
-	template := TFTensor
-		fromFloats: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6))).
-	const := graph const: 'const' value: template.
-	same := const identity.
-	shape := graph shapeOf: (same input: 0).
-	self assert: template shape equals: shape
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testShapeOfOutput [
-	| graph template const shape |
-	graph := TFGraph create.
-	template := TFTensor
-		fromFloats: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6))).
-	const := graph const: 'const' value: template.
-	shape := graph shapeOf: (const output: 0).
-	self assert: template shape equals: shape
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testShapeOfOutputSet [
-	| graph var shape output |
-	graph := TFGraph create.
-	var := graph
-		newOperation: 'Placeholder'
-		named: 'var'
-		described: [ :description | 
-			description
-				at: 'dtype' putType: TFTensor typeInt64;
-				at: 'shape' putShape: #(3 -1 -1) asTensorShape].
-	output := var output: 0.
-	shape := graph shapeOf: output.
-	self assert: shape equals: #(3 -1 -1) asTensorShape.
-	graph shapeOf: output set: #(-1 3 -1).
-	shape := graph shapeOf: output.
-	self assert: shape equals: #(3 3 -1) asTensorShape
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testShapeOfOutputSetInvalid [
-	| graph template const output |
-	graph := TFGraph create.
-	template := TFTensor
-		fromFloats: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6))).
-	const := graph const: 'const' value: template.
-	output := const output: 0.
-	self
-		should: [ graph shapeOf: output set: #(1 2 3) ]
-		raiseError:
-			'INVALID_ARGUMENT: Dimension 0 in both shapes must be equal, but are 2 and 1'
-]
-
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testShapeOfOutputSetInvalidRank [
-	| graph template const output |
-	graph := TFGraph create.
-	template := TFTensor
-		fromFloats: #(#(#(1) #(2) #(3)) #(#(4) #(5) #(6))).
-	const := graph const: 'const' value: template.
-	output := const output: 0.
-	self
-		should: [ graph shapeOf: output set: #(1 2 3 -1) ]
-		raiseError: 'INVALID_ARGUMENT: Shapes must be equal rank, but are 3 and 4'
 ]
 
 { #category : 'testing tensor' }
@@ -2656,16 +1450,6 @@ TensorFlowCAPITest >> testTensorAllElements [
 ]
 
 { #category : 'testing tensor' }
-TensorFlowCAPITest >> testTensorAllStrings [
-	| result strings expected |
-	expected := #('0.420000').
-	result := self runFloatAsStringGraph.
-	strings := result allStrings.
-	self assert: strings equals: expected.
-	result delete
-]
-
-{ #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorArrayNumbersAt [
 	| graph inputValues inputs mul numbers output results session |
 	graph := self mulGraphTwoInputsInt64.
@@ -2748,16 +1532,6 @@ TensorFlowCAPITest >> testTensorAsNumbersInt32 [
 TensorFlowCAPITest >> testTensorAsNumbersRank0 [
 	self assert: 1 equals: 1 asInt32Tensor asNumbers.
 	self assert: 1.0 equals: 1.0 asTensor asNumbers
-]
-
-{ #category : 'testing tensor' }
-TensorFlowCAPITest >> testTensorAsOperation [
-	| graph a b result |
-	graph := TFGraph create.
-	a := graph const: 3.14 asTensor.
-	b := a + 1.234 asTensor.
-	result := (TFSession on: graph) runOutput: b firstOutput.
-	self assert: 3.14 + 1.234 closeTo: result asNumbers
 ]
 
 { #category : 'testing tensor' }

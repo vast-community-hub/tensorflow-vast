@@ -32,11 +32,11 @@ TFTensor class >> elementsOf: aMultidimensionalTensor [
 ]
 
 { #category : 'utils' }
-TFTensor class >> elementsOf: aTensorCollectionOrElement do: oneArgBlock [
+TFTensor class >> elementsOf: anTensorCollectionOrElement do: oneArgBlock [
 
-	^(aTensorCollectionOrElement isCollection and: [aTensorCollectionOrElement isString not])
-		ifTrue: [aTensorCollectionOrElement do: [:each | self elementsOf: each do: oneArgBlock]]
-		ifFalse: [oneArgBlock value: aTensorCollectionOrElement value]
+	^(anTensorCollectionOrElement isCollection and: [anTensorCollectionOrElement isString not])
+		ifTrue: [anTensorCollectionOrElement do: [:each | self elementsOf: each do: oneArgBlock]]
+		ifFalse: [oneArgBlock value: anTensorCollectionOrElement value]
 ]
 
 { #category : 'instance creation' }
@@ -481,8 +481,10 @@ TFTensor >> asNumbers [
 ]
 
 { #category : 'converting' }
-TFTensor >> asOperationOn: aTFGraph [
-	^ aTFGraph const: self
+TFTensor >> asOperationOn: aComputation [
+
+
+	^ ConstantNode on: aComputation with: self
 ]
 
 { #category : 'converting' }

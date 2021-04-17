@@ -78,9 +78,15 @@ ExternalWordArrayTest >> testExternalFromArrayTensor [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testOperationArrayAtPut [
+
 	| graph sample |
+
 	graph := TFGraph create.
-	sample := graph placeholder: 'var' type: TFTensor typeInt64.
+	sample :=
+		graph
+			newOperation: 'Placeholder'
+			named: 'var'
+			described: [:description | description at: 'dtype' putType: TFTensor typeInt64].
 	self testArrayAtPutFor: TFOperationPtrArray elementSample: sample
 ]
 
