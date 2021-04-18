@@ -14,6 +14,13 @@ TensorShape class >> matrixSized: aNumberOfRows by: aNumberOfColumns [
 ]
 
 { #category : 'Instance Creation' }
+TensorShape class >> numberOfBatches: anInteger height: aHeight width: aWidth channels: anAmountOfChannels [
+
+	^self withDimensionsSized:
+		(Array with: anInteger with: aHeight with: aWidth with: anAmountOfChannels)
+]
+
+{ #category : 'Instance Creation' }
 TensorShape class >> scalar [
 
 	^self withDimensionsSized: #()

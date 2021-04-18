@@ -128,6 +128,16 @@ TensorFlowCAPI >> description: aTFOperationDescription set: aString toInt64: anI
 ]
 
 { #category : 'operation description' }
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toInts: values size: size [
+
+	^self dispatcher
+		callTF_SetAttrIntListWith: aTFOperationDescription
+		with: anAttributeName
+		with: values
+		with: size
+]
+
+{ #category : 'operation description' }
 TensorFlowCAPI >> description: aTFOperationDescription set: aString toShape: anInt64Array size: size [
 	^ self dispatcher callTF_SetAttrShapeWith: aTFOperationDescription with: aString with: anInt64Array with: size
 ]

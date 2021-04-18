@@ -1,7 +1,7 @@
 Class {
 	#name : 'TileTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFTensorModifierModelTests'
+	#category : 'TFExperimentalOperationModelTests'
 }
 
 { #category : 'Test' }

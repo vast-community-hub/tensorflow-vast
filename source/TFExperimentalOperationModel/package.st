@@ -1,4 +1,4 @@
 Package {
-	#name : 'TFRegularizationModel',
+	#name : 'TFExperimentalOperationModel',
 	#vaPrerequisites : ['TFOperationModel']
 }

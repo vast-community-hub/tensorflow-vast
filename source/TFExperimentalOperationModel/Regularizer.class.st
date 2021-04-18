@@ -1,7 +1,7 @@
 Class {
 	#name : 'Regularizer',
 	#superclass : 'Object',
-	#category : 'TFRegularizationModel'
+	#category : 'TFExperimentalOperationModel'
 }
 
 { #category : 'Processing' }

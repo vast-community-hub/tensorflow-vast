@@ -1,7 +1,7 @@
 Class {
 	#name : 'L2RegularizationTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFRegularizationModelTests'
+	#category : 'TFExperimentalOperationModelTests'
 }
 
 { #category : 'Test' }

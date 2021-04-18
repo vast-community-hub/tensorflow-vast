@@ -5,7 +5,7 @@ Class {
 		'input',
 		'multipleTimes'
 	],
-	#category : 'TFOperationModel'
+	#category : 'TFExperimentalOperationModel'
 }
 
 { #category : 'Instance Creation' }

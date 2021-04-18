@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'lambda'
 	],
-	#category : 'TFRegularizationModel'
+	#category : 'TFExperimentalOperationModel'
 }
 
 { #category : 'Instance Creation' }

@@ -70,6 +70,16 @@ TFOperationDescription >> at: attribute putInt: value [
 ]
 
 { #category : 'attributes' }
+TFOperationDescription >> at: attribute putInts: aListOfIntegers [
+
+	^self library
+		description: self
+		set: attribute asAsciiZ
+		toInts: (Int64Array externalFromArray: aListOfIntegers)
+		size: aListOfIntegers size
+]
+
+{ #category : 'attributes' }
 TFOperationDescription >> at: attribute putShape: aTensorShape [
 	| status value |
 	value := aTensorShape asInt64Array.
