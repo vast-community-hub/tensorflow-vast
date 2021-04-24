@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.49',
-						#ts : 3796199174
+						#versionName : '1.51',
+						#ts : 3796719454
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,7 +17,7 @@
 				]
 			}
 		],
-		#ts : 3796199610,
+		#ts : 3796719460,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -48,7 +48,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.41'
+		#versionName : '0.43'
 	},
 	{
 		#conditions : [
@@ -57,8 +57,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.41',
-						#ts : 3796199610
+						#versionName : '0.43',
+						#ts : 3796719460
 					},
 					{
 						#name : 'SUnit',
@@ -68,7 +68,7 @@
 				]
 			}
 		],
-		#ts : 3796199613,
+		#ts : 3796719476,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -94,7 +94,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.40'
+		#versionName : '0.42'
 	},
 	{
 		#conditions : [
@@ -133,13 +133,13 @@
 					},
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.41',
-						#ts : 3796199610
+						#versionName : '0.43',
+						#ts : 3796719460
 					}
 				]
 			}
 		],
-		#ts : 3796199622,
+		#ts : 3796734596,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -165,17 +165,17 @@
 			},
 			{
 				#name : 'TFExperimentalOperationModel',
-				#versionName : '1.0',
-				#ts : 3796198971
+				#versionName : '1.1',
+				#ts : 3796326233
 			},
 			{
 				#name : 'TFExperimentalOperationModelTests',
-				#versionName : '1.0',
-				#ts : 3796198982
+				#versionName : '1.2',
+				#ts : 3796734589
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.12'
+		#versionName : '0.15'
 	},
 	{
 		#conditions : [
@@ -354,7 +354,7 @@
 				]
 			}
 		],
-		#ts : 3796199174,
+		#ts : 3796719454,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -440,8 +440,8 @@
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : 'df8d906-new-modeo',
-				#ts : 3795539747
+				#versionName : '1.2',
+				#ts : 3796719447
 			},
 			{
 				#name : 'TFVariableSpecificationModelTests',
@@ -450,7 +450,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.49'
+		#versionName : '1.51'
 	},
 	{
 		#conditions : [

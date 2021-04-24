@@ -11,14 +11,28 @@ PseudorandomTensorGenerator >> glorotFactorBasedOn: aTensorShape [
 	| fanOut fanIn |
 
 	fanIn := fanOut := nil.
-	aTensorShape representsScalar ifTrue: [fanIn := fanOut := 1].
-	aTensorShape representsVector ifTrue: [fanIn := fanOut := aTensorShape dimensionSizes first].
-	aTensorShape representsMatrix
-		ifTrue: [
-			fanIn := aTensorShape dimensionSizes first.
-			fanOut := aTensorShape dimensionSizes second].
-	fanIn isNil ifTrue: [AssertionFailure signal: 'Shape still not supported']. 
-	
+	aTensorShape representsScalar
+		ifTrue: [fanIn := fanOut := 1]
+		ifFalse: [
+			aTensorShape representsVector
+				ifTrue: [fanIn := fanOut := aTensorShape dimensionSizes first]
+				ifFalse: [
+					aTensorShape representsMatrix
+						ifTrue: [
+							fanIn := aTensorShape dimensionSizes first.
+							fanOut := aTensorShape dimensionSizes second]
+						ifFalse: [| receptiveFieldSize inputDepth outputDepth |
+							"Copied from https://github.com/tensorflow/tensorflow/blob/8cae746d8449c7dda5298327353d68613f16e798/tensorflow/python/keras/initializers/initializers_v2.py#L991 # Assuming convolution kernels shape (2D, 3D, or more). kernel shape: (..., input_depth, depth)"
+							receptiveFieldSize :=
+								(1 to: aTensorShape dimensionSizes size - 2)
+									inject: 1
+									into: [:receptiveSize :size | receptiveSize * size].
+							inputDepth :=
+								aTensorShape dimensionSizes
+									at: (aTensorShape dimensionSizes size - 2).
+							outputDepth := aTensorShape dimensionSizes last.
+							fanIn := receptiveFieldSize * inputDepth.
+							fanOut := receptiveFieldSize * outputDepth]]].
 	^2 / (fanIn + fanOut)
 ]
 
@@ -28,7 +42,7 @@ PseudorandomTensorGenerator >> glorotNormalTensorOn: aComputation shaped: aTenso
 	| scale stddev |
 
 	scale := self glorotFactorBasedOn: aTensorShape.
-	stddev := scale sqrt / 0.87962566103423978. " Constant from https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/init_ops_v2.py#L593 "
+	stddev := scale sqrt / 0.87962566103423978. " Constant from https://github.com/tensorflow/tensorflow/blob/8cae746d8449c7dda5298327353d68613f16e798/tensorflow/python/ops/init_ops_v2.py#L593 "
 	
 	^self truncatedNormalTensorOn: aComputation shaped: aTensorShape centeredOn: 0 spreadedBy: stddev
 ]
