@@ -10,7 +10,7 @@ Class {
 	#pools : [
 		'TensorFlowFunctions'
 	],
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'Accessing' }

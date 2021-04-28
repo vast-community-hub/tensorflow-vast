@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFInputArray',
 	#superclass : 'ExternalWordArray',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'initialization' }

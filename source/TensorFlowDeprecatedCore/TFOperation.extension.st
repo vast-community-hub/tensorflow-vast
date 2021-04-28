@@ -100,11 +100,11 @@ TFOperation >> arcTan [
 
 { #category : '*TensorFlowDeprecatedCore',
  #vaCategories : ['ops binary'] }
-TFOperation >> assign: aTFOperation [
+TFOperation >> assign: aTF_Operation [
 	^ self
 		binaryOp: 'Assign'
-		with: aTFOperation
-		named: self name , '_initializer'
+		with: aTF_Operation
+		named: (self nameFor: self name, '_initializer') 
 ]
 
 { #category : '*TensorFlowDeprecatedCore',

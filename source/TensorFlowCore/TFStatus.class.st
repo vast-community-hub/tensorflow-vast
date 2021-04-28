@@ -6,10 +6,8 @@ Class {
 
 { #category : 'instance creation' }
 TFStatus class >> create [
-	| answer |
-	answer := self persistent.
-	answer useFinalization.
-	^ answer
+
+	^TensorFlowCAPI current newAutoreleaseStatus
 ]
 
 { #category : 'Startup/Shutdown',
@@ -32,7 +30,8 @@ TFStatus class >> new [
 
 { #category : 'instance creation' }
 TFStatus class >> persistent [
-	^ TensorFlowCAPI current newStatus
+
+	^TensorFlowCAPI current newPersistentStatus
 ]
 
 { #category : 'initialize-release' }
@@ -53,15 +52,14 @@ TFStatus >> code [
 	Answers
 		<Integer> - status code"
 
-	^self library getCode: self
+	^self library getCodeOf: self
 ]
 
 { #category : 'accessing' }
-TFStatus >> code: aTF_Code message: aString [
-	| externalized |
-	self assert: aTF_Code ~= 0.
-	externalized := self library externalizeString: aString.
-	self library setStatus: self code: aTF_Code message: externalized
+TFStatus >> code: aTFCode message: aString [
+	
+	self assert: aTFCode  ~= 0.
+	self library setStatus: self code: aTFCode  message: aString
 ]
 
 { #category : 'accessing' }

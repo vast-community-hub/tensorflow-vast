@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'Defaults',

@@ -21,8 +21,13 @@ TensorFlowCAPISlowTests >> assertCreating: anAmount of: aTensorFlowObjectCreator
 			(1 to: anAmount) collect: [:i |
 				self garbageCollect.
 				aTensorFlowObjectCreator value address]).
-		handles size < total ifTrue: [^self]].
-	self assert: handles size < total
+		handles size < total ifTrue: [
+			" Meaning some external addresses where reused, so we're good "
+			^self]].
+	self 
+		assert: handles size < total
+		description: 'No external address could be reused, check for some leak'
+	
 ]
 
 { #category : 'testing session' }

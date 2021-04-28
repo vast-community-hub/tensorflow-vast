@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFTensorPtrArray',
 	#superclass : 'ExternalWordArray',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'Not categorized' }
@@ -26,6 +26,12 @@ TFTensorPtrArray >> numbersAt: index [
 	| tensor |
 	tensor := self at: index.
 	^ tensor asNumbers
+]
+
+{ #category : 'accessing' }
+TFTensorPtrArray >> outputOn: aGraph [
+
+	^self
 ]
 
 { #category : 'accessing' }

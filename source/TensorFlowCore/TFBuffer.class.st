@@ -23,11 +23,8 @@ TFBuffer class >> fromFileNamed: aString [
 
 { #category : 'instance creation' }
 TFBuffer class >> fromString: aString [
-	| answer |
-	answer := TensorFlowCAPI current
-		newBufferFromString: aString
-		size: aString size.
-	^ answer
+
+	^TensorFlowCAPI current newBufferFromString: aString
 ]
 
 { #category : 'Startup/Shutdown',
@@ -40,16 +37,8 @@ TFBuffer class >> initializeAfterLoad [
 
 { #category : 'instance creation' }
 TFBuffer class >> new [
-	"Answer a new buffer
-	 
-	 Answers:
-		<TFBuffer>"
 
-	| result |
-
-	result := self address: (self dispatcher callTF_NewBuffer).
-	result isNull ifTrue: [^nil].
-	^result
+	^ TensorFlowCAPI current newBuffer
 ]
 
 { #category : 'release' }

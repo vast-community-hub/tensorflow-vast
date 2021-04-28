@@ -5,7 +5,7 @@ Class {
 		'type',
 		'shape'
 	],
-	#category : 'TFOperationModel'
+	#category : 'TensorFlowCore'
 }
 
 { #category : 'Instance Creation' }

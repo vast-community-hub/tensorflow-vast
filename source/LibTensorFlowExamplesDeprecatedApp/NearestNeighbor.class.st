@@ -30,8 +30,7 @@ NearestNeighbor >> decodeCSV: csvLines graphRun: description [
 	session := TFSession on: graph.
 	results :=
 		session
-			runOperations: (Array with: output)
-			inputs: (Array with: records)
+			runInputs: (Array with: records)
 			values: (Array with: values)
 			outputs: (
 				OrderedCollection new

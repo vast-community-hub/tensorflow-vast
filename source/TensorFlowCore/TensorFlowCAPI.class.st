@@ -1,624 +1,650 @@
 Class {
 	#name : 'TensorFlowCAPI',
-	#superclass : 'ExternalLibrary',
+	#superclass : 'Object',
+	#instVars : [
+		'library'
+	],
 	#classInstVars : [
 		'current'
 	],
 	#category : 'TensorFlowCore'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 TensorFlowCAPI class >> current [
-	^ current ifNil: [ current := self new ]
+
+	current ifNil: [ self error: 'No tensorflow binding for this smalltalk platform was set' ].
+	^ current
 ]
 
-{ #category : 'Not categorized' }
-TensorFlowCAPI class >> dispatcher [
-	"Get a handle on the dispatcher"
+{ #category : 'Instance Creation' }
+TensorFlowCAPI class >> setCurrentPlatformLibraryTo: aTensorFlowSmalltalkPlatformLibrary [
 
-	^TFLibraryDispatcher default
+	current := self wrapping: aTensorFlowSmalltalkPlatformLibrary
 ]
 
-{ #category : 'Not categorized' }
-TensorFlowCAPI class >> moduleName [
-	^ 'libtensorflow'
-]
+{ #category : 'Instance Creation' }
+TensorFlowCAPI class >> wrapping: aTensorFlowLibrary [
 
-{ #category : 'instance creation' }
-TensorFlowCAPI class >> new [
-
-	^super new initialize
+	
+	^ self new initializeWrapping: aTensorFlowLibrary
 ]
 
 { #category : 'tensor' }
-TensorFlowCAPI >> allocateTensorType: anInteger shape: aLonnLongArray rank: dimCount length: len [
-	| address |
-	address := self dispatcher callTF_AllocateTensorWith: anInteger with: aLonnLongArray with: dimCount with: len.
-	^ TFTensor address: address
+TensorFlowCAPI >> allocateTensorOf: aTensorDomain length: aSmallInteger [
+
+	
+	^ library allocateTensorOf: aTensorDomain length: aSmallInteger 
 ]
 
-{ #category : 'session' }
-TensorFlowCAPI >> closeSession: aTFSession status: aTFStatus [
-	^ self dispatcher callTF_CloseSessionWith: aTFSession with: aTFStatus
-	
+{ #category : 'strings' }
+TensorFlowCAPI >> allStringsOf: aTFTensor [
+
+	^ library allStringsOf: aTFTensor
+]
+
+{ #category : 'deleting' }
+TensorFlowCAPI >> closeSession: aTFSession [
+
+	library checkStatusAfter: [:status | library closeSession: aTFSession status: status]
 ]
 
 { #category : 'buffer' }
 TensorFlowCAPI >> deleteBuffer: aTFBuffer [
-	^ self dispatcher callTF_DeleteBufferWith: aTFBuffer
+
+	^ library deleteBuffer: aTFBuffer
 ]
 
 { #category : 'device list' }
 TensorFlowCAPI >> deleteDeviceList: aTFDeviceList [
-	^ self dispatcher callTF_DeleteDeviceListWith: aTFDeviceList
+
+
+	^ library deleteDeviceList: aTFDeviceList 
 ]
 
-{ #category : 'graph' }
+{ #category : 'deleting' }
 TensorFlowCAPI >> deleteGraph: aTFGraph [
-	^ self dispatcher callTF_DeleteGraphWith: aTFGraph
+
+	^library deleteGraph: aTFGraph
 ]
 
 { #category : 'options' }
 TensorFlowCAPI >> deleteImportGraphDefOptions: aTFImportGraphDefOptions [
-	^ self dispatcher callTF_DeleteImportGraphDefOptionsWith: aTFImportGraphDefOptions
+
+	
+	^ library deleteImportGraphDefOptions: aTFImportGraphDefOptions 
 ]
 
-{ #category : 'session' }
-TensorFlowCAPI >> deleteSession: aTFSession status: aTFStatus [
-	^ self dispatcher callTF_DeleteSessionWith: aTFSession with: aTFStatus
+{ #category : 'deleting' }
+TensorFlowCAPI >> deleteSession: aTFSession [
 
+	library checkStatusAfter: [:status | library deleteSession: aTFSession status: status]
 ]
 
-{ #category : 'options' }
+{ #category : 'deleting' }
 TensorFlowCAPI >> deleteSessionOptions: aTFSessionOptions [
-	^ self dispatcher callTF_DeleteSessionOptionsWith: aTFSessionOptions
+
+	^library deleteSessionOptions: aTFSessionOptions
 ]
 
-{ #category : 'status' }
+{ #category : 'deleting' }
 TensorFlowCAPI >> deleteStatus: aTFStatus [
-	^ self dispatcher callTF_DeleteStatusWith: aTFStatus
+
+	^library deleteStatus: aTFStatus
 ]
 
-{ #category : 'tensor' }
+{ #category : 'deleting' }
 TensorFlowCAPI >> deleteTensor: aTFTensor [
-	^ self dispatcher callTF_DeleteTensorWith: aTFTensor
+
+	^library deleteTensor: aTFTensor
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription addControlInput: aTFOutputOrOperation [
-	"	old version:
-			void 'TF_AddControlInput' (TFOperationDescription* TFOutput)
-		new version:
-			void 'TF_AddControlInput' (TFOperationDescription* *TFOperation)"
-	| operation |
-	(aTFOutputOrOperation isKindOf: TFOutput)
-		ifTrue: [
-			self halt: 'Deprecated interface: The second argument type has changed from TFOutput to *TFOperation'.
-			operation := aTFOutputOrOperation operation.
-			operation := TFOperation address: operation.
-		] ifFalse: [
-			operation := aTFOutputOrOperation].
-	^ self dispatcher callTF_AddControlInputWith: aTFOperationDescription with: operation
+TensorFlowCAPI >> description: aTFOperationDescription addControlInput: aTFOperation [
+
+	
+	^ library description: aTFOperationDescription addControlInput: aTFOperation 
 ]
 
 { #category : 'operation description' }
 TensorFlowCAPI >> description: aTFOperationDescription addInput: aTFOutput [
-	^ self dispatcher callTF_AddInputWith: aTFOperationDescription with: aTFOutput
+
+	
+	^ library description: aTFOperationDescription addInput: aTFOutput 
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription addInputs: aTFOutputArray size: anInteger [
-	^ self dispatcher callTF_AddInputListWith: aTFOperationDescription with: aTFOutputArray with: anInteger
+TensorFlowCAPI >> description: aTFOperationDescription addInputs: anArray [
+
+	^ library description: aTFOperationDescription addInputs: anArray
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toBool: anInt [
-	^ self dispatcher callTF_SetAttrBoolWith: aTFOperationDescription with: aString with: anInt
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toBool: aBoolean [
+	
+	^ library description: aTFOperationDescription set: anAttributeName toBool: aBoolean
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toFloat: valueFloat [
-	"	<cdecl: void 'TF_SetAttrFloat' (TFOperationDescription* char* float)>"
-	^ self dispatcher callTF_SetAttrFloatWith: aTFOperationDescription with: aString with: valueFloat
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toFloat: aFloat [
+
+	
+	^ library description: aTFOperationDescription set: anAttributeName toFloat: aFloat 
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toInt64: anInt [
-	^ self dispatcher callTF_SetAttrIntWith: aTFOperationDescription with: aString with: anInt
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toInt64: anInteger [
+
+	^ library description: aTFOperationDescription set: anAttributeName toInt64: anInteger
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toInts: values size: size [
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toInts: aListOfIntegers [
 
-	^self dispatcher
-		callTF_SetAttrIntListWith: aTFOperationDescription
-		with: anAttributeName
-		with: values
-		with: size
+	^ library description: aTFOperationDescription set: anAttributeName toInts: aListOfIntegers
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toShape: anInt64Array size: size [
-	^ self dispatcher callTF_SetAttrShapeWith: aTFOperationDescription with: aString with: anInt64Array with: size
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toShape: aTensorShape [
+
+	^ library description: aTFOperationDescription set: anAttributeName toShape: aTensorShape
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toShapes: dims sizesOfEach: num_dims size: num_shapes [
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toShapes: aListOfShapes [
 
-	^self dispatcher
-		callTF_SetAttrShapeListWith: aTFOperationDescription
-		with: anAttributeName
-		with: dims
-		with: num_dims
-		with: num_shapes
+
+	library description: aTFOperationDescription set: anAttributeName toShapes: aListOfShapes
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: nameString toString: valueString size: size [
-	"	<cdecl: void 'TF_SetAttrString' (TFOperationDescription* char* char* ulonglong)>"
-	^ self dispatcher callTF_SetAttrStringWith: aTFOperationDescription with: nameString with: valueString with: size
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toString: aString [
+
+	library checkStatusAfter: [:status |
+		library
+			description: aTFOperationDescription
+			set: anAttributeName asAsciiZ
+			toString: aString
+			size: aString size]
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toStrings: anArrayOfString sizes: sizes count: count [
-	"	<cdecl: void 'TF_SetAttrStringList' (TFOperationDescription* char* void* Int64Array* longlong)>"
-	^ self dispatcher callTF_SetAttrStringListWith: aTFOperationDescription with: aString with: anArrayOfString with: sizes with: count
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toStrings: aStringCollection [
+
+	
+	^ library description: aTFOperationDescription set: anAttributeName toStrings: aStringCollection 
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toTensor: aTFTensor status: aTFStatus [
-	^ self dispatcher callTF_SetAttrTensorWith: aTFOperationDescription with: aString with: aTFTensor with: aTFStatus
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTensor: aTFTensor [
 
+	library checkStatusAfter: [:status |
+		library
+			description: aTFOperationDescription
+			set: anAttributeName asAsciiZ
+			toTensor: aTFTensor
+			status: status]
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: aString toType: anInt [
-	^ self dispatcher callTF_SetAttrTypeWith: aTFOperationDescription with: aString  with: anInt
-
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toType: aTensorType [
+	
+	^ library description: aTFOperationDescription set: anAttributeName toType: aTensorType
 ]
 
 { #category : 'operation description' }
-TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTypes: values size: size [
+TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTypes: aListOfTypes [
 
-	^self dispatcher
-		callTF_SetAttrTypeListWith: aTFOperationDescription
-		with: anAttributeName
-		with: values
-		with: size
+	library description: aTFOperationDescription set: anAttributeName toTypes: aListOfTypes
 ]
 
 { #category : 'operation description' }
 TensorFlowCAPI >> description: aTFOperationDescription setDevice: aString [
-	"	<cdecl: void 'TF_SetDevice' (TFOperationDescription* char*)>"
-	^ self dispatcher callTF_SetDeviceWith: aTFOperationDescription with: aString
+
+
+	^ library description: aTFOperationDescription setDevice: aString 
 ]
 
 { #category : 'device list' }
-TensorFlowCAPI >> deviceList: aDeviceList incarnationAt: anInteger status: aTFStatus [
-	" char* TF_DeviceListIncarnation(const TF_DeviceList* list, int index, TF_Status* status) "
+TensorFlowCAPI >> deviceList: aTFDeviceList incarnationAt: anIndex [
 
-	^ self dispatcher callTF_DeviceListIncarnationWith: aDeviceList with: anInteger with: aTFStatus.
+	^library checkStatusAfter: [:status |
+		library deviceList: aTFDeviceList incarnationAt: anIndex status: status]
 ]
 
 { #category : 'device list' }
-TensorFlowCAPI >> deviceList: aDeviceList memoryAt: anInteger status: aTFStatus [
-	" char* TF_DeviceListMemoryBytes(const TF_DeviceList* list, int index, TF_Status* status) "
+TensorFlowCAPI >> deviceList: aTFDeviceList memoryAt: anIndex [
 
-	^ self dispatcher callTF_DeviceListMemoryBytesWith: aDeviceList with: anInteger with: aTFStatus.
+	^library checkStatusAfter: [:status |
+		library deviceList: aTFDeviceList memoryAt: anIndex status: status]
 ]
 
 { #category : 'device list' }
-TensorFlowCAPI >> deviceList: aDeviceList nameAt: anInteger status: aTFStatus [
-	" char* TF_DeviceListName(const TF_DeviceList* list, int index, TF_Status* status) "
-	| answer |
+TensorFlowCAPI >> deviceList: aTFDeviceList nameAt: anIndex [
 
-	answer := self dispatcher callTF_DeviceListNameWith: aDeviceList with: anInteger with: aTFStatus.
-	^ (OSStringZ address: answer) asString
+	^library checkStatusAfter: [:status |
+		library deviceList: aTFDeviceList nameAt: anIndex status: status]
 ]
 
 { #category : 'device list' }
-TensorFlowCAPI >> deviceList: aDeviceList typeAt: anInteger status: aTFStatus [
-	" char* TF_DeviceListType(const TF_DeviceList* list, int index, TF_Status* status) "
-	| answer |
+TensorFlowCAPI >> deviceList: aTFDeviceList typeAt: anIndex [
 
-	answer := self dispatcher callTF_DeviceListTypeWith: aDeviceList with: anInteger with: aTFStatus.
-	^ (OSStringZ address: answer) asString
+	^library checkStatusAfter: [:status |
+		library deviceList: aTFDeviceList typeAt: anIndex status: status]
 ]
 
 { #category : 'device list' }
 TensorFlowCAPI >> deviceListCount: aTFDeviceList [
-	^ self dispatcher callTF_DeviceListCountWith: aTFDeviceList
 
+	^library deviceListCount: aTFDeviceList
 ]
 
 { #category : 'device list' }
-TensorFlowCAPI >> deviceListForSession: aTFSession status: aTFStatus [
-	" TF_DeviceList* TF_SessionListDevices(TF_Session* session, TF_Status* status);"
-	
-	| answer |
+TensorFlowCAPI >> deviceListForSession: aTFSession [
 
-	answer := self dispatcher callTF_SessionListDevicesWith: aTFSession with: aTFStatus.
-	^ TFDeviceList address: answer
+	^library checkStatusAfter: [:status | library deviceListForSession: aTFSession status: status]
 ]
 
-{ #category : 'utils' }
-TensorFlowCAPI >> dispatcher [
-	^self class dispatcher
-]
-
-{ #category : 'utils' }
+{ #category : 'strings' }
 TensorFlowCAPI >> externalizeString: aString [
-	^ aString copyToOSMemory
-]
 
-{ #category : 'operation description' }
-TensorFlowCAPI >> finishOperation: aTFOperationDescription status: aTFStatus [
-	| answer |
-	answer := self
-		finishOperationAsVoid: aTFOperationDescription
-		status: aTFStatus.
-	^ TFOperation address: answer
-]
-
-{ #category : 'operation description' }
-TensorFlowCAPI >> finishOperationAsVoid: aTFOperationDescription status: aTFStatus [
-	^ self dispatcher callTF_FinishOperationWith: aTFOperationDescription with: aTFStatus.
-
+	
+	^ library externalizeString: aString 
 ]
 
 { #category : 'operation' }
-TensorFlowCAPI >> forGraph: aTFGraph outputDims: aTFOutput status: aTFStatus [
-	^ self dispatcher callTF_GraphGetTensorNumDimsWith: aTFGraph with: aTFOutput with: aTFStatus
+TensorFlowCAPI >> finishOperation: aTFOperationDescription [
+
+	^library checkStatusAfter: [:status | | answer |
+		answer := library finishOperation: aTFOperationDescription status: status.
+		aTFOperationDescription makeNull.
+		answer]
+]
+
+{ #category : 'graph' }
+TensorFlowCAPI >> forGraph: aTFGraph outputDims: aTFOutput [
+
+	^library
+		checkStatusAfter: [:status | library forGraph: aTFGraph outputDims: aTFOutput status: status]
 ]
 
 { #category : 'utils' }
 TensorFlowCAPI >> getAllOps [
-	^ TFBuffer address: self dispatcher callTF_GetAllOpList
+	
+	^ library getAllOps
 ]
 
-{ #category : 'status' }
-TensorFlowCAPI >> getCode: aTFStatus [
-	^self dispatcher callTF_GetCodeWith: aTFStatus
+{ #category : 'initialization' }
+TensorFlowCAPI >> getCodeOf: aTFStatus [
+
+	^library getCode: aTFStatus
 ]
 
-{ #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph getOperationNamed: aString [
-	| answer |
-	answer := self graph: aTFGraph getOperationNamedAsVoid: aString.
-	answer := TFOperation address: answer.
-	answer graph: aTFGraph.
-	^ answer
-]
+{ #category : 'gradients' }
+TensorFlowCAPI >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: dxArrayOfOutput in: aTFGraph [
 
-{ #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph getOperationNamedAsVoid: aString [
-	^ self dispatcher callTF_GraphOperationByNameWith: aTFGraph with: aString
-]
-
-{ #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph getRankOf: aTFOutputOrInput status: status [
-	^ self dispatcher callTF_GraphGetTensorNumDimsWith: aTFGraph with: aTFOutputOrInput with: status
+	^ library
+		gradientsOf: yArrayOfTFOutput
+		withRespectTo: xArrayOfTFOutput
+		product: dxArrayOfOutput
+		in: aTFGraph
 ]
 
 { #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph getShapeOf: aTFOutputOrInput into: anInt64Array size: anInteger status: status [
-	^ self dispatcher callTF_GraphGetTensorShapeWith: aTFGraph with: aTFOutputOrInput with: anInt64Array with: anInteger with: status
+TensorFlowCAPI >> graph: aTFGraph getOperationNamed: anOperationName [
+	
+		^ library graph: aTFGraph getOperationNamed: anOperationName
 ]
 
-{ #category : 'operation' }
+{ #category : 'graph' }
+TensorFlowCAPI >> graph: aTFGraph getRankOf: aTFOutputOrInput [
+
+	^library checkStatusAfter: [:status |
+		library graph: aTFGraph getRankOf: aTFOutputOrInput status: status]
+]
+
+{ #category : 'graph' }
+TensorFlowCAPI >> graph: aTFGraph getShapeOf: aTFOutput [
+
+	
+	^ library graph: aTFGraph getShapeOf: aTFOutput 
+]
+
+{ #category : 'graph' }
 TensorFlowCAPI >> graph: aTFGraph operationAt: contextULongLongPtr [
-	| answer |
-	answer := self graph: aTFGraph operationAtAsVoid: contextULongLongPtr.
-	answer := TFOperation address: answer.
-	answer graph: aTFGraph.
-	^ answer
-]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> graph: aTFGraph operationAtAsVoid: contextULongLongPtr [
-	^ self dispatcher callTF_GraphNextOperationWith: aTFGraph with: contextULongLongPtr
+	^library graph: aTFGraph operationAt: contextULongLongPtr
 ]
 
 { #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph setShapeOf: aTFOutputOrInput to: anInt64Array size: anInteger status: status [
-	"	<cdecl: void 'TF_GraphSetTensorShape' (TFGraph* TFOutput Int64Array* ulonglong TFStatus*)>"
-	^ self dispatcher callTF_GraphSetTensorShapeWith: aTFGraph with: aTFOutputOrInput with: anInt64Array with: anInteger with: status
+TensorFlowCAPI >> graph: aTFGraph setShapeOf: aTFOutput to: aShape [
+
+
+	^ library graph: aTFGraph setShapeOf: aTFOutput to: aShape 
 ]
 
 { #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph toGraphDef: aTFBuffer status: aTFStatus [
-	^ self dispatcher callTF_GraphToGraphDefWith: aTFGraph with: aTFBuffer with: aTFStatus
+TensorFlowCAPI >> graphDefinitionOf: aTFGraph [
+
+	"Return the protobuff serialisation of the graph"
+
+	| buffer |
+
+	buffer := TFBuffer new.
+	library checkStatusAfter: [:status | library graph: aTFGraph toGraphDef: buffer status: status].
+	^buffer dataBytes asString
 ]
 
 { #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph y: yTFOutputArray yCount: yCount x: xTFOutputArray xCount: xCount dx: dxTFOutputArray status: aTFStatus [
+TensorFlowCAPI >> importGraphDefFrom: aTFBuffer into: aTFGraph [
 
+	library checkStatusAfter: [:status | | options |
+		options := TFImportGraphDefOptions create.
+		library importGraphDefInto: aTFGraph from: aTFBuffer options: options status: status.
+		options delete]
 ]
 
-{ #category : 'graph' }
-TensorFlowCAPI >> graph: aTFGraph y: yTFOutputArray yCount: yCount x: xTFOutputArray xCount: xCount dx: dxTFOutputArray status: aTFStatus into: dyTFOutputArray [
-	" void TF_AddGradients(TF_Graph* g, TF_Output* y, int ny,
-						   TF_Output* x, int nx, TF_Output* dx,
-						   TF_Status* status, TF_Output* dy); "
-	^ self dispatcher
-		callTF_AddGradientsWith: aTFGraph
-		with: yTFOutputArray with: yCount
-		with: xTFOutputArray with: xCount
-		with: dxTFOutputArray
-		with: aTFStatus
-		with: dyTFOutputArray
-]
+{ #category : 'initialization',
+  #vaVisibility : 'private' }
+TensorFlowCAPI >> initializeWrapping: aTensorFlowPharoLibrary [
 
-{ #category : 'graph' }
-TensorFlowCAPI >> importGraphDefInto: aTFGraph from: aTFBuffer options: aTFImportGraphDefOptions status: aTFStatus [
-	^ self dispatcher
-		callTF_GraphImportGraphDefWith: aTFGraph
-		with: aTFBuffer
-		with: aTFImportGraphDefOptions
-		with: aTFStatus
-
+	
+	library := aTensorFlowPharoLibrary 
 ]
 
 { #category : 'status' }
 TensorFlowCAPI >> message: aTFStatus [
-	^(OSStringZ address: (self dispatcher callTF_MessageWith: aTFStatus)) asString
+
+
+	^ library message: aTFStatus 
+]
+
+{ #category : 'session' }
+TensorFlowCAPI >> newAutoreleaseSessionOn: aTFGraph [
+
+
+	^ library newAutoreleaseSessionOn: aTFGraph
+]
+
+{ #category : 'options' }
+TensorFlowCAPI >> newAutoreleaseSessionOptions [
+	
+	^ library newAutoreleaseSessionOptions
+	
+]
+
+{ #category : 'status' }
+TensorFlowCAPI >> newAutoreleaseStatus [
+
+	^library newAutoreleaseStatus
 ]
 
 { #category : 'buffer' }
-TensorFlowCAPI >> newBufferFromString: aString size: anInteger [
-	^ TFBuffer address: (self dispatcher callTF_NewBufferFromStringWith: aString with: anInteger)
+TensorFlowCAPI >> newBuffer [
+
+	^ library newBuffer
+]
+
+{ #category : 'buffer' }
+TensorFlowCAPI >> newBufferFromString: aString [
+
+	
+	^ library newBufferFromString: aString size: aString size 
 ]
 
 { #category : 'graph' }
 TensorFlowCAPI >> newGraph [
-	^ TFGraph address: self dispatcher callTF_NewGraph
+	
+	^ library newGraph 
 ]
 
 { #category : 'options' }
 TensorFlowCAPI >> newImportGraphDefOptions [
-	^ TFImportGraphDefOptions address: self dispatcher callTF_NewImportGraphDefOptions
-]
-
-{ #category : 'operation' }
-TensorFlowCAPI >> newOperationDescriptionOn: graph type: type named: name [
-	| address |
-	address := self dispatcher callTF_NewOperationWith: graph with: type with: name.
-	^ TFOperationDescription address: address
-]
-
-{ #category : 'session' }
-TensorFlowCAPI >> newSession: aTFGraph options: aTFSessionOptions status: aTFStatus [
-	| answer |
-	answer := self dispatcher callTF_NewSessionWith: aTFGraph with: aTFSessionOptions with: aTFStatus. 
-	^ TFSession address: answer.
 	
+	^ library newImportGraphDefOptions
+]
+
+{ #category : 'operation description' }
+TensorFlowCAPI >> newOperationDescriptionOn: aTFGraph type: aTensorType named: anOperationName [
+	
+	^ library newOperationDescriptionOn: aTFGraph type: aTensorType named: anOperationName
+]
+
+{ #category : 'status' }
+TensorFlowCAPI >> newPersistentStatus [
+	
+	^ library newPersistentStatus
 ]
 
 { #category : 'options' }
 TensorFlowCAPI >> newSessionOptions [
-	^ TFSessionOptions address: (self dispatcher callTF_NewSessionOptions)
+	
+	^ library newSessionOptions
 ]
 
 { #category : 'status' }
 TensorFlowCAPI >> newStatus [
-	^TFStatus address: (self dispatcher callTF_NewStatus)
+	
+	^ library newStatus
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getBool: valueBoolPtr status: status [
-	^ self dispatcher callTF_OperationGetAttrBoolWith: aTFOperation with: nameZString with: valueBoolPtr address with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getBoolAt: anAttributeName [
+
+	^ library operation: aTFOperation getBoolAt: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getFloat: valueFloatPtr status: status [
-	^ self dispatcher callTF_OperationGetAttrFloatWith: aTFOperation with: nameZString with: valueFloatPtr with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getFloatAt: anAttributeName [
+
+	^ library operation: aTFOperation getFloatAt: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getInt64: valueLongPtr status: status [
-	^ self dispatcher callTF_OperationGetAttrIntWith: aTFOperation with: nameZString with: valueLongPtr with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getInt64At: anAttributeName [
+
+
+	^library operation: aTFOperation getInt64At: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getShape: int64array size: maxSize status: status [
-	"	<cdecl: void 'TF_OperationGetAttrShape' (TFOperation* char* Int64Array* ulonglong TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrShapeWith: aTFOperation with: nameZString with: int64array with: maxSize with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getMetadataFor: anAttributeName [
+
+	
+	^  library operation: aTFOperation getMetadataFor: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getString: valueString size: maxSize status: status [
-	"	<cdecl: void 'TF_OperationGetAttrString' (TFOperation* char* void* ulonglong TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrStringWith: aTFOperation with: nameZString with: valueString with: maxSize with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getShapeAt: anAttributeName [
+
+	^ library operation: aTFOperation getShapeAt: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getStrings: valueStringArray sizes: sizesArray maxCount: maxCount storage: aBytaArray size: storageSize status: status [
-	"	<cdecl: void 'TF_OperationGetAttrStringList' (TFOperation* char* void* Int64Array* ulonglong void* size_t TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrStringListWith: aTFOperation with: nameZString with: valueStringArray with: sizesArray with: maxCount with: aBytaArray with: storageSize with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getStringAt: anAttributeName [
+
+	^ library operation: aTFOperation getStringAt: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getTensor: valueLongPtr status: status [
-	"	<cdecl: void 'TF_OperationGetAttrTensor' (TFOperation* char* void* TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrTensorWith: aTFOperation with: nameZString with: valueLongPtr with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getStringsAt: anAttributeName [
+
+	^ library operation: aTFOperation getStringsAt: anAttributeName
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation attr: nameZString getType: valueLongPtr status: status [
-	"	<cdecl: void 'TF_OperationGetAttrType' (TFOperation* char* ulonglong* TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrTypeWith: aTFOperation with: nameZString with: valueLongPtr with: status
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getTensorAt: anAttributeName [
+
+
+	^ library operation: aTFOperation getTensorAt: anAttributeName 
 ]
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operation: aTFOperation getMetadataFor: nameZString status: status [
-	"	<cdecl: TFAttrMetadata 'TF_OperationGetAttrMetadata' (TFOperation* char* TFStatus*)>"
-	^ self dispatcher callTF_OperationGetAttrMetadataWith: aTFOperation with: nameZString with: status
-]
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> operation: aTFOperation getTypeAt: anAttributeName [
 
-{ #category : 'operation' }
-TensorFlowCAPI >> operationDevice: aTFOperation [
-	"	<cdecl: char* 'TF_OperationDevice' (TFOperation*)>"
-	^ self dispatcher callTF_OperationDeviceWith: aTFOperation
+	
+	^ library operation: aTFOperation getTypeAt: anAttributeName
 ]
 
 { #category : 'operation' }
 TensorFlowCAPI >> operationName: aTFOperation [
-	| address |
-	address := self dispatcher callTF_OperationNameWith: aTFOperation.
-	^ (OSStringZ address: address) asString
+
+	
+	^ library operationName: aTFOperation 
 ]
 
 { #category : 'operation' }
 TensorFlowCAPI >> operationNumInputs: aTFOperation [
-	^ self dispatcher callTF_OperationNumInputsWith: aTFOperation
+
+
+	^ library operationNumInputs: aTFOperation 
 ]
 
 { #category : 'operation' }
 TensorFlowCAPI >> operationNumOutputs: aTFOperation [
-	^ self dispatcher callTF_OperationNumOutputsWith: aTFOperation
+
+	
+	^ library operationNumOutputs: aTFOperation 
 ]
 
 { #category : 'operation' }
 TensorFlowCAPI >> operationOpType: aTFOperation [
-	| address |
-	address := self dispatcher callTF_OperationOpTypeWith: aTFOperation.
-	^ (OSStringZ address: address) asString
+
+
+	^ library operationOpType: aTFOperation 
 ]
 
 { #category : 'operation' }
 TensorFlowCAPI >> operationOutputType: aTFOutput [
-	^ self dispatcher callTF_OperationOutputTypeWith: aTFOutput
-]
 
-{ #category : 'strings' }
-TensorFlowCAPI >> primStringEncodedSize: anInteger [
-	^ self dispatcher callTF_StringEncodedSizeWith:anInteger
+
+	^ library operationOutputType: aTFOutput 
 ]
 
 { #category : 'session' }
-TensorFlowCAPI >> runSession: aTFSession options: runOptionsTFBufferOrNil inputs: inTFOutputArray values: inTFTensorArray count: inCount outputs: outTFOutputArray values: outTFTensorArrayPtr count: outCount targets: targetTFOperationArrayOrNil count: targetCount metadata: metadataTFBuffer status: aTFStatus [
-	"	<cdecl: void 'TF_SessionRun' (
-		TFSession* TFBuffer*
-		TFOutputArray* TFTensorPtrArray* long
-		TFOutputArray* TFTensorPtrArray* long
-		TFOperationPtrArray* long	
-		TFBuffer*
-		TFStatus*)>"
-		^ self dispatcher
-			callTF_SessionRunWith: aTFSession
-			with: runOptionsTFBufferOrNil
-			with: inTFOutputArray with: inTFTensorArray with: inCount 
-			with: outTFOutputArray with: outTFTensorArrayPtr with: outCount
-			with: targetTFOperationArrayOrNil with: targetCount
-			with: metadataTFBuffer
-			with: aTFStatus
+TensorFlowCAPI >> runSession: aTFSession [
+
+	library checkStatusAfter: [:status |
+		library
+			runSession: aTFSession
+			options: nil
+			inputs: nil
+			values: nil
+			count: 0
+			outputs: nil
+			values: nil
+			count: 0
+			targets: nil
+			count: 0
+			metadata: nil
+			status: status]
+]
+
+{ #category : 'session' }
+TensorFlowCAPI >> runSession: aTFSession inputs: anArrayOfPlaceholders values: anArrayOfTensors outputs: anArrayOfOutputs [
+	
+	^ library runSession: aTFSession inputs: anArrayOfPlaceholders values: anArrayOfTensors outputs: anArrayOfOutputs
+]
+
+{ #category : 'session' }
+TensorFlowCAPI >> runSession: aTFSession operation: aTFOperation output: aTFOutput [
+
+	
+	^ library runSession: aTFSession operation: aTFOperation output: aTFOutput 
+]
+
+{ #category : 'session' }
+TensorFlowCAPI >> runSession: aTFSession operations: anArrayOfTFOperations [
+	
+	^ library runSession: aTFSession operations: anArrayOfTFOperations
+]
+
+{ #category : 'session' }
+TensorFlowCAPI >> runSession: aTFSession outputs: aTFOutputArray [
+
+	
+	^ library runSession: aTFSession outputs: aTFOutputArray
 ]
 
 { #category : 'options' }
-TensorFlowCAPI >> sessionOptions: aTFSessionOptions setConfig: aByteObject configSize: anInteger status: aTFStatus [
-	self dispatcher callTF_SetConfigWith: aTFSessionOptions with: aByteObject with: anInteger with: aTFStatus.
+TensorFlowCAPI >> sessionOptions: aTFSessionOptions setConfig: aString [
+
+	library checkStatusAfter: [:status |
+		library
+			sessionOptions: aTFSessionOptions
+			setConfig: aString
+			configSize: aString size
+			status: status]
 ]
 
 { #category : 'options' }
-TensorFlowCAPI >> sessionOptions: aTFSessionOptions setTarget: anExternalString [
-	^self dispatcher callTF_SetTargetWith: aTFSessionOptions with: anExternalString
+TensorFlowCAPI >> sessionOptions: aTFSessionOptions setTarget: aString [
+
+	library sessionOptions: aTFSessionOptions setTarget: (library externalizeString: aString)
 ]
 
 { #category : 'status' }
-TensorFlowCAPI >> setStatus: aTFStatus code: anInteger message: anExternalString [
-	^ self dispatcher callTF_SetStatusWith: aTFStatus with: anInteger with: anExternalString
+TensorFlowCAPI >> setStatus: aTFStatus code: aTFCode message: aString [
+
+	| externalized |
+
+	externalized := library externalizeString: aString.
+	^ library setStatus: aTFStatus code: aTFCode message: externalized
 ]
 
 { #category : 'utils' }
-TensorFlowCAPI >> sizeOfDataType: aDataType [
+TensorFlowCAPI >> sizeOfDataType: aSmallInteger [
 
-	^self dispatcher callTF_DataTypeSizeWith: aDataType
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringDecode: src [
-	| destination status answer dstSize |
-	destination := ByteArray new: 8.
-	dstSize := ByteArray new: 8.
-	status := TFStatus create.
-	answer := self
-		stringDecode: src
-		len: src size
-		destination: destination
-		len: dstSize
-		status: status.
-	status check.
-	dstSize := dstSize uint64At: 0.
-	destination := OSPtr address: (destination pointerAt: 0).
-	answer := destination memcpyStringFrom: 0 to: dstSize - 1.
-	^ answer
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringDecode: srcString len: srcLen destination: dstPointer len: dstLenPointer status: status [
-	"	<cdecl: ulonglong 'TF_StringDecode' (char* ulonglong char* ulonglong* TFStatus)>"
-	^ self dispatcher callTF_StringDecodeWith: srcString with: srcLen with: dstPointer with: dstLenPointer with: status
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringEncode: srcString len: srcLen destination: dstString len: dstLen status: status [
-	"	<cdecl: ulonglong 'TF_StringEncode' (char* ulonglong char* ulonglong TFStatus)>"
-	^ self dispatcher callTF_StringEncodeWith: srcString with: srcLen with: dstString with: dstLen with: status
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringEncode: src to: dst [
-	^ self stringEncode: src to: dst size: dst size
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringEncode: src to: dst size: dstSize [
-	| status answer |
-	status := TFStatus create.
-	answer := self
-		stringEncode: src
-		len: src size
-		destination: dst
-		len: dstSize
-		status: status.
-	status check.
-	^ answer
-]
-
-{ #category : 'strings' }
-TensorFlowCAPI >> stringEncodedSize: aString [
-	^ self primStringEncodedSize: aString size
+	^ library sizeOfDataType: aSmallInteger
 ]
 
 { #category : 'tensor' }
-TensorFlowCAPI >> tensor: aTFTensor sizeOn: dimension [
-	^ self dispatcher callTF_DimWith: aTFTensor  with: dimension
+TensorFlowCAPI >> tensor: aTFTensor sizeOn: aDimension [
+
+	^ library tensor: aTFTensor sizeOn: aDimension
 ]
 
 { #category : 'tensor' }
 TensorFlowCAPI >> tensorByteSize: aTFTensor [
-	^ self dispatcher callTF_TensorByteSizeWith: aTFTensor
+
+	
+	^ library tensorByteSize: aTFTensor 
 ]
 
 { #category : 'tensor' }
-TensorFlowCAPI >> tensorData: aTFTensor [
-	"	<cdecl: void* 'TF_TensorData' (TFTensor*)>"
-	^ self dispatcher callTF_TensorDataWith: aTFTensor
+TensorFlowCAPI >> tensorDataOf: aTFTensor [
+
+	^library tensorDataOf: aTFTensor
+]
+
+{ #category : 'tensor' }
+TensorFlowCAPI >> tensorFromString: aString [
+
+
+	^ library tensorFromString: aString
+]
+
+{ #category : 'tensor' }
+TensorFlowCAPI >> tensorFromStrings: anArray shaped: aTensorShape [
+
+
+	^ library tensorFromStrings: anArray shaped: aTensorShape 
 ]
 
 { #category : 'tensor' }
 TensorFlowCAPI >> tensorRank: aTFTensor [
-	^ self dispatcher callTF_NumDimsWith: aTFTensor
+
+	^ library tensorRank: aTFTensor
 ]
 
 { #category : 'tensor' }
 TensorFlowCAPI >> tensorType: aTFTensor [
-	"	<cdecl: ulonglong 'TF_TensorType' (TFTensor*)>"
-	^ self dispatcher callTF_TensorTypeWith: aTFTensor
+
+	^library tensorType: aTFTensor
 ]
 
 { #category : 'utils' }
 TensorFlowCAPI >> version [
-	#fixme. #repeated.
-	^ self dispatcher callTF_Version
+	
+	^ library version
 ]

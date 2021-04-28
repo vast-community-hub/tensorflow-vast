@@ -1,7 +1,7 @@
 Class {
 	#name : 'Int64Array',
 	#superclass : 'ExternalWordArray',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'instance creation' }

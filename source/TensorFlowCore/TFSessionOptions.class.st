@@ -6,7 +6,10 @@ Class {
 
 { #category : 'instance creation' }
 TFSessionOptions class >> create [
-	^ TensorFlowCAPI current newSessionOptions useFinalization
+
+	^ TensorFlowCAPI current newAutoreleaseSessionOptions
+
+
 ]
 
 { #category : 'instance creation' }
@@ -61,17 +64,7 @@ TFSessionOptions >> config: aByteObject [
 	 Answers:
 		<TFStatus>"
 
-	| status |
-
-	status := TFStatus new.
-	self library
-		sessionOptions: self
-		setConfig: aByteObject
-		configSize: aByteObject size
-		status: status.
-	status check.
-	
-
+	self library sessionOptions: self setConfig: aByteObject
 ]
 
 { #category : 'Memory Management' }
@@ -91,7 +84,5 @@ TFSessionOptions >> target: aString [
 	 Arguments:
 		aString - <String>"
 
-	self library
-		sessionOptions: self
-		setTarget: (self library externalizeString: aString)
+	self library sessionOptions: self setTarget: aString
 ]

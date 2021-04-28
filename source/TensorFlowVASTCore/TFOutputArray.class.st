@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFOutputArray',
 	#superclass : 'ExternalWordArray',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'Not categorized' }
@@ -36,6 +36,12 @@ TFOutputArray >> at: anInteger put: aTFOutput [
 		arrayAt: anInteger - 1 * size
 		put: aTFOutput
 		size: 1
+]
+
+{ #category : 'accessing' }
+TFOutputArray >> outputOn: aGraph [
+
+	^self
 ]
 
 { #category : 'accessing' }

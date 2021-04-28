@@ -65,12 +65,6 @@ TensorShape >> asInt32Tensor [
 	^self dimensionSizes asInt32Tensor
 ]
 
-{ #category : 'Accessing' }
-TensorShape >> asInt64Array [
-
-	^Int64Array externalFromArray: dimensionSizes
-]
-
 { #category : 'Converting' }
 TensorShape >> asInt64Tensor [
 

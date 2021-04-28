@@ -137,16 +137,8 @@ TFGraph >> runInputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outA
 { #category : '*TensorFlowDeprecatedCore',
  #vaCategories : ['outputs'] }
 TFGraph >> shapeOf: aTFOutputOrInput set: shape [
-	| status value |
-	value := Int64Array externalFromArray: shape.
-	status := TFStatus create.
-	self library
-		graph: self
-		setShapeOf: aTFOutputOrInput
-		to: value
-		size: shape size
-		status: status.
-	status check
+
+	self library graph: self setShapeOf: aTFOutputOrInput to: shape
 ]
 
 { #category : '*TensorFlowDeprecatedCore',

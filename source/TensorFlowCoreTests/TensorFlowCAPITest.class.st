@@ -429,29 +429,6 @@ TensorFlowCAPITest >> testAttrSetShapeTooLarge [
 	self testAttrSetShape: (1 to: 200) asArray
 ]
 
-{ #category : 'testing operation' }
-TensorFlowCAPITest >> testAttrSetShapeTooLargeTruncated [
-	| graph op shape status size |
-	
-	status := TFStatus create.
-	graph := TFGraph create.
-	shape := Int64Array externalFromArray: (1 to: 200) asArray.
-	size := 5.
-	
-	op := graph
-		newOperation: 'Placeholder'
-		named: 'const'
-		described: [ :description | 
-			description library
-				description: description
-				set: 'shape' asAsciiZ
-				toShape: shape
-				size: size.
-			description at: 'dtype' putType: TFTensor typeInt64 ].
-	status check.
-	self assert: (op shapeAt: 'shape') equals: (1 to: size) asArray.
-]
-
 { #category : 'testing buffer' }
 TensorFlowCAPITest >> testBufferDataBytes [
 	| buffer string data |
@@ -501,11 +478,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunCSV: csvLines [
 	values := TFTensor fromStringArray: csvLines.
 	session := TFSession on: graph.
 	results := session
-		runOperations:
-			((Array new: 1)
-				at: 1 put: output;
-				yourself)
-		inputs:
+		runInputs:
 			((Array new: 1)
 				at: 1 put: records;
 				yourself)
@@ -716,8 +689,7 @@ TensorFlowCAPITest >> testGraphDeletionDoesntBreakSessions [
 	graph ignoreFinalization.
 	graph delete.
 	results := session
-		runOperations: (Array with: add)
-		inputs: inputs
+		runInputs: inputs
 		values: inputValues
 		outputs: (Array with: output).
 	self deny: results isNull.
@@ -1032,8 +1004,7 @@ TensorFlowCAPITest >> testRunGraphAddTwoInputs [
 	output := add output: 0.
 	session := TFSession on: graph.
 	results := session
-		runOperations: (Array with: add)
-		inputs: inputs
+		runInputs: inputs
 		values: inputValues
 		outputs: (Array with: output).
 	self deny: results isNull.
@@ -1055,11 +1026,10 @@ TensorFlowCAPITest >> testRunGraphMulOneInput [
 	mul := graph operationNamed: 'mul'.
 	output := mul output: 0.
 	session := TFSession on: graph.
-	result := session
-		runOperation: mul
-		input: input
-		value: inputValue
-		output: output.
+	result := (session
+		runInputs: (Array with: input) 
+		values: (Array with: inputValue) 
+		outputs: (Array with: output)) first.
 	self deny: result isNull.
 	self deny: result data isNull.
 	self
@@ -1085,8 +1055,7 @@ TensorFlowCAPITest >> testRunGraphMulTwoInputs [
 	output := mul output: 0.
 	session := TFSession on: graph.
 	results := session
-		runOperations: (Array with: mul)
-		inputs: inputs
+		runInputs: inputs
 		values: inputValues
 		outputs: (Array with: output).
 	self deny: results isNull.
@@ -1349,87 +1318,6 @@ TensorFlowCAPITest >> testStringAsTensor [
 	self assert: tensor dataBytes allButFirst asString equals: template
 ]
 
-{ #category : 'testing strings' }
-TensorFlowCAPITest >> testStringDecode [
-	| size string encoded decoded status |
-	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
-	string := 'a ver como queda este string encodeado?'.
-	status := TFStatus create.
-	size := library stringEncodedSize: string.
-	encoded := ByteArray new: size + 20.
-	encoded uint8At: size put: $@ value.
-	library
-		stringEncode: string
-		len: string size
-		destination: encoded
-		len: size + 20
-		status: status.
-	status check.
-	decoded := library stringDecode: encoded.
-	self deny: decoded = (string , '@').
-	self assert: decoded equals: string
-]
-
-{ #category : 'testing strings' }
-TensorFlowCAPITest >> testStringEncode [
-	| size string encoded encodedSize |
-	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
-	string := 'a ver como queda este string encodeado?'.
-	size := library stringEncodedSize: string.
-	encoded := ByteArray new: size + 20.
-	encodedSize := library stringEncode: string to: encoded.
-	self assert: encodedSize equals: size.
-	self assert: (encoded byteAt: 1) equals: string size.
-	self
-		assert: (encoded memcpyStringFrom: 1 to: string size)
-		equals: string
-]
-
-{ #category : 'testing strings' }
-TensorFlowCAPITest >> testStringEncodeExternal [
-	| size string encoded encodedSize status |
-	" This test assumes the internal representation of a TensorFlow string. May fail if they change it "
-	status := TFStatus create.
-	string := 'a ver como queda este string encodeado?'.
-	size := library stringEncodedSize: string.
-	encoded := OSPtr calloc: size + 20.
-	encodedSize := library
-		stringEncode: string
-		len: string size
-		destination: encoded
-		len: size + 20
-		status: status.
-	status check.
-	self assert: encodedSize equals: size.
-	self assert: (encoded uint8At: 0) equals: string size.
-	self
-		assert: (encoded memcpyStringFrom: 1 to: string size)
-		equals: string
-]
-
-{ #category : 'testing strings' }
-TensorFlowCAPITest >> testStringSize [
-	self assert: (library primStringEncodedSize: 0) equals: 0 + 1.
-	self assert: (library primStringEncodedSize: 127) equals: 127 + 1.
-	self assert: (library primStringEncodedSize: 128) equals: 128 + 2.
-	self
-		assert: (library primStringEncodedSize: 127 * 127)
-		equals: 127 * 127 + 2.
-	self
-		assert: (library primStringEncodedSize: 127 * 127 + 123)
-		equals: 127 * 127 + 123 + 2.
-	self
-		assert: (library primStringEncodedSize: 127 * 127 * 127)
-		equals: 127 * 127 * 127 + 3.
-	self assert: (library stringEncodedSize: '') equals: 0 + 1.
-	self
-		assert: (library stringEncodedSize: (String new: 127))
-		equals: 127 + 1.
-	self
-		assert: (library stringEncodedSize: (String new: 128))
-		equals: 128 + 2
-]
-
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorAllElements [
 	self
@@ -1463,8 +1351,7 @@ TensorFlowCAPITest >> testTensorArrayNumbersAt [
 	output := mul output: 0.
 	session := TFSession on: graph.
 	results := session
-		runOperations: (Array with: mul)
-		inputs: inputs
+		runInputs: inputs
 		values: inputValues
 		outputs: (Array with: output).
 	numbers := results numbersAt: 1.

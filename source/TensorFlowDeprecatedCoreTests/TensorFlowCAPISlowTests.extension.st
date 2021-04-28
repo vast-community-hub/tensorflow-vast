@@ -26,8 +26,7 @@ TensorFlowCAPISlowTests >> testRunGraphMulTwoInputsConstTensorDeleted [
 	output := mul output: 0.
 	session := TFSession on: graph.
 	results := session
-		runOperations: (Array with: mul)
-		inputs: inputs
+		runInputs: inputs
 		values: inputValues
 		outputs: (Array with: output).
 	self deny: results isNull.

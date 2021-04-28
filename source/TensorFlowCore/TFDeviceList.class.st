@@ -14,12 +14,8 @@ TFDeviceList class >> initializeAfterLoad [
 
 { #category : 'Instance creation' }
 TFDeviceList class >> on: aTFSession [
-	| answer status |
-	status := TFStatus create.
-	answer := TensorFlowCAPI current deviceListForSession: aTFSession status: status.
-	status check.
-	answer useFinalization.
-	^ answer
+
+	^TensorFlowCAPI current deviceListForSession: aTFSession
 ]
 
 { #category : 'Accesssing' }
@@ -50,29 +46,20 @@ TFDeviceList >> devices [
 
 { #category : 'Accesssing' }
 TFDeviceList >> incarnationAt: anInteger [
-	| answer status |
-	status := TFStatus new.
-	answer := self library deviceList: self incarnationAt: anInteger-1 status: status.
-	status check.
-	^ answer
+
+	^self library deviceList: self incarnationAt: anInteger - 1
 ]
 
 { #category : 'Accesssing' }
 TFDeviceList >> memoryAt: anInteger [
-	| answer status |
-	status := TFStatus new.
-	answer := self library deviceList: self memoryAt: anInteger-1 status: status.
-	status check.
-	^ answer
+	
+	^ self library deviceList: self memoryAt: anInteger-1 
 ]
 
 { #category : 'Accesssing' }
 TFDeviceList >> nameAt: anInteger [
-	| external status |
-	status := TFStatus new.
-	external := self library deviceList: self nameAt: anInteger-1 status: status.
-	status check.
-	^ external
+
+	^self library deviceList: self nameAt: anInteger - 1
 ]
 
 { #category : 'Accesssing' }
@@ -83,9 +70,6 @@ TFDeviceList >> names [
 
 { #category : 'Accesssing' }
 TFDeviceList >> typeAt: anInteger [
-	| answer status |
-	status := TFStatus new.
-	answer := self library deviceList: self typeAt: anInteger-1 status: status.
-	status check.
-	^ answer
+
+	^self library deviceList: self typeAt: anInteger - 1
 ]

@@ -51,7 +51,7 @@ TFVersion class >> getLibraryVersion [
 	 Answers:
 		<TFVersion> - semantic version"
 
-	^self fromString: self dispatcher callTF_Version.
+	^self fromString: TensorFlowCAPI current version
 ]
 
 { #category : 'Comparing' }

@@ -9,7 +9,8 @@ Class {
 
 { #category : 'instance creation' }
 TFGraph class >> create [
-	^ TensorFlowCAPI current newGraph initialize useFinalization
+
+	^ TensorFlowCAPI current newGraph
 ]
 
 { #category : 'instance creation' }
@@ -73,12 +74,8 @@ TFGraph >> basicDelete [
 
 { #category : 'accessing' }
 TFGraph >> definition [
-	| buffer status |
-	status := TFStatus create.
-	buffer := TFBuffer new.
-	self library graph: self toGraphDef: buffer status: status.
-	status check.
-	^ buffer dataBytes asString
+	
+	^ self library graphDefinitionOf: self 
 ]
 
 { #category : 'gradients' }
@@ -90,38 +87,17 @@ TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
 { #category : 'gradients' }
 TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: dxArrayOfOutput [
 
-	| y x dx status dy |
-
-	y := TFOutputArray externalFromArray: yArrayOfTFOutput.
-	x := TFOutputArray externalFromArray: xArrayOfTFOutput.
-	dx := dxArrayOfOutput ifNil: [nil] ifNotNil: [TFOutputArray externalFromArray: dxArrayOfOutput].
-	dy := TFOutputArray new: xArrayOfTFOutput size.
-	status := TFStatus create.
-	self library
-		graph: self
-		y: y
-		yCount: yArrayOfTFOutput size
-		x: x
-		xCount: xArrayOfTFOutput size
-		dx: dx
-		status: status
-		into: dy.
-	status check.
-	^dy
+	^ self library
+		gradientsOf: yArrayOfTFOutput
+		withRespectTo: xArrayOfTFOutput
+		product: dxArrayOfOutput
+		in: self
 ]
 
 { #category : 'initialize-release' }
 TFGraph >> import: aTFBuffer [
-	| options status |
-	status := TFStatus create.
-	options := TFImportGraphDefOptions create.
-	self library
-		importGraphDefInto: self
-		from: aTFBuffer
-		options: options
-		status: status.
-	options delete.
-	status check
+
+	self library importGraphDefFrom: aTFBuffer into: self
 ]
 
 { #category : 'initialize-release' }
@@ -215,13 +191,12 @@ TFGraph >> operationAt: contextULongLongPtr [
 
 { #category : 'accessing' }
 TFGraph >> operationNamed: aString [
+
 	| answer |
-	answer := self library
-		graph: self
-		getOperationNamed: aString asAsciiZ.
-	answer isNull
-		ifTrue: [ Error signal: 'Operation not found' ].
-	^ answer
+
+	answer := self library graph: self getOperationNamed: aString asAsciiZ.
+	answer isNull ifTrue: [Error signal: 'Operation not found'].
+	^answer
 ]
 
 { #category : 'accessing' }
@@ -270,26 +245,14 @@ TFGraph >> operationsSelect: conditionBlock thenDo: actionBlock [
 
 { #category : 'outputs' }
 TFGraph >> outputDimensionsCount: aTFOutput [
-	| status answer |
-	status := TFStatus create.
-	answer := self library
-		forGraph: self
-		outputDims: aTFOutput
-		status: status.
-	status check.
-	^ answer
+
+	^  self library forGraph: self outputDims: aTFOutput
 ]
 
 { #category : 'outputs' }
 TFGraph >> rankOf: aTFOutputOrInput [
-	| status answer |
-	status := TFStatus create.
-	answer := self library
-		graph: self
-		getRankOf: aTFOutputOrInput
-		status: status.
-	status check.
-	^ answer
+
+	^ self library graph: self getRankOf: aTFOutputOrInput
 ]
 
 { #category : 'running' }
@@ -310,19 +273,8 @@ TFGraph >> runOutputs: anArrayOfTFOutputs [
 
 { #category : 'outputs' }
 TFGraph >> shapeOf: aTFOutputOrInput [
-	| status value size answer |
-	size := self rankOf: aTFOutputOrInput.
-	value := Int64Array externalNew: size.
-	status := TFStatus create.
-	self library
-		graph: self
-		getShapeOf: aTFOutputOrInput
-		into: value
-		size: size
-		status: status.
-	status check.
-	answer := (1 to: size) collect: [ :i | value at: i ].
-	^ answer asTensorShape
+
+	^self library graph: self getShapeOf: aTFOutputOrInput
 ]
 
 { #category : 'debugging' }

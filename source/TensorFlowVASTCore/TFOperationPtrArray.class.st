@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFOperationPtrArray',
 	#superclass : 'ExternalWordArray',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'Not categorized' }

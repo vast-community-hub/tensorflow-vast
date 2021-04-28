@@ -7,13 +7,6 @@ Class {
 	#category : 'TensorFlowCore'
 }
 
-{ #category : 'Accessing' }
-TFStructure class >> dispatcher [
-	"Get a handle on the dispatcher"
-
-	^TFLibraryDispatcher default
-]
-
 { #category : 'Instance Creation' }
 TFStructure class >> externalNew [
 	^ self calloc
@@ -43,13 +36,6 @@ TFStructure >> delete [
 	self isNull
 		ifFalse: [ self basicDelete ].
 	self makeNull
-]
-
-{ #category : 'Accessing' }
-TFStructure >> dispatcher [
-	"Get a handle on the dispatcher"
-
-	^self class dispatcher
 ]
 
 { #category : 'initialize-release' }

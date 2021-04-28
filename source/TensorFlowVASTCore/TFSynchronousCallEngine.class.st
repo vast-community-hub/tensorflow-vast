@@ -1,7 +1,7 @@
 Class {
 	#name : 'TFSynchronousCallEngine',
 	#superclass : 'TFCallEngine',
-	#category : 'TensorFlowCore'
+	#category : 'TensorFlowVASTCore'
 }
 
 { #category : 'API' }

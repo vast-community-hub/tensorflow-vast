@@ -120,14 +120,8 @@ TFTensor class >> fromNumbers: values type: type shape: shape [
 
 { #category : 'instance creation' }
 TFTensor class >> fromString: aString [
-	| answer bytesize |
-	bytesize := TensorFlowCAPI current stringEncodedSize: aString.
-	answer := self type: self typeString shape: TensorShape scalar bytesize: bytesize.
-	TensorFlowCAPI current
-		stringEncode: aString
-		to: answer data
-		size: bytesize.
-	^ answer
+	
+	^ TensorFlowCAPI current tensorFromString: aString
 ]
 
 { #category : 'instance creation' }
@@ -138,26 +132,8 @@ TFTensor class >> fromStringArray: aStringArray [
 
 { #category : 'instance creation' }
 TFTensor class >> fromStringArray: aStringArray shape: shape [
-	| answer sizes offsets offsetSize bytesize |
-	sizes := aStringArray collect: [ :each | self sizeOfString: each ].
-	offsetSize := self sizeForType: self typeInt64.
-	bytesize := offsetSize * aStringArray size + sizes sum.
-	offsets := OrderedCollection new: sizes size.
-	sizes
-		inject: 0
-		into: [ :prev :each | 
-			offsets add: prev.
-			each + prev ].
-	answer := self type: self typeString shape: shape bytesize: bytesize.
-	self int64Array: offsets into: answer data.
-	1 to: aStringArray size do: [:index |
-			| offset |
-			offset := offsetSize * aStringArray size + (offsets at: index).
-			TensorFlowCAPI current
-				stringEncode: (aStringArray at: index)
-				to: answer data + offset
-				size: bytesize - offset ].
-	^ answer
+
+	^ TensorFlowCAPI current tensorFromStrings: aStringArray shaped: shape
 ]
 
 { #category : 'instance creation' }
@@ -301,24 +277,11 @@ TFTensor class >> type: anInteger shape: aTensorShape [
 ]
 
 { #category : 'instance creation' }
-TFTensor class >> type: anInteger shape: anIntegerArray bytesize: bytesizeInteger [
-	" I understand dimenssions are:
-		#()		-> Scalar
-		#(7)		-> Unidimensional array of 7 elements
-		#(7 4)		-> 7x4 elements matrix
-		#(2 5 9)	-> 2x5x9 elements cube
-		etc.
-	"
+TFTensor class >> type: aTensorType shape: aTensorShape bytesize: bytesizeInteger [
 
-	| externalized answer |
-	externalized := anIntegerArray asInt64Array.
-	answer := TensorFlowCAPI current
-		allocateTensorType: anInteger
-		shape: externalized
-		rank: anIntegerArray size
-		length: bytesizeInteger.
-	answer useFinalization.
-	^ answer
+	^ TensorFlowCAPI current
+		allocateTensorOf: ( TensorDomain of: aTensorType withShape: aTensorShape )
+		length: bytesizeInteger
 ]
 
 { #category : 'types' }
@@ -448,17 +411,8 @@ TFTensor >> allInt64s [
 
 { #category : 'converting' }
 TFTensor >> allStrings [
-	| total answer bytes data |
-	total := self size.
-	answer := WriteStream on: (Array new: total).
-	bytes := self dataBytes.
-	1 to: total do: [ :i | 
-		| offset str |
-		offset := bytes uint64At: (i - 1) * 8.
-		data := bytes copyFrom: 8 * total + 1 + offset to: bytes size.
-		str := self library stringDecode: data.
-		answer nextPut: str ].
-	^ answer contents
+
+	^ self library allStringsOf: self
 ]
 
 { #category : 'converting' }
@@ -478,13 +432,6 @@ TFTensor >> arrayFromStream: strm shape: shape [
 { #category : 'converting' }
 TFTensor >> asNumbers [
 	^ self arrayFromStream: self asStream shape: self shape
-]
-
-{ #category : 'converting' }
-TFTensor >> asOperationOn: aComputation [
-
-
-	^ ConstantNode on: aComputation with: self
 ]
 
 { #category : 'converting' }
@@ -513,12 +460,8 @@ TFTensor >> byteSize [
 
 { #category : 'Accessing' }
 TFTensor >> data [
-	"Answers the size of the underlying data in bytes.
-	 
-	 Answers:
-		<OSVoid>"
-
-	^OSPtr address: (self dispatcher callTF_TensorDataWith: self)
+	
+	^ self library tensorDataOf: self
 ]
 
 { #category : 'iterating' }
@@ -551,7 +494,7 @@ TFTensor >> elementSize [
 TFTensor >> free [
 	"Destroy a Tensor"
 
-	self dispatcher callTF_DeleteTensorWith: self.
+	self basicDelete. 
 	self makeUndefined
 ]
 
@@ -562,12 +505,8 @@ TFTensor >> getterBlock [
 
 { #category : 'Accessing' }
 TFTensor >> numBytes [
-	"Answers the size of the underlying data in bytes.
-	 
-	 Answers:
-		<Integer>"
 
-	^self dispatcher callTF_TensorByteSizeWith: self
+	^self byteSize
 ]
 
 { #category : 'Accessing' }
@@ -577,7 +516,7 @@ TFTensor >> numDims [
 	 Answers:
 		<Integer>"
 
-	^self dispatcher callTF_NumDimsWith: self
+	^TensorFlowCAPI current tensorRank: self
 ]
 
 { #category : 'accessing' }
@@ -617,10 +556,6 @@ TFTensor >> sizeOn: dimension [
 
 { #category : 'Accessing' }
 TFTensor >> type [
-	"Answers the type of a tensor element.
-	 
-	 Answers:
-		<Integer>"
 
-	^self dispatcher callTF_TensorTypeWith: self
+	^ self library tensorType: self
 ]

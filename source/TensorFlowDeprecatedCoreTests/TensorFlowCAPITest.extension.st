@@ -254,12 +254,11 @@ TensorFlowCAPITest >> testAsStringGraphRunOn: tensor [
 	in := graph operationNamed: 'in'.
 	out := graph operationNamed: 'out'.
 	result := session
-		runOperation: out
-		input: (in input: 0)
-		value: tensor
-		output: (out output: 0).
+		runInputs: (Array with: (in input: 0)) 
+		values: (Array with: tensor)
+		outputs: (Array with: (out output: 0)).
 	graph delete.
-	^ result
+	^ result first
 ]
 
 { #category : '*TensorFlowDeprecatedCoreTests',
@@ -762,24 +761,6 @@ TensorFlowCAPITest >> testGetAttrMetadataTensor [
 
 { #category : '*TensorFlowDeprecatedCoreTests',
  #vaCategories : ['testing gradients'] }
-TensorFlowCAPITest >> testGradientSimple [
-	| graph x y dy grad |
-	graph := TFGraph fromBlock: [:input |
-		x := input.
-		y := input @* 3.0].
-	dy := graph
-		gradientsOf: (Array with: y firstOutput)
-		withRespectTo: (Array with: x firstOutput).
-	grad := graph
-		runInputs: (Array with: x firstInput)
-		values: (Array with: 7.0 asTensor)
-		outputs: (Array with: dy).
-	
-	self assert: grad first asNumbers equals: 3.0.
-]
-
-{ #category : '*TensorFlowDeprecatedCoreTests',
- #vaCategories : ['testing gradients'] }
 TensorFlowCAPITest >> testGradientTwoInputs [
 	| graph x1 x2 y dy grad |
 	graph := TFGraph fromBlock: [:input1 :input2 |
@@ -986,54 +967,12 @@ TensorFlowCAPITest >> testGraphFromBlockSimplerer [
 
 { #category : '*TensorFlowDeprecatedCoreTests',
  #vaCategories : ['testing graph'] }
-TensorFlowCAPITest >> testGraphRunInputsOutputs [
-	| graph output result input |
-	graph := TFGraph create.
-	output := graph
-		fromBlock: [ :a | 
-			input := a.
-			a @* TFTensor pi ].
-	result := graph
-		runInputs:
-			((Array new: 1)
-				at: 1 put: (input input: 0);
-				yourself)
-		values:
-			((Array new: 1)
-				at: 1 put: 7.23 asTensor;
-				yourself)
-		outputs:
-			((Array new: 1)
-				at: 1 put: output firstOutput;
-				yourself).
-	self assert: Float pi * 7.23 closeTo: result first asNumbers
-]
-
-{ #category : '*TensorFlowDeprecatedCoreTests',
- #vaCategories : ['testing graph'] }
 TensorFlowCAPITest >> testGraphRunOutput [
 	| graph output result |
 	graph := TFGraph create.
 	output := graph const: TFTensor pi.
 	result := graph runOutput: output firstOutput.
 	self assert: Float pi closeTo: result asNumbers
-]
-
-{ #category : '*TensorFlowDeprecatedCoreTests',
- #vaCategories : ['testing graph'] }
-TensorFlowCAPITest >> testGraphRunOutputs [
-	| graph output1 output2 results |
-	graph := TFGraph create.
-	output1 := graph const: TFTensor pi.
-	output2 := output1 @/ 2.0 asTensor.
-	results := graph
-		runOutputs:
-			((Array new: 2)
-				at: 1 put: output1 firstOutput;
-				at: 2 put: output2 firstOutput;
-				yourself).
-	self assert: Float pi closeTo: results first asNumbers.
-	self assert: Float pi / 2 closeTo: results second asNumbers
 ]
 
 { #category : '*TensorFlowDeprecatedCoreTests',
@@ -1246,10 +1185,9 @@ TensorFlowCAPITest >> testPlaceholderType: type [
 		described: [ :description | description addInput: (var output: 0) ].
 	session := TFSession on: graph.
 	result := session
-		runOperation: abs
-		input: (var input: 0)
-		value: tensor
-		output: (abs output: 0).
+		runInputs: (Array with: (var input: 0))
+		values: (Array with: tensor)
+		outputs: (Array with: (abs output: 0)).
 	result delete
 ]
 
@@ -1356,15 +1294,4 @@ TensorFlowCAPITest >> testTensorAllStrings [
 	strings := result allStrings.
 	self assert: strings equals: expected.
 	result delete
-]
-
-{ #category : '*TensorFlowDeprecatedCoreTests',
- #vaCategories : ['testing tensor'] }
-TensorFlowCAPITest >> testTensorAsOperation [
-	| graph a b result |
-	graph := TFGraph create.
-	a := graph const: 3.14 asTensor.
-	b := a + 1.234 asTensor.
-	result := (TFSession on: graph) runOutput: b firstOutput.
-	self assert: 3.14 + 1.234 closeTo: result asNumbers
 ]

@@ -35,6 +35,14 @@ TFTensor class >> descriptionOf: aType [
 ]
 
 { #category : '*TFOperationModel',
+ #vaCategories : ['converting'] }
+TFTensor >> asOperationOn: aComputation [
+
+
+	^ ConstantNode on: aComputation with: self
+]
+
+{ #category : '*TFOperationModel',
  #vaCategories : ['Accessing'],
   #vaVisibility : 'private' }
 TFTensor >> isScalar [
