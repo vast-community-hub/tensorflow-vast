@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'library'
 	],
-	#category : 'TensorFlowCoreTests'
+	#category : 'TensorFlowVASTCoreTests'
 }
 
 { #category : 'instance creation' }

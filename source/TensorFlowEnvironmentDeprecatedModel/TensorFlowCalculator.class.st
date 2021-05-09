@@ -165,7 +165,7 @@ TensorFlowCalculator >> reduceSum: aTensor [
   #vaVisibility : 'private' }
 TensorFlowCalculator >> reductionAxesFor: aTensor [
 
-	^((1 to: aTensor numDims) collect: [:dimension | dimension - 1]) asInt32Tensor
+	^((1 to: aTensor rank) collect: [:dimension | dimension - 1]) asInt32Tensor
 ]
 
 { #category : 'Processing' }

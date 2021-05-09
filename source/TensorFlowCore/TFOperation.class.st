@@ -22,6 +22,14 @@ TFOperation class >> new [
 	^super new initialize
 ]
 
+{ #category : 'converting' }
+TFOperation >> asOperationOn: aTFGraph [
+
+	graph == aTFGraph
+		ifTrue: [^self]
+		ifFalse: [^Error signal: 'Can''t move an operation to another Graph']
+]
+
 { #category : 'attributes' }
 TFOperation >> attrMetadata: nameString [
 
@@ -36,6 +44,8 @@ TFOperation >> boolAt: nameString [
 
 { #category : 'accessing' }
 TFOperation >> device [
+"The name of the device to which this op has been assigned, if any.
+Returns: The string name of the device to which this op has been assigned, or an empty string if it has not been assigned to a device."
 	^ self library operationDevice: self
 ]
 
@@ -58,6 +68,8 @@ TFOperation >> floatAt: nameString [
 
 { #category : 'accessing' }
 TFOperation >> graph [
+	"The Graph that contains this operation"
+	
 	^ graph
 ]
 
@@ -67,14 +79,17 @@ TFOperation >> graph: aTFGraph [
 ]
 
 { #category : 'accessing' }
-TFOperation >> input: indexInteger [
-	^ TFInput onOperation: self index: indexInteger
+TFOperation >> input: anInteger [
+	"Return input at position anInteger"
+	
+	^ TFInput onOperation: self index: anInteger
 ]
 
 { #category : 'accessing' }
 TFOperation >> inputsCount [
-
-	^self library operationNumInputs: self
+	"Returns number of inputs of this operation"
+	
+	^ self library operationNumInputs: self
 ]
 
 { #category : 'attributes' }
@@ -85,24 +100,30 @@ TFOperation >> intAt: nameString [
 
 { #category : 'accessing' }
 TFOperation >> name [
+	"The full name of this operation"
+	
 	^ self library operationName: self
 ]
 
 { #category : 'accessing' }
-TFOperation >> output: indexInteger [
-	^ TFOutput onOperation: self index: indexInteger
+TFOperation >> output: anInteger [
+	"Return output at position anInteger"
+	
+	^ TFOutput onOperation: self index: anInteger
 ]
 
 { #category : 'accessing' }
 TFOperation >> outputsCount [
+	"Returns number of inputs of this operation"
+	
 	^ self library operationNumOutputs: self
 ]
 
 { #category : 'printing' }
-TFOperation >> printOn: strm [
-	super printOn: strm.
+TFOperation >> printOn: stream [
+	super printOn: stream.
 	self isNull
-		ifFalse: [ strm
+		ifFalse: [ stream
 				space;
 				print: self type;
 				space;
@@ -136,6 +157,8 @@ TFOperation >> tensorAt: nameString [
 
 { #category : 'accessing' }
 TFOperation >> type [
+	"The type of the op (e.g. MatMul)"
+
 	^ self library operationOpType: self
 ]
 

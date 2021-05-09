@@ -41,7 +41,8 @@ TFBuffer class >> new [
 	^ TensorFlowCAPI current newBuffer
 ]
 
-{ #category : 'release' }
+{ #category : 'Memory Management',
+ #vaCategories : ['Memory Management','release'] }
 TFBuffer >> basicDelete [
 	^ self library deleteBuffer: self
 ]
@@ -63,7 +64,8 @@ TFBuffer >> data: anObject [
 	^ self halt: 'The source for this method failed to compile'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing',
+ #vaCategories : ['accessing','Accessing'] }
 TFBuffer >> dataBytes [
 	^ self data byteArrayAt: 0 size: self length
 ]

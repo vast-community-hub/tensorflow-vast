@@ -3,15 +3,6 @@ Extension {
 }
 
 { #category : '*TFOperationModel',
- #vaCategories : ['converting'] }
-TFOperation >> asOperationOn: aTFGraph [
-
-	graph == aTFGraph
-		ifTrue: [^self]
-		ifFalse: [^Error signal: 'Can''t move an operation to another Graph']
-]
-
-{ #category : '*TFOperationModel',
  #vaCategories : ['accessing'] }
 TFOperation >> castedTo: aType [
 

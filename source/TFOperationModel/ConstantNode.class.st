@@ -36,7 +36,7 @@ ConstantNode class >> like: anOperation filledWith: aValue [
 { #category : 'Instance Creation' }
 ConstantNode class >> on: aComputation named: aName shaped: aShape filledWith: aTensor [
 
-	^self
+	^ self
 		on: aComputation
 		named: aName
 		with: aShape asInt32Tensor

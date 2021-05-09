@@ -43,14 +43,14 @@ TFTensor >> asOperationOn: aComputation [
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Accessing'],
+ #vaCategories : ['accessing'],
   #vaVisibility : 'private' }
 TFTensor >> isScalar [
 	^self rank = 0
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
+ #vaCategories : ['accessing'] }
 TFTensor >> outputOn: aComputation [
 
 
@@ -66,14 +66,14 @@ TFTensor >> printOn: aStream [
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
+ #vaCategories : ['accessing'] }
 TFTensor >> shapeDescription [
 
 	^self shape description
 ]
 
 { #category : '*TFOperationModel',
- #vaCategories : ['Accessing'] }
+ #vaCategories : ['accessing'] }
 TFTensor >> typeDescription [
 
 	^self class descriptionOf: self type

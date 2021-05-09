@@ -7,15 +7,15 @@ Extension {
 TensorFlowCAPI >> allTheFunctionsIn: aTFGraph [
 
 	
-	^ library allTheFunctionsIn: aTFGraph 
+	^ platformLibrary allTheFunctionsIn: aTFGraph 
 ]
 
 { #category : '*TensorFlowFunctionExtensions',
  #vaCategories : ['functions'] }
 TensorFlowCAPI >> newFunctionNamed: aFunctionName appended: aHashToAppend with: aTFGraph containingAll: anOperationsArray consideringInputs: anInputArray consideringOutputs: anOutputArray consideringNames: anOutputNames withOptions: anOptionsArray description: aDescription [
 
-	^library checkStatusAfter: [:status |
-		library
+	^platformLibrary checkStatusAfter: [:status |
+		platformLibrary
 			newFunctionNamed: aFunctionName
 			appended: aHashToAppend
 			with: aTFGraph

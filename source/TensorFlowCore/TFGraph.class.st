@@ -78,22 +78,6 @@ TFGraph >> definition [
 	^ self library graphDefinitionOf: self 
 ]
 
-{ #category : 'gradients' }
-TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
-
-	^self gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: nil
-]
-
-{ #category : 'gradients' }
-TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: dxArrayOfOutput [
-
-	^ self library
-		gradientsOf: yArrayOfTFOutput
-		withRespectTo: xArrayOfTFOutput
-		product: dxArrayOfOutput
-		in: self
-]
-
 { #category : 'initialize-release' }
 TFGraph >> import: aTFBuffer [
 

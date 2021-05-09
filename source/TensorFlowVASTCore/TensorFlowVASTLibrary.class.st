@@ -1125,18 +1125,23 @@ TensorFlowVASTLibrary >> tensorDataOf: aTFTensor [
 { #category : 'tensor' }
 TensorFlowVASTLibrary >> tensorFromString: aString [
 
-	| answer bytesize |
+	| bytesize |
 
 	bytesize := self stringEncodedSize: aString.
-	answer := TFTensor type: TFTensor typeString shape: TensorShape scalar bytesize: bytesize.
-	self stringEncode: aString to: answer data size: bytesize.
-	^answer
+	
+	^ TFTensor
+		newTyped: TFTensor typeString
+		shaped: TensorShape scalar
+		bytesize: bytesize
+		thenDo: [ :answer | self stringEncode: aString to: answer data size: bytesize ]
+
+
 ]
 
 { #category : 'tensor' }
 TensorFlowVASTLibrary >> tensorFromStrings: aStringArray shaped: aTensorShape [
 
-	| answer sizes offsets offsetSize bytesize |
+	| sizes offsets offsetSize bytesize |
 
 	sizes := aStringArray collect: [:each | self stringEncodedSize: each].
 	offsetSize := self sizeOfDataType: TFTensor typeInt64.
@@ -1147,12 +1152,19 @@ TensorFlowVASTLibrary >> tensorFromStrings: aStringArray shaped: aTensorShape [
 		into: [:prev :each |
 			offsets add: prev.
 			each + prev].
-	answer := TFTensor type: TFTensor typeString shape: aTensorShape bytesize: bytesize.
-	TFTensor int64Array: offsets into: answer data.
-	1 to: aStringArray size do: [:index | | offset |
-		offset := offsetSize * aStringArray size + (offsets at: index).
-		self stringEncode: (aStringArray at: index) to: answer data + offset size: bytesize - offset].
-	^answer
+
+	^TFTensor
+		newTyped: TFTensor typeString
+		shaped: aTensorShape
+		bytesize: bytesize
+		thenDo: [:answer |
+			TFTensor int64Array: offsets into: answer data.
+			1 to: aStringArray size do: [:index | | offset |
+				offset := offsetSize * aStringArray size + (offsets at: index).
+				self
+					stringEncode: (aStringArray at: index)
+					to: answer data + offset
+					size: bytesize - offset]]
 ]
 
 { #category : 'tensor' }

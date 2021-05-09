@@ -1441,14 +1441,14 @@ TensorFlowCAPITest >> testTensorAsStream [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorByteSize [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3) asTensorShape.
+	tensor := TFTensor newTyped: TFTensor typeInt64 shaped: #(2 3) asTensorShape.
 	self assert: tensor byteSize equals: 8 * 2 * 3
 ]
 
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorData [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: #(2 3) asTensorShape.
+	tensor := TFTensor newTyped: TFTensor typeInt64 shaped: #(2 3) asTensorShape.
 	self assert: tensor rank equals: 2.
 	self deny: tensor isNull.
 	self deny: tensor isUndefined
@@ -1775,7 +1775,7 @@ TensorFlowCAPITest >> testTensorFromStringsShape [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorNewScalar [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: TensorShape scalar.
+	tensor := TFTensor newTyped: TFTensor typeInt64 shaped: TensorShape scalar.
 	tensor ignoreFinalization.
 	self deny: tensor isNull.
 	tensor delete.
@@ -1785,7 +1785,7 @@ TensorFlowCAPITest >> testTensorNewScalar [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorShape: anArray [
 	| tensor shape size |
-	tensor := TFTensor type: TFTensor typeInt64 shape: anArray asTensorShape.
+	tensor := TFTensor newTyped: TFTensor typeInt64 shaped: anArray asTensorShape.
 	self assert: tensor rank equals: anArray size.
 	1 to: anArray size do: [:index |
 		self assert: (tensor sizeOn: index - 1) equals: (anArray at: index)].
@@ -1820,9 +1820,9 @@ TensorFlowCAPITest >> testTensorShape2D [
 { #category : 'testing tensor' }
 TensorFlowCAPITest >> testTensorType [
 	| tensor |
-	tensor := TFTensor type: TFTensor typeInt64 shape: TensorShape scalar.
+	tensor := TFTensor newTyped: TFTensor typeInt64 shaped: TensorShape scalar.
 	self assert: tensor type equals: tensor class typeInt64.
-	tensor := TFTensor type: TFTensor typeFloat shape: TensorShape scalar.
+	tensor := TFTensor newTyped: TFTensor typeFloat shaped: TensorShape scalar.
 	self assert: tensor type equals: tensor class typeFloat
 ]
 

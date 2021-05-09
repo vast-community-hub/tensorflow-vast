@@ -1177,7 +1177,7 @@ TensorFlowCAPITest >> testOperationEquals [
 TensorFlowCAPITest >> testPlaceholderType: type [
 	| graph var session result tensor abs |
 	graph := TFGraph create.
-	tensor := TFTensor type: type shape: TensorShape scalar.
+	tensor := TFTensor newTyped: type shaped: TensorShape scalar.
 	var := graph placeholder: 'var' type: type.
 	abs := graph
 		newOperation: 'Abs'
