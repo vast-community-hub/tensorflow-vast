@@ -7,16 +7,14 @@ Class {
 { #category : 'Test' }
 SoftmaxTest >> testActivatingFloatScalarFails [
 
-	| input softmax |
+	| input |
 
 	input := tf variableNamed: 'input' with: 4 asFloatTensor.
-	softmax := input softmax.
 
 	self
-		assert: [tf compute: softmax]
+		assert: [input softmax]
 		raisesExceptionWith:
-			'INVALID_ARGUMENT: logits must have >= 1 dimension, got []
-	 [[{{node Softmax}}]]'
+			'INVALID_ARGUMENT: Shape must be at least rank 1 but is rank 0 for ''{{node Softmax}} = Softmax[T=DT_FLOAT](input)'' with input shapes: [].'
 ]
 
 { #category : 'Test' }

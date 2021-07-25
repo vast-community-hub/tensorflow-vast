@@ -6,7 +6,7 @@ Class {
 		'notANumberValue',
 		'linesIncludesHeaders'
 	],
-	#category : 'TFUtilityModel'
+	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }

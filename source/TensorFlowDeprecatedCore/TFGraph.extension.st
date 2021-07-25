@@ -92,6 +92,13 @@ TFGraph >> fromBlock: aBlockClosure named: nameString [
 ]
 
 { #category : '*TensorFlowDeprecatedCore',
+ #vaCategories : ['accessing'] }
+TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput [
+
+	^self gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: nil
+]
+
+{ #category : '*TensorFlowDeprecatedCore',
  #vaCategories : ['root operations'] }
 TFGraph >> inputType: typeInteger [
 	^ self

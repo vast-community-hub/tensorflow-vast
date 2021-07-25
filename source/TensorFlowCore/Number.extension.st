@@ -22,22 +22,7 @@ Number >> asInt64Tensor [
 
 { #category : '*TensorFlowCore',
  #vaCategories : ['Converting'] }
-Number >> asOperationOn: aGraph [
-
-	^self asTensor asOperationOn: aGraph
-]
-
-{ #category : '*TensorFlowCore',
- #vaCategories : ['Converting'] }
 Number >> asTensor [
 
 	^self subclassResponsibility
-]
-
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
-Number >> outputOn: aComputation [
-
-
-	^ ( self asOperationOn: aComputation ) value firstOutput
 ]

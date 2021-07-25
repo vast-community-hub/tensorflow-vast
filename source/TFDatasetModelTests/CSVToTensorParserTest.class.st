@@ -1,7 +1,7 @@
 Class {
 	#name : 'CSVToTensorParserTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#category : 'TFUtilityModelTests'
+	#category : 'TFDatasetModelTests'
 }
 
 { #category : 'Tests' }

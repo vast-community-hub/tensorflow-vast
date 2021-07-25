@@ -8,7 +8,7 @@ Class {
 		'columnDefinitions',
 		'shouldIgnoreHeaders'
 	],
-	#category : 'TFUtilityModel'
+	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation' }

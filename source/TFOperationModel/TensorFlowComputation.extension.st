@@ -10,6 +10,28 @@ TensorFlowComputation >> constantWith: aNumberOrArray [
 ]
 
 { #category : '*TFOperationModel',
+ #vaCategories : ['Creating - Variables'] }
+TensorFlowComputation >> createVariableNamed: aName of: aType shaped: aShape initializedWith: aVariableInitializer [
+
+	
+	| variable | 
+	variable := 
+		self
+			newOperationOf: 'Variable'
+			namePrefixed: aName
+			withAll: #()
+			describedBy: [:description |
+				description
+					atDataTypePut: aType;
+					atShapePut: aShape].
+	" If I dont't force the shape with the following collaboration, 
+	TF_GraphGetTensorNumDims of a 'Variable' operation returns -1, meaning unknown, although 
+	the rank is well knwown. See https://github.com/tensorflow/tensorflow/issues/5106 "
+	graph shapeOf: variable firstOutput set: aShape.
+	^ variable 
+]
+
+{ #category : '*TFOperationModel',
  #vaCategories : ['Creating - Constants'] }
 TensorFlowComputation >> floatConstantWith: aNumberOrArray [
 

@@ -34,18 +34,16 @@ ReciprocalTest >> testIntegerScalarReciprocal [
 	reciprocal := Reciprocal named: 'recip' of: x.
 
 	self
-		assert: [tf compute: reciprocal]
-		raisesExceptionWith:
-			'INVALID_ARGUMENT: 2 root error(s) found.
-  (0) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.
-	 [[{{node recip}}]]
-	 [[recip]]
-	 [[recip/_3]]
-  (1) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.
-	 [[{{node recip}}]]
-	 [[recip]]
-0 successful operations.
-0 derived errors ignored.'
+		should: [tf compute: reciprocal]
+		raise: Error
+		withSignalDo: [:exception | | errorText | 
+			errorText := exception messageText.
+			self assert: (errorText includesSubstring: 'INVALID_ARGUMENT: 2 root error(s) found.').
+			self assert: (errorText includesSubstring: '(0) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.').
+			self assert: (errorText includesSubstring: '(1) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.')	.
+			self assert: (errorText includesSubstring: '0 successful operations.').
+			self assert: (errorText includesSubstring: '0 derived errors ignored.')].
+
 ]
 
 { #category : 'Tests' }

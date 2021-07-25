@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'definition'
 	],
-	#category : 'TFUtilityModel'
+	#category : 'TFDatasetModel'
 }
 
 { #category : 'Instance Creation',

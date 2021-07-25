@@ -533,7 +533,7 @@ TensorFlowVASTLibrary >> graph: aTFGraph setShapeOf: aTFOutputOrInput to: aShape
 
 	| value |
 
-	value := Int64Array externalFromArray: aShape.
+	value := Int64Array externalFromArray: aShape dimensionSizes.
 	^self checkStatusAfter: [:status |
 		self graph: aTFGraph setShapeOf: aTFOutputOrInput to: value size: aShape size status: status]
 ]

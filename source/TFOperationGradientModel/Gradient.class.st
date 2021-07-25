@@ -14,7 +14,8 @@ Class {
   #vaVisibility : 'private' }
 Gradient class >> assert: aFunctionCollection hasTheSameSizeAs: aVectorCollection [
 
-	aFunctionCollection size = aVectorCollection size ifFalse: [SizeMismatch signal]
+	aFunctionCollection size = aVectorCollection size
+		ifFalse: [AssertionFailure signal: 'Collections sizes do not match']
 ]
 
 { #category : 'Instance Creation',

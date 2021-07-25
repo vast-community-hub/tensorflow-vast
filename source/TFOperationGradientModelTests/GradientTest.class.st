@@ -166,7 +166,7 @@ GradientTest >> testNumberOfDifferentiatedFunctionsShouldMatchNumberOfCotangentV
 				of: output
 				withRespectTo: (Array with: weights with: input)
 				product: (Array with: 5.0 asTensor with: 3 asTensor)]
-		raise: SizeMismatch
+		raise: AssertionFailure
 		withDescription: 'Collections sizes do not match'
 ]
 

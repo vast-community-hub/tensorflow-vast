@@ -52,15 +52,7 @@ VariableNode >> currentComputation [
 VariableNode >> initializeOn: aTensorFlowComputation named: aName of: aType shaped: aShape initializedWith: aVariableInitializer [
 
 	currentComputation := aTensorFlowComputation.
-	value :=
-		aTensorFlowComputation
-			newOperationOf: self operationType
-			namePrefixed: aName
-			withAll: #()
-			describedBy: [:description |
-				description
-					atDataTypePut: aType;
-					atShapePut: aShape].
+	value := currentComputation createVariableNamed: aName of: aType shaped: aShape initializedWith: aVariableInitializer.
 	aVariableInitializer applyTo: self
 ]
 
