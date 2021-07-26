@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowVASTCore',
-	#vaPrerequisites : ['CommonGraphics','TensorFlowCore']
+	#vaPrerequisites : ['CommonGraphics','IdxReaderApp','SstHttpCommunications','TensorFlowCore']
 }

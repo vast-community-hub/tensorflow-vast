@@ -8,49 +8,16 @@ Class {
 	#category : 'LibTensorFlowExamplesApp'
 }
 
-{ #category : 'private',
-  #vaVisibility : 'private' }
-MNISTFile class >> download: aName [
-"The following source failed to compile (all double quotes have been doubled):
-
-	| datasetURL outputFileName |
-	datasetURL := 'http://yann.lecun.com/exdb/mnist/' , aName.
-	outputFileName := 'dataset/' , aName.
-	FileSystem disk workingDirectory fileSystem ensureCreateDirectory: 'dataset'.
-	UIManager default
-		informUserDuring: [ :bar | 
-			bar label: 'Downloading MNIST dataset ...'.
-			[ ZnClient new
-				url: datasetURL;
-				signalProgress: true;
-				downloadTo: outputFileName ]
-				on: HTTPProgress
-				do: [ :progress | 
-					progress isEmpty
-						ifFalse: [ bar current: progress percentage.
-							progress total
-								ifNotNil: [ :aTotalNumber | 
-									| humanReadable |
-									humanReadable := self printHumanReadableSize: aTotalNumber.
-									bar label: 'Downloading ' , humanReadable , ' of MNIST dataset ... ' ] ].
-					progress resume ] ].
-	^ outputFileName asFileReference
-"
-
-	^ self halt: 'The source for this method failed to compile'
-]
-
 { #category : 'instance creation' }
 MNISTFile class >> fromFile: aString [
 
-	| file filename reader |
+	| file filename datasetURL |
 
 	filename := aString , '.gz'.
-	file := ('examples/' , filename) asPath.
-	file exists ifFalse: [AssertionFailure signal: (#'Can''t find %1' bindWith: file asString)].
-	file readStreamDo: [:compressed |
-		reader := IdxReader onStream: compressed contents gzipDecompress readStream.
-		^self fromReader: reader]
+	file := (FileSystemAPI current directoryNamed: 'datasets/mnist-handwritten') / filename.
+	datasetURL := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-handwritten/' , filename.
+	file := FileSystemAPI current downloadFileAt: datasetURL to: file.
+	^self fromReader: (FileSystemAPI current idxReaderOn: file)
 ]
 
 { #category : 'instance creation' }
@@ -64,19 +31,6 @@ MNISTFile class >> fromReader: aReader [
 MNISTFile class >> new [
 
 	^super new initialize
-]
-
-{ #category : 'private',
-  #vaVisibility : 'private' }
-MNISTFile class >> printHumanReadableSize: aTotalNumber [
-	| humanReadable length unit |
-	length := ((aTotalNumber decimalDigitLength / 3) truncated) - 1 max: 0.
-	humanReadable := (aTotalNumber / (1024 raisedTo: (length min: 3))) rounded.
-	length = 0 ifTrue: [ unit := 'bytes' ].
-	length = 1 ifTrue: [ unit := 'KB' ].
-	length = 2 ifTrue: [ unit := 'MB' ].
-	length = 3 ifTrue: [ unit := 'GB' ].
-	^ humanReadable printString, ' ', unit
 ]
 
 { #category : 'accessing' }

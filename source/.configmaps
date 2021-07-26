@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.55',
-						#ts : 3804679422
+						#versionName : '1.56',
+						#ts : 3804699837
 					},
 					{
 						#name : 'Platform Portability',
@@ -17,14 +17,14 @@
 				]
 			}
 		],
-		#ts : 3804679444,
+		#ts : 3804699850,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : '1.2',
-				#ts : 3795889319
+				#versionName : 'df8d906-new-model - 1.7',
+				#ts : 3804697590
 			},
 			{
 				#name : 'MLNeuralNetworkExamples',
@@ -48,7 +48,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.47'
+		#versionName : '0.48'
 	},
 	{
 		#conditions : [
@@ -57,8 +57,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.47',
-						#ts : 3804679444
+						#versionName : '0.48',
+						#ts : 3804699850
 					},
 					{
 						#name : 'SUnit',
@@ -68,7 +68,7 @@
 				]
 			}
 		],
-		#ts : 3804679454,
+		#ts : 3804699857,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -94,7 +94,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.46'
+		#versionName : '0.47'
 	},
 	{
 		#conditions : [
@@ -133,20 +133,20 @@
 					},
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.47',
-						#ts : 3804679444
+						#versionName : '0.48',
+						#ts : 3804699850
 					}
 				]
 			}
 		],
-		#ts : 3804679449,
+		#ts : 3804699867,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'DatasetProviderModel',
-				#versionName : 'df8d906-new-model - 1.6',
-				#ts : 3795539747
+				#versionName : 'df8d906-new-model - 1.7',
+				#ts : 3804686245
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
@@ -175,7 +175,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.19'
+		#versionName : '0.20'
 	},
 	{
 		#conditions : [
@@ -262,7 +262,7 @@
 				]
 			}
 		],
-		#ts : 3804681670,
+		#ts : 3804699806,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -273,8 +273,8 @@
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : '2.2',
-				#ts : 3804679800
+				#versionName : '2.3',
+				#ts : 3804682797
 			},
 			{
 				#name : 'TensorFlowCoreTests',
@@ -288,8 +288,8 @@
 			},
 			{
 				#name : 'TensorFlowVASTCore',
-				#versionName : '2.2',
-				#ts : 3804680689
+				#versionName : 'df8d906-new-model - 1.7',
+				#ts : 3804682346
 			},
 			{
 				#name : 'TensorFlowVASTCoreTests',
@@ -298,7 +298,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.19'
+		#versionName : '0.64.20'
 	},
 	{
 		#conditions : [
@@ -307,13 +307,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.19',
-						#ts : 3804681670
+						#versionName : '0.64.20',
+						#ts : 3804699806
 					}
 				]
 			}
 		],
-		#ts : 3804681701,
+		#ts : 3804699829,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -344,7 +344,7 @@
 			}
 		],
 		#name : 'TensorFlow | Deprecated Model',
-		#versionName : '1.4'
+		#versionName : '1.5'
 	},
 	{
 		#conditions : [
@@ -353,13 +353,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.19',
-						#ts : 3804681670
+						#versionName : '0.64.20',
+						#ts : 3804699806
 					}
 				]
 			}
 		],
-		#ts : 3804679422,
+		#ts : 3804699837,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -445,7 +445,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.55'
+		#versionName : '1.56'
 	},
 	{
 		#conditions : [
@@ -504,13 +504,13 @@
 					},
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.19',
-						#ts : 3804681670
+						#versionName : '0.64.20',
+						#ts : 3804699806
 					}
 				]
 			}
 		],
-		#ts : 3804681689,
+		#ts : 3804699844,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -521,6 +521,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.13'
+		#versionName : '1.14'
 	}
 ]

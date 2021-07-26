@@ -37,8 +37,7 @@ DatasetProvider class >> new [
   #vaVisibility : 'private' }
 DatasetProvider >> download: aRemoteFileUrl to: aTargetDirectory [
 
-	aTargetDirectory exists
-		ifFalse: [PublicResourceDownloader new downloadFileAt: aRemoteFileUrl to: aTargetDirectory]
+	FileSystemAPI current downloadFileAt: aRemoteFileUrl to: aTargetDirectory
 ]
 
 { #category : 'Accessing - MNIST' }
@@ -73,8 +72,7 @@ DatasetProvider >> initializeFashionDataset [
 	| baseUrl baseDirectory |
 
 	baseUrl := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-fashion/'.
-	baseDirectory := './datasets/fashion-mnist' asFileReference.
-	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
+	baseDirectory := FileSystemAPI current directoryNamed: './datasets/mnist-fashion'.
 
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
@@ -114,8 +112,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 	| baseUrl baseDirectory |
 
 	baseUrl := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-handwritten/'.
-	baseDirectory := './datasets/mnist-handwritten/' asFileReference.
-	baseDirectory realize ifFalse: [AssertionFailure signal: 'Folder could not be created'].
+	baseDirectory := FileSystemAPI current directoryNamed: './datasets/mnist-handwritten/'.
 
 	OrderedCollection new
 		add: 'train-labels-idx1-ubyte.gz';
@@ -125,7 +122,7 @@ DatasetProvider >> initializeHandwrittenDataset [
 		do: [:fileName |
 			self
 				download: ('<1s><2s>' expandMacrosWith: baseUrl with: fileName)
-				to: baseDirectory / ('<1s>' expandMacrosWith: fileName)].
+				to: baseDirectory / fileName].
 
 	handwrittenDigitsDataset :=
 		SampleDataset new
@@ -164,14 +161,12 @@ DatasetProvider >> shakespeareText [
   #vaVisibility : 'private' }
 DatasetProvider >> tensorTyped: aTensorType fromFileNamed: aString [
 
-	| file reader |
-
-	file := aString asFileReference.
-	file exists ifFalse: [AssertionFailure signal: (#'Can''t find %1' bindWith: file asString)].
-	file readStreamDo: [:compressed |
-		reader := IdxReader onStream: compressed contents gzipDecompress readStream.
-		^TFTensor
-			fromNumbers: reader next
-			type: aTensorType
-			shape: (TensorShape withDimensionsSized: reader dimensionSizes)]
+	FileSystemAPI current
+		readIdxFileNamed: aString
+		thenDo: [ :dimensionSizes :content | 
+			^TFTensor
+				fromNumbers: content
+				type: aTensorType
+				shape: ( TensorShape withDimensionsSized: dimensionSizes )
+			]
 ]
