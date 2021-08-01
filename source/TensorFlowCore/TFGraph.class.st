@@ -261,6 +261,12 @@ TFGraph >> shapeOf: aTFOutputOrInput [
 	^self library graph: self getShapeOf: aTFOutputOrInput
 ]
 
+{ #category : 'operations' }
+TFGraph >> shapeOf: aTFOutputOrInput set: shape [
+
+	self library graph: self setShapeOf: aTFOutputOrInput to: shape
+]
+
 { #category : 'debugging' }
 TFGraph >> writeDefTo: strm [
 	strm nextPutAll: self definition
