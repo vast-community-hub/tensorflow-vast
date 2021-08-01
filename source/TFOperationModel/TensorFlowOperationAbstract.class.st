@@ -214,7 +214,7 @@ TensorFlowOperationAbstract >> reshapeTo: aNewShape [
 { #category : 'Operations' }
 TensorFlowOperationAbstract >> shape [
 
-	^Shape of: self
+	^ShapeOperation of: self
 ]
 
 { #category : 'Operations' }

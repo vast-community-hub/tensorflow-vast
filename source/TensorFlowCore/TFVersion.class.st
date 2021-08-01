@@ -15,12 +15,17 @@ TFVersion class >> bindingVersion [
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TFVersion class >> dispatcher [
-	"Answer the dispatcher delgate used for platform function call management
+	"The following source failed to compile (all double quotes have been doubled):"
+"
+	""Answer the dispatcher delgate used for platform function call management
 	 
 	 Answers:
-		<TFLibraryDispatcher>"
+		<TFLibraryDispatcher>""
 
-	^TFLibraryDispatcher default
+	^TFLibraryDispatcher default"
+#tonelCompilationFailure.
+
+^ self halt: 'The source for this method failed to compile' 
 ]
 
 { #category : 'Instance Creation' }

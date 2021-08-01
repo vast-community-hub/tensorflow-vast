@@ -36,8 +36,13 @@ TensorFlowTestCase >> assertAll: aCollection closeTo: anotherCollection [
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TensorFlowTestCase >> dispatcher [
+	"The following source failed to compile (all double quotes have been doubled):"
+"
 
-	^TFLibraryDispatcher default
+	^TFLibraryDispatcher default"
+#tonelCompilationFailure.
+
+^ self halt: 'The source for this method failed to compile' 
 ]
 
 { #category : 'Accessing' }

@@ -9,10 +9,10 @@ ShapeTest >> testOperationName [
 
 	| shape |
 
-	shape := Shape named: 'my-shape' of: (tf floatConstantWith: #((1) (2))).
+	shape := ShapeOperation named: 'my-shape' of: (tf floatConstantWith: #((1) (2))).
 	self assert: shape operationName equals: 'my-shape'.
 
-	shape := Shape of: (tf floatConstantWith: #((1) (2))).
+	shape := ShapeOperation of: (tf floatConstantWith: #((1) (2))).
 	self assert: shape operationName equals: 'Shape'
 
 
@@ -49,14 +49,14 @@ ShapeTest >> testShapeOfMatrix [
 	scalar := #((1.0 3.0 4.0) (2.0 0.5 -0.1)) asFloatTensor.
 	expectedShape := #(2 3).
 
-	self assertOutputOf: (Shape of: (tf constantWith: scalar)) isIntegerVectorEqualsTo: expectedShape.
+	self assertOutputOf: (ShapeOperation of: (tf constantWith: scalar)) isIntegerVectorEqualsTo: expectedShape.
 	self
-		assertOutputOf: (Shape of: (tf variableNamed: 'input' with: scalar))
+		assertOutputOf: (ShapeOperation of: (tf variableNamed: 'input' with: scalar))
 		isIntegerVectorEqualsTo: expectedShape.
 	self
 		assert: (
 			tf
-				compute: ((Shape of: (tf floatInputNamed: 'x')))
+				compute: ((ShapeOperation of: (tf floatInputNamed: 'x')))
 				feedingInputsWith: (
 					Dictionary new
 						at: 'x' put: scalar;
@@ -72,14 +72,14 @@ ShapeTest >> testShapeOfRowVector [
 	scalar := #(1.0 2.0) asFloatTensor.
 	expectedShape := #(2).
 
-	self assertOutputOf: (Shape of: (tf constantWith: scalar)) isIntegerVectorEqualsTo: expectedShape.
+	self assertOutputOf: (ShapeOperation of: (tf constantWith: scalar)) isIntegerVectorEqualsTo: expectedShape.
 	self
-		assertOutputOf: (Shape of: (tf variableNamed: 'input' with: scalar))
+		assertOutputOf: (ShapeOperation of: (tf variableNamed: 'input' with: scalar))
 		isIntegerVectorEqualsTo: expectedShape.
 	self
 		assert: (
 			tf
-				compute: ((Shape of: (tf floatInputNamed: 'x')))
+				compute: ((ShapeOperation of: (tf floatInputNamed: 'x')))
 				feedingInputsWith: (
 					Dictionary new
 						at: 'x' put: scalar;
@@ -95,9 +95,9 @@ ShapeTest >> testShapeOfScalar [
 	scalar := 1.0 asFloatTensor.
 	expectedShape := #().
 
-	shapeOfConstant := Shape of: (tf constantWith: scalar).
-	shapeOfVariable := Shape of: (tf variableNamed: 'input' with: scalar).
-	shapeOfInput := (Shape of: (tf floatInputNamed: 'x')).
+	shapeOfConstant := ShapeOperation of: (tf constantWith: scalar).
+	shapeOfVariable := ShapeOperation of: (tf variableNamed: 'input' with: scalar).
+	shapeOfInput := (ShapeOperation of: (tf floatInputNamed: 'x')).
 	self assertOutputOf: shapeOfConstant isIntegerVectorEqualsTo: expectedShape.
 	self assertOutputOf: shapeOfVariable isIntegerVectorEqualsTo: expectedShape.
 	self

@@ -1,7 +1,7 @@
 Class {
 	#name : 'ExternalWordArray',
 	#superclass : 'TFStructure',
-	#category : 'TensorFlowVASTCore'
+	#category : 'TensorFlowCore'
 }
 
 { #category : 'instance creation' }

@@ -91,7 +91,10 @@ TensorDomain >> withNewUnknownDimension [
 { #category : 'Accessing' }
 TensorDomain >> withSlicedShape [
 
-	^TensorDomain
+	self shape representsScalar
+		ifTrue: [ AssertionFailure signal: 'A scalar shaped can''t be sliced' ].
+
+	^ TensorDomain
 		of: self type
-		withShape: (TensorShape withDimensionsSized: self shape dimensionSizes allButFirst)
+		withShape: ( TensorShape withDimensionsSized: self shape dimensionSizes allButFirst )
 ]

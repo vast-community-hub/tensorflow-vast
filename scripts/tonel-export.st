@@ -10,4 +10,4 @@ TonelWriter new
 	addLatestConfigurationMapNamed: 'TensorFlow | Environment';
 	addLatestConfigurationMapNamed: 'TensorFlow | Visualization';
 	addApplicationsFromConfigurationMaps;
-	writeProjectInto: ((CfsPath named: CfsDirectoryDescriptor getcwd) append: 'tensorflow-vast').
+	writeProjectInto: ((CfsPath named: CfsDirectoryDescriptor getcwd) append: 'github\tensorflow-vast').

@@ -26,13 +26,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.57',
-						#ts : 3805281140
+						#versionName : '1.58',
+						#ts : 3805292738
 					}
 				]
 			}
 		],
-		#ts : 3805281625,
+		#ts : 3805292778,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -63,7 +63,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.49'
+		#versionName : '0.50'
 	},
 	{
 		#conditions : [
@@ -92,13 +92,13 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.49',
-						#ts : 3805281625
+						#versionName : '0.50',
+						#ts : 3805292778
 					}
 				]
 			}
 		],
-		#ts : 3805281644,
+		#ts : 3805292791,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -124,7 +124,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.48'
+		#versionName : '0.49'
 	},
 	{
 		#conditions : [
@@ -203,13 +203,13 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.49',
-						#ts : 3805281625
+						#versionName : '0.50',
+						#ts : 3805292778
 					}
 				]
 			}
 		],
-		#ts : 3805281676,
+		#ts : 3805292786,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -245,7 +245,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.21'
+		#versionName : '0.22'
 	},
 	{
 		#conditions : [
@@ -382,7 +382,7 @@
 				]
 			}
 		],
-		#ts : 3805281066,
+		#ts : 3805292742,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -393,13 +393,13 @@
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805278546
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805292219
 			},
 			{
 				#name : 'TensorFlowCoreTests',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805278560
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805290904
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
@@ -408,8 +408,8 @@
 			},
 			{
 				#name : 'TensorFlowVASTCore',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805279450
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805292213
 			},
 			{
 				#name : 'TensorFlowVASTCoreTests',
@@ -418,7 +418,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.21'
+		#versionName : '0.64.22'
 	},
 	{
 		#conditions : [
@@ -427,13 +427,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.21',
-						#ts : 3805281066
+						#versionName : '0.64.22',
+						#ts : 3805292742
 					}
 				]
 			}
 		],
-		#ts : 3805281140,
+		#ts : 3805292738,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -449,8 +449,8 @@
 			},
 			{
 				#name : 'TensorFlowEnvironmentModelTests',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805279473
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805292215
 			},
 			{
 				#name : 'TFDatasetModel',
@@ -479,13 +479,13 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805279476
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805292387
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '78a9f6b-new-model',
-				#ts : 3805279522
+				#versionName : '78a9f6b-new-modem',
+				#ts : 3805292488
 			},
 			{
 				#name : 'TFOptimizerModel',
@@ -519,7 +519,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.57'
+		#versionName : '1.58'
 	},
 	{
 		#conditions : [
@@ -638,13 +638,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.21',
-						#ts : 3805281066
+						#versionName : '0.64.22',
+						#ts : 3805292742
 					}
 				]
 			}
 		],
-		#ts : 3805281173,
+		#ts : 3805292770,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -655,6 +655,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.15'
+		#versionName : '1.16'
 	}
 ]
