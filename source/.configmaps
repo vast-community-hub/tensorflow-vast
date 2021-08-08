@@ -542,11 +542,6 @@
 						#ts : 3793868647
 					},
 					{
-						#name : 'Server Smalltalk - HTTP Server',
-						#versionName : 'V 10.0.0  [480]',
-						#ts : 3790505371
-					},
-					{
 						#name : 'Server Smalltalk - Kernel',
 						#versionName : 'V 10.0.2  [487]',
 						#ts : 3799582988
@@ -555,6 +550,16 @@
 						#name : 'Server Smalltalk - TCP Communications',
 						#versionName : 'V 10.0.0  [480]',
 						#ts : 3790505795
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 10.0.0  [480]',
+						#ts : 3790505371
+					},
+					{
+						#name : 'Platform Portability',
+						#versionName : 'V 10.0.0  [480]',
+						#ts : 3787580382
 					},
 					{
 						#name : 'Seaside Core',
@@ -570,11 +575,6 @@
 						#name : 'Javascript Core',
 						#versionName : 'V 9.0.0  [453]',
 						#ts : 3679137047
-					},
-					{
-						#name : 'Platform Portability',
-						#versionName : 'V 10.0.0  [480]',
-						#ts : 3787580382
 					}
 				]
 			},
@@ -597,11 +597,6 @@
 						#ts : 3768025709
 					},
 					{
-						#name : 'Server Smalltalk - HTTP Server',
-						#versionName : 'V 9.2.0  [453]',
-						#ts : 3745762738
-					},
-					{
 						#name : 'Server Smalltalk - Kernel',
 						#versionName : 'V 9.2.0  [453]',
 						#ts : 3720784238
@@ -610,6 +605,16 @@
 						#name : 'Server Smalltalk - TCP Communications',
 						#versionName : 'V 9.2.0  [453]',
 						#ts : 3749992240
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3745762738
+					},
+					{
+						#name : 'Platform Portability',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3746251879
 					},
 					{
 						#name : 'Seaside Core',
@@ -625,11 +630,6 @@
 						#name : 'Javascript Core',
 						#versionName : 'V 9.0.0  [453]',
 						#ts : 3679137047
-					},
-					{
-						#name : 'Platform Portability',
-						#versionName : 'V 9.2.0  [453]',
-						#ts : 3746251879
 					}
 				]
 			},
