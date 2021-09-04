@@ -5,28 +5,20 @@ Extension {
 { #category : '*IdxReaderApp',
  #vaCategories : ['Compatibility'] }
 ByteArray >> doubleAt: index bigEndian: bool [
-	"Return a 64 bit float starting from the given byte index"
 
-	| w1 w2 dbl |
-
-	w1 := self unsignedLongAt: index bigEndian: bool.
-	w2 := self unsignedLongAt: index + 4 bigEndian: bool.
-	dbl := Float new: 2.
-	bool
-		ifTrue: [
-			dbl basicAt: 1 put: w1.
-			dbl basicAt: 2 put: w2]
-		ifFalse: [
-			dbl basicAt: 1 put: w2.
-			dbl basicAt: 2 put: w1].
-	^dbl
+	^(FloatingPointNumberParser from: self)
+		doublePrecisionAt: index
+		bigEndianStored: bool
+		
 ]
 
 { #category : '*IdxReaderApp',
  #vaCategories : ['Compatibility'] }
 ByteArray >> floatAt: index bigEndian: boolean [
 
-	^Float fromIEEE32Bit: (self unsignedLongAt: index bigEndian: boolean)
+	^(FloatingPointNumberParser from: self)
+		singlePrecisionAt: index
+		bigEndianStored: boolean
 ]
 
 { #category : '*IdxReaderApp',
