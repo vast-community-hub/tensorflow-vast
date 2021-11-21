@@ -96,11 +96,14 @@ TFOutput >> tensorflowTypeFrom: aProtobufferType [
 			at: 101 put: TFTensor typeFloat;
 			at: 102 put: TFTensor typeFloat;
 			at: 103 put: TFTensor typeInt32;
+			at: 120 put: TFTensor typeResource;
 			yourself.
 
 	^mapping
 		at: aProtobufferType
-		ifAbsent: [self error: ('No mapping found for the Protobuffer data type %1' bindWith: aProtobufferType)]
+		ifAbsent: [
+			self error:
+				('No mapping found for the Protobuffer data type %1' bindWith: aProtobufferType)]
 ]
 
 { #category : 'accessing' }

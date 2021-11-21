@@ -13,14 +13,16 @@ ExternalWordArrayTest class >> new [
 	^super new initialize
 ]
 
-{ #category : 'testing' }
-ExternalWordArrayTest >> testArray: anExternalWordArraySubclass sampleElement: anObject [
+{ #category : 'testing',
+  #vaVisibility : 'private' }
+ExternalWordArrayTest >> assertElementsIn: anExternalWordArraySubclass areKindOf: aClass [
+
 	| array size |
+
 	size := 4.
-	array := anExternalWordArraySubclass new: 4.
-"	self assert: size * Smalltalk wordSize = array getHandle size.	This isn't dialect independent
-"	self assert: (array first isKindOf: anObject class).
-	1 to: size do: [ :index | self assert: ((array at: index) isKindOf: anObject class) ]
+	array := anExternalWordArraySubclass new: size.
+	"	self assert: size * Smalltalk wordSize = array getHandle size.	This isn't dialect independent "
+	1 to: size do: [:index | self assert: ((array at: index) isKindOf: aClass)]
 ]
 
 { #category : 'testing' }
@@ -92,7 +94,8 @@ ExternalWordArrayTest >> testOperationArrayAtPut [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testOperationArrayElementsOfRightClass [
-	^ self testArray: TFOperationPtrArray sampleElement: TFOperation new
+
+	self assertElementsIn: TFOperationPtrArray areKindOf: TFOperation
 ]
 
 { #category : 'testing' }
@@ -166,7 +169,8 @@ ExternalWordArrayTest >> testTensorArrayAtPut [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testTensorArrayElementsOfRightClass [
-	^ self testArray: TFTensorPtrArray sampleElement: TFTensor new
+
+	self assertElementsIn: TFTensorPtrArray areKindOf: TFTensor
 ]
 
 { #category : 'testing' }
@@ -196,5 +200,6 @@ ExternalWordArrayTest >> testUInt64ArrayAtPut [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testUInt64ArrayElementsOfRightClass [
-	^ self testArray: Int64Array sampleElement: 1234
+
+	self assertElementsIn: Int64Array areKindOf: SmallInteger
 ]

@@ -245,6 +245,13 @@ TensorFlowCAPI >> deviceListForSession: aTFSession [
 	^platformLibrary checkStatusAfter: [:status | platformLibrary deviceListForSession: aTFSession status: status]
 ]
 
+{ #category : 'operation attribute' }
+TensorFlowCAPI >> deviceNameContaining: aTFOperation [
+
+	
+	^ platformLibrary deviceNameContaining: aTFOperation 
+]
+
 { #category : 'strings' }
 TensorFlowCAPI >> externalizeString: aString [
 

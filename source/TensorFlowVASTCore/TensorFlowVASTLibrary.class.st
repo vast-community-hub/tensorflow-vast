@@ -394,6 +394,16 @@ TensorFlowVASTLibrary >> deviceListForSession: aTFSession status: aTFStatus [
 	^TFDeviceList address: answer
 ]
 
+{ #category : 'operation' }
+TensorFlowVASTLibrary >> deviceNameContaining: aTFOperation [
+	"	<cdecl: char* 'TF_OperationDevice' (TFOperation*)>"
+
+	| address |
+
+	address := self dispatcher callTF_OperationDeviceWith: aTFOperation.
+	^(OSStringZ address: address) asString
+]
+
 { #category : 'utils' }
 TensorFlowVASTLibrary >> dispatcher [
 
@@ -852,13 +862,6 @@ TensorFlowVASTLibrary >> operation: aTFOperation getTypeAt: anAttributeName [
 ]
 
 { #category : 'operation' }
-TensorFlowVASTLibrary >> operationDevice: aTFOperation [
-	"	<cdecl: char* 'TF_OperationDevice' (TFOperation*)>"
-
-	^self dispatcher callTF_OperationDeviceWith: aTFOperation
-]
-
-{ #category : 'operation' }
 TensorFlowVASTLibrary >> operationName: aTFOperation [
 
 	| address |
@@ -1158,7 +1161,7 @@ TensorFlowVASTLibrary >> tensorFromStrings: aStringArray shaped: aTensorShape [
 		shaped: aTensorShape
 		bytesize: bytesize
 		thenDo: [:answer |
-			TFTensor int64Array: offsets into: answer data.
+			TFTensor copyInt64ArrayWith: offsets into: answer data.
 			1 to: aStringArray size do: [:index | | offset |
 				offset := offsetSize * aStringArray size + (offsets at: index).
 				self

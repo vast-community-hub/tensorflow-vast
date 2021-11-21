@@ -5,19 +5,24 @@ Class {
 }
 
 { #category : 'utils' }
-TFTensor class >> array: values type: type into: anExternalAddressOrByteArray [
+TFTensor class >> copyArrayOf: type with: values into: anExternalAddressOrByteArray [
+
 	| size index setter |
+
 	size := self sizeForType: type.
 	setter := self setterBlockFor: type.
 	index := 0.
 	self
 		elementsOf: values
-		do: [ :value | 
-			setter
-				value: anExternalAddressOrByteArray
-				value: index * size + 1
-				value: value.
-			index := index + 1 ]
+		do: [:value |
+			setter value: anExternalAddressOrByteArray value: index * size + 1 value: value.
+			index := index + 1]
+]
+
+{ #category : 'utils' }
+TFTensor class >> copyInt64ArrayWith: values into: anExternalAddressOrByteArray [
+
+	self copyArrayOf: self typeInt64 with: values into: anExternalAddressOrByteArray
 ]
 
 { #category : 'utils' }
@@ -113,13 +118,11 @@ TFTensor class >> fromNumbers: values type: type shape: shape [
 
 	size := self sizeOf: values.
 	count := shape totalAmountOfElements.
-	count = size
-		ifFalse: [ Error signal: 'Inferred size and real size don''t match.' ].
-	^ self
+	count = size ifFalse: [Error signal: 'Inferred size and real size don''t match.'].
+	^self
 		newTyped: type
 		shaped: shape
-		thenDo: [ :tensor | self array: values type: type into: tensor data ]
-
+		thenDo: [:tensor | self copyArrayOf: type with: values into: tensor data]
 ]
 
 { #category : 'instance creation' }
@@ -164,6 +167,7 @@ TFTensor class >> getterBlockFor: type [
 	self typeDouble = type ifTrue: [^[:data :offset | data float64At: offset - 1]].
 	self typeBoolean = type ifTrue: [^[:data :offset | data bool8At: offset - 1]].
 	self typeUInt8 = type ifTrue: [^[:data :offset | data uint8At: offset - 1]].
+	self typeResource = type ifTrue: [^[:data :offset | data uint8At: offset - 1]].
 	^self shouldBeImplemented
 
 
@@ -175,14 +179,6 @@ TFTensor class >> initializeAfterLoad [
 	"Set an opaque layout."
 
 	self initializeOpaqueLayout
-]
-
-{ #category : 'utils' }
-TFTensor class >> int64Array: values into: anExternalAddressOrByteArray [
-	self
-		array: values
-		type: self typeInt64
-		into: anExternalAddressOrByteArray
 ]
 
 { #category : 'instance creation' }
@@ -255,6 +251,10 @@ TFTensor class >> setterBlockFor: type [
 	self typeBoolean = type ifTrue: [^[:data :offset :value | data bool8At: offset - 1 put: value]].
 	self typeUInt8 = type ifTrue: [^[:data :offset :value | data uint8At: offset - 1 put: value]].
 	self typeVariant = type
+		ifTrue: [
+			^[:data :offset :value |
+				data pointerAt: (offset - 1) * ExternalWordArray fixedSize put: value]].
+	self typeResource = type
 		ifTrue: [
 			^[:data :offset :value |
 				data pointerAt: (offset - 1) * ExternalWordArray fixedSize put: value]].
