@@ -17,7 +17,7 @@ BatchDatasetTest >> testIterateThroughDatasetWithOneFloatMatrixInBatchesOfOne [
 	iterator := batch newIterator.
 	self
 		assert: iterator next
-		isOf: TFTensor typeFloat
+		isOf: FloatDataType new
 		with: (TensorShape withDimensionsSized: #(1 2 4))
 		comparedTo: #(0 1 2 3 9 8 7 6)
 		complying: [:actual :expected | self assert: actual equals: expected].

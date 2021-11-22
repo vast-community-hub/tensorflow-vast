@@ -170,7 +170,7 @@ ObjectDetectionZoo >> prepareImageInput [
 	inputValues :=
 		TFTensor
 			fromNumbers: images
-			type: TFTensor typeUInt8
+			type: UnsignedInt8DataType new
 			shape: (Array with: images size with: imageSize x with: imageSize y with: 3 "RGB")
 
 

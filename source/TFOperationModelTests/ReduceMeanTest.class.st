@@ -64,7 +64,7 @@ ReduceMeanTest >> testReducePlaceholder [
 
 	constant := tf floatConstantWith: inputValue.
 	inputWithoutShape := tf floatInputNamed: 'input'.
-	inputWithSize := InputNode on: tf named: 'inputWithSize' of: TFTensor typeFloat sized: 2.
+	inputWithSize := InputNode on: tf named: 'inputWithSize' of: FloatDataType new sized: 2.
 
 	self assert: constant mean compute isFloatScalarCloseTo: 1.65.
 	self

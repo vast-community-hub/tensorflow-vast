@@ -11,7 +11,7 @@ TypeCastTest >> testBooleanToFloat [
 
 	x := tf constantWith: (Array with: true with: false) asBooleanTensor.
 
-	self assert: (tf compute: (x castedTo: TFTensor typeFloat)) isFloatVectorCloseTo: #(1 0)
+	self assert: (tf compute: (x castedTo: FloatDataType new)) isFloatVectorCloseTo: #(1 0)
 ]
 
 { #category : 'Test' }
@@ -27,7 +27,7 @@ TypeCastTest >> testBooleanToInteger [
 				asBooleanTensor).
 
 	self
-		assert: (tf compute: (x castedTo: TFTensor typeInt32))
+		assert: (tf compute: (x castedTo: Int32DataType new))
 		isIntegerMatrixCloseTo: #((1 0) (0 1))
 ]
 
@@ -38,5 +38,5 @@ TypeCastTest >> testPrintString [
 
 	x := tf variableNamed: 'input' with: (Array with: true with: false) asBooleanTensor.
 
-	self assert: (x castedTo: TFTensor typeFloat) printString equals: 'input casted to Float'
+	self assert: (x castedTo: FloatDataType new) printString equals: 'input casted to Float'
 ]

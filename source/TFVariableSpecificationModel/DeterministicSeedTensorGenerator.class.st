@@ -33,7 +33,7 @@ DeterministicSeedTensorGenerator >> truncatedNormalTensorOn: aComputation shaped
 		newOperationOf: 'StatelessTruncatedNormal'
 		namePrefixed: 'StatelessTruncatedNormal'
 		withAll: ( Array with: shape with: seeds )
-		describedBy: [ :description | description atDataTypePut: TFTensor typeFloat ]
+		describedBy: [ :description | description atDataTypePut: FloatDataType new ]
 ]
 
 { #category : 'Accessing',
@@ -49,5 +49,5 @@ DeterministicSeedTensorGenerator >> uniformTensorOn: aComputation shaped: aTenso
 		newOperationOf: 'StatelessRandomUniform'
 		namePrefixed: 'StatelessRandomUniform'
 		withAll: (Array with: shape with: seeds)
-		describedBy: [:description | description atDataTypePut: TFTensor typeFloat] 
+		describedBy: [:description | description atDataTypePut: FloatDataType new] 
 ]

@@ -18,10 +18,10 @@ CSVDatasetTest >> datasetFromCSVNamed: aFileName [
 		from: aFileName
 		withColumnsDefinedBy: (
 			OrderedCollection new
-				add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
-				add: (CSVColumnDefinition mandatoryTyped: TFTensor typeFloat);
-				add: (CSVColumnDefinition nullableTyped: TFTensor typeFloat defaultTo: -1);
-				add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
+				add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
+				add: (CSVColumnDefinition mandatoryTyped: FloatDataType new);
+				add: (CSVColumnDefinition nullableTyped: FloatDataType new defaultTo: -1);
+				add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
 				yourself)
 		configuredBy: [:configuration |
 			configuration
@@ -50,10 +50,10 @@ CSVDatasetTest >> setUpCSVDatasetOnFile: aFileName [
 			from: aFileName
 			withColumnsDefinedBy: (
 				OrderedCollection new
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
-					add: (CSVColumnDefinition mandatoryTyped: TFTensor typeFloat);
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeFloat defaultTo: -1);
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
+					add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
+					add: (CSVColumnDefinition mandatoryTyped: FloatDataType new);
+					add: (CSVColumnDefinition nullableTyped: FloatDataType new defaultTo: -1);
+					add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
 					yourself)
 			configuredBy: [:configuration |
 				configuration
@@ -79,10 +79,10 @@ CSVDatasetTest >> setUpTSVDatasetOnFile: aFileName [
 			from: aFileName
 			withColumnsDefinedBy: (
 				OrderedCollection new
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
-					add: (CSVColumnDefinition mandatoryTyped: TFTensor typeFloat);
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeFloat defaultTo: -1);
-					add: (CSVColumnDefinition nullableTyped: TFTensor typeInt32 defaultTo: -1);
+					add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
+					add: (CSVColumnDefinition mandatoryTyped: FloatDataType new);
+					add: (CSVColumnDefinition nullableTyped: FloatDataType new defaultTo: -1);
+					add: (CSVColumnDefinition nullableTyped: Int32DataType new defaultTo: -1);
 					yourself)
 			configuredBy: [:configuration |
 				configuration

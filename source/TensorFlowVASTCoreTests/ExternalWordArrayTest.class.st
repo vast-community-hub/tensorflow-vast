@@ -88,7 +88,7 @@ ExternalWordArrayTest >> testOperationArrayAtPut [
 		graph
 			newOperation: 'Placeholder'
 			named: 'var'
-			described: [:description | description at: 'dtype' putType: TFTensor typeInt64].
+			described: [:description | description at: 'dtype' putType: Int64DataType new].
 	self testArrayAtPutFor: TFOperationPtrArray elementSample: sample
 ]
 

@@ -9,7 +9,7 @@ TensorFillerTest >> testFillConstant [
 
 	| const1 const2 |
 
-	const1 := TensorFiller on: tf fillWith: 4 tensorShaped: #(2 4) andType: TFTensor typeFloat.
+	const1 := TensorFiller on: tf fillWith: 4 tensorShaped: #(2 4) andType: FloatDataType new.
 	const2 :=
 		TensorFiller fillWith: 1.0 tensorShaped: (ConstantNode on: tf with: #(3 2) asInt32Tensor).
 

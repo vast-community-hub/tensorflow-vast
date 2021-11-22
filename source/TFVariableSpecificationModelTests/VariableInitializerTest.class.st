@@ -96,7 +96,7 @@ VariableInitializerTest >> testInitializeScalarVariableWithRandomSeed [
 	
 	output := tf compute: variable.
 	
-	self assert: output type equals: TFTensor typeFloat.
+	self assert: output type equals: FloatDataType new.
 	self assert: output shape equals: TensorShape scalar.
 	
 ]

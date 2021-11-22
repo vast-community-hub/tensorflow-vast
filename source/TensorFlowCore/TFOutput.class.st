@@ -93,10 +93,10 @@ TFOutput >> tensorflowTypeFrom: aProtobufferType [
 
 	mapping :=
 		Dictionary new
-			at: 101 put: TFTensor typeFloat;
-			at: 102 put: TFTensor typeFloat;
-			at: 103 put: TFTensor typeInt32;
-			at: 120 put: TFTensor typeResource;
+			at: 101 put: FloatDataType new;
+			at: 102 put: FloatDataType new;
+			at: 103 put: Int32DataType new;
+			at: 120 put: ResourceDataType new;
 			yourself.
 
 	^mapping
@@ -115,5 +115,7 @@ TFOutput >> type [
 	" When querying the type of a Variable node output, TF_OperationOutputType is
 	 returning the protobuf DataType enum 
 	Ref: https://github.com/tensorflow/tensorflow/issues/5409. "
-	^self operation type = 'Variable' ifTrue: [self tensorflowTypeFrom: type] ifFalse: [type]
+	^self operation type = 'Variable'
+		ifTrue: [self tensorflowTypeFrom: type]
+		ifFalse: [TensorDataType identifiedWith: type]
 ]

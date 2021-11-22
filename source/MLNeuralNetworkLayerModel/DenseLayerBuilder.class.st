@@ -48,7 +48,7 @@ DenseLayerBuilder >> biasInitializedTo: anArray [
 
 	self biasSpecifiedBy: (
 		VariableNodeSpecification
-			of: TFTensor typeFloat
+			of: FloatDataType new
 			initializedWith: (ConstantInitializer with: anArray asFloatTensor))
 ]
 
@@ -57,7 +57,7 @@ DenseLayerBuilder >> biasInitializedToZero [
 
 	self biasSpecifiedBy: (
 		VariableNodeSpecification
-			of: TFTensor typeFloat
+			of: FloatDataType new
 			initializedWith: ConstantInitializer withZeros)
 ]
 
@@ -137,7 +137,7 @@ DenseLayerBuilder >> weightInitializedToZero [
 DenseLayerBuilder >> weightInitializedWith: anVariableInitializer [
 
 	self weightSpecifiedBy:
-		(VariableNodeSpecification of: TFTensor typeFloat initializedWith: anVariableInitializer)
+		(VariableNodeSpecification of: FloatDataType new initializedWith: anVariableInitializer)
 ]
 
 { #category : 'Configuring - Weight' }

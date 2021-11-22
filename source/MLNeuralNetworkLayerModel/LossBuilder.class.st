@@ -23,7 +23,7 @@ LossBuilder >> buildCategoricalCrossEntropy [
 		InputNode
 			on: model currentComputation
 			named: self targetInputName
-			of: TFTensor typeFloat
+			of: FloatDataType new
 			shaped: model outputShape.
 
 	^reduction value: (CategoricalCrossEntropy of: model whenExpectedProbabilityIs: labels)
@@ -43,7 +43,7 @@ LossBuilder >> buildSparseCategoricalCrossEntropy [
 	| labels |
 
 	labels :=
-		InputNode on: model currentComputation named: self targetInputName of: TFTensor typeInt32.
+		InputNode on: model currentComputation named: self targetInputName of: Int32DataType new.
 
 	^reduction value: (SparseCategoricalCrossEntropy of: model whenExpectedIs: labels)
 ]
@@ -57,7 +57,7 @@ LossBuilder >> buildSquaredError [
 		InputNode
 			on: model currentComputation
 			named: self targetInputName
-			of: TFTensor typeFloat
+			of: FloatDataType new
 			shaped: model outputShape.
 
 	^reduction value: (SquaredDifference between: model and: expected)

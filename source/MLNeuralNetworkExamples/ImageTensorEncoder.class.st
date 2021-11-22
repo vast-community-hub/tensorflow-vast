@@ -50,13 +50,13 @@ ImageTensorEncoder >> encodeAll: anImageFilePathCollection [
 { #category : 'Configuring' }
 ImageTensorEncoder >> encodingToFloatTensor [
 
-	tensorType := TFTensor typeFloat
+	tensorType := FloatDataType new
 ]
 
 { #category : 'Configuring' }
 ImageTensorEncoder >> encodingToUnsignedSmallIntegerTensor [
 
-	tensorType := TFTensor typeUInt8
+	tensorType := UnsignedInt8DataType new
 ]
 
 { #category : 'Accessing' }

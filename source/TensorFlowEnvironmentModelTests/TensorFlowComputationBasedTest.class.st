@@ -51,7 +51,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeFloat
+		isOf: FloatDataType new
 		with: TensorShape scalar
 		comparedTo: (Array with: aScalar)
 		complying: [:actual :expected | self assert: actual closeTo: expected]
@@ -61,7 +61,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isFloatScalarCloseTo: aScalar
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isFloatVectorCloseTo: anExpectedArray [
 
-	self assert: anOutput isVectorTyped: TFTensor typeFloat closeTo: anExpectedArray
+	self assert: anOutput isVectorTyped: FloatDataType new closeTo: anExpectedArray
 ]
 
 { #category : 'Test Support',
@@ -80,7 +80,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerMatrixCloseTo: aFloa
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeInt32
+		isOf: Int32DataType new
 		with: (TensorShape matrixSized: aFloatMatrix size by: columns)
 		comparedTo: rows
 		complying: [:actual :expected | self assert: actual closeTo: expected]
@@ -92,7 +92,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerScalarEqualTo: aScal
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeInt32
+		isOf: Int32DataType new
 		with: TensorShape scalar
 		comparedTo: (Array with: aScalar)
 		complying: [:actual :expected | self assert: actual equals: expected]
@@ -104,7 +104,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isIntegerVectorEqualsTo: anEx
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeInt32
+		isOf: Int32DataType new
 		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
 		complying: [:actual :expected | self assert: actual equals: expected]
@@ -116,7 +116,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerScalarEqualsTo:
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeInt64
+		isOf: Int64DataType new
 		with: TensorShape scalar
 		comparedTo: (Array with: anInteger)
 		complying: [:actual :expected | self assert: actual equals: expected]
@@ -128,7 +128,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerVectorEqualsTo:
 
 	self
 		assert: anOutput
-		isOf: TFTensor typeInt64
+		isOf: Int64DataType new
 		with: (TensorShape vectorSized: anExpectedArray size)
 		comparedTo: anExpectedArray
 		complying: [:actual :expected | self assert: actual equals: expected]
@@ -138,7 +138,7 @@ TensorFlowComputationBasedTest >> assert: anOutput isLargeIntegerVectorEqualsTo:
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOutput isMatrixCloseTo: anExpectedMatrix [
 
-	self assert: anOutput isMatrixTyped: TFTensor typeFloat closeTo: anExpectedMatrix
+	self assert: anOutput isMatrixTyped: FloatDataType new closeTo: anExpectedMatrix
 ]
 
 { #category : 'Test Support',
@@ -210,7 +210,7 @@ TensorFlowComputationBasedTest >> assertOutputOf: anOperation isAStringEqualTo: 
 	| output |
 
 	output := tf compute: anOperation.
-	self assert: output type equals: TFTensor typeString.
+	self assert: output type equals: StringDataType new.
 	self assert: output shape equals: TensorShape scalar.
 	self assert: output allStrings any equals: aString
 ]

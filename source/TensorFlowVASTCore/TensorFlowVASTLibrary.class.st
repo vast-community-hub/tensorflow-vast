@@ -36,6 +36,21 @@ TensorFlowVASTLibrary class >> new [
 	^super new initialize
 ]
 
+{ #category : 'tensor',
+  #vaVisibility : 'private' }
+TensorFlowVASTLibrary >> accumulatedLengthsOf: aStringArray [
+
+	| offsets |
+
+	offsets := OrderedCollection new: aStringArray size.
+	(self collectEncodedSizeOf: aStringArray)
+		inject: 0
+		into: [:prev :each |
+			offsets add: prev.
+			each + prev].
+	^offsets
+]
+
 { #category : 'tensor' }
 TensorFlowVASTLibrary >> allocateTensorOf: aTensorDomain length: aLenght [
 
@@ -44,7 +59,7 @@ TensorFlowVASTLibrary >> allocateTensorOf: aTensorDomain length: aLenght [
 	externalized := Int64Array externalFromArray: aTensorDomain shape dimensionSizes.
 	answer :=
 		self
-			allocateTensorType: aTensorDomain type
+			allocateTensorType: aTensorDomain type uniqueIdentifier
 			shape: externalized
 			rank: aTensorDomain shape rank
 			length: aLenght.
@@ -91,6 +106,13 @@ TensorFlowVASTLibrary >> checkStatusAfter: aBlock [
 TensorFlowVASTLibrary >> closeSession: aTFSession status: aTFStatus [
 
 	^self dispatcher callTF_CloseSessionWith: aTFSession with: aTFStatus
+]
+
+{ #category : 'tensor',
+  #vaVisibility : 'private' }
+TensorFlowVASTLibrary >> collectEncodedSizeOf: aStringArray [
+
+	^aStringArray collect: [:each | self stringEncodedSize: each]
 ]
 
 { #category : 'buffer' }
@@ -1131,43 +1153,34 @@ TensorFlowVASTLibrary >> tensorFromString: aString [
 	| bytesize |
 
 	bytesize := self stringEncodedSize: aString.
-	
-	^ TFTensor
-		newTyped: TFTensor typeString
+
+	^TFTensor
+		newTyped: StringDataType new
 		shaped: TensorShape scalar
 		bytesize: bytesize
-		thenDo: [ :answer | self stringEncode: aString to: answer data size: bytesize ]
-
-
+		thenDo: [:answer | self stringEncode: aString to: answer data size: bytesize]
 ]
 
 { #category : 'tensor' }
 TensorFlowVASTLibrary >> tensorFromStrings: aStringArray shaped: aTensorShape [
 
-	| sizes offsets offsetSize bytesize |
+	| offsets stringArrayBytesize offsetsBytesize |
 
-	sizes := aStringArray collect: [:each | self stringEncodedSize: each].
-	offsetSize := self sizeOfDataType: TFTensor typeInt64.
-	bytesize := offsetSize * aStringArray size + sizes sum.
-	offsets := OrderedCollection new: sizes size.
-	sizes
-		inject: 0
-		into: [:prev :each |
-			offsets add: prev.
-			each + prev].
-
+	offsets := self accumulatedLengthsOf: aStringArray.
+	offsetsBytesize := aStringArray size * Int64DataType new dataSize.
+	stringArrayBytesize := offsetsBytesize + (self collectEncodedSizeOf: aStringArray) sum.
 	^TFTensor
-		newTyped: TFTensor typeString
+		newTyped: StringDataType new
 		shaped: aTensorShape
-		bytesize: bytesize
+		bytesize: stringArrayBytesize
 		thenDo: [:answer |
-			TFTensor copyInt64ArrayWith: offsets into: answer data.
+			TFTensor copyArrayOf: Int64DataType new with: offsets into: answer data.
 			1 to: aStringArray size do: [:index | | offset |
-				offset := offsetSize * aStringArray size + (offsets at: index).
+				offset := offsetsBytesize + (offsets at: index).
 				self
 					stringEncode: (aStringArray at: index)
 					to: answer data + offset
-					size: bytesize - offset]]
+					size: stringArrayBytesize - offset]]
 ]
 
 { #category : 'tensor' }

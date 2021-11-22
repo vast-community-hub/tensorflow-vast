@@ -13,7 +13,7 @@ TFOutputTest >> testOperation [
 		TFGraph create
 			newOperation: 'Placeholder'
 			named: 'x'
-			described: [:description | description at: 'dtype' putType: TFTensor typeFloat].
+			described: [:description | description at: 'dtype' putType: FloatDataType new].
 	output := op firstOutput.
 	self assert: output operation equals: op
 ]

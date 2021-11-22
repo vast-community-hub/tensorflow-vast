@@ -32,7 +32,7 @@ TensorFlowFunctionTest >> testCreateIdentityFunction [
 	| newComputation input |
 
 	newComputation := TensorFlowComputation new.
-	input := InputNode on: newComputation named: 'input' of: TFTensor typeFloat.
+	input := InputNode on: newComputation named: 'input' of: FloatDataType new.
 
 	newComputation
 		storeComputationAsFunctionNamed: 'duplicar'

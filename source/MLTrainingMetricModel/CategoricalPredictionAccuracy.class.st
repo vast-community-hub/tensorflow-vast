@@ -30,7 +30,7 @@ CategoricalPredictionAccuracy >> initializeOf: aPrediction whenExpectedIs: aTarg
 	target := aTarget.
 	predictionsMatches :=
 		(aPrediction comparedWith: (aTarget castedTo: aPrediction outputType))
-			castedTo: TFTensor typeFloat.
+			castedTo: FloatDataType new.
 
 	" I assume this is always gonna be a vector with the matches "
 	value := predictionsMatches meanAlongside: #(0)

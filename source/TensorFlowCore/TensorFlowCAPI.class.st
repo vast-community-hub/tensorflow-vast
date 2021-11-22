@@ -195,7 +195,10 @@ TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTy
 { #category : 'operation description' }
 TensorFlowCAPI >> description: aTFOperationDescription set: anAttributeName toTypes: aListOfTypes [
 
-	platformLibrary description: aTFOperationDescription set: anAttributeName toTypes: aListOfTypes
+	platformLibrary
+		description: aTFOperationDescription
+		set: anAttributeName
+		toTypes: (aListOfTypes collect: #uniqueIdentifier)
 ]
 
 { #category : 'operation description' }
@@ -599,9 +602,9 @@ TensorFlowCAPI >> setStatus: aTFStatus code: aTFCode message: aString [
 ]
 
 { #category : 'utils' }
-TensorFlowCAPI >> sizeOfDataType: aSmallInteger [
+TensorFlowCAPI >> sizeOfDataType: aDataType [
 
-	^ platformLibrary sizeOfDataType: aSmallInteger
+	^ platformLibrary sizeOfDataType: aDataType uniqueIdentifier
 ]
 
 { #category : 'tensor' }
@@ -646,7 +649,7 @@ TensorFlowCAPI >> tensorRank: aTFTensor [
 { #category : 'tensor' }
 TensorFlowCAPI >> tensorType: aTFTensor [
 
-	^platformLibrary tensorType: aTFTensor
+	^TensorDataType identifiedWith: (platformLibrary tensorType: aTFTensor)
 ]
 
 { #category : 'utils' }

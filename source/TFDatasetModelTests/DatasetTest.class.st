@@ -17,7 +17,7 @@ DatasetTest >> assertDatasetHasExpectedOutput: aDataset [
 	| output |
 
 	output := tf compute: aDataset.
-	self assert: output type equals: TFTensor typeVariant.
+	self assert: output type equals: VariantDataType new.
 	self assert: output shape equals: TensorShape scalar.
 	self assert: output numBytes equals: 64
 ]

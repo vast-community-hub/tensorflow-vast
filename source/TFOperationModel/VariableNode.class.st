@@ -14,7 +14,7 @@ VariableNode class >> on: aComputation named: aName forFloatsShaped: aShape init
 	^self
 		on: aComputation
 		named: aName
-		of: TFTensor typeFloat
+		of: FloatDataType new
 		shaped: aShape
 		initializedWith: aVariableInitializer
 ]
