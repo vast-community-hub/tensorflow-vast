@@ -38,11 +38,7 @@ ReciprocalTest >> testIntegerScalarReciprocal [
 		raise: Error
 		withSignalDo: [:exception | | errorText | 
 			errorText := exception messageText.
-			self assert: (errorText includesSubstring: 'INVALID_ARGUMENT: 2 root error(s) found.').
-			self assert: (errorText includesSubstring: '(0) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.').
-			self assert: (errorText includesSubstring: '(1) Invalid argument: Invalid cast from floating point type to S32 in ConstantR0WithType.')	.
-			self assert: (errorText includesSubstring: '0 successful operations.').
-			self assert: (errorText includesSubstring: '0 derived errors ignored.')].
+			self assert: (errorText includesSubstring: 'INVALID_ARGUMENT: No OpKernel was registered to support Op ''Reciprocal'' used by {{node recip}} with these attrs: [T=DT_INT32]')].
 
 ]
 

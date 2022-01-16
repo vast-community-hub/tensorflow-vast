@@ -51,7 +51,7 @@ TextDataset >> initializeOn: aComputation readingFrom: aFileName compressedWith:
 			namePrefixed: 'TextLineDataset'
 			withAll: (
 				OrderedCollection new
-					add: (TFTensor fromStringArray: (Array with: aFileName));
+					add: (TFTensor fromStrings: (Array with: aFileName));
 					add: (
 						TFTensor
 							fromStrings: (Array with: aCompressionType)

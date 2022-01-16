@@ -483,7 +483,7 @@ TensorFlowCAPITest >> testDecodeCSVGraphRunCSV: csvLines [
 	graph := self decodeCSVGraphDefaults: defaults.
 	records := (graph operationNamed: 'records') input: 0.
 	output := graph operationNamed: 'output'.
-	values := TFTensor fromStringArray: csvLines.
+	values := TFTensor fromStrings: csvLines.
 	session := TFSession on: graph.
 	results := session
 		runInputs:
@@ -1318,11 +1318,13 @@ TensorFlowCAPITest >> testStatusSetGetCode [
 
 { #category : 'testing strings' }
 TensorFlowCAPITest >> testStringAsTensor [
+
 	| tensor template |
+
 	template := 'hola manola'.
 	tensor := template asTensor.
-	self assert: tensor dataBytes first equals: template size.
-	self assert: tensor dataBytes allButFirst asString equals: template
+	self assert: tensor size equals: template size.
+	self assert: tensor content equals: template
 ]
 
 { #category : 'testing tensor' }
@@ -1466,7 +1468,6 @@ TensorFlowCAPITest >> testTensorDataTypeSize [
 
 	OrderedCollection new
 		add: ResourceDataType new;
-		add: StringDataType new;
 		add: VariantDataType new;
 		do: [:type | self assert: type dataSize equals: 0].
 
@@ -1501,7 +1502,8 @@ TensorFlowCAPITest >> testTensorDataTypeSize [
 		add: UnsignedInt64DataType new;
 		do: [:type | self assert: type dataSize equals: 8].
 
-	self assert: Complex128DataType new dataSize equals: 16
+	self assert: Complex128DataType new dataSize equals: 16.
+	self assert: StringDataType new dataSize equals: 24
 ]
 
 { #category : 'testing tensor' }
@@ -1786,26 +1788,45 @@ TensorFlowCAPITest >> testTensorFromInt64Shape [
 ]
 
 { #category : 'testing strings' }
+TensorFlowCAPITest >> testTensorFromLargeString [
+
+	| string template |
+
+	template := String streamContents: [:str | 100 timesRepeat: [str nextPutAll: 'Hola']].
+	string := TFString with: template.
+	
+	self assert: string size equals: template size. 
+	self assert: string stringType equals: TF_TSTR_LARGE.
+	self assert: string capacity equals: 415.
+	self assert: string content equals: template
+]
+
+{ #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromString [
-	| tensor template |
+
+	| string template |
+
 	template := 'hola manola'.
-	tensor := TFTensor fromString: template.
-	self assert: tensor dataBytes first equals: template size.
-	self assert: tensor dataBytes allButFirst asString equals: template
+	string := TFString with: template.
+
+	self assert: string size equals: template size.
+	self assert: string stringType equals: TF_TSTR_SMALL.
+	self assert: string capacity equals: 22.
+	self assert: string content equals: template
 ]
 
 { #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromStringArray [
 	| tensor template |
 	template := #('hola manola' 'te traje una lola' 'pamela' 'que pandulce!').
-	tensor := TFTensor fromStringArray: template.
+	tensor := TFTensor fromStrings: template.
 	self assert: tensor allStrings equals: template
 ]
 
 { #category : 'testing strings' }
 TensorFlowCAPITest >> testTensorFromStrings [
 
-	| tensor template flatten |
+	| tensor template |
 
 	template := #(('hola manola' 'te traje una lola') ('pamela' 'que pandulce!') ('habia una vez' 'truz')).
 	tensor := TFTensor fromStrings: template.
@@ -1903,7 +1924,7 @@ TensorFlowCAPITest >> testVersion [
 	| version |
 
 	version := library version.
-	self assert: version equals: '2.3.1'
+	self assert: version equals: '2.7.0'
 ]
 
 { #category : 'testing graph' }

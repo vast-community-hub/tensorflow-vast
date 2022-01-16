@@ -15,7 +15,7 @@ ElementWiseMultiplicationTest >> testFactorsMustHaveSameType [
 	self
 		assert: [x * y]
 		raisesExceptionWith:
-			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''Mul'' using Op<name=Mul; signature=x:T, y:T -> z:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_UINT8, DT_INT8, DT_UINT16, DT_INT16, DT_INT32, DT_INT64, DT_COMPLEX64, DT_COMPLEX128]; is_commutative=true>'
+			'INVALID_ARGUMENT: Inconsistent values for attr ''T'' DT_FLOAT vs. DT_INT32 while building NodeDef ''Mul'' using Op<name=Mul; signature=x:T, y:T -> z:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_UINT8, DT_INT8, DT_UINT16, DT_INT16, DT_INT32, DT_UINT32, DT_UINT64, DT_INT64, DT_COMPLEX64, DT_COMPLEX128]; is_commutative=true>'
 ]
 
 { #category : 'Test' }

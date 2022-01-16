@@ -83,6 +83,6 @@ TensorFlowCAPISlowTests >> testTensorFinalizationReleasesExternalMemory [
 			yourself.
 	self
 		assertCreating: 20
-		of: [TFTensor fromStringArray: template]
+		of: [TFTensor fromStrings: template]
 		releasesExternalMemoryRepeatingUpTo: 20
 ]

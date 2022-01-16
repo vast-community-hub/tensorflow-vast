@@ -28,9 +28,10 @@ BatchDataset >> initializeSplitting: aDataset in: aBatchSize [
 	outputDomains := aDataset outputDomains collect: #withNewUnknownDimension.
 	value :=
 		currentComputation
-			newOperationOf: 'BatchDataset'
+			newOperationOf: 'BatchDatasetV2'
 			namePrefixed: 'BatchDataset'
-			withAll: (Array with: aDataset with: aBatchSize asInt64Tensor)
+			withAll:
+				(Array with: aDataset with: aBatchSize asInt64Tensor with: false asBooleanTensor)
 			describedBy: [:description |
 				description
 					atOutputTypesPut: (outputDomains collect: #type);

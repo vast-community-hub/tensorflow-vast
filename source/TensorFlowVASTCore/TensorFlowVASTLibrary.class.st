@@ -36,21 +36,6 @@ TensorFlowVASTLibrary class >> new [
 	^super new initialize
 ]
 
-{ #category : 'tensor',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> accumulatedLengthsOf: aStringArray [
-
-	| offsets |
-
-	offsets := OrderedCollection new: aStringArray size.
-	(self collectEncodedSizeOf: aStringArray)
-		inject: 0
-		into: [:prev :each |
-			offsets add: prev.
-			each + prev].
-	^offsets
-]
-
 { #category : 'tensor' }
 TensorFlowVASTLibrary >> allocateTensorOf: aTensorDomain length: aLenght [
 
@@ -75,22 +60,6 @@ TensorFlowVASTLibrary >> allocateTensorType: anInteger shape: aLonnLongArray ran
 	^ TFTensor address: address
 ]
 
-{ #category : 'strings' }
-TensorFlowVASTLibrary >> allStringsOf: aTFTensor [
-
-	| total answer bytes data |
-
-	total := aTFTensor size.
-	answer := WriteStream on: (Array new: total).
-	bytes := aTFTensor dataBytes.
-	1 to: total do: [:i | | offset str |
-		offset := bytes uint64At: (i - 1) * 8.
-		data := bytes copyFrom: 8 * total + 1 + offset to: bytes size.
-		str := self stringDecode: data.
-		answer nextPut: str].
-	^answer contents
-]
-
 { #category : 'status' }
 TensorFlowVASTLibrary >> checkStatusAfter: aBlock [
 
@@ -106,13 +75,6 @@ TensorFlowVASTLibrary >> checkStatusAfter: aBlock [
 TensorFlowVASTLibrary >> closeSession: aTFSession status: aTFStatus [
 
 	^self dispatcher callTF_CloseSessionWith: aTFSession with: aTFStatus
-]
-
-{ #category : 'tensor',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> collectEncodedSizeOf: aStringArray [
-
-	^aStringArray collect: [:each | self stringEncodedSize: each]
 ]
 
 { #category : 'buffer' }
@@ -155,6 +117,18 @@ TensorFlowVASTLibrary >> deleteSessionOptions: aTFSessionOptions [
 TensorFlowVASTLibrary >> deleteStatus: aTFStatus [
 
 	^self dispatcher callTF_DeleteStatusWith: aTFStatus
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> deleteString: aTFString [
+
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringDealloc'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer)
+		returnType: #void)
+			callWith: aTFString
 ]
 
 { #category : 'tensor' }
@@ -704,6 +678,24 @@ TensorFlowVASTLibrary >> newStatus [
 	^self newPersistentStatus
 ]
 
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> newStringOn: anExternalAddress with: aString [
+
+	self
+		stringInitOn: anExternalAddress;
+		stringCopy: aString withLenght: aString size into: anExternalAddress
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> newStringWith: aString [
+
+	| externalString |
+
+	externalString := TFString externalNew.
+	self newStringOn: externalString with: aString.
+	^externalString
+]
+
 { #category : 'operation attribute',
   #vaVisibility : 'private' }
 TensorFlowVASTLibrary >> operation: aTFOperation attr: nameZString getBool: valueBoolPtr status: status [
@@ -919,12 +911,6 @@ TensorFlowVASTLibrary >> operationOutputType: aTFOutput [
 	^self dispatcher callTF_OperationOutputTypeWith: aTFOutput
 ]
 
-{ #category : 'strings',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> primStringEncodedSize: anInteger [
-	^ self dispatcher callTF_StringEncodedSizeWith:anInteger
-]
-
 { #category : 'session' }
 TensorFlowVASTLibrary >> runSession: aTFSession inputs: inArrayOfTFOutputs values: inArrayOfTFTensor outputs: outArrayOfTFOutputs [
 
@@ -1073,49 +1059,83 @@ TensorFlowVASTLibrary >> sizeOfDataType: aDataType [
 	^self dispatcher callTF_DataTypeSizeWith: aDataType
 ]
 
-{ #category : 'strings',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> stringDecode: src [
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> stringCopy: aString withLenght: aLenght into: aTFString [
 
-	| destination answer dstSize |
-
-	destination := ByteArray new: 8.
-	dstSize := ByteArray new: 8.
-	answer :=
-		self checkStatusAfter: [:status |
-			self stringDecode: src len: src size destination: destination len: dstSize status: status].
-	dstSize := dstSize uint64At: 0.
-	destination := OSPtr address: (destination pointerAt: 0).
-	answer := destination memcpyStringFrom: 0 to: dstSize - 1.
-	^answer
-]
-
-{ #category : 'strings',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> stringDecode: srcString len: srcLen destination: dstPointer len: dstLenPointer status: status [
-	"	<cdecl: ulonglong 'TF_StringDecode' (char* ulonglong char* ulonglong* TFStatus)>"
-	^ self dispatcher callTF_StringDecodeWith: srcString with: srcLen with: dstPointer with: dstLenPointer with: status
-]
-
-{ #category : 'strings',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> stringEncode: srcString len: srcLen destination: dstString len: dstLen status: status [
-	"	<cdecl: ulonglong 'TF_StringEncode' (char* ulonglong char* ulonglong TFStatus)>"
-	^ self dispatcher callTF_StringEncodeWith: srcString with: srcLen with: dstString with: dstLen with: status
-]
-
-{ #category : 'strings',
-  #vaVisibility : 'private' }
-TensorFlowVASTLibrary >> stringEncode: src to: dst size: dstSize [
-
-	^self checkStatusAfter: [:status |
-		self stringEncode: src len: src size destination: dst len: dstSize status: status]
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringCopy'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer pointer int32)
+		returnType: #void)
+			callWith: aTFString
+			with: aString
+			with: aLenght
 ]
 
 { #category : 'strings' }
-TensorFlowVASTLibrary >> stringEncodedSize: aString [
+TensorFlowVASTLibrary >> stringGetCapacityOf: aTFString [
 
-	^self primStringEncodedSize: aString size
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringGetCapacity'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer)
+		returnType: #int32)
+			callWith: aTFString
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> stringGetDataOf: aTFString [
+
+	| dataPointer |
+
+	dataPointer :=
+		(PlatformFunction
+			callingConvention: 'C'
+			function: 'TF_StringGetDataPointer'
+			library: 'TENSORFLOW_LIB'
+			parameterTypes: #(pointer)
+			returnType: #pointer)
+				callWith: aTFString.
+
+	^(OSStringZ address: dataPointer) asString
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> stringGetSizeOf: aTFString [
+
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringGetSize'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer)
+		returnType: #uint64)
+			callWith: aTFString
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> stringGetTypeOf: aTFString [
+
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringGetType'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer)
+		returnType: #uint64)
+			callWith: aTFString
+]
+
+{ #category : 'strings' }
+TensorFlowVASTLibrary >> stringInitOn: aTFString [
+
+	^(PlatformFunction
+		callingConvention: 'C'
+		function: 'TF_StringInit'
+		library: 'TENSORFLOW_LIB'
+		parameterTypes: #(pointer)
+		returnType: #void)
+			callWith: aTFString
 ]
 
 { #category : 'tensor' }
@@ -1145,42 +1165,6 @@ TensorFlowVASTLibrary >> tensorDataOf: aTFTensor [
 		<OSVoid>"
 
 	^OSPtr address: (self tensorData: aTFTensor)
-]
-
-{ #category : 'tensor' }
-TensorFlowVASTLibrary >> tensorFromString: aString [
-
-	| bytesize |
-
-	bytesize := self stringEncodedSize: aString.
-
-	^TFTensor
-		newTyped: StringDataType new
-		shaped: TensorShape scalar
-		bytesize: bytesize
-		thenDo: [:answer | self stringEncode: aString to: answer data size: bytesize]
-]
-
-{ #category : 'tensor' }
-TensorFlowVASTLibrary >> tensorFromStrings: aStringArray shaped: aTensorShape [
-
-	| offsets stringArrayBytesize offsetsBytesize |
-
-	offsets := self accumulatedLengthsOf: aStringArray.
-	offsetsBytesize := aStringArray size * Int64DataType new dataSize.
-	stringArrayBytesize := offsetsBytesize + (self collectEncodedSizeOf: aStringArray) sum.
-	^TFTensor
-		newTyped: StringDataType new
-		shaped: aTensorShape
-		bytesize: stringArrayBytesize
-		thenDo: [:answer |
-			TFTensor copyArrayOf: Int64DataType new with: offsets into: answer data.
-			1 to: aStringArray size do: [:index | | offset |
-				offset := offsetsBytesize + (offsets at: index).
-				self
-					stringEncode: (aStringArray at: index)
-					to: answer data + offset
-					size: stringArrayBytesize - offset]]
 ]
 
 { #category : 'tensor' }

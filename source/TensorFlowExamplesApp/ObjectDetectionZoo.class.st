@@ -151,13 +151,12 @@ ObjectDetectionZoo >> predict [
 
 { #category : 'initialization' }
 ObjectDetectionZoo >> prepareImageInput [
-
-	| images |
-
 	"If the user supplies more than one image, then we scale all of them to be 
 	 640@480 because we can't specify multiple image sizes to TensorFlow. 
 	 If the user specified only image, then we don't scale it and we pass
 	 its original size to TensorFlow"
+
+	| images |
 
 	self imageFiles size > 1
 		ifTrue: [
@@ -169,11 +168,9 @@ ObjectDetectionZoo >> prepareImageInput [
 			images := self images].
 	inputValues :=
 		TFTensor
-			fromNumbers: images
-			type: UnsignedInt8DataType new
-			shape: (Array with: images size with: imageSize x with: imageSize y with: 3 "RGB")
-
-
+			newTyped: UnsignedInt8DataType new
+			shaped: (Array with: images size with: imageSize x with: imageSize y with: 3 "RGB") 
+			containing: images 
 ]
 
 { #category : 'helpers' }

@@ -1563,27 +1563,6 @@ TFLibraryDispatcher >> callTF_SetTargetWith: options with: target [
 
 { #category : 'Functions',
   #vaVisibility : 'private' }
-TFLibraryDispatcher >> callTF_StringDecodeWith: src with: src_len with: dst with: dst_len with: status [
-
-	^callEngine call: TF_StringDecode with: src with: src_len with: dst with: dst_len with: status
-]
-
-{ #category : 'Functions',
-  #vaVisibility : 'private' }
-TFLibraryDispatcher >> callTF_StringEncodedSizeWith: len [
-
-	^callEngine call: TF_StringEncodedSize with: len
-]
-
-{ #category : 'Functions',
-  #vaVisibility : 'private' }
-TFLibraryDispatcher >> callTF_StringEncodeWith: src with: src_len with: dst with: dst_len with: status [
-
-	^callEngine call: TF_StringEncode with: src with: src_len with: dst with: dst_len with: status
-]
-
-{ #category : 'Functions',
-  #vaVisibility : 'private' }
 TFLibraryDispatcher >> callTF_TensorByteSizeWith: TF_Tensor [
 
 	^callEngine call: TF_TensorByteSize with: TF_Tensor

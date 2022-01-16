@@ -11,7 +11,8 @@ String >> asAsciiZ [
 { #category : '*TensorFlowCore',
  #vaCategories : ['TensorFlow-Kernel'] }
 String >> asTensor [
-	^ TFTensor fromString: self
+
+	^TFString with: self
 ]
 
 { #category : '*TensorFlowCore',

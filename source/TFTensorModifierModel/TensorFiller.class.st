@@ -21,5 +21,5 @@ TensorFiller class >> on: aTensorFlowComputation fillWith: aValue tensorShaped: 
 		newOperationOf: 'Fill'
 		namePrefixed: 'Fill'
 		with: aShape asInt32Tensor
-		with: (TFTensor fromNumbers: aValue type: aTensorType)
+		with: (TFTensor newTyped: aTensorType containing: aValue)
 ]

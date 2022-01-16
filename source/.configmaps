@@ -528,8 +528,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.25',
-						#ts : 3815036044
+						#versionName : '0.64.27',
+						#ts : 3819777128
 					}
 				]
 			},
@@ -644,7 +644,7 @@
 				]
 			}
 		],
-		#ts : 3815036058,
+		#ts : 3819778077,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -655,6 +655,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.19'
+		#versionName : '1.20'
 	}
 ]

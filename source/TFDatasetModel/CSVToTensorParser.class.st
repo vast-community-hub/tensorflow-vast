@@ -65,7 +65,7 @@ CSVToTensorParser >> parseColumnsFrom: aLineCollection [
 		tf
 			createSessionAndCompute: (self columnIndexCollect: [:i | parsing output: i - 1])
 			feeding: (Array with: input value firstOutput)
-			with: (Array with: (TFTensor fromStringArray: aLineCollection)).
+			with: (Array with: (TFTensor fromStrings: aLineCollection)).
 	^self columnIndexCollect: [:i | output at: i]
 ]
 

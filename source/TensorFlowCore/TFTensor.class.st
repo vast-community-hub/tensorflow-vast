@@ -4,7 +4,8 @@ Class {
 	#category : 'TensorFlowCore'
 }
 
-{ #category : 'utils' }
+{ #category : 'utils',
+  #vaVisibility : 'private' }
 TFTensor class >> copyArrayOf: type with: values into: anExternalAddressOrByteArray [
 
 	| index |
@@ -18,31 +19,31 @@ TFTensor class >> copyArrayOf: type with: values into: anExternalAddressOrByteAr
 { #category : 'instance creation' }
 TFTensor class >> fromBooleans: values [
 
-	^self fromNumbers: values type: BooleanDataType new
+	^self newTyped: BooleanDataType new containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromDoubles: values [
 
-	^self fromNumbers: values type: DoubleDataType new
+	^self newTyped: DoubleDataType new containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromDoubles: values shape: shape [
 
-	^self fromNumbers: values type: DoubleDataType new shape: shape
+	^self newTyped: DoubleDataType new shaped: shape containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromFloats: values [
 
-	^self fromNumbers: values type: FloatDataType new
+	^self newTyped: FloatDataType new containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromFloats: values shape: shape [
 
-	^self fromNumbers: values type: FloatDataType new shape: shape
+	^self newTyped: FloatDataType new shaped: shape containing: values
 ]
 
 { #category : 'instance creation' }
@@ -53,13 +54,13 @@ TFTensor class >> fromInt32: value [
 { #category : 'instance creation' }
 TFTensor class >> fromInt32s: values [
 
-	^self fromNumbers: values type: Int32DataType new
+	^self newTyped: Int32DataType new containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromInt32s: values shape: shape [
 
-	^self fromNumbers: values type: Int32DataType new shape: shape
+	^self newTyped: Int32DataType new shaped: shape containing: values
 ]
 
 { #category : 'instance creation' }
@@ -70,51 +71,13 @@ TFTensor class >> fromInt64: value [
 { #category : 'instance creation' }
 TFTensor class >> fromInt64s: values [
 
-	^self fromNumbers: values type: Int64DataType new
+	^self newTyped: Int64DataType new containing: values
 ]
 
 { #category : 'instance creation' }
 TFTensor class >> fromInt64s: values shape: shape [
 
-	^self fromNumbers: values type: Int64DataType new shape: shape
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> fromNumbers: values type: type [
-
-	^self fromNumbers: values type: type shape: values inferTensorShape
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> fromNumbers: values type: type shape: shape [
-
-	| size count |
-
-	size := values singleElementsInCollection.
-	count := shape totalAmountOfElements.
-	count = size ifFalse: [Error signal: 'Inferred size and real size don''t match.'].
-	^self
-		newTyped: type
-		shaped: shape
-		thenDo: [:tensor | self copyArrayOf: type with: values into: tensor data]
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> fromString: aString [
-	
-	^ TensorFlowCAPI current tensorFromString: aString
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> fromStringArray: aStringArray [
-
-	^self fromStrings: aStringArray shape: (TensorShape vectorSized: aStringArray size)
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> fromStringArray: aStringArray shape: shape [
-
-	^ TensorFlowCAPI current tensorFromStrings: aStringArray shaped: shape
+	^self newTyped: Int64DataType new shaped: shape containing: values
 ]
 
 { #category : 'instance creation' }
@@ -124,15 +87,15 @@ TFTensor class >> fromStrings: aStringArray [
 ]
 
 { #category : 'instance creation' }
-TFTensor class >> fromStrings: strings shape: shape [
+TFTensor class >> fromStrings: aStringArray shape: shape [
 
 	| flatten |
 
 	flatten :=
 		Array
-			new: strings singleElementsInCollection
-			streamContents: [:stream | strings singleElementsDo: [:each | stream nextPut: each]].
-	^self fromStringArray: flatten shape: shape
+			new: aStringArray singleElementsInCollection
+			streamContents: [:stream | aStringArray singleElementsDo: [:each | stream nextPut: each]].
+	^self newTyped: StringDataType new shaped: shape containing: flatten
 ]
 
 { #category : 'Startup/Shutdown',
@@ -150,38 +113,43 @@ TFTensor class >> new [
 ]
 
 { #category : 'instance creation' }
+TFTensor class >> newTyped: type containing: values [
+
+	^self newTyped: type shaped: values inferTensorShape containing: values
+]
+
+{ #category : 'instance creation' }
 TFTensor class >> newTyped: anInteger shaped: aTensorShape [
 
 	^ self newTyped: anInteger shaped: aTensorShape thenDo: [ :tensor | ]
 ]
 
 { #category : 'instance creation' }
-TFTensor class >> newTyped: aTensorType shaped: aTensorShape bytesize: bytesizeInteger thenDo: aBlock [
+TFTensor class >> newTyped: type shaped: shape containing: values [
 
+	| size count |
+
+	size := values singleElementsInCollection.
+	count := shape totalAmountOfElements.
+	count = size ifFalse: [Error signal: 'Inferred size and real size don''t match.'].
+	^self
+		newTyped: type
+		shaped: shape
+		thenDo: [:tensor | self copyArrayOf: type with: values into: tensor data]
+]
+
+{ #category : 'instance creation',
+  #vaVisibility : 'private' }
+TFTensor class >> newTyped: aDataType shaped: aTensorShape thenDo: aBlock [
 
 	| tensor |
 
-	tensor := TensorFlowCAPI current
-		allocateTensorOf: ( TensorDomain of: aTensorType withShape: aTensorShape )
-		length: bytesizeInteger.
+	tensor :=
+		TensorFlowCAPI current
+			allocateTensorOf: (TensorDomain of: aDataType withShape: aTensorShape)
+			length: aTensorShape totalAmountOfElements * aDataType dataSize.
 	aBlock value: tensor.
-	^ tensor
-]
-
-{ #category : 'instance creation' }
-TFTensor class >> newTyped: aDataType shaped: aTensorShape thenDo: aBlock [
-	" I understand dimenssions are:
-		#()		-> Scalar
-		#(7)		-> Unidimensional array of 7 elements
-		#(7 4)		-> 7x4 elements matrix
-		#(2 5 9)	-> 2x5x9 elements cube
-		etc.
-	"
-
-	| bytesize |
-
-	bytesize := aTensorShape totalAmountOfElements * aDataType dataSize.
-	^self newTyped: aDataType shaped: aTensorShape bytesize: bytesize thenDo: aBlock
+	^tensor
 ]
 
 { #category : 'instance creation' }
@@ -212,7 +180,7 @@ TFTensor >> allInt64s [
 { #category : 'converting' }
 TFTensor >> allStrings [
 
-	^ self library allStringsOf: self
+	^self allElements collect: #content
 ]
 
 { #category : 'converting' }

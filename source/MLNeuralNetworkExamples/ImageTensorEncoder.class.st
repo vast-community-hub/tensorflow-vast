@@ -30,11 +30,11 @@ ImageTensorEncoder >> convertToTensor: anImageFilePathCollection scalingTo: anIm
 	| images |
 
 	images := self scaleAll: anImageFilePathCollection to: anImageSize.
-
+	
 	^TFTensor
-		fromNumbers: images
-		type: tensorType
-		shape: (Array with: images size with: anImageSize x with: anImageSize y with: 3)
+		newTyped: tensorType
+		shaped: (Array with: images size with: anImageSize x with: anImageSize y with: 3)
+		containing: images
 ]
 
 { #category : 'Processing' }
