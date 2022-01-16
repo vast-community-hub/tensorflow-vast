@@ -15,21 +15,12 @@ ExternalWordArrayTest class >> new [
 
 { #category : 'testing',
   #vaVisibility : 'private' }
-ExternalWordArrayTest >> assertElementsIn: anExternalWordArraySubclass areKindOf: aClass [
+ExternalWordArrayTest >> assertCanStore: anObject inExternalArrayOf: anExternalWordArraySubclass [
 
-	| array size |
-
-	size := 4.
-	array := anExternalWordArraySubclass new: size.
-	"	self assert: size * Smalltalk wordSize = array getHandle size.	This isn't dialect independent "
-	1 to: size do: [:index | self assert: ((array at: index) isKindOf: aClass)]
-]
-
-{ #category : 'testing' }
-ExternalWordArrayTest >> testArrayAtPutFor: anExternalWordArraySubclass elementSample: anObject [
 	| array size one |
+
 	size := 4.
-	array := anExternalWordArraySubclass externalFromArray: (Array with: anObject).
+	array := anExternalWordArraySubclass externalFromArray: (Array new: size withAll: anObject).
 	one := array first.
 	array first: anObject.
 	self assert: array first equals: anObject.
@@ -44,17 +35,30 @@ ExternalWordArrayTest >> testArrayAtPutFor: anExternalWordArraySubclass elementS
 		self assert: (array at: index) equals: one]
 ]
 
+{ #category : 'testing',
+  #vaVisibility : 'private' }
+ExternalWordArrayTest >> assertElementsIn: anExternalWordArraySubclass areKindOf: aClass [
+
+	| array size |
+
+	size := 4.
+	array := anExternalWordArraySubclass new: size.
+	"	self assert: size * Smalltalk wordSize = array getHandle size.	This isn't dialect independent "
+	1 to: size do: [:index | self assert: ((array at: index) isKindOf: aClass)]
+]
+
 { #category : 'testing' }
 ExternalWordArrayTest >> testExternalFromArrayOperation [
+
 	| op1 op2 array |
-	op1 := TFOperation externalNew.
-	op2 := TFOperation externalNew.
-	array := TFOperationPtrArray
-		externalFromArray: (Array with: op1 with: op2).
+
+	op1 := TFOperation externalNew ignoreFinalization.
+	op2 := TFOperation externalNew ignoreFinalization.
+	array := TFOperationPtrArray externalFromArray: (Array with: op1 with: op2).
 	self assert: array first address = op1 address.
 	self assert: (array at: 2) address = op2 address.
-	op1 free.
-	op2 free.
+	op1 delete.
+	op2 delete
 ]
 
 { #category : 'testing' }
@@ -89,7 +93,7 @@ ExternalWordArrayTest >> testOperationArrayAtPut [
 			newOperation: 'Placeholder'
 			named: 'var'
 			described: [:description | description at: 'dtype' putType: Int64DataType new].
-	self testArrayAtPutFor: TFOperationPtrArray elementSample: sample
+	self assertCanStore: sample inExternalArrayOf: TFOperationPtrArray
 ]
 
 { #category : 'testing' }
@@ -100,11 +104,13 @@ ExternalWordArrayTest >> testOperationArrayElementsOfRightClass [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testOutputArrayAtPut [
+
 	| array size one other operation |
+
 	size := 4.
 	array := TFOutputArray externalNew: size.
-	operation := TFOperation externalNew.
-	one := TFOutput externalNew.
+	operation := TFOperation externalNew ignoreFinalization.
+	one := TFOutput externalNew ignoreFinalization.
 	one index: 16r75F6F7F8.
 	one operation: operation.
 	other := array first.
@@ -112,19 +118,19 @@ ExternalWordArrayTest >> testOutputArrayAtPut [
 	self deny: one address = other address.
 	self assert: one index = other index.
 	self assert: one operation = other operation.
-	operation free.
-	
+	operation delete.
+
 	operation := TFOperation externalNew.
 	one index: 16r75F6F7F8.
 	one operation: operation.
-	1 to: size do: [ :index | 
+	1 to: size do: [:index |
 		other := array at: index.
 		array at: index put: one.
 		self deny: one address = other address.
 		self assert: one index = other index.
-		self assert: one operation = other operation ].
-	operation free.
-	one free.
+		self assert: one operation = other operation].
+	operation delete.
+	one delete
 ]
 
 { #category : 'testing' }
@@ -162,9 +168,11 @@ ExternalWordArrayTest >> testOutputArrayElementsOfRightClass [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testTensorArrayAtPut [
+
 	| sample |
+
 	sample := TFTensor fromInt64: 16r12341234.
-	self testArrayAtPutFor: TFTensorPtrArray elementSample: sample
+	self assertCanStore: sample inExternalArrayOf: TFTensorPtrArray
 ]
 
 { #category : 'testing' }
@@ -190,12 +198,11 @@ ExternalWordArrayTest >> testUIn64ArrayfromArray: template [
 
 { #category : 'testing' }
 ExternalWordArrayTest >> testUInt64ArrayAtPut [
-	self testArrayAtPutFor: Int64Array elementSample: 12345.
-	self testArrayAtPutFor: Int64Array elementSample: 16rFE00FE00.
-	self testArrayAtPutFor: Int64Array elementSample: 16r7E00FE00FE00FE00.
-	self
-		testArrayAtPutFor: Int64Array
-		elementSample: 16r-7E00FE00FE00FE00
+
+	self assertCanStore: 12345 inExternalArrayOf: Int64Array.
+	self assertCanStore: 16rFE00FE00 inExternalArrayOf: Int64Array.
+	self assertCanStore: 16r7E00FE00FE00FE00 inExternalArrayOf: Int64Array.
+	self assertCanStore: 16r-7E00FE00FE00FE00 inExternalArrayOf: Int64Array
 ]
 
 { #category : 'testing' }
