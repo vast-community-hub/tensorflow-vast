@@ -13,6 +13,19 @@ DeterministicSeedTensorGenerator class >> fixedTo: anIntegerSeed [
 	^self new initializeFixedTo: anIntegerSeed
 ]
 
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+DeterministicSeedTensorGenerator >> binomialTensorOn: aComputation shaped: aTensorShape withProbabilityOfSuccess: aProbabilityOfSuccess in: aNumberOfExperiments [
+
+	^aComputation
+		newOperationOf: 'StatelessRandomBinomial'
+		namePrefixed: 'StatelessRandomBinomial'
+		withAll:
+			{ aTensorShape asInt32Tensor. { seed. 0 } asInt32Tensor.
+			aNumberOfExperiments asFloatTensor. aProbabilityOfSuccess asFloatTensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
+]
+
 { #category : 'Initialization',
   #vaVisibility : 'private' }
 DeterministicSeedTensorGenerator >> initializeFixedTo: anIntegerSeed [
@@ -24,30 +37,20 @@ DeterministicSeedTensorGenerator >> initializeFixedTo: anIntegerSeed [
   #vaVisibility : 'private' }
 DeterministicSeedTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape [
 
-
-	| shape seeds |
-
-	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
-	seeds := ConstantNode on: aComputation with: ( Array with: seed with: 0 ) asInt32Tensor.
-	^ aComputation
+	^aComputation
 		newOperationOf: 'StatelessTruncatedNormal'
 		namePrefixed: 'StatelessTruncatedNormal'
-		withAll: ( Array with: shape with: seeds )
-		describedBy: [ :description | description atDataTypePut: FloatDataType new ]
+		withAll: { aTensorShape asInt32Tensor. { seed. 0 } asInt32Tensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 DeterministicSeedTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
 
-
-	| shape seeds |
-
-	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
-	seeds := ConstantNode on: aComputation with: (Array with: seed with: 0) asInt32Tensor.
-	^ aComputation 
+	^aComputation
 		newOperationOf: 'StatelessRandomUniform'
 		namePrefixed: 'StatelessRandomUniform'
-		withAll: (Array with: shape with: seeds)
-		describedBy: [:description | description atDataTypePut: FloatDataType new] 
+		withAll: { aTensorShape asInt32Tensor. { seed. 0 } asInt32Tensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
 ]

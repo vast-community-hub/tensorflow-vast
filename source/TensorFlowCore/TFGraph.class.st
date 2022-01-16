@@ -107,11 +107,14 @@ TFGraph >> initialize [
 
 { #category : 'running' }
 TFGraph >> initializeOn: aTFSession [
+
 	| initializers |
-	initializers := self allInitializers
-		collect: [ :each | each output: 0 ].
-	initializers size > 0
-		ifTrue: [ aTFSession runOutputs: initializers ]
+
+	(self operationsSelect: [:op | op type = 'AssignVariableOp'])
+		do: [:op | aTFSession runOperation: op].
+
+	initializers := self allInitializers collect: [:each | each output: 0].
+	initializers size > 0 ifTrue: [aTFSession runOutputs: initializers]
 ]
 
 { #category : 'initialize-release' }

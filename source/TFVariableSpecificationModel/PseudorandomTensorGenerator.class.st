@@ -4,6 +4,12 @@ Class {
 	#category : 'TFVariableSpecificationModel'
 }
 
+{ #category : 'Accessing' }
+PseudorandomTensorGenerator >> binomialTensorOn: aTensorFlowComputation shaped: aTensorShape withProbabilityOfSuccess: aProbabilityOfSuccess in: aNumberOfExperiments [
+
+	self subclassResponsibility
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 PseudorandomTensorGenerator >> glorotFactorBasedOn: aTensorShape [
@@ -95,7 +101,6 @@ PseudorandomTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTe
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 PseudorandomTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
-
 
 	self subclassResponsibility
 ]

@@ -96,7 +96,9 @@ TFOutput >> tensorflowTypeFrom: aProtobufferType [
 			at: 101 put: FloatDataType new;
 			at: 102 put: FloatDataType new;
 			at: 103 put: Int32DataType new;
+			at: 109 put: Int64DataType new; 
 			at: 120 put: ResourceDataType new;
+			at: 121 put: VariantDataType new;
 			yourself.
 
 	^mapping

@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.61',
-						#ts : 3815036065
+						#versionName : '1.63',
+						#ts : 3819777135
 					}
 				]
 			},
@@ -32,19 +32,19 @@
 				]
 			}
 		],
-		#ts : 3815036082,
+		#ts : 3819777150,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894219
+				#versionName : '1512a9e-new-modem',
+				#ts : 3817295160
 			},
 			{
 				#name : 'MLNeuralNetworkExamples',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-moden',
+				#ts : 3815578000
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
@@ -63,7 +63,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.53'
+		#versionName : '0.55'
 	},
 	{
 		#conditions : [
@@ -72,8 +72,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.53',
-						#ts : 3815036082
+						#versionName : '0.55',
+						#ts : 3819777150
 					}
 				]
 			},
@@ -98,14 +98,14 @@
 				]
 			}
 		],
-		#ts : 3815036189,
+		#ts : 3819777155,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'LibTensorFlowExamplesTestsApp',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894229
+				#versionName : '1512a9e-new-modem',
+				#ts : 3817295143
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModelTests',
@@ -124,7 +124,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.52'
+		#versionName : '0.54'
 	},
 	{
 		#conditions : [
@@ -133,8 +133,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.53',
-						#ts : 3815036082
+						#versionName : '0.55',
+						#ts : 3819777150
 					}
 				]
 			},
@@ -209,14 +209,14 @@
 				]
 			}
 		],
-		#ts : 3815036196,
+		#ts : 3819777159,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'DatasetProviderModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-moden',
+				#ts : 3815577795
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
@@ -245,7 +245,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.25'
+		#versionName : '0.27'
 	},
 	{
 		#conditions : [
@@ -382,7 +382,7 @@
 				]
 			}
 		],
-		#ts : 3815036044,
+		#ts : 3819777128,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -393,32 +393,32 @@
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3814964797
+				#versionName : '1512a9e-new-modep',
+				#ts : 3819121033
 			},
 			{
 				#name : 'TensorFlowCoreTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815031933
+				#versionName : '1512a9e-new-moden',
+				#ts : 3815577020
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-moden',
+				#ts : 3815577795
 			},
 			{
 				#name : 'TensorFlowVASTCore',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modeo',
+				#ts : 3815467367
 			},
 			{
 				#name : 'TensorFlowVASTCoreTests',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modeo',
+				#ts : 3817369854
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.25'
+		#versionName : '0.64.27'
 	},
 	{
 		#conditions : [
@@ -427,13 +427,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.25',
-						#ts : 3815036044
+						#versionName : '0.64.27',
+						#ts : 3819777128
 					}
 				]
 			}
 		],
-		#ts : 3815036065,
+		#ts : 3819777135,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -454,8 +454,8 @@
 			},
 			{
 				#name : 'TFDatasetModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-moden',
+				#ts : 3815577795
 			},
 			{
 				#name : 'TFDatasetModelTests',
@@ -479,13 +479,13 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modep',
+				#ts : 3819121032
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '1512a9e-new-model.A',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modep',
+				#ts : 3819121088
 			},
 			{
 				#name : 'TFOptimizerModel',
@@ -499,8 +499,8 @@
 			},
 			{
 				#name : 'TFTensorModifierModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894174
+				#versionName : '1512a9e-new-modem',
+				#ts : 3815577795
 			},
 			{
 				#name : 'TFTensorModifierModelTests',
@@ -509,17 +509,17 @@
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : '1512a9e-new-model.A',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modep',
+				#ts : 3817492780
 			},
 			{
 				#name : 'TFVariableSpecificationModelTests',
-				#versionName : '1512a9e-new-model.A',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modep',
+				#ts : 3817492892
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.61'
+		#versionName : '1.63'
 	},
 	{
 		#conditions : [

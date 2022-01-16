@@ -6,32 +6,39 @@ Class {
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
+RandomSeedTensorGenerator >> binomialTensorOn: aComputation shaped: aTensorShape withProbabilityOfSuccess: aProbabilityOfSuccess in: aNumberOfExperiments [
+
+	| rngAlgorithm |
+
+	rngAlgorithm := PhiloxRandom new.
+	^aComputation
+		newOperationOf: 'StatefulRandomBinomial'
+		namePrefixed: 'StatefulRandomBinomial'
+		withAll:
+			{ rngAlgorithm createInitialStateOn: aComputation.
+			rngAlgorithm uniqueIdentifier asInt64Tensor. aTensorShape asInt32Tensor.
+			aNumberOfExperiments asFloatTensor. aProbabilityOfSuccess asFloatTensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
+]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
 RandomSeedTensorGenerator >> truncatedNormalTensorOn: aComputation shaped: aTensorShape [
 
-
-	| shape |
-
-	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
-
-	^ aComputation
+	^aComputation
 		newOperationOf: 'TruncatedNormal'
 		namePrefixed: 'TruncatedNormal'
-		withAll: ( Array with: shape )
-		describedBy: [ :description | description atDataTypePut: FloatDataType new ]
+		withAll: { aTensorShape asInt32Tensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
 ]
 
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 RandomSeedTensorGenerator >> uniformTensorOn: aComputation shaped: aTensorShape [
 
-
-	| shape |
-
-	shape := ConstantNode on: aComputation with: aTensorShape dimensionSizes asInt32Tensor.
-
-	^ aComputation
+	^aComputation
 		newOperationOf: 'RandomUniform'
 		namePrefixed: 'RandomUniform'
-		withAll: ( Array with: shape )
-		describedBy: [ :description | description atDataTypePut: FloatDataType new ]
+		withAll: { aTensorShape asInt32Tensor }
+		describedBy: [:description | description atDataTypePut: FloatDataType new]
 ]
