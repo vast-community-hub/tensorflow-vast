@@ -48,7 +48,7 @@ ResourceVariableNode >> initializeOn: aTensorFlowComputation named: aName of: aT
 				description
 					atDataTypePut: aType;
 					atShapePut: aShape;
-					at: 'shared_name' putString: aName].
+					atSharedNamePut: aName].
 	variableReader :=
 		self currentComputation
 			newOperationOf: 'ReadVariableOp'
