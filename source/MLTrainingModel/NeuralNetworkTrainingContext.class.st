@@ -58,9 +58,9 @@ NeuralNetworkTrainingContext >> computeEpochFor: aStage using: aSampleDataset [
 						computeBatchStepUsing:
 							(self buildInputWithFeatures: features andTarget: target)
 						aggregatingLossTo: losses
-						within: self]].
-	loss := losses mean.
-	self addMetricValued: loss during: aStage to: self lossMetricKey.
+						within: self].
+			loss := losses mean.
+			self addMetricValued: loss during: aStage to: self lossMetricKey].
 	^loss
 ]
 

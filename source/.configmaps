@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.63',
-						#ts : 3819777135
+						#versionName : '1.65',
+						#ts : 3823959570
 					}
 				]
 			},
@@ -32,7 +32,7 @@
 				]
 			}
 		],
-		#ts : 3819777150,
+		#ts : 3823975684,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -53,17 +53,17 @@
 			},
 			{
 				#name : 'MLTrainingMetricModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-moden',
+				#ts : 3823963541
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894188
+				#versionName : '1512a9e-new-modem',
+				#ts : 3823975673
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.55'
+		#versionName : '0.58'
 	},
 	{
 		#conditions : [
@@ -72,8 +72,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.55',
-						#ts : 3819777150
+						#versionName : '0.58',
+						#ts : 3823975684
 					}
 				]
 			},
@@ -98,7 +98,7 @@
 				]
 			}
 		],
-		#ts : 3819777155,
+		#ts : 3823975691,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -114,8 +114,8 @@
 			},
 			{
 				#name : 'MLTrainingMetricModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894235
+				#versionName : '1512a9e-new-modem',
+				#ts : 3823963996
 			},
 			{
 				#name : 'MLTrainingModelTests',
@@ -124,7 +124,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.54'
+		#versionName : '0.57'
 	},
 	{
 		#conditions : [
@@ -133,8 +133,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.55',
-						#ts : 3819777150
+						#versionName : '0.58',
+						#ts : 3823975684
 					}
 				]
 			},
@@ -209,7 +209,7 @@
 				]
 			}
 		],
-		#ts : 3819777159,
+		#ts : 3823975701,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -245,7 +245,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.27'
+		#versionName : '0.30'
 	},
 	{
 		#conditions : [
@@ -433,7 +433,7 @@
 				]
 			}
 		],
-		#ts : 3819777135,
+		#ts : 3823959570,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -479,8 +479,8 @@
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1512a9e-new-modep',
-				#ts : 3819121032
+				#versionName : '1512a9e-new-modeq',
+				#ts : 3823959250
 			},
 			{
 				#name : 'TFOperationModelTests',
@@ -498,6 +498,16 @@
 				#ts : 3805894204
 			},
 			{
+				#name : 'TFSummaryWriterModel',
+				#versionName : '1.0',
+				#ts : 3818574647
+			},
+			{
+				#name : 'TFSummaryWriterModelTests',
+				#versionName : '1.0',
+				#ts : 3819822655
+			},
+			{
 				#name : 'TFTensorModifierModel',
 				#versionName : '1512a9e-new-modem',
 				#ts : 3815577795
@@ -509,8 +519,8 @@
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : '1512a9e-new-modep',
-				#ts : 3817492780
+				#versionName : '1512a9e-new-modeq',
+				#ts : 3819813000
 			},
 			{
 				#name : 'TFVariableSpecificationModelTests',
@@ -519,7 +529,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.63'
+		#versionName : '1.65'
 	},
 	{
 		#conditions : [
