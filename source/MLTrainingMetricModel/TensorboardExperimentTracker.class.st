@@ -2,8 +2,9 @@ Class {
 	#name : 'TensorboardExperimentTracker',
 	#superclass : 'TrainingMetricTracker',
 	#instVars : [
-		'writer',
-		'logsFolder'
+		'logsFolder',
+		'trainingWriter',
+		'validationWriter'
 	],
 	#category : 'MLTrainingMetricModel'
 }
@@ -24,15 +25,12 @@ TensorboardExperimentTracker >> initializeStoringTo: aLogsLocation [
 { #category : 'Processing' }
 TensorboardExperimentTracker >> measureMetricDuring: aFittingStage onEpochEndWithin: aTrainingContext [
 
-	| lossValues |
+	| writer |
 
-	lossValues := aTrainingContext
-		metricKnownAs: aTrainingContext lossMetricKey
-		during: aFittingStage.
-	writer
-		writeScalar: lossValues last
-		atStep: lossValues size
-		tagged: (aFittingStage metricKeyNamed: aTrainingContext lossMetricKey)
+	writer := self suitableWriterFor: aFittingStage.
+	self
+		writeLastLossValueDuring: aFittingStage within: aTrainingContext using: writer;
+		writeLastAccuracyValueDuring: aFittingStage within: aTrainingContext using: writer
 ]
 
 { #category : 'Processing' }
@@ -60,6 +58,48 @@ TensorboardExperimentTracker >> measureMetricDuring: aTrainingStage onStepStartU
 { #category : 'Preprocessing' }
 TensorboardExperimentTracker >> prepareMetricsWithin: aNeuralNetworkTrainingContext [
 
-	
-	writer := aNeuralNetworkTrainingContext buildSummaryWriterTo: logsFolder 
+	| timestamp |
+
+	timestamp :=
+		'%1-%2'
+			bindWith: (Date today stsFormattedUsing: '%Y%m%d')
+			with: (Time now stsFormattedUsing: '%H%M%S').
+	trainingWriter :=
+		aNeuralNetworkTrainingContext
+			buildSummaryWriterTo: (logsFolder asFileReference / 'fit' / timestamp / 'train') asString.
+	validationWriter :=
+		aNeuralNetworkTrainingContext buildSummaryWriterTo:
+			(logsFolder asFileReference / 'fit' / timestamp / 'validation') asString
+]
+
+{ #category : 'Processing',
+  #vaVisibility : 'private' }
+TensorboardExperimentTracker >> suitableWriterFor: aFittingStage [
+
+	^aFittingStage whenTrainDo: [trainingWriter] whenValidationDo: [validationWriter]
+]
+
+{ #category : 'Processing',
+  #vaVisibility : 'private' }
+TensorboardExperimentTracker >> writeLastAccuracyValueDuring: aFittingStage within: aTrainingContext using: writer [
+
+	aTrainingContext
+		withMetricKnownAs: CategoricalPredictionAccuracyTracker metricKey
+		during: aFittingStage
+		do: [:accuracyValues |
+			writer
+				writeScalar: accuracyValues last
+				atStep: accuracyValues size - 1
+				tagged: 'epoch_accuracy']
+]
+
+{ #category : 'Processing',
+  #vaVisibility : 'private' }
+TensorboardExperimentTracker >> writeLastLossValueDuring: aFittingStage within: aTrainingContext using: writer [
+
+	aTrainingContext
+		withMetricKnownAs: aTrainingContext lossMetricKey
+		during: aFittingStage
+		do: [:lossValues |
+			writer writeScalar: lossValues last atStep: lossValues size - 1 tagged: 'epoch_loss']
 ]

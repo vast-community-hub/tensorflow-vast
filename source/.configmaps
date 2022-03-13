@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.65',
-						#ts : 3823959570
+						#versionName : '1.66',
+						#ts : 3824644138
 					}
 				]
 			},
@@ -32,7 +32,7 @@
 				]
 			}
 		],
-		#ts : 3823975684,
+		#ts : 3824644158,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -53,17 +53,17 @@
 			},
 			{
 				#name : 'MLTrainingMetricModel',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3823963541
+				#versionName : '1512a9e-new-modeo',
+				#ts : 3824639018
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3823975673
+				#versionName : '1512a9e-new-moden',
+				#ts : 3824638956
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.58'
+		#versionName : '0.59'
 	},
 	{
 		#conditions : [
@@ -72,8 +72,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.58',
-						#ts : 3823975684
+						#versionName : '0.59',
+						#ts : 3824644158
 					}
 				]
 			},
@@ -98,7 +98,7 @@
 				]
 			}
 		],
-		#ts : 3823975691,
+		#ts : 3824644169,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -114,8 +114,8 @@
 			},
 			{
 				#name : 'MLTrainingMetricModelTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3823963996
+				#versionName : '1512a9e-new-moden',
+				#ts : 3824641826
 			},
 			{
 				#name : 'MLTrainingModelTests',
@@ -124,7 +124,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.57'
+		#versionName : '0.58'
 	},
 	{
 		#conditions : [
@@ -133,8 +133,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.58',
-						#ts : 3823975684
+						#versionName : '0.59',
+						#ts : 3824644158
 					}
 				]
 			},
@@ -209,7 +209,7 @@
 				]
 			}
 		],
-		#ts : 3823975701,
+		#ts : 3824644177,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -220,8 +220,8 @@
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894226
+				#versionName : '1512a9e-new-modem',
+				#ts : 3824639468
 			},
 			{
 				#name : 'TensorFlowFunctionExtensions',
@@ -245,7 +245,7 @@
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.30'
+		#versionName : '0.31'
 	},
 	{
 		#conditions : [
@@ -280,18 +280,18 @@
 				]
 			}
 		],
-		#ts : 3815036019,
+		#ts : 3824644116,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'PharoCompatibilityModel',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815033529
+				#versionName : '1512a9e-new-modeo',
+				#ts : 3824638351
 			}
 		],
 		#name : 'Pharo Compatibility | Runtime',
-		#versionName : '1.10'
+		#versionName : '1.11'
 	},
 	{
 		#conditions : [
@@ -300,8 +300,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Pharo Compatibility | Runtime',
-						#versionName : '1.10',
-						#ts : 3815036019
+						#versionName : '1.11',
+						#ts : 3824644116
 					}
 				]
 			},
@@ -326,7 +326,7 @@
 				]
 			}
 		],
-		#ts : 3815036036,
+		#ts : 3824644123,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -337,7 +337,7 @@
 			}
 		],
 		#name : 'Pharo Compatibility | Development',
-		#versionName : '1.10'
+		#versionName : '1.11'
 	},
 	{
 		#conditions : [
@@ -346,8 +346,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Pharo Compatibility | Runtime',
-						#versionName : '1.10',
-						#ts : 3815036019
+						#versionName : '1.11',
+						#ts : 3824644116
 					}
 				]
 			},
@@ -382,7 +382,7 @@
 				]
 			}
 		],
-		#ts : 3819777128,
+		#ts : 3824644132,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -393,8 +393,8 @@
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : '1512a9e-new-modep',
-				#ts : 3819121033
+				#versionName : '1512a9e-new-modeq',
+				#ts : 3824638971
 			},
 			{
 				#name : 'TensorFlowCoreTests',
@@ -418,7 +418,7 @@
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.27'
+		#versionName : '0.64.28'
 	},
 	{
 		#conditions : [
@@ -427,13 +427,13 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.27',
-						#ts : 3819777128
+						#versionName : '0.64.28',
+						#ts : 3824644132
 					}
 				]
 			}
 		],
-		#ts : 3823959570,
+		#ts : 3824644138,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -529,7 +529,7 @@
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.65'
+		#versionName : '1.66'
 	},
 	{
 		#conditions : [
@@ -538,8 +538,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.27',
-						#ts : 3819777128
+						#versionName : '0.64.28',
+						#ts : 3824644132
 					}
 				]
 			},
@@ -654,7 +654,7 @@
 				]
 			}
 		],
-		#ts : 3819778077,
+		#ts : 3824644144,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
@@ -665,6 +665,6 @@
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.20'
+		#versionName : '1.21'
 	}
 ]

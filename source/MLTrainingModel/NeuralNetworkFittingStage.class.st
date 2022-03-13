@@ -30,6 +30,12 @@ NeuralNetworkFittingStage >> shouldBeExecutedFor: aSampleDataset [
 	
 ]
 
+{ #category : 'Not categorized' }
+NeuralNetworkFittingStage >> whenTrainDo: aTrainBlock whenValidationDo: aValidationBlock [
+
+	self subclassResponsibility
+]
+
 { #category : 'Accessing' }
 NeuralNetworkFittingStage >> withSuitableSetIn: aSampleDataset do: aBlock [
 

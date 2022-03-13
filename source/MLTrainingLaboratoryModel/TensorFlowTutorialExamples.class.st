@@ -6,7 +6,11 @@ Class {
 
 { #category : 'Examples' }
 TensorFlowTutorialExamples class >> classifyingClothesImages [
-	" Example from https://www.tensorflow.org/tutorials/keras/classification"
+		" Example from https://www.tensorflow.org/tutorials/keras/classification.
+	The idea is to get the same results as the Experiment 2 in
+	https://colab.research.google.com/drive/1wC0GzDcgHwf227Ivs5TIbirBPD3BqBdg#scrollTo=4M3Oli63F06p
+	https://tensorboard.dev/experiment/u0UOLBLHQlmFDn1XEPfLBA/#scalars
+	"
 
 	| tf sample model summary |
 
@@ -26,12 +30,15 @@ TensorFlowTutorialExamples class >> classifyingClothesImages [
 
 	summary :=
 		(NeuralNetworkTrainer on: tf)
-			minimizeSparseCategoricalCrossEntropyUsing: AdaptiveGradient new;
+			minimizeSparseCategoricalCrossEntropyUsing: AdaptiveMomentEstimation new;
 			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
 			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			trackMetricWith: (TensorboardExperimentTracker storingTo: 'experiment-logs');
 			train: model toFit: sample.
-
+	
+	summary inspect. 
+	
 	^TrainingSummaryMetricsDumper new
 		stringOfMetricsIn: summary
-		knownAs: #('training-loss' 'training-accuracy')
+		knownAs: #('loss' 'accuracy')
 ]

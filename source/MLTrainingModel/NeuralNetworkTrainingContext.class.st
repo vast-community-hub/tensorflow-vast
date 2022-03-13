@@ -234,3 +234,10 @@ NeuralNetworkTrainingContext >> validationMetricKnownAs: aMetricKey [
 
 	^self metricKnownAs: aMetricKey during: ValidationStage new
 ]
+
+{ #category : 'Accessing',
+  #vaVisibility : 'private' }
+NeuralNetworkTrainingContext >> withMetricKnownAs: aMetricKey during: aFittingStage do: aBlock [
+
+	^(metricsCollected at: (aFittingStage metricKeyNamed: aMetricKey) ifPresent: aBlock ifAbsent: [])
+]

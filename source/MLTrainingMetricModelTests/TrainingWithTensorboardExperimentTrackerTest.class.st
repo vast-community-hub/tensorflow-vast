@@ -32,10 +32,15 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithNoValidat
 		train: model toFit: self trainingDataset.
 
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
-	[| files |
-		files := folder fileEntries.
-		self assert: files size equals: 1.
-		self assert: files any stSize equals: 550]
+	[| content folderWithDate |
+		content := folder allFileAndDirectoryEntries.
+		self assert: content size equals: 6.
+		self assert: (content at: 1) dName equals: 'fit'.
+		folderWithDate := (content at: 2) dName.
+		self assert: (content at: 3) dName equals: ('%1\train' bindWith: folderWithDate).
+		self assert: (content at: 4) stSize equals: 518.
+		self assert: (content at: 5) dName equals: ('%1\validation' bindWith: folderWithDate).
+		self assert: (content at: 6) stSize equals: 40]
 			ensure: [folder deleteAll]
 ]
 
@@ -45,18 +50,23 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithValidatio
 	| model folder |
 
 	model := self modelWithTwoOutputUnits.
-	
+
 	(NeuralNetworkTrainer on: tf)
 		minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 		trackMetricWith: (TensorboardExperimentTracker storingTo: './test-logs');
 		stopTrainingWhen: (CompletedNumberOfTraining after: 10);
 		train: model toFit: self trainingDatasetWithValidation.
-		
+
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
-	[| files |
-		files := folder fileEntries.
-		self assert: files size equals: 1.
-		self assert: files any stSize equals: 1080]
+	[| content folderWithDate |
+		content := folder allFileAndDirectoryEntries.
+		self assert: content size equals: 6.
+		self assert: (content at: 1) dName equals: 'fit'.
+		folderWithDate := (content at: 2) dName.
+		self assert: (content at: 3) dName equals: ('%1\train' bindWith: folderWithDate).
+		self assert: (content at: 4) stSize equals: 518.
+		self assert: (content at: 5) dName equals: ('%1\validation' bindWith: folderWithDate).
+		self assert: (content at: 6) stSize equals: 518]
 			ensure: [folder deleteAll]
 ]
 
@@ -70,12 +80,14 @@ TrainingWithTensorboardExperimentTrackerTest >> trainingDataset [
 		yourself
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests',
+  #vaVisibility : 'private' }
 TrainingWithTensorboardExperimentTrackerTest >> trainingDatasetWithValidation [
-	^(SampleDataset new)
-		bindTrainingSetTo: #(#(0 0 1) #(0 1 1) #(1 0 0) #(1 1 1)) asFloatTensor
+
+	^SampleDataset new
+		bindTrainingSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
 			withLabels: #(0 1 0 0) asInt32Tensor;
-		bindValidationSetTo: #(#(0 0 1) #(0 1 1) #(1 0 0) #(1 1 1)) asFloatTensor
+		bindValidationSetTo: #((0 0 1) (0 1 1) (1 0 0) (1 1 1)) asFloatTensor
 			withLabels: #(0 1 0 0) asInt32Tensor;
 		yourself
 ]

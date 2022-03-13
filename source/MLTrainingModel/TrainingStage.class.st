@@ -40,6 +40,12 @@ TrainingStage >> shouldBeExecutedFor: aSampleDataset [
 	^aSampleDataset hasTrainingSetConfigured
 ]
 
+{ #category : 'Not categorized' }
+TrainingStage >> whenTrainDo: aTrainBlock whenValidationDo: aValidationBlock [
+
+	^aTrainBlock value
+]
+
 { #category : 'Accessing' }
 TrainingStage >> withSuitableSetIn: aSampleDataset do: aBlock [
 

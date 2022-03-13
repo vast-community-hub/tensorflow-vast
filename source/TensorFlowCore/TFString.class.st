@@ -14,6 +14,9 @@ TFString class >> with: aContent [
 { #category : 'accessing' }
 TFString >> basicDelete [
 
+	Transcript
+		show: 'Deleted TFString';
+		cr.
 	^TensorFlowCAPI current deleteString: self
 ]
 

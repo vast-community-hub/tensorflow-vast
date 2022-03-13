@@ -19,7 +19,7 @@ FloatDataType >> getElementAt: anIndex in: aByteArray [
 { #category : 'accessing' }
 FloatDataType >> put: aValue at: anIndex in: anExternalAddressOrByteArray [
 
-	^anExternalAddressOrByteArray float32At: anIndex * self dataSize put: aValue asFloat
+	^anExternalAddressOrByteArray float32At: anIndex * self dataSize put: aValue value asFloat
 ]
 
 { #category : 'accessing' }
