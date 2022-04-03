@@ -309,52 +309,6 @@
 				#condition : 'System imageVersionDottedId = \'9.2.2\'',
 				#requiredMaps : [
 					{
-						#name : 'SUnit',
-						#versionName : 'V 9.2.0  [453]',
-						#ts : 3741517856
-					}
-				]
-			},
-			{
-				#condition : 'System imageVersionDottedId = \'10.0.2\'',
-				#requiredMaps : [
-					{
-						#name : 'SUnit',
-						#versionName : 'V 9.2.2  [002]',
-						#ts : 3763029439
-					}
-				]
-			}
-		],
-		#ts : 3824644123,
-		#comment : '',
-		#formatVersion : '1.1',
-		#applications : OrderedCollection [
-			{
-				#name : 'PharoCompatibilityTestsModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894138
-			}
-		],
-		#name : 'Pharo Compatibility | Development',
-		#versionName : '1.11'
-	},
-	{
-		#conditions : [
-			{
-				#condition : 'true',
-				#requiredMaps : [
-					{
-						#name : 'Pharo Compatibility | Runtime',
-						#versionName : '1.11',
-						#ts : 3824644116
-					}
-				]
-			},
-			{
-				#condition : 'System imageVersionDottedId = \'9.2.2\'',
-				#requiredMaps : [
-					{
 						#name : 'z.ST: SUnit',
 						#versionName : 'V 9.2.2  [002]',
 						#ts : 3768827234

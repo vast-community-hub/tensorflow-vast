@@ -1,3 +1,0 @@
-Extension {
-	#name : 'TestAsserter'
-}
