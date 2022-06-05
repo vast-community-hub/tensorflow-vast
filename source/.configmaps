@@ -30,40 +30,50 @@
 						#ts : 3787580382
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'Grease Core',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3825064942
+					}
+				]
 			}
 		],
-		#ts : 3824644158,
+		#ts : 3831894978,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'LibTensorFlowExamplesApp',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3817295160
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279933
 			},
 			{
 				#name : 'MLNeuralNetworkExamples',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815578000
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279939
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279899
 			},
 			{
 				#name : 'MLTrainingMetricModel',
-				#versionName : '1512a9e-new-modeo',
-				#ts : 3824639018
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279941
 			},
 			{
 				#name : 'MLTrainingModel',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3824638956
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279901
 			}
 		],
 		#name : 'Machine Learning TF | Runtime',
-		#versionName : '0.59'
+		#versionName : '0.60'
 	},
 	{
 		#conditions : [
@@ -96,35 +106,45 @@
 						#ts : 3763029439
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'SUnit',
+						#versionName : 'V 9.2.2  [002]',
+						#ts : 3763029439
+					}
+				]
 			}
 		],
-		#ts : 3824644169,
+		#ts : 3831895052,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'LibTensorFlowExamplesTestsApp',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3817295143
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279950
 			},
 			{
 				#name : 'MLNeuralNetworkLayerModelTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279951
 			},
 			{
 				#name : 'MLTrainingMetricModelTests',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3824641826
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279961
 			},
 			{
 				#name : 'MLTrainingModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894231
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279954
 			}
 		],
 		#name : 'Machine Learning TF | Development',
-		#versionName : '0.58'
+		#versionName : '0.59'
 	},
 	{
 		#conditions : [
@@ -207,45 +227,80 @@
 						#ts : 3726400313
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'ENVY/Image Crypto',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3812907048
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3827404499
+					},
+					{
+						#name : 'Server Smalltalk - TCP Communications',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3814881674
+					},
+					{
+						#name : 'Server Smalltalk - Kernel',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3826288957
+					},
+					{
+						#name : 'ENVY/Image SCI',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3811358953
+					},
+					{
+						#name : 'ENVY/Image Socket Framework',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3726400313
+					}
+				]
 			}
 		],
-		#ts : 3824644177,
+		#ts : 3831895084,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'DatasetProviderModel',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815577795
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279945
 			},
 			{
 				#name : 'MLTrainingLaboratoryModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3824639468
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279946
 			},
 			{
 				#name : 'TensorFlowFunctionExtensions',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894226
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279946
 			},
 			{
 				#name : 'TensorFlowFunctionExtensionsTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279947
 			},
 			{
 				#name : 'TFExperimentalOperationModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894227
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279947
 			},
 			{
 				#name : 'TFExperimentalOperationModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894228
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279949
 			}
 		],
 		#name : 'Machine Learning TF | Experimental',
-		#versionName : '0.31'
+		#versionName : '0.32'
 	},
 	{
 		#conditions : [
@@ -278,20 +333,35 @@
 						#ts : 3787580382
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'ENVY/Image Base',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3828447443
+					},
+					{
+						#name : 'Grease Core',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3825064942
+					}
+				]
 			}
 		],
-		#ts : 3824644116,
+		#ts : 3831897937,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'PharoCompatibilityModel',
-				#versionName : '1512a9e-new-modeo',
-				#ts : 3824638351
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279234
 			}
 		],
 		#name : 'Pharo Compatibility | Runtime',
-		#versionName : '1.11'
+		#versionName : '1.12'
 	},
 	{
 		#conditions : [
@@ -334,45 +404,60 @@
 						#ts : 3704527564
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'z.ST: SUnit',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3828450289
+					},
+					{
+						#name : 'ENVY/Image Examples',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3828363763
+					}
+				]
 			}
 		],
-		#ts : 3824644132,
+		#ts : 3831894398,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'IdxReaderApp',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3807683345
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279236
 			},
 			{
 				#name : 'TensorFlowCore',
-				#versionName : '1512a9e-new-modeq',
-				#ts : 3824638971
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279240
 			},
 			{
 				#name : 'TensorFlowCoreTests',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815577020
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279258
 			},
 			{
 				#name : 'TensorFlowExamplesApp',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815577795
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279268
 			},
 			{
 				#name : 'TensorFlowVASTCore',
-				#versionName : '1512a9e-new-modeo',
-				#ts : 3815467367
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279291
 			},
 			{
 				#name : 'TensorFlowVASTCoreTests',
-				#versionName : '1512a9e-new-modeo',
-				#ts : 3817369854
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279307
 			}
 		],
 		#name : 'TensorFlow',
-		#versionName : '0.64.28'
+		#versionName : '0.64.29'
 	},
 	{
 		#conditions : [
@@ -387,103 +472,103 @@
 				]
 			}
 		],
-		#ts : 3824644138,
+		#ts : 3831894451,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'MLMathExtensions',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894172
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279871
 			},
 			{
 				#name : 'TensorFlowEnvironmentModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894172
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279871
 			},
 			{
 				#name : 'TensorFlowEnvironmentModelTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279872
 			},
 			{
 				#name : 'TFDatasetModel',
-				#versionName : '1512a9e-new-moden',
-				#ts : 3815577795
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279890
 			},
 			{
 				#name : 'TFDatasetModelTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279907
 			},
 			{
 				#name : 'TFOperationGradientFailingModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894200
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279924
 			},
 			{
 				#name : 'TFOperationGradientModel',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894193
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279911
 			},
 			{
 				#name : 'TFOperationGradientModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894198
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279921
 			},
 			{
 				#name : 'TFOperationModel',
-				#versionName : '1512a9e-new-modeq',
-				#ts : 3823959250
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279874
 			},
 			{
 				#name : 'TFOperationModelTests',
-				#versionName : '1512a9e-new-modep',
-				#ts : 3819121088
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279913
 			},
 			{
 				#name : 'TFOptimizerModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279924
 			},
 			{
 				#name : 'TFOptimizerModelTests',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894204
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279928
 			},
 			{
 				#name : 'TFSummaryWriterModel',
-				#versionName : '1.0',
-				#ts : 3818574647
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279929
 			},
 			{
 				#name : 'TFSummaryWriterModelTests',
-				#versionName : '1.0',
-				#ts : 3819822655
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279930
 			},
 			{
 				#name : 'TFTensorModifierModel',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815577795
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279874
 			},
 			{
 				#name : 'TFTensorModifierModelTests',
-				#versionName : '1512a9e-new-modem',
-				#ts : 3815033529
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279930
 			},
 			{
 				#name : 'TFVariableSpecificationModel',
-				#versionName : '1512a9e-new-modeq',
-				#ts : 3819813000
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279895
 			},
 			{
 				#name : 'TFVariableSpecificationModelTests',
-				#versionName : '1512a9e-new-modep',
-				#ts : 3817492892
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279931
 			}
 		],
 		#name : 'TensorFlow | Environment',
-		#versionName : '1.66'
+		#versionName : '1.67'
 	},
 	{
 		#conditions : [
@@ -606,19 +691,74 @@
 						#ts : 3679137047
 					}
 				]
+			},
+			{
+				#condition : 'System imageVersionDottedId = \'11.0\'',
+				#requiredMaps : [
+					{
+						#name : 'ENVY/Image Crypto',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3812907048
+					},
+					{
+						#name : 'ENVY/Image Socket Framework',
+						#versionName : 'V 9.2.0  [453]',
+						#ts : 3726400313
+					},
+					{
+						#name : 'ENVY/Image SCI',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3811358953
+					},
+					{
+						#name : 'Server Smalltalk - Kernel',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3826288957
+					},
+					{
+						#name : 'Server Smalltalk - TCP Communications',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3814881674
+					},
+					{
+						#name : 'Server Smalltalk - HTTP Server',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3827404499
+					},
+					{
+						#name : 'Grease Core',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3825064942
+					},
+					{
+						#name : 'Seaside Core',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3809155063
+					},
+					{
+						#name : 'Seaside Development',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3809155202
+					},
+					{
+						#name : 'Seaside Javascript',
+						#versionName : 'V 11.0.0  [510]',
+						#ts : 3813295636
+					}
+				]
 			}
 		],
-		#ts : 3824644144,
+		#ts : 3831894461,
 		#comment : '',
 		#formatVersion : '1.1',
 		#applications : OrderedCollection [
 			{
 				#name : 'TensorboardWebViews',
-				#versionName : '1512a9e-new-model',
-				#ts : 3805894217
+				#versionName : '229bbbd-new-model',
+				#ts : 3831279869
 			}
 		],
 		#name : 'TensorFlow | Visualization',
-		#versionName : '1.21'
+		#versionName : '1.22'
 	}
 ]
