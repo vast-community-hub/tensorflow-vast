@@ -80,7 +80,7 @@ TFVersionTest >> testVersion [
 	
 	libVersion := TFVersion getLibraryVersion.
 	bindingVersion := TFVersion getBindingVersion.
-	expected := TFVersion fromString: '1.13.1'.
+	expected := TFVersion fromString: '2.9.1'.
 	
 	self assert: libVersion >= expected.
 	

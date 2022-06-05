@@ -5,7 +5,6 @@ TonelWriter new
 	addLatestConfigurationMapNamed: 'Machine Learning TF | Development';
 	addLatestConfigurationMapNamed: 'Machine Learning TF | Experimental';
 	addLatestConfigurationMapNamed: 'Pharo Compatibility | Runtime';
-	addLatestConfigurationMapNamed: 'Pharo Compatibility | Development';
 	addLatestConfigurationMapNamed: 'TensorFlow';
 	addLatestConfigurationMapNamed: 'TensorFlow | Environment';
 	addLatestConfigurationMapNamed: 'TensorFlow | Visualization';

@@ -40,13 +40,16 @@ TFStructure >> delete [
 
 { #category : 'initialize-release' }
 TFStructure >> finalize [
-	[ self delete ]
+
+	[self delete]
 		on: Error
-		do: [ Transcript
-				newLine;
-				print: 'Error finalizing ';
-				show: self class name] 
-				
+		do: [:signal |
+			Transcript
+				cr;
+				nextPutAll: (
+					'Error finalizing %1 due to %2'
+						bindWith: self class name
+						with: signal messageText)]
 ]
 
 { #category : 'Finalization' }
