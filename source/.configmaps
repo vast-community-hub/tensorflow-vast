@@ -6,8 +6,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow | Environment',
-						#versionName : '1.66',
-						#ts : 3824644138
+						#versionName : '1.67',
+						#ts : 3831894451
 					}
 				]
 			},
@@ -82,8 +82,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.59',
-						#ts : 3824644158
+						#versionName : '0.60',
+						#ts : 3831894978
 					}
 				]
 			},
@@ -153,8 +153,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Machine Learning TF | Runtime',
-						#versionName : '0.59',
-						#ts : 3824644158
+						#versionName : '0.60',
+						#ts : 3831894978
 					}
 				]
 			},
@@ -370,8 +370,8 @@
 				#requiredMaps : [
 					{
 						#name : 'Pharo Compatibility | Runtime',
-						#versionName : '1.11',
-						#ts : 3824644116
+						#versionName : '1.12',
+						#ts : 3831897937
 					}
 				]
 			},
@@ -466,8 +466,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.28',
-						#ts : 3824644132
+						#versionName : '0.64.29',
+						#ts : 3831894398
 					}
 				]
 			}
@@ -577,8 +577,8 @@
 				#requiredMaps : [
 					{
 						#name : 'TensorFlow',
-						#versionName : '0.64.28',
-						#ts : 3824644132
+						#versionName : '0.64.29',
+						#ts : 3831894398
 					}
 				]
 			},
