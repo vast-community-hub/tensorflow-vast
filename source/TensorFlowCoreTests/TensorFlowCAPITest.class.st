@@ -1924,7 +1924,7 @@ TensorFlowCAPITest >> testVersion [
 	| version |
 
 	version := library version.
-	self assert: version equals: '2.9.1'
+	self assert: version equals: '2.10.0'
 ]
 
 { #category : 'testing graph' }

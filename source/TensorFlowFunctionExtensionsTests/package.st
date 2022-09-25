@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowFunctionExtensionsTests',
-	#vaPrerequisites : ['TensorFlowEnvironmentModelTests','TensorFlowFunctionExtensions','TFOperationModel']
+	#vaPrerequisites : ['TensorFlowComputationModelTests','TensorFlowOperationBasicModel']
 }

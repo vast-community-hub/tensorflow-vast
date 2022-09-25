@@ -27,7 +27,7 @@ BackpropagationAlgorithm >> improvedWeightsUsing: aPlaceholderValueMapping [
   #vaVisibility : 'private' }
 BackpropagationAlgorithm >> initialize [
 
-	| inputVariable weights predicted gradient learningRate target backProp |
+	| input weights predicted gradient learningRate target backProp |
 
 	tf := TensorFlowComputation new.
 
@@ -37,8 +37,8 @@ BackpropagationAlgorithm >> initialize [
 
 	gradient := SigmoidGradient considering: predicted andGradientsOfInputs: backProp.
 
-	inputVariable := tf floatInputNamed: 'input'.
+	input := tf floatInputNamed: 'input'.
 	weights := tf floatInputNamed: 'weights'.
-	learningRate := VariableNode on: tf named: 'learningRate' with: 0.9 asTensor.
-	output := weights - (learningRate * gradient * inputVariable)
+	learningRate := VariableTensor on: tf named: 'learningRate' with: 0.9 asTensor.
+	output := weights - (learningRate * gradient * input)
 ]

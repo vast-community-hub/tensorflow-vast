@@ -64,8 +64,8 @@ TFBuffer >> data: anObject [
 	^ self halt: 'The source for this method failed to compile'
 ]
 
-{ #category : 'accessing',
- #vaCategories : ['accessing','Accessing'] }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','accessing'] }
 TFBuffer >> dataBytes [
 	^ self data byteArrayAt: 0 size: self length
 ]

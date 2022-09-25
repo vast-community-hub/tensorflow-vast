@@ -1,4 +1,4 @@
 Package {
 	#name : 'LibTensorFlowExamplesTestsApp',
-	#vaPrerequisites : ['LibTensorFlowExamplesApp','TensorFlowEnvironmentModelTests']
+	#vaPrerequisites : ['LibTensorFlowExamplesApp','TensorFlowComputationModelTests']
 }

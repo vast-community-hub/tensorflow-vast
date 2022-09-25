@@ -1,4 +1,4 @@
 Package {
 	#name : 'TensorFlowFunctionExtensions',
-	#vaPrerequisites : ['TensorFlowVASTCore']
+	#vaPrerequisites : ['TensorFlowComputationModel','TensorFlowVASTCore']
 }

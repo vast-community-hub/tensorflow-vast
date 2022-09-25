@@ -75,14 +75,14 @@ TFVersionTest >> testLessThan [
 
 { #category : 'Tests' }
 TFVersionTest >> testVersion [
-	
+
 	| libVersion bindingVersion expected |
-	
+
 	libVersion := TFVersion getLibraryVersion.
 	bindingVersion := TFVersion getBindingVersion.
-	expected := TFVersion fromString: '2.9.1'.
-	
-	self assert: libVersion >= expected.
-	
-	self assert: bindingVersion>= expected.
+	expected := TFVersion fromString: '2.10.0'.
+
+	self assert: libVersion = expected.
+
+	self assert: bindingVersion = expected
 ]

@@ -7,9 +7,9 @@ Class {
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TFVersion class >> bindingVersion [
-	"2.9.1"
+	"2.10.0"
 
-	^16r02009001
+	^16r0200A000
 ]
 
 { #category : 'Accessing',
