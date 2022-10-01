@@ -52,17 +52,8 @@ TensorboardExperimentTracker >> measureMetricDuring: aTrainingStage onEpochStart
 
 { #category : 'Processing' }
 TensorboardExperimentTracker >> measureMetricDuring: aFittingStage onStepEndUsing: aStepInput within: aTrainingContext [
-
-	| writer |
-
-	writer := self suitableWriterFor: aFittingStage.
-	aFittingStage
-		whenTrainDo: []
-		whenValidationDo: [
-			self
-				writeLastStepAccuracyValuDuring: aFittingStage
-				within: aTrainingContext
-				using: writer]
+	
+	" do nothing - jvanecek " 
 ]
 
 { #category : 'Processing' }
@@ -102,7 +93,15 @@ TensorboardExperimentTracker >> writeLastAccuracyValueDuring: aFittingStage with
 			writer
 				writeScalar: accuracyValues last
 				atStep: accuracyValues size - 1
-				tagged: 'epoch_accuracy']
+				tagged: 'epoch_accuracy'.
+						
+			aFittingStage
+				whenTrainDo: []
+				whenValidationDo: [
+					writer
+						writeScalar: accuracyValues last
+						atStep: aTrainingContext trainingStepValue 
+						tagged: 'evaluation_accuracy_vs_iterations']]
 ]
 
 { #category : 'Processing',
@@ -114,17 +113,4 @@ TensorboardExperimentTracker >> writeLastLossValueDuring: aFittingStage within: 
 		during: aFittingStage
 		do: [:lossValues |
 			writer writeScalar: lossValues last atStep: lossValues size - 1 tagged: 'epoch_loss']
-]
-
-{ #category : 'Processing' }
-TensorboardExperimentTracker >> writeLastStepAccuracyValuDuring: aFittingStage within: aTrainingContext using: writer [
-
-	aTrainingContext
-		withMetricKnownAs: CategoricalPredictionAccuracyTracker stepsMetricKey
-		during: aFittingStage
-		do: [:accuracyValues |
-			writer
-				writeScalar: accuracyValues last
-				atStep: accuracyValues size - 1
-				tagged: 'evaluation_accuracy_vs_iterations']
 ]

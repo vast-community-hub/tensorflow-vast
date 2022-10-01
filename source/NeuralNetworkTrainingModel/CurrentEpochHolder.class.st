@@ -62,6 +62,12 @@ CurrentEpochHolder >> trainingStepAsVariable [
 ]
 
 { #category : 'Accessing' }
+CurrentEpochHolder >> trainingStepValue [
+
+	^(currentComputation compute: self trainingStepAsVariable) scalarOutput
+]
+
+{ #category : 'Accessing' }
 CurrentEpochHolder >> value [
 
 	^(currentComputation compute: self asVariable) scalarOutput

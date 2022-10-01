@@ -230,6 +230,12 @@ NeuralNetworkTrainingContext >> trainingMetricKnownAs: aMetricKey [
 ]
 
 { #category : 'Accessing' }
+NeuralNetworkTrainingContext >> trainingStepValue [
+	
+	^ currentEpoch trainingStepValue
+]
+
+{ #category : 'Accessing' }
 NeuralNetworkTrainingContext >> validationMetricKnownAs: aMetricKey [
 
 	^self metricKnownAs: aMetricKey during: ValidationStage new
