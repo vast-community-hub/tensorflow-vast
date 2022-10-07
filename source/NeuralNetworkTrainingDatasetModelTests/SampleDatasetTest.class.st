@@ -1,7 +1,7 @@
 Class {
 	#name : 'SampleDatasetTest',
 	#superclass : 'TestCase',
-	#category : 'NeuralNetworkTrainingModelTests'
+	#category : 'NeuralNetworkTrainingDatasetModelTests'
 }
 
 { #category : 'Testing' }

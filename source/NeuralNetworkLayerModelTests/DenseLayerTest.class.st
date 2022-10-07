@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tff1'
 	],
-	#category : 'NeuralNetworkTrainingModelTests'
+	#category : 'NeuralNetworkLayerModelTests'
 }
 
 { #category : 'Test' }
