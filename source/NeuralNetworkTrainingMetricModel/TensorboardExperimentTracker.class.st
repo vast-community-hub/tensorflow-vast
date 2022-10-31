@@ -77,7 +77,9 @@ TensorboardExperimentTracker >> prepareMetricsWithin: aNeuralNetworkTrainingCont
 			buildSummaryWriterTo: (logsFolder asFileReference / 'train') asString.
 	validationWriter :=
 		aNeuralNetworkTrainingContext
-			buildSummaryWriterTo: (logsFolder asFileReference / 'validation') asString
+			buildSummaryWriterTo: (logsFolder asFileReference / 'validation') asString.
+			
+	trainingWriter writeGraphSummaryAtStep: 0
 ]
 
 { #category : 'Processing',

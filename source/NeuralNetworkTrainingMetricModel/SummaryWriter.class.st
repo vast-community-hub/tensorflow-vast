@@ -79,6 +79,18 @@ SummaryWriter >> initializeOn: aTensorFlowComputation writingTo: aLogFolder appe
 ]
 
 { #category : 'writing' }
+SummaryWriter >> writeGraphSummaryAtStep: aNumber [
+	
+	currentComputation createSessionAndRun: (
+		currentComputation
+			newOperationOf: 'WriteGraphSummary'
+			namePrefixed: 'WriteGraphSummary'
+			withAll:
+				{ self. aNumber asInt64Tensor. (TFTensor fromStrings: currentComputation graphDefinition ) }
+			describedBy: [:desc | ])
+]
+
+{ #category : 'writing' }
 SummaryWriter >> writeScalar: aNumber atStep: aStep tagged: aString [
 
 	currentComputation createSessionAndRun: (

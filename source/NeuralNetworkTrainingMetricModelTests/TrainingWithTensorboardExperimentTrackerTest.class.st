@@ -32,11 +32,11 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithNoValidat
 		train: model toFit: self trainingDataset.
 
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
-	[| content folderWithDate |
+	[| content |
 		content := folder allFileAndDirectoryEntries.
 		self assert: content size equals: 4.
 		self assert: (content at: 1) dName equals: 'train'.
-		self assert: (content at: 2) stSize equals: 518.
+		self assert: (content at: 2) stSize equals: 4473.
 		self assert: (content at: 3) dName equals: 'validation'.
 		self assert: (content at: 4) stSize equals: 40]
 			ensure: [folder deleteAll]
@@ -56,11 +56,11 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithValidatio
 		train: model toFit: self trainingDatasetWithValidation.
 
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
-	[| content folderWithDate |
+	[| content |
 		content := folder allFileAndDirectoryEntries.
 		self assert: content size equals: 4.
 		self assert: (content at: 1) dName equals: 'train'.
-		self assert: (content at: 2) stSize equals: 518.
+		self assert: (content at: 2) stSize equals: 4473.
 		self assert: (content at: 3) dName equals: 'validation'.
 		self assert: (content at: 4) stSize equals: 518]
 			ensure: [folder deleteAll]
