@@ -48,17 +48,6 @@ DatasetProvider >> fashionDataset [
 ]
 
 { #category : 'Accessing - MNIST' }
-DatasetProvider >> fashionDatasetOn: aTensorFlowComputation [
-
-	^(SampleDatasetComputationAware
-		on: aTensorFlowComputation
-		transformingFeaturesWith: [:features | features reshapeFlattened / 255.0]
-		transformingLabelsWith: [:labels | labels]
-		applying: [:dataset | dataset inBatchesOf: 32])
-			bindSetsFrom: self fashionDataset
-]
-
-{ #category : 'Accessing - MNIST' }
 DatasetProvider >> handwrittenDigitsDataset [
 
 	handwrittenDigitsDataset ifNil: [self initializeHandwrittenDataset].

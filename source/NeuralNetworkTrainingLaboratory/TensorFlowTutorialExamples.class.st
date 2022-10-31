@@ -15,7 +15,12 @@ TensorFlowTutorialExamples class >> classifyingClothesImages [
 
 	tf := TensorFlowComputation new.
 
-	sample := DatasetProvider current fashionDatasetOn: tf.
+	sample := (SampleDatasetComputationAware
+		on: tf
+		transformingFeaturesWith: [:features | features reshapeFlattened / 255.0]
+		transformingLabelsWith: [:labels | labels]
+		applying: [:dataset | dataset inBatchesOf: 32])
+			bindSetsFrom: DatasetProvider current fashionDataset.
 
 	model :=
 		(SequentialModelBuilder on: tf)

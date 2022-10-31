@@ -10,12 +10,17 @@ Class {
 }
 
 { #category : 'Instance Creation' }
+TensorboardExperimentTracker class >> formattedTimestamp [
+	
+	^ '%1-%2' 
+		bindWith: (Date today stsFormattedUsing: '%Y%m%d')
+		with: (Time now stsFormattedUsing: '%H%M%S')
+]
+
+{ #category : 'Instance Creation' }
 TensorboardExperimentTracker class >> new [
 
-	^self storingTo: (
-		'%1-%2'
-			bindWith: (Date today stsFormattedUsing: '%Y%m%d')
-			with: (Time now stsFormattedUsing: '%H%M%S'))
+	^ self storingTo: self formattedTimestamp
 ]
 
 { #category : 'Instance Creation' }
