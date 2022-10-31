@@ -74,5 +74,5 @@ NeuralNetworkBuilder >> train: anInitialModel doing: aTraining [
 { #category : 'Configuring' }
 NeuralNetworkBuilder >> trainingIterations: aTrainingTimes [
 
-	self stopTrainingWhen: (CompletedNumberOfTraining after: aTrainingTimes)
+	self stopTrainingWhen: (CompletedNumberOfEpochs after: aTrainingTimes)
 ]

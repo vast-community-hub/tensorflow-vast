@@ -28,7 +28,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 	summary :=
 		self neuralNetworkTrainer
 			trackMetricWith: CategoricalPredictionAccuracyTracker new; 
-			stopTrainingWhen: (CompletedNumberOfTraining after: 1);
+			stopTrainingWhen: (CompletedNumberOfEpochs after: 1);
 			train: model toFit: self trainingDataset.
 
 	self
@@ -46,7 +46,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 	summary :=
 		self neuralNetworkTrainer
 			trackMetricWith: CategoricalPredictionAccuracyTracker new;
-			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
 			train: model toFit: self trainingDataset.
 
 	self
@@ -64,7 +64,7 @@ TrainingMinimizingLossFunctionTest >> testEpochDuration [
 	summary :=
 		self neuralNetworkTrainer
 			trackMetricWith: EpochDurationTracker new;
-			stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+			stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
 			train: model toFit: self trainingDataset.
 
 	durations := summary trainingMetricKnownAs: EpochDurationTracker metricKey.
@@ -87,7 +87,7 @@ TrainingMinimizingLossFunctionTest >> testFittingLogger [
 
 	self neuralNetworkTrainer
 		trackMetricWith: (NeuralNetworkFittingLogger on: stream);
-		stopTrainingWhen: (CompletedNumberOfTraining after: 2);
+		stopTrainingWhen: (CompletedNumberOfEpochs after: 2);
 		train: model toFit: inputInBatches.
 
 	self assert: (stream contents subStrings: String crlf) size equals: 25

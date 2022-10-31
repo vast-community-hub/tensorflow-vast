@@ -1,13 +1,13 @@
 Class {
-	#name : 'CompletedNumberOfTrainingTest',
+	#name : 'CompletedNumberOfEpochsTest',
 	#superclass : 'TestCase',
 	#category : 'NeuralNetworkTrainingModelTests'
 }
 
 { #category : 'Test' }
-CompletedNumberOfTrainingTest >> testPrintString [
+CompletedNumberOfEpochsTest >> testPrintString [
 
 	self
-		assert: (CompletedNumberOfTraining after: 100) printString
+		assert: (CompletedNumberOfEpochs after: 100) printString
 		equals: 'Stop training after 100 epochs'
 ]

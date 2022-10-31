@@ -28,7 +28,7 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithNoValidat
 	(NeuralNetworkTrainer on: tf)
 		minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 		trackMetricWith: (TensorboardExperimentTracker storingTo: './test-logs');
-		stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+		stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
 		train: model toFit: self trainingDataset.
 
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
@@ -52,7 +52,7 @@ TrainingWithTensorboardExperimentTrackerTest >> testTrackExperimentWithValidatio
 	(NeuralNetworkTrainer on: tf)
 		minimizeSparseCategoricalCrossEntropyUsing: (GradientDescent scalingBy: 0.2);
 		trackMetricWith: (TensorboardExperimentTracker storingTo: './test-logs');
-		stopTrainingWhen: (CompletedNumberOfTraining after: 10);
+		stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
 		train: model toFit: self trainingDatasetWithValidation.
 
 	folder := FileSystemAPI current directoryNamed: './test-logs'.
