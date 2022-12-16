@@ -1,11 +1,11 @@
 Class {
-	#name : 'InputNodeTest',
+	#name : 'InputTensorTest',
 	#superclass : 'TensorFlowComputationBasedTest',
 	#category : 'TensorFlowOperationBasicModelTests'
 }
 
 { #category : 'Tests' }
-InputNodeTest >> testOutputAttributesOfPartiallyUndefinedShapedInput [
+InputTensorTest >> testOutputAttributesOfPartiallyUndefinedShapedInput [
 
 	| input |
 
@@ -21,7 +21,7 @@ InputNodeTest >> testOutputAttributesOfPartiallyUndefinedShapedInput [
 ]
 
 { #category : 'Tests' }
-InputNodeTest >> testOutputAttributesOfUndefinedShapedInput [
+InputTensorTest >> testOutputAttributesOfUndefinedShapedInput [
 
 	| input |
 

@@ -10,13 +10,6 @@ TFTensor >> asOperationOn: aComputation [
 ]
 
 { #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['accessing'],
-  #vaVisibility : 'private' }
-TFTensor >> isScalar [
-	^self rank = 0
-]
-
-{ #category : '*TensorFlowOperationBasicModel',
  #vaCategories : ['accessing'] }
 TFTensor >> outputOn: aComputation [
 

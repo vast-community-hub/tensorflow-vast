@@ -1,11 +1,11 @@
 Class {
-	#name : 'ShapeTest',
+	#name : 'ShapeOperationTest',
 	#superclass : 'TensorFlowComputationBasedTest',
 	#category : 'TensorFlowOperationMathModelTests'
 }
 
 { #category : 'Test' }
-ShapeTest >> testOperationName [
+ShapeOperationTest >> testOperationName [
 
 	| shape |
 
@@ -19,7 +19,7 @@ ShapeTest >> testOperationName [
 ]
 
 { #category : 'Test' }
-ShapeTest >> testShapeOfColumnVector [
+ShapeOperationTest >> testShapeOfColumnVector [
 
 	| scalar expectedShape |
 
@@ -42,7 +42,7 @@ ShapeTest >> testShapeOfColumnVector [
 ]
 
 { #category : 'Test' }
-ShapeTest >> testShapeOfMatrix [
+ShapeOperationTest >> testShapeOfMatrix [
 
 	| scalar expectedShape |
 
@@ -65,7 +65,7 @@ ShapeTest >> testShapeOfMatrix [
 ]
 
 { #category : 'Test' }
-ShapeTest >> testShapeOfRowVector [
+ShapeOperationTest >> testShapeOfRowVector [
 
 	| scalar expectedShape |
 
@@ -88,7 +88,7 @@ ShapeTest >> testShapeOfRowVector [
 ]
 
 { #category : 'Test' }
-ShapeTest >> testShapeOfScalar [
+ShapeOperationTest >> testShapeOfScalar [
 
 	| scalar expectedShape shapeOfConstant shapeOfVariable shapeOfInput |
 

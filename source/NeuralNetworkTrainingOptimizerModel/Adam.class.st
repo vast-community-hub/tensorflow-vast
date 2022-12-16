@@ -47,8 +47,14 @@ Adam class >> defaultLearningRate [
 { #category : 'Instance Creation' }
 Adam class >> new [
 
+	^self scalingBy: self defaultLearningRate 
+]
+
+{ #category : 'Instance Creation' }
+Adam class >> scalingBy: aLearningRate [
+
 	^self
-		scalingBy: self defaultLearningRate
+		scalingBy: aLearningRate
 		decayingFirstMomentBy: self defaultBeta1Factor
 		decayingSecondMomentBy: self defaultBeta2Factor
 		usingForNumericalStability: self defaultEpsilonValue
