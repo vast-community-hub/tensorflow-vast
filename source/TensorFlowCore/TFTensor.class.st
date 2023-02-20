@@ -260,6 +260,12 @@ TFTensor >> free [
 	self makeUndefined
 ]
 
+{ #category : 'accessing',
+  #vaVisibility : 'private' }
+TFTensor >> isScalar [
+	^self rank = 0
+]
+
 { #category : 'accessing' }
 TFTensor >> numBytes [
 
