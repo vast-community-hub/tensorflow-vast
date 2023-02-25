@@ -2,8 +2,7 @@ Extension {
 	#name : 'NeuralNetworkTrainingContext'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Building'] }
+{ #category : 'Building' }
 NeuralNetworkTrainingContext >> buildCategoricalPredictionAccuracy [
 
 	^CategoricalPredictionAccuracy
@@ -11,8 +10,7 @@ NeuralNetworkTrainingContext >> buildCategoricalPredictionAccuracy [
 		whenExpectedIs: optimization lossToMinimize targetInputAsLabels
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Building'] }
+{ #category : 'Building' }
 NeuralNetworkTrainingContext >> buildSummaryWriterTo: aLogsLocation [
 
 	^SummaryWriter

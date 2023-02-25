@@ -2,8 +2,7 @@ Extension {
 	#name : 'SubstractionTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 SubstractionTest >> testGradientWithRespectToScalarInputs [
 	"f(x,y) = x-y
 	 df/dx = 1

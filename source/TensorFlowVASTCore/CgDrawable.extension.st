@@ -2,8 +2,7 @@ Extension {
 	#name : 'CgDrawable'
 }
 
-{ #category : '*TensorFlowVASTCore',
- #vaCategories : ['CG-Internal'],
+{ #category : 'CG-Internal',
   #vaVisibility : 'private' }
 CgDrawable >> getDeviceIndependentImage2: rectangle [
 
@@ -33,8 +32,7 @@ A CgDeviceIndependentImage.
 	^result
 ]
 
-{ #category : '*TensorFlowVASTCore',
- #vaCategories : ['CG-Internal'],
+{ #category : 'CG-Internal',
   #vaVisibility : 'private' }
 CgDrawable >> osGetDeviceIndependentImage2: rectangle [
 	"Answer a CgDeviceIndependentImage copied from the area

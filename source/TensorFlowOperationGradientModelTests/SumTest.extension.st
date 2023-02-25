@@ -2,8 +2,7 @@ Extension {
 	#name : 'SumTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SumTest >> testGradientUsingSameInput [
 	"f(x,y) = x^2 + 1/x
 	 df/dx = 2x - 1/x^2"
@@ -17,8 +16,7 @@ SumTest >> testGradientUsingSameInput [
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 2 * 3 - (1 / 9)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SumTest >> testPartialDerivativeWithRespectToFloatInput [
 	"f(x,y) = x + y
 	 df/dx = 1"
@@ -33,8 +31,7 @@ SumTest >> testPartialDerivativeWithRespectToFloatInput [
 	self assertPartialDerivativeOf: sum withRespectTo: x isVectorCloseTo: #(1 1 1)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SumTest >> testPartialDerivativeWithRespectToIntegerInput [
 	"f(x,y) = x + y
 	 df/dx = 1"
@@ -50,8 +47,7 @@ SumTest >> testPartialDerivativeWithRespectToIntegerInput [
 	self assertOutputOf: dx isIntegerVectorEqualsTo: #(1 1 1)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SumTest >> testPartialDerivativeWithRespectToOneInput [
 	"f(x,y) = x^2 + 3yx
 	 df/dx = 2x + 3"

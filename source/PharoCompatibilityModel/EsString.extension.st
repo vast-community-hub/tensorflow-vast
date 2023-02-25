@@ -2,8 +2,7 @@ Extension {
 	#name : 'EsString'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo API'] }
+{ #category : 'Pharo API' }
 EsString >> asFileReference [
 
 

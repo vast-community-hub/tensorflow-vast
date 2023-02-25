@@ -2,15 +2,13 @@ Extension {
 	#name : 'TFGraph'
 }
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['accessing'] }
+{ #category : 'accessing' }
 TFGraph >> allTheFunctions [
 
 	^self library allTheFunctionsIn: self
 ]
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['operations'] }
+{ #category : 'operations' }
 TFGraph >> storeAsFunctionNamed: aString outputing: anOutputsArray [
 
 	^self library

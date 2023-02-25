@@ -2,8 +2,7 @@ Extension {
 	#name : 'ElementWiseDivisionTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseDivisionTest >> testPartialDerivativeWithRespectToScalarDenominator [
 	"f(x,y) = x / y 
 	 df/dy = - x / y^2 "
@@ -17,8 +16,7 @@ ElementWiseDivisionTest >> testPartialDerivativeWithRespectToScalarDenominator [
 	self assertPartialDerivativeOf: result withRespectTo: y isCloseTo: (0 - 10) / 9
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseDivisionTest >> testPartialDerivativeWithRespectToScalarNumerator [
 	"f(x,y) = x / y 
 	 df/dx = 1 / y 
@@ -34,8 +32,7 @@ ElementWiseDivisionTest >> testPartialDerivativeWithRespectToScalarNumerator [
 	self assertPartialDerivativeOf: result withRespectTo: y isCloseTo: -10 / 9
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseDivisionTest >> testPartialDerivativeWithRespectToVectorDenominator [
 
 	" f(x,y) = x / y 
@@ -53,8 +50,7 @@ ElementWiseDivisionTest >> testPartialDerivativeWithRespectToVectorDenominator [
 		isVectorCloseTo: (Array with: 10 / 9 negated with: 5 / 6.25)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseDivisionTest >> testPartialDerivativeWithRespectToVectorNumerator [
 
 	" f(x,y) = x / y 

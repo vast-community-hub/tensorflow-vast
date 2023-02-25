@@ -2,15 +2,13 @@ Extension {
 	#name : 'SequenceableCollection'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> atRandom [
 
 	^self atRandom: EsRandom new
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> beginsWith: aSequenceableCollection [
 	"Answer true if the receiver starts with the argument collection"
 
@@ -19,8 +17,7 @@ SequenceableCollection >> beginsWith: aSequenceableCollection [
 	^true
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> endsWith: aSequenceableCollection [
 	"Answer true if the receiver ends with the argument collection"
 
@@ -33,8 +30,7 @@ SequenceableCollection >> endsWith: aSequenceableCollection [
 	^true
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Enumerating'] }
+{ #category : 'Enumerating' }
 SequenceableCollection >> reverseWith: aSequenceableCollection do: aBlock [
 
 	"Evaluate aBlock with each of the receiver's elements, in reverse order, 
@@ -48,30 +44,26 @@ SequenceableCollection >> reverseWith: aSequenceableCollection do: aBlock [
 				value: (aSequenceableCollection at: index)]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> shuffle [
 
 	^self shuffleBy: EsRandom new
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> shuffleBy: aRandom [
 	"Durstenfeld's version of the Fisher-Yates shuffle"
 
 	self size to: 2 by: -1 do: [:i | self swap: i with: (aRandom nextInt: i)]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> shuffled [
 
 	^self shuffle
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 SequenceableCollection >> with: otherCollection collect: twoArgBlock [
 	"Collect and return the result of evaluating twoArgBlock with corresponding elements from this collection and otherCollection."
 
@@ -86,8 +78,7 @@ SequenceableCollection >> with: otherCollection collect: twoArgBlock [
 	^result
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['ES-Portability'] }
+{ #category : 'ES-Portability' }
 SequenceableCollection >> withIndexDo: aBlock [
 
 

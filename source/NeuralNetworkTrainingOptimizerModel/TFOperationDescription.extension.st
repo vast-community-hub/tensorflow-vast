@@ -2,8 +2,7 @@ Extension {
 	#name : 'TFOperationDescription'
 }
 
-{ #category : '*NeuralNetworkTrainingOptimizerModel',
- #vaCategories : ['attributes'] }
+{ #category : 'attributes' }
 TFOperationDescription >> atUseNesterovPut: aBoolean [
 
 	self at: TFAttributeName useNesterov putBoolean: aBoolean

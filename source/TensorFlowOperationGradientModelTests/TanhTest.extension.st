@@ -2,8 +2,7 @@ Extension {
 	#name : 'TanhTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToAnotherMatrixVariable [
 
 	| input tanh x |
@@ -23,8 +22,7 @@ TanhTest >> testPartialDerivativeWithRespectToAnotherMatrixVariable [
 	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToAnotherScalarVariable [
 	"f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
@@ -39,8 +37,7 @@ TanhTest >> testPartialDerivativeWithRespectToAnotherScalarVariable [
 	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToAnotherVectorVariable [
 
 	| input tanh x |
@@ -53,8 +50,7 @@ TanhTest >> testPartialDerivativeWithRespectToAnotherVectorVariable [
 	self assert: tanh isNotDifferentiableRespectTo: x
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToMatrixInput [
 	" f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
@@ -82,8 +78,7 @@ TanhTest >> testPartialDerivativeWithRespectToMatrixInput [
 				yourself)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToScalarInput [
 	"f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"
@@ -96,8 +91,7 @@ TanhTest >> testPartialDerivativeWithRespectToScalarInput [
 	self assertPartialDerivativeOf: tanh withRespectTo: input isCloseTo: 1 - (0.5 squared)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 TanhTest >> testPartialDerivativeWithRespectToVectorInput [
 	" f(x) = tanh(x) 
 	 df/dx = 1 - tanh(x)^2"

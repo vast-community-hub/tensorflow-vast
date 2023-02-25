@@ -2,15 +2,13 @@ Extension {
 	#name : 'TensorFlowComputation'
 }
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Constants'] }
+{ #category : 'Creating - Constants' }
 TensorFlowComputation >> constantWith: aNumberOrArray [
 
 	^ConstantTensor on: self with: aNumberOrArray asTensor
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Variables'] }
+{ #category : 'Creating - Variables' }
 TensorFlowComputation >> createVariableNamed: aName of: aType shaped: aShape initializedWith: aVariableInitializer [
 
 	
@@ -31,43 +29,37 @@ TensorFlowComputation >> createVariableNamed: aName of: aType shaped: aShape ini
 	^ variable 
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Constants'] }
+{ #category : 'Creating - Constants' }
 TensorFlowComputation >> floatConstantWith: aNumberOrArray [
 
 	^self constantWith: aNumberOrArray asFloatTensor
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Constants'] }
+{ #category : 'Creating - Constants' }
 TensorFlowComputation >> floatConstantWith: aNumberOrMatrix named: aName [
 
 	^ConstantTensor on: self named: aName with: aNumberOrMatrix asFloatTensor
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Inputs'] }
+{ #category : 'Creating - Inputs' }
 TensorFlowComputation >> floatInputNamed: anInputName [
 
 	^InputTensor on: self named: anInputName of: FloatDataType new
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Constants'] }
+{ #category : 'Creating - Constants' }
 TensorFlowComputation >> integerConstantWith: aNumberOrArray [
 
 	^self constantWith: aNumberOrArray asInt32Tensor
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Inputs'] }
+{ #category : 'Creating - Inputs' }
 TensorFlowComputation >> integerInputNamed: anInputName [
 
 	^InputTensor on: self named: anInputName of: Int32DataType new
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Creating - Variables'] }
+{ #category : 'Creating - Variables' }
 TensorFlowComputation >> variableNamed: aVariableName with: aTensor [
 
 	^VariableTensor on: self named: aVariableName with: aTensor

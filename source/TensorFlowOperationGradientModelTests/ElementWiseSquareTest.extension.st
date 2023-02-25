@@ -2,8 +2,7 @@ Extension {
 	#name : 'ElementWiseSquareTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testGradientWhenComposed [
 	"f(x) = tanh(x) ^2
 	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
@@ -19,8 +18,7 @@ ElementWiseSquareTest >> testGradientWhenComposed [
 		isCloseTo: (2 * 0.5 * (1 - (0.5 squared)))
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testPartialDerivativeWhenComposed [
 	"f(x) = tanh(x) ^2
 	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
@@ -36,8 +34,7 @@ ElementWiseSquareTest >> testPartialDerivativeWhenComposed [
 		isCloseTo: 2 * 0.5 * (1 - (0.5 squared))
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherInputWhenComposed [
 	" f(x) = tanh(x) ^2
 	 df/dx = 2tanh(x) tanh'(x) = 2 tanh(x) (1 - tanh(x)^2)"
@@ -52,8 +49,7 @@ ElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherInputWhenCompo
 	self assert: square isNotDifferentiableRespectTo: x
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherScalarInput [
 	" f(x) = x^2
 	 df/dy = 0"
@@ -68,8 +64,7 @@ ElementWiseSquareTest >> testPartialDerivativeWithRespectToAnotherScalarInput [
 	self assert: square isNotDifferentiableRespectTo: x
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testPartialDerivativeWithRespectToScalarInput [
 	"f(x) = x^2
 	 df/dx = 2x"
@@ -82,8 +77,7 @@ ElementWiseSquareTest >> testPartialDerivativeWithRespectToScalarInput [
 	self assertPartialDerivativeOf: square withRespectTo: input isCloseTo: 6
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseSquareTest >> testPartialDerivativeWithRespectToVectorInput [
 	" f(x) = x^2
 	 df/dx = 2x"

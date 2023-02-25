@@ -2,8 +2,7 @@ Extension {
 	#name : 'Array'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['pharo'] }
+{ #category : 'pharo' }
 Array >> literalEqual: other [
 
 	self class == other class ifFalse: [^ false].

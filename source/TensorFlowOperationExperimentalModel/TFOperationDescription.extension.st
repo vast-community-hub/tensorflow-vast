@@ -2,15 +2,13 @@ Extension {
 	#name : 'TFOperationDescription'
 }
 
-{ #category : '*TensorFlowOperationExperimentalModel',
- #vaCategories : ['attributes'] }
+{ #category : 'attributes' }
 TFOperationDescription >> atPaddingPut: aListOfIntegers [
 
 	^self at: 'padding' putString: aListOfIntegers
 ]
 
-{ #category : '*TensorFlowOperationExperimentalModel',
- #vaCategories : ['attributes'] }
+{ #category : 'attributes' }
 TFOperationDescription >> atStridesPut: aListOfIntegers [
 
 	^self at: 'strides' putInts: aListOfIntegers

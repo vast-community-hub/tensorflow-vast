@@ -2,58 +2,50 @@ Extension {
 	#name : 'Collection'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> * arg [
 
 	^ arg adaptToCollection: self andSend: #*
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> + arg [
 
 	^ arg adaptToCollection: self andSend: #+
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> - arg [
 
 	^ arg adaptToCollection: self andSend: #-
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> / arg [
 
 	^ arg adaptToCollection: self andSend: #/
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> // arg [
 
 	^ arg adaptToCollection: self andSend: #//
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> \\ arg [
 
 	^ arg adaptToCollection: self andSend: #\\
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> abs [
 	"Absolute value of all elements in the collection"
 
 	^self collect: [:a | a abs]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> adaptToCollection: rcvr andSend: selector [
 	"If I am involved in arithmetic with another Collection, return a Collection of
 	the results of each element combined with the scalar in that expression."
@@ -65,8 +57,7 @@ Collection >> adaptToCollection: rcvr andSend: selector [
 		collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> anyOne [
 	"Answer a representative sample of the receiver. It raises an error when the collection is empty. This method can be helpful when needing to preinfer the nature of the contents of semi-homogeneous collections."
 	"#(1 2 3) anyOne >>> 1"
@@ -78,8 +69,7 @@ Collection >> anyOne [
 	self do: [:each | ^each]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> detect: aDetectionBlock ifFound: aFoundBlock ifNone: aNoneBlock [
 
 	| found |
@@ -88,23 +78,20 @@ Collection >> detect: aDetectionBlock ifFound: aFoundBlock ifNone: aNoneBlock [
 	^aFoundBlock cull: found
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
 	SizeMismatch signal
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> flatCollect: aBlock [
 
 	^self flatCollect: aBlock as: self species
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> flatCollect: aBlock as: aCollectionClass [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
@@ -117,8 +104,7 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	^col
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Collection >> groupedBy: aBlock [
 	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 	
@@ -133,14 +119,12 @@ Collection >> groupedBy: aBlock [
 
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> max [
 	^ self inject: self anyOne into: [:max :each | max max: each]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
 	"5 sign >>> 1"
@@ -148,14 +132,12 @@ Collection >> sign [
 	^self collect: [:each | each sign]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> sqrt [
 	^ self collect: [:each | each sqrt]
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Collections-Arithmetic'] }
+{ #category : 'Collections-Arithmetic' }
 Collection >> sum [
 	"This is implemented using a variant of the normal inject:into: pattern. 
 	The reason for this is that it is not known whether we're in the normal 
@@ -170,8 +152,7 @@ Collection >> sum [
 	^sum - sample
 ]
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Squeak Family compatibility'] }
+{ #category : 'Squeak Family compatibility' }
 Collection >> with: aCollection collect: twoArgumentsBlock [
 	| other |
 	other := ReadStream on: aCollection.

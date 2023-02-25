@@ -2,16 +2,14 @@ Extension {
 	#name : 'TrainingMinimizingCategoricalCrossEntropyTest'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingCategoricalCrossEntropyTest >> expectedAccuracyAfterOneEpoch [
 
 	^#(0.5)
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingCategoricalCrossEntropyTest >> expectedAccuracyThroughTenEpochs [
 

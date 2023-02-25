@@ -2,16 +2,14 @@ Extension {
 	#name : 'Collection'
 }
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow - Kernel'] }
+{ #category : 'TensorFlow - Kernel' }
 Collection >> singleElementsDo: aBlock [
 
 
 	^ self do: [:each | each singleElementsDo: aBlock ]
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Collection >> singleElementsInCollection [
 
 	^self isEmpty

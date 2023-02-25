@@ -2,8 +2,7 @@ Extension {
 	#name : 'ElementWiseMultiplicationTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseMultiplicationTest >> testGradientUsingSameInput [
 	"f(x) = x^2 / x
 	 df/dx = 1"
@@ -17,8 +16,7 @@ ElementWiseMultiplicationTest >> testGradientUsingSameInput [
 	self assertPartialDerivativeOf: z withRespectTo: x isCloseTo: 1
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseMultiplicationTest >> testGradientWithRespectToScalarInput [
 	"f(x,y) = x^2 y
 	 df/dx = 2xy
@@ -35,8 +33,7 @@ ElementWiseMultiplicationTest >> testGradientWithRespectToScalarInput [
 	self assertPartialDerivativeOf: z withRespectTo: y isCloseTo: 3 * 3
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ElementWiseMultiplicationTest >> testGradientWithRespectToVariable [
 	"  f(x) = x^2 / x
 	 df/dx = 1"

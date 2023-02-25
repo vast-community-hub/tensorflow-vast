@@ -2,8 +2,7 @@ Extension {
 	#name : 'TrainingUsingOptimizationTest'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'],
+{ #category : 'Tests',
   #vaVisibility : 'private' }
 TrainingUsingOptimizationTest >> assertConsistencyInDurationsTrackedFor: summary [
 
@@ -24,8 +23,7 @@ TrainingUsingOptimizationTest >> assertConsistencyInDurationsTrackedFor: summary
 			self assert: stepAvgDuration * 2 equals: epochDuration]
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testAccuracyMinimizingCategoricalCrossEntropyInBatches [
 
 	| model summary inputInBatches |
@@ -45,8 +43,7 @@ TrainingUsingOptimizationTest >> testAccuracyMinimizingCategoricalCrossEntropyIn
 	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.5 0.5 0.5 0.5 0.5)
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testAccuracyMinimizingMeanSquaredErrorInBatches [
 
 	| model summary inputInBatches |
@@ -66,8 +63,7 @@ TrainingUsingOptimizationTest >> testAccuracyMinimizingMeanSquaredErrorInBatches
 	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.5 0.5 0.5 0.5 0.5)
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEntropyInBatches [
 
 	| model summary inputInBatches |
@@ -87,8 +83,7 @@ TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEnt
 	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingCategoricalCrossEntropy [
 
 	| model inputInBatches summary |
@@ -108,8 +103,7 @@ TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingCategoricalCross
 	self assertConsistencyInDurationsTrackedFor: summary
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingMeanSquaredError [
 
 	| model inputInBatches summary |
@@ -129,8 +123,7 @@ TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingMeanSquaredError
 	self assertConsistencyInDurationsTrackedFor: summary
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingUsingOptimizationTest >> testEpochDurationWhenMinimizingSparseCategoricalCrossEntropy [
 
 	| model inputInBatches summary |

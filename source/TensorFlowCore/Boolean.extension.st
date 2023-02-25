@@ -2,14 +2,12 @@ Extension {
 	#name : 'Boolean'
 }
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Boolean >> asBooleanTensor [
 	^ TFTensor fromBooleans: self
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Boolean >> asTensor [
 	^ self asBooleanTensor
 ]

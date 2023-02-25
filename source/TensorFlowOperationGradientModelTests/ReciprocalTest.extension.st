@@ -2,8 +2,7 @@ Extension {
 	#name : 'ReciprocalTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 ReciprocalTest >> testGradientWithRespectToScalarInput [
 	"f(x) = 1/x
 	 df/dx = -1/x^2"
@@ -17,8 +16,7 @@ ReciprocalTest >> testGradientWithRespectToScalarInput [
 	self assertPartialDerivativeOf: y withRespectTo: x isCloseTo: (-1 / (4 * 4))
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 ReciprocalTest >> testGradientWithRespectToVectorInput [
 
 	| x y |

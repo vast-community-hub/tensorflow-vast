@@ -2,15 +2,13 @@ Extension {
 	#name : 'TensorFlowVASTLibrary'
 }
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['functions'] }
+{ #category : 'functions' }
 TensorFlowVASTLibrary >> allTheFunctionsIn: aTFGraph [
 
 	^self dispatcher callTF_GraphNumFunctionsWith: aTFGraph
 ]
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['operation description'] }
+{ #category : 'operation description' }
 TensorFlowVASTLibrary >> description: aTFOperationDescription set: aString toFunction: aFunction [
 
 	^self dispatcher
@@ -20,8 +18,7 @@ TensorFlowVASTLibrary >> description: aTFOperationDescription set: aString toFun
 		with: nil
 ]
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['operation'] }
+{ #category : 'operation' }
 TensorFlowVASTLibrary >> newFunctionNamed: aFunctionName appended: aHashToAppend with: aTFGraph containingAll: anOperationsArray consideringInputs: anInputArray consideringOutputs: anOutputArray consideringNames: anOutputNames withOptions: anOptionsArray description: aDescription status: aStatus [
 
 	^self dispatcher

@@ -2,15 +2,13 @@ Extension {
 	#name : 'Number'
 }
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['Converting'] }
+{ #category : 'Converting' }
 Number >> asOperationOn: aGraph [
 
 	^self asTensor asOperationOn: aGraph
 ]
 
-{ #category : '*TensorFlowOperationBasicModel',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Number >> outputOn: aComputation [
 
 

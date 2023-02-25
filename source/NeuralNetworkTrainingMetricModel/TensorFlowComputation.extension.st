@@ -2,8 +2,7 @@ Extension {
 	#name : 'TensorFlowComputation'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Accessing'] }
+{ #category : 'Accessing' }
 TensorFlowComputation >> graphDefinition [
 
 	^ graph definition 

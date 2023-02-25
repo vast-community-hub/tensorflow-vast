@@ -2,8 +2,7 @@ Extension {
 	#name : 'TFGraph'
 }
 
-{ #category : '*TensorboardWebViews',
- #vaCategories : ['debugging'] }
+{ #category : 'debugging' }
 TFGraph >> analyzeWithTensorboard [
 
 	GraphUnderAnalysisHolder current analyze: self

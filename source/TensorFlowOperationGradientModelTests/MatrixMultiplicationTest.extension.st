@@ -2,8 +2,7 @@ Extension {
 	#name : 'MatrixMultiplicationTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 MatrixMultiplicationTest >> testGradientOfMatrixOutput [
 
 	| constA constB output |
@@ -31,8 +30,7 @@ MatrixMultiplicationTest >> testGradientOfMatrixOutput [
 					yourself)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 MatrixMultiplicationTest >> testGradientOfScalarOutput [
 
 	| constA constB output |

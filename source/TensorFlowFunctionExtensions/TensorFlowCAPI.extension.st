@@ -2,16 +2,14 @@ Extension {
 	#name : 'TensorFlowCAPI'
 }
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['functions'] }
+{ #category : 'functions' }
 TensorFlowCAPI >> allTheFunctionsIn: aTFGraph [
 
 	
 	^ platformLibrary allTheFunctionsIn: aTFGraph 
 ]
 
-{ #category : '*TensorFlowFunctionExtensions',
- #vaCategories : ['functions'] }
+{ #category : 'functions' }
 TensorFlowCAPI >> newFunctionNamed: aFunctionName appended: aHashToAppend with: aTFGraph containingAll: anOperationsArray consideringInputs: anInputArray consideringOutputs: anOutputArray consideringNames: anOutputNames withOptions: anOptionsArray description: aDescription [
 
 	^platformLibrary checkStatusAfter: [:status |

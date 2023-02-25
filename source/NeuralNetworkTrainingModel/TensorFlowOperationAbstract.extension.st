@@ -2,8 +2,7 @@ Extension {
 	#name : 'TensorFlowOperationAbstract'
 }
 
-{ #category : '*NeuralNetworkTrainingModel',
- #vaCategories : ['Accessing'] }
+{ #category : 'Accessing' }
 TensorFlowOperationAbstract >> += anOperation [
 
 	^self currentComputation

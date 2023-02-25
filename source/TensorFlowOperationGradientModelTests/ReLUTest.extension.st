@@ -2,8 +2,7 @@ Extension {
 	#name : 'ReLUTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReLUTest >> testDerivativeWithRespectToAnInvalidInput [
 
 	| negativeScalar positiveScalar |
@@ -16,8 +15,7 @@ ReLUTest >> testDerivativeWithRespectToAnInvalidInput [
 		isNotDifferentiableRespectTo: positiveScalar
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReLUTest >> testGradientOfReluOfFloatScalar [
 
 	| negativeScalar positiveScalar |
@@ -34,8 +32,7 @@ ReLUTest >> testGradientOfReluOfFloatScalar [
 			isCloseTo: 1
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReLUTest >> testGradientOfReluOfFloatVector [
 
 	| input relu |

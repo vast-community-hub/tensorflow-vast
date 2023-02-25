@@ -2,8 +2,7 @@ Extension {
 	#name : 'ReduceSumTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceSumTest >> testSumOfAllElementsDerived [
 
 	| a mean |
@@ -31,8 +30,7 @@ ReduceSumTest >> testSumOfAllElementsDerived [
 				yourself)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceSumTest >> testSumOfDotProductDerived [
 
 	| a b mean |
@@ -59,8 +57,7 @@ ReduceSumTest >> testSumOfDotProductDerived [
 				yourself)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceSumTest >> testSumOfDotProductDerived1 [
 
 	| a b mean |
@@ -74,8 +71,7 @@ ReduceSumTest >> testSumOfDotProductDerived1 [
 		assertPartialDerivativeOf: mean withRespectTo: b isMatrixCloseTo: #((1.1) (2.1))
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceSumTest >> testSumOfSquareAllElementsDerived [
 
 	| a mean |

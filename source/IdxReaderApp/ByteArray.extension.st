@@ -2,8 +2,7 @@ Extension {
 	#name : 'ByteArray'
 }
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> doubleAt: index bigEndian: bool [
 
 	^(FloatingPointNumberParser from: self)
@@ -12,8 +11,7 @@ ByteArray >> doubleAt: index bigEndian: bool [
 		
 ]
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> floatAt: index bigEndian: boolean [
 
 	^(FloatingPointNumberParser from: self)
@@ -21,8 +19,7 @@ ByteArray >> floatAt: index bigEndian: boolean [
 		bigEndianStored: boolean
 ]
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"
 	| b0 b1 b2 w h |
@@ -44,8 +41,7 @@ ByteArray >> longAt: index bigEndian: aBool [
 	^w
 ]
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> shortAt: index bigEndian: aBool [
 	"Return a 16 bit integer quantity starting from the given byte index"
 
@@ -55,8 +51,7 @@ ByteArray >> shortAt: index bigEndian: aBool [
 	^(uShort bitAnd: 16r7FFF) - (uShort bitAnd: 16r8000)
 ]
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> unsignedLongAt: index bigEndian: aBool [
 	"Return a 32bit unsigned integer quantity starting from the given byte index"
 
@@ -80,8 +75,7 @@ ByteArray >> unsignedLongAt: index bigEndian: aBool [
 	^w
 ]
 
-{ #category : '*IdxReaderApp',
- #vaCategories : ['Compatibility'] }
+{ #category : 'Compatibility' }
 ByteArray >> unsignedShortAt: index bigEndian: aBool [
 	"Return a 16 bit unsigned integer quantity starting from the given byte index"
 

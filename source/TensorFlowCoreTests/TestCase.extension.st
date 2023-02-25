@@ -2,8 +2,7 @@ Extension {
 	#name : 'TestCase'
 }
 
-{ #category : '*TensorFlowCoreTests',
- #vaCategories : ['asserting'],
+{ #category : 'asserting',
   #vaVisibility : 'private' }
 TestCase >> assert: firstString isEqualSkippingSeparatorsTo: secondString [
 
@@ -14,8 +13,7 @@ TestCase >> assert: firstString isEqualSkippingSeparatorsTo: secondString [
 	self assert: firstSanitizedString equals: secondSanitizedString
 ]
 
-{ #category : '*TensorFlowCoreTests',
- #vaCategories : ['asserting'],
+{ #category : 'asserting',
   #vaVisibility : 'private' }
 TestCase >> executeShould: aBlock inScopeOf: anException withSignalDo: anotherBlock [
 
@@ -27,8 +25,7 @@ TestCase >> executeShould: aBlock inScopeOf: anException withSignalDo: anotherBl
 			aSignal sunitExitWith: true]
 ]
 
-{ #category : '*TensorFlowCoreTests',
- #vaCategories : ['asserting'],
+{ #category : 'asserting',
   #vaVisibility : 'private' }
 TestCase >> should: aBlock raise: anException withDescription: aString [
 
@@ -39,8 +36,7 @@ TestCase >> should: aBlock raise: anException withDescription: aString [
 			self assert: exception messageText isEqualSkippingSeparatorsTo: aString]
 ]
 
-{ #category : '*TensorFlowCoreTests',
- #vaCategories : ['asserting'],
+{ #category : 'asserting',
   #vaVisibility : 'private' }
 TestCase >> should: aBlock raise: anException withSignalDo: anotherBlock [
 

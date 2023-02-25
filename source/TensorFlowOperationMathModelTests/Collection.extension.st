@@ -2,15 +2,13 @@ Extension {
 	#name : 'Collection'
 }
 
-{ #category : '*TensorFlowOperationMathModelTests',
- #vaCategories : ['*Math-Numerical'] }
+{ #category : '*Math-Numerical' }
 Collection >> mean [
 
 	^self sum / self size
 ]
 
-{ #category : '*TensorFlowOperationMathModelTests',
- #vaCategories : ['Not categorized'] }
+{ #category : 'Not categorized' }
 Collection >> softmax [
 	" This assumes self represents a Matrix (is a collection of collection of numbers)
 	 To make our softmax function numerically stable, we simply normalize the values in the vector, 

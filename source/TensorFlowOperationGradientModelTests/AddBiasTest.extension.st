@@ -2,8 +2,7 @@ Extension {
 	#name : 'AddBiasTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 AddBiasTest >> testAddBiasGradientComparedToSum [
 
 	| weight bias addBias sum |

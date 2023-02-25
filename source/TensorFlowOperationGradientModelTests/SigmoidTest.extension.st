@@ -2,8 +2,7 @@ Extension {
 	#name : 'SigmoidTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SigmoidTest >> testGradientWithRespectToScalarInput [
 
 	| input sigmoid |
@@ -18,8 +17,7 @@ SigmoidTest >> testGradientWithRespectToScalarInput [
 		isCloseTo: (self sigmoidAppliedTo: -4) * (1 - (self sigmoidAppliedTo: -4))
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 SigmoidTest >> testGradientWithRespectToVectorInput [
 
 	| input sigmoid |

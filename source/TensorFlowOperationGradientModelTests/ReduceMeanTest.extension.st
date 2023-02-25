@@ -2,8 +2,7 @@ Extension {
 	#name : 'ReduceMeanTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceMeanTest >> testMeanOfAllElementsDerived [
 
 	| a mean |
@@ -31,8 +30,7 @@ ReduceMeanTest >> testMeanOfAllElementsDerived [
 				yourself)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 ReduceMeanTest >> testMeanOfSquareAllElementsDerived [
 
 	| a mean |

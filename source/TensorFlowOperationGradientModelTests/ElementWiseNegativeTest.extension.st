@@ -2,8 +2,7 @@ Extension {
 	#name : 'ElementWiseNegativeTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 ElementWiseNegativeTest >> testGradientOfNegatedSquare [
 	"f(x) = -x^2
 	 df/dx = -2x"
@@ -17,8 +16,7 @@ ElementWiseNegativeTest >> testGradientOfNegatedSquare [
 	self assertPartialDerivativeOf: y withRespectTo: x isCloseTo: -2 * 3
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 ElementWiseNegativeTest >> testGradientWithRespectToFloatInput [
 	"f(x) = -x
 	 df/dx = -1"

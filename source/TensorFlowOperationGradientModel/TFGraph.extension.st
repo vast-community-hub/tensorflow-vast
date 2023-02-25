@@ -2,8 +2,7 @@ Extension {
 	#name : 'TFGraph'
 }
 
-{ #category : '*TensorFlowOperationGradientModel',
- #vaCategories : ['gradients'] }
+{ #category : 'gradients' }
 TFGraph >> gradientsOf: yArrayOfTFOutput withRespectTo: xArrayOfTFOutput product: dxArrayOfOutput [
 
 	^ self library

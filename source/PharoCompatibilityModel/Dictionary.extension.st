@@ -2,8 +2,7 @@ Extension {
 	#name : 'Dictionary'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['pharo compatibility'] }
+{ #category : 'pharo compatibility' }
 Dictionary >> at: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the first block optionally with the value associated

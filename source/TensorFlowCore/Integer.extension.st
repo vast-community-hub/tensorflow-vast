@@ -2,8 +2,7 @@ Extension {
 	#name : 'Integer'
 }
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['Converting'] }
+{ #category : 'Converting' }
 Integer >> asTensor [
 
 	^self asInt32Tensor

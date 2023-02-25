@@ -2,8 +2,7 @@ Extension {
 	#name : 'MeanSquaredErrorTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 MeanSquaredErrorTest >> testGradientOfMSEBetweenTwoConstantScalars [
 
 	| prediction expected mse |
@@ -16,8 +15,7 @@ MeanSquaredErrorTest >> testGradientOfMSEBetweenTwoConstantScalars [
 	self assertPartialDerivativeOf: mse withRespectTo: prediction isCloseTo: 2 * (3 - Float pi)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test'] }
+{ #category : 'Test' }
 MeanSquaredErrorTest >> testGradientOfMSEBetweenTwoScalars [
 
 	| prediction expected mse |

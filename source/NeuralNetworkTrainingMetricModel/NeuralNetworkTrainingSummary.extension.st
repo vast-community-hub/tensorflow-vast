@@ -2,22 +2,19 @@ Extension {
 	#name : 'NeuralNetworkTrainingSummary'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Accessing'] }
+{ #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> historicalTrainingAccuracy [
 
 	^self trainingMetricKnownAs: CategoricalPredictionAccuracyTracker metricKey
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Accessing'] }
+{ #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> trainingMetricKnownAs: aMetricKey [
 
 	^trainingContext trainingMetricKnownAs: aMetricKey
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModel',
- #vaCategories : ['Accessing'] }
+{ #category : 'Accessing' }
 NeuralNetworkTrainingSummary >> validationMetricKnownAs: aMetricKey [
 
 	^trainingContext validationMetricKnownAs: aMetricKey

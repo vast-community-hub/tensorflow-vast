@@ -2,8 +2,7 @@ Extension {
 	#name : 'TensorFlowComputation'
 }
 
-{ #category : '*TensorFlowDatasetModel',
- #vaCategories : ['Computing'] }
+{ #category : 'Computing' }
 TensorFlowComputation >> createSessionAndRun: anOperation [
 
 	session ifNil: [

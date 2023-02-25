@@ -2,8 +2,7 @@ Extension {
 	#name : 'Interval'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 Interval >> shuffled [
 
 	^self asArray shuffle

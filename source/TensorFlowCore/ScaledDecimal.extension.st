@@ -2,8 +2,7 @@ Extension {
 	#name : 'ScaledDecimal'
 }
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['Converting'] }
+{ #category : 'Converting' }
 ScaledDecimal >> asTensor [
 
 	^self asFloatTensor

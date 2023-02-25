@@ -2,8 +2,7 @@ Extension {
 	#name : 'OrderedCollection'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo Compatibility Model'] }
+{ #category : 'Pharo Compatibility Model' }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
 	| newCol |

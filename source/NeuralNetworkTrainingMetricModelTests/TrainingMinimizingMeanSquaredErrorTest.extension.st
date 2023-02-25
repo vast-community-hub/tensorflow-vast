@@ -2,16 +2,14 @@ Extension {
 	#name : 'TrainingMinimizingMeanSquaredErrorTest'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingMeanSquaredErrorTest >> expectedAccuracyAfterOneEpoch [
 
 	^#(0.5)
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingMeanSquaredErrorTest >> expectedAccuracyThroughTenEpochs [
 

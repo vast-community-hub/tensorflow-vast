@@ -2,8 +2,7 @@ Extension {
 	#name : 'Number'
 }
 
-{ #category : '*TensorFlowOperationMathModelTests',
- #vaCategories : ['Math-Extensions'] }
+{ #category : 'Math-Extensions' }
 Number >> sigmoid [
 
 	" sigmoid function "

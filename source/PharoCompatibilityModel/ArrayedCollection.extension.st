@@ -2,8 +2,7 @@ Extension {
 	#name : 'ArrayedCollection'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['Pharo-API'] }
+{ #category : 'Pharo-API' }
 ArrayedCollection class >> newFrom: aCollection [
 
 	"Answer an instance of me containing the same elements as aCollection."

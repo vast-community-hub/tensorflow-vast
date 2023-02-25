@@ -2,24 +2,21 @@ Extension {
 	#name : 'TrainingMinimizingLossFunctionTest'
 }
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedAccuracyAfterOneEpoch [
 
 	self subclassResponsibility
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedAccuracyThroughTenEpochs [
 
 	self subclassResponsibility
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 
 	| model summary |
@@ -36,8 +33,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 		isArrayCloseTo: self expectedAccuracyAfterOneEpoch
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 
 	| model summary |
@@ -54,8 +50,7 @@ TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 		isArrayCloseTo: self expectedAccuracyThroughTenEpochs
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingMinimizingLossFunctionTest >> testEpochDuration [
 
 	| model summary durations |
@@ -72,8 +67,7 @@ TrainingMinimizingLossFunctionTest >> testEpochDuration [
 	self assert: (durations conform: [:duration | duration >= 0])
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Tests'] }
+{ #category : 'Tests' }
 TrainingMinimizingLossFunctionTest >> testFittingLogger [
 
 	| model stream inputInBatches |
@@ -93,8 +87,7 @@ TrainingMinimizingLossFunctionTest >> testFittingLogger [
 	self assert: (stream contents subStrings: String crlf) size equals: 25
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> trainingAndValidationDataset [
 
@@ -104,8 +97,7 @@ TrainingMinimizingLossFunctionTest >> trainingAndValidationDataset [
 		yourself
 ]
 
-{ #category : '*NeuralNetworkTrainingMetricModelTests',
- #vaCategories : ['Accessing'],
+{ #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> trainingDataset [
 

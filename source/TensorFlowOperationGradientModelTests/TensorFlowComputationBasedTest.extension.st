@@ -2,8 +2,7 @@ Extension {
 	#name : 'TensorFlowComputationBasedTest'
 }
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test Support'],
+{ #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assert: anOperation isNotDifferentiableRespectTo: anInput [
 
@@ -15,8 +14,7 @@ TensorFlowComputationBasedTest >> assert: anOperation isNotDifferentiableRespect
 				expandMacrosWith: anInput operationName)
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test Support'],
+{ #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isCloseTo: anExpectedValue [
 
@@ -25,8 +23,7 @@ TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRes
 		isFloatScalarCloseTo: anExpectedValue
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test Support'],
+{ #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isMatrixCloseTo: anExpectedValue [
 
@@ -35,8 +32,7 @@ TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRes
 		isMatrixCloseTo: anExpectedValue
 ]
 
-{ #category : '*TensorFlowOperationGradientModelTests',
- #vaCategories : ['Test Support'],
+{ #category : 'Test Support',
   #vaVisibility : 'private' }
 TensorFlowComputationBasedTest >> assertPartialDerivativeOf: anOperation withRespectTo: anInput isVectorCloseTo: anExpectedValue [
 

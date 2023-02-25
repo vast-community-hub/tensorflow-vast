@@ -2,28 +2,24 @@ Extension {
 	#name : 'Object'
 }
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Object >> ignoreFinalization [
 	#fixme. #finalization
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Object >> inferTensorRank [
 
 	^0
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Object >> inferTensorShape [
 
 	^TensorShape scalar
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['ANSI-API'] }
+{ #category : 'ANSI-API' }
 Object >> isA: aClass [
 
 	"Answer a Boolean which is true if aClass, is the class or
@@ -32,16 +28,14 @@ Object >> isA: aClass [
 	^(self isMemberOf: aClass) or: [self class inheritsFrom: aClass]
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Object >> singleElementsDo: aBlock [
 
 
 	^ aBlock value: self 
 ]
 
-{ #category : '*TensorFlowCore',
- #vaCategories : ['TensorFlow-Kernel'] }
+{ #category : 'TensorFlow-Kernel' }
 Object >> singleElementsInCollection [
 
 	^1

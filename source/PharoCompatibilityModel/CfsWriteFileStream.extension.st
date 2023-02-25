@@ -2,8 +2,7 @@ Extension {
 	#name : 'CfsWriteFileStream'
 }
 
-{ #category : '*PharoCompatibilityModel',
- #vaCategories : ['CFS-API'] }
+{ #category : 'CFS-API' }
 CfsWriteFileStream >> crlf [
 	
 	self rawCrLf
