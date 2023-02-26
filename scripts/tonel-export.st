@@ -1,6 +1,6 @@
 TonelWriter new
 	dontClearSourcesDirectory;
-	useLfEOL;
+	useCrLfEOL;
 	addLatestConfigurationMapNamed: 'Pharo Compatibility | Runtime';
 	addLatestConfigurationMapNamed: 'TensorFlow';
 	addLatestConfigurationMapNamed: 'TensorFlow Computation | Runtime';
