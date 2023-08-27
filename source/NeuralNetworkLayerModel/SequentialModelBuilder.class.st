@@ -23,13 +23,34 @@ SequentialModelBuilder class >> on: aTensorFlowComputation [
 { #category : 'Configuring' }
 SequentialModelBuilder >> addDenseLayerSized: anOutputSize builtWith: aBlock [
 
-	| input layerBuilder |
+	self
+		inScopeNamed: 'dense'
+		withCountOf: DenseLayer
+		do: [| input layerBuilder |
+			input := layers isEmpty ifTrue: [tf floatInputNamed: 'input'] ifFalse: [layers last].
+			layerBuilder := DenseLayerBuilder ofSize: anOutputSize receiving: input.
+			layers isEmpty ifFalse: [layerBuilder makeInputSizeOptional].
+			aBlock value: layerBuilder.
+			self addLayer: layerBuilder build]
+]
 
-	input := layers isEmpty ifTrue: [tf floatInputNamed: 'input'] ifFalse: [layers last].
-	layerBuilder := DenseLayerBuilder ofSize: anOutputSize receiving: input.
-	layers isEmpty ifFalse: [layerBuilder makeInputSizeOptional].
-	aBlock value: layerBuilder.
-	self addLayer: layerBuilder build
+{ #category : 'Configuring' }
+SequentialModelBuilder >> addFlattenLayerSized: aTensorShape [
+
+	self
+		inScopeNamed: 'flatten'
+		withCountOf: FlattenLayer
+		do: [| input |
+			input :=
+				layers isEmpty
+					ifTrue: [
+						InputTensor
+							on: tf
+							named: 'input'
+							of: FloatDataType new
+							shaped: aTensorShape withUnknowBatchDimension]
+					ifFalse: [layers last].
+			self addLayer: (FlattenLayer receiving: input)]
 ]
 
 { #category : 'Configuring',
@@ -57,4 +78,19 @@ SequentialModelBuilder >> initializeOn: aTensorFlowComputation [
 
 	tf := aTensorFlowComputation.
 	layers := OrderedCollection new
+]
+
+{ #category : 'Configuring',
+  #vaVisibility : 'private' }
+SequentialModelBuilder >> inScopeNamed: aLayerName withCountOf: aLayerClass do: aBlock [
+
+	| denseCount |
+
+	denseCount := layers count: [:layer | layer isA: aLayerClass].
+	tf
+		inScopeNamed: (
+			denseCount = 0
+				ifTrue: [aLayerName]
+				ifFalse: ['%1_%2' bindWith: aLayerName with: denseCount])
+		do: aBlock
 ]
