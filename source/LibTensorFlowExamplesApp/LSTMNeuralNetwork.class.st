@@ -3,14 +3,7 @@ Class {
 	#superclass : 'NeuralNetwork',
 	#instVars : [
 		'tf',
-		'input',
-		'expectedPredictions',
-		'weightsByLayer',
-		'biasesByLayer',
-		'outputsByLayer',
 		'loss',
-		'learntVariables',
-		'learnLoss',
 		'optimizer',
 		'modelOutput',
 		'optimization'
@@ -92,7 +85,7 @@ LSTMNeuralNetwork >> predictFrom: aFeaturesCollection [
 		compute: modelOutput
 		feedingInputsWith: (
 			Dictionary new
-				at: 'input' put: aFeaturesCollection asFloatTensor;
+				at: modelOutput inputVariableName put: aFeaturesCollection asFloatTensor;
 				yourself)
 ]
 
@@ -103,8 +96,8 @@ LSTMNeuralNetwork >> predictFrom: aFeatureTensor andCompareTo: anExpectedTensor 
 		computeAllNamed: (Array with: modelOutput operationName with: loss operationName)
 		feedingInputsWith: (
 			Dictionary new
-				at: 'input' put: aFeatureTensor asFloatTensor;
-				at: 'expected' put: anExpectedTensor;
+				at: modelOutput inputVariableName put: aFeatureTensor asFloatTensor;
+				at: loss targetInput name put: anExpectedTensor;
 				yourself)
 
 
