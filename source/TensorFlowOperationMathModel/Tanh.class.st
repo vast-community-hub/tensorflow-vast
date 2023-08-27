@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-Tanh class >> activating: aNeuron [
-
-	^self named: self operationType activating: aNeuron
-]
-
-{ #category : 'Instance Creation' }
 Tanh class >> named: anOperationName activating: aNeuron [
 
 	^self new initializeNamed: anOperationName activating: aNeuron

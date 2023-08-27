@@ -21,7 +21,7 @@ LSTMNeuralNetworkTest >> testPredictAndCompare [
 	prediction := nn predictFrom: images andCompareTo: expected.
 
 	self
-		assert: (prediction at: 'Tanh_2')
+		assert: (prediction at: 'dense_2/activation')
 		isMatrixCloseTo: #(-1.625294535188e-4 -2.54893238889053e-4).
 	self assert: (prediction at: 'MSE') isFloatScalarCloseTo: 51.5479850769043
 ]

@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-Softmax class >> activating: aNeuron [
-
-	^self named: self operationType activating: aNeuron
-]
-
-{ #category : 'Instance Creation' }
 Softmax class >> named: anOperationName activating: aNeuron [
 
 	^self new initializeNamed: anOperationName activating: aNeuron
