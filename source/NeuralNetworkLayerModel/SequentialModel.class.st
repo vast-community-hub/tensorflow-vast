@@ -1,6 +1,6 @@
 Class {
 	#name : 'SequentialModel',
-	#superclass : 'TensorFlowOperationAbstract',
+	#superclass : 'PredictionModel',
 	#instVars : [
 		'layers',
 		'logits'
@@ -63,6 +63,12 @@ SequentialModel >> printOn: aStream [
 	layers size > 1 ifTrue: [aStream nextPut: $s].
 	aStream cr.
 	layers do: [:layer | aStream print: layer] separatedBy: [aStream cr]
+]
+
+{ #category : 'Not categorized' }
+SequentialModel >> saveModelTo: aFileName [
+
+	self currentComputation storeGraphInto: aFileName
 ]
 
 { #category : 'Accessing' }
