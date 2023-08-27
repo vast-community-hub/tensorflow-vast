@@ -1,6 +1,6 @@
 Class {
 	#name : 'DenseLayer',
-	#superclass : 'TensorFlowOperationAbstract',
+	#superclass : 'SequentialModelLayer',
 	#instVars : [
 		'inputSize',
 		'outputSize',
@@ -98,7 +98,7 @@ DenseLayer >> initializeWeightFrom: aVariableSpec [
 	weights :=
 		VariableTensor
 			on: self currentComputation
-			named: 'weight'
+			named: 'kernel'
 			of: aVariableSpec variableType
 			shaped: (TensorShape matrixSized: inputSize by: outputSize)
 			initializedWith: aVariableSpec variableInitializer.

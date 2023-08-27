@@ -1,9 +1,6 @@
 Class {
 	#name : 'DenseLayerTest',
 	#superclass : 'TensorFlowComputationBasedTest',
-	#instVars : [
-		'tff1'
-	],
 	#category : 'NeuralNetworkLayerModelTests'
 }
 
@@ -39,7 +36,7 @@ DenseLayerTest >> testCreating [
 
 	self
 		assert: layer trainableVariables
-		hasTheSameOperationsAs: (Array with: (tf operationNamed: 'weight'))
+		hasTheSameOperationsAs: (Array with: (tf operationNamed: 'kernel'))
 ]
 
 { #category : 'Test' }
@@ -79,7 +76,7 @@ DenseLayerTest >> testCreatingWithBias [
 	self
 		assert: layer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
+			(Array with: (tf operationNamed: 'kernel') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -120,7 +117,7 @@ DenseLayerTest >> testCreatingWithBiasAndActivation [
 	self
 		assert: layer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
+			(Array with: (tf operationNamed: 'kernel') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -163,7 +160,7 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingFloats [
 	self
 		assert: layer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
+			(Array with: (tf operationNamed: 'kernel') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -208,7 +205,7 @@ DenseLayerTest >> testCreatingWithBiasAndActivationUsingIntegers [
 	self
 		assert: layer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias'))
+			(Array with: (tf operationNamed: 'kernel') with: (tf operationNamed: 'bias'))
 ]
 
 { #category : 'Test' }
@@ -259,9 +256,9 @@ DenseLayerTest >> testDenseLayerAsInputOfOtherLayer [
 	self
 		assert: layer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight') with: (tf operationNamed: 'bias')).
+			(Array with: (tf operationNamed: 'kernel') with: (tf operationNamed: 'bias')).
 	self
 		assert: secondLayer trainableVariables
 		hasTheSameOperationsAs:
-			(Array with: (tf operationNamed: 'weight_2') with: (tf operationNamed: 'bias_2'))
+			(Array with: (tf operationNamed: 'kernel_2') with: (tf operationNamed: 'bias_2'))
 ]
