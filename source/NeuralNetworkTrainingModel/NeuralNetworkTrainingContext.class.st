@@ -132,9 +132,12 @@ NeuralNetworkTrainingContext >> historicalTrainingLoss [
   #vaVisibility : 'private' }
 NeuralNetworkTrainingContext >> initializeMetricsTrackedBy: aMetricTrackerCollection [
 
-	metricTrackers := aMetricTrackerCollection.
-	metricsCollected := Dictionary new.
-	metricTrackers do: [:each | each prepareMetricsWithin: self]
+	modelToTrain currentComputation
+		inScopeNamed: 'metrics'
+		do: [
+			metricTrackers := aMetricTrackerCollection.
+			metricsCollected := Dictionary new.
+			metricTrackers do: [:each | each prepareMetricsWithin: self]]
 ]
 
 { #category : 'Initialization',
@@ -239,6 +242,19 @@ NeuralNetworkTrainingContext >> trainingStepValue [
 NeuralNetworkTrainingContext >> validationMetricKnownAs: aMetricKey [
 
 	^self metricKnownAs: aMetricKey during: ValidationStage new
+]
+
+{ #category : 'Accessing' }
+NeuralNetworkTrainingContext >> withAllMetricsCollectedDuring: aTrainingStage do: aTwoArgBlock [
+
+	metricsCollected keysAndValuesDo: [:key :values |
+		(aTrainingStage wasMetricMeasuredDuringStage: key)
+			ifTrue: [
+				aTwoArgBlock
+					value: (key allButFirst: ('%1-' bindWith: aTrainingStage description) size)
+					value: values]]
+
+
 ]
 
 { #category : 'Accessing',

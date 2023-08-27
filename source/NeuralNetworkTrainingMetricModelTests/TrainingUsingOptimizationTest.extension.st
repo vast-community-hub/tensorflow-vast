@@ -76,11 +76,13 @@ TrainingUsingOptimizationTest >> testAccuracyMinimizingSparseCategoricalCrossEnt
 
 	summary :=
 		self trainerMinimizingSparseCategoricalCrossEntropy
-			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			trackMetricWith: SparseCategoricalPredictionAccuracyTracker new;
 			stopTrainingWhen: (CompletedNumberOfEpochs after: 5);
 			train: model toFit: inputInBatches.
 
-	self assert: summary historicalTrainingAccuracy isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
+	self
+		assert: (summary trainingMetricKnownAs: SparseCategoricalPredictionAccuracyTracker metricKey)
+		isArrayCloseTo: #(0.25 0.25 0.25 0.25 0.25)
 ]
 
 { #category : 'Tests' }

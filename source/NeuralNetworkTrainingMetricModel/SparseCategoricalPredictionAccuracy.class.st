@@ -1,5 +1,5 @@
 Class {
-	#name : 'CategoricalPredictionAccuracy',
+	#name : 'SparseCategoricalPredictionAccuracy',
 	#superclass : 'TensorFlowOperationAbstract',
 	#instVars : [
 		'prediction',
@@ -9,38 +9,38 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-CategoricalPredictionAccuracy class >> of: aPrediction whenExpectedIs: aTarget [
+SparseCategoricalPredictionAccuracy class >> of: aPrediction whenExpectedIs: aTarget [
 
 	^self new initializeOf: aPrediction whenExpectedIs: aTarget
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-CategoricalPredictionAccuracy >> countAllElementsIn: predictionsMatches using: currentComputation [
+SparseCategoricalPredictionAccuracy >> countAllElementsIn: predictionsMatches using: currentComputation [
 
 	^ReduceSum valuesIn:
 		(currentComputation newOperationOf: 'OnesLike' namePrefixed: 'ones' with: predictionsMatches)
 ]
 
 { #category : 'Accessing' }
-CategoricalPredictionAccuracy >> currentComputation [
+SparseCategoricalPredictionAccuracy >> currentComputation [
 
 	^value currentComputation
 ]
 
 { #category : 'Initialization',
   #vaVisibility : 'private' }
-CategoricalPredictionAccuracy >> initializeOf: aPrediction whenExpectedIs: aTarget [
+SparseCategoricalPredictionAccuracy >> initializeOf: aPrediction whenExpectedIs: aTarget [
 	" see keras.utils.metrics_utils.sparse_categorical_matches "
 
 	| predictionsMatches count |
 
 	prediction := aPrediction argMaxAcross: -1.
-	target := aTarget argMaxAcross: -1.
+	target := aTarget reshapeTo: aTarget outputShape flattened.
 	predictionsMatches :=
 		(prediction comparedWith: (target castedTo: prediction outputType))
 			castedTo: FloatDataType new.
-	
+
 	count := self countAllElementsIn: predictionsMatches using: aPrediction currentComputation.
 	value := predictionsMatches sumElements / count
 ]

@@ -123,7 +123,7 @@ TrainingUsingOptimizationTest >> modelWithTwoOutputUnits [
 					inputSize: 3;
 					weightInitializedToZero;
 					biasInitializedTo: #(0.2 0.8)];
-		buildApplyingToLogits: [:logits | logits argMaxOnRows]
+		build
 ]
 
 { #category : 'Accessing',

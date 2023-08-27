@@ -79,14 +79,19 @@ SampleDatasetComputationAware >> bindTrainingFeaturesTo: aFeaturesTensor withLab
 
 	| featuresNode labelsNode |
 
-	featuresNode := featuresTransformation value: (currentComputation constantWith: aFeaturesTensor).
-	labelsNode := labelsTransformation value: (currentComputation constantWith: aLabelsTensor).
+	currentComputation
+		inScopeNamed: 'training_dataset'
+		do: [
+			featuresNode :=
+				featuresTransformation value: (currentComputation constantWith: aFeaturesTensor).
+			labelsNode := labelsTransformation
+				value: (currentComputation constantWith: aLabelsTensor).
 
-	trainingDataset :=
-		datasetTransformation value: (
-			TensorDataset
-				on: currentComputation
-				slicingAll: (Array with: featuresNode with: labelsNode))
+			trainingDataset :=
+				datasetTransformation value: (
+					TensorDataset
+						on: currentComputation
+						slicingAll: (Array with: featuresNode with: labelsNode))]
 ]
 
 { #category : 'Configuring' }
@@ -94,14 +99,19 @@ SampleDatasetComputationAware >> bindValidationFeaturesTo: aFeaturesTensor withL
 
 	| featuresNode labelsNode |
 
-	featuresNode := featuresTransformation value: (currentComputation constantWith: aFeaturesTensor).
-	labelsNode := labelsTransformation value: (currentComputation constantWith: aLabelsTensor).
+	currentComputation
+		inScopeNamed: 'validation_dataset'
+		do: [
+			featuresNode :=
+				featuresTransformation value: (currentComputation constantWith: aFeaturesTensor).
+			labelsNode := labelsTransformation
+				value: (currentComputation constantWith: aLabelsTensor).
 
-	validationDataset :=
-		datasetTransformation value: (
-			TensorDataset
-				on: currentComputation
-				slicingAll: (Array with: featuresNode with: labelsNode))
+			validationDataset :=
+				datasetTransformation value: (
+					TensorDataset
+						on: currentComputation
+						slicingAll: (Array with: featuresNode with: labelsNode))]
 ]
 
 { #category : 'Testing' }

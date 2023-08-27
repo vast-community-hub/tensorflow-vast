@@ -60,7 +60,7 @@ DatasetProvider >> initializeFashionDataset [
 
 	| baseUrl baseDirectory |
 
-	baseUrl := 'https://raw.githubusercontent.com/jvanecek/datasets/main/mnist-fashion/'.
+	baseUrl := 'https://storage.googleapis.com/tensorflow/tf-keras-datasets/'.
 	baseDirectory := FileSystemAPI current directoryNamed: './datasets/mnist-fashion'.
 
 	OrderedCollection new

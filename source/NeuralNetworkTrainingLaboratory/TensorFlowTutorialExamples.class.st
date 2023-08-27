@@ -15,32 +15,32 @@ TensorFlowTutorialExamples class >> classifyingClothesImages [
 
 	tf := TensorFlowComputation new.
 
-	sample := (SampleDatasetComputationAware
-		on: tf
-		transformingFeaturesWith: [:features | features reshapeFlattened / 255.0]
-		transformingLabelsWith: [:labels | labels]
-		applying: [:dataset | dataset inBatchesOf: 32])
-			bindSetsFrom: DatasetProvider current fashionDataset.
+	sample :=
+		(SampleDatasetComputationAware
+			on: tf
+			transformingFeaturesWith: [:features | features / 255.0]
+			transformingLabelsWith: [:labels | labels]
+			applying: [:dataset | dataset inBatchesOf: 32])
+				bindSetsFrom: DatasetProvider current fashionDataset.
 
 	model :=
 		(SequentialModelBuilder on: tf)
-			addDenseLayerSized: 128
-				builtWith: [:layer |
-					layer
-						inputSize: 28 * 28;
-						activatedByRelu];
+			addFlattenLayerSized: #(28 28) asTensorShape;
+			addDenseLayerSized: 128 builtWith: [:layer | layer activatedByRelu];
 			addDenseLayerSized: 10 builtWith: [:layer | ];
-			buildApplyingToLogits: [:logits | logits softmax argMaxOnRows].
+			buildApplyingToLogits: [:logits | logits].
 
 	summary :=
 		(NeuralNetworkTrainer on: tf)
 			minimizeSparseCategoricalCrossEntropyUsing: Adam new;
 			stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
-			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			trackMetricWith: SparseCategoricalPredictionAccuracyTracker new;
 			trackMetricWith: (TensorboardExperimentTracker storingTo: 'experiment-2/vast');
 			train: model toFit: sample.
 
 	summary inspect.
 
-	^TrainingSummaryMetricsDumper new stringOfMetricsIn: summary knownAs: #('loss' 'accuracy')
+	^TrainingSummaryMetricsDumper new
+		stringOfMetricsIn: summary
+		knownAs: { 'loss' .  SparseCategoricalPredictionAccuracyTracker metricKey } 
 ]

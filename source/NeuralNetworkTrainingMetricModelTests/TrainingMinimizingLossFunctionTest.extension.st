@@ -2,6 +2,13 @@ Extension {
 	#name : 'TrainingMinimizingLossFunctionTest'
 }
 
+{ #category : 'Tests',
+  #vaVisibility : 'private' }
+TrainingMinimizingLossFunctionTest >> accuracyTracker [
+
+	self subclassResponsibility
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingLossFunctionTest >> expectedAccuracyAfterOneEpoch [
@@ -24,12 +31,12 @@ TrainingMinimizingLossFunctionTest >> testAccuracyAfterOneEpoch [
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		self neuralNetworkTrainer
-			trackMetricWith: CategoricalPredictionAccuracyTracker new; 
+			trackMetricWith: self accuracyTracker;
 			stopTrainingWhen: (CompletedNumberOfEpochs after: 1);
 			train: model toFit: self trainingDataset.
 
 	self
-		assert: summary historicalTrainingAccuracy
+		assert: (summary trainingMetricKnownAs: self accuracyTracker class metricKey)
 		isArrayCloseTo: self expectedAccuracyAfterOneEpoch
 ]
 
@@ -41,12 +48,12 @@ TrainingMinimizingLossFunctionTest >> testAccuracyThroughTenEpochs [
 	model := self modelWithTwoOutputUnits.
 	summary :=
 		self neuralNetworkTrainer
-			trackMetricWith: CategoricalPredictionAccuracyTracker new;
+			trackMetricWith: self accuracyTracker;
 			stopTrainingWhen: (CompletedNumberOfEpochs after: 10);
 			train: model toFit: self trainingDataset.
 
 	self
-		assert: summary historicalTrainingAccuracy
+		assert: (summary trainingMetricKnownAs: self accuracyTracker class metricKey)
 		isArrayCloseTo: self expectedAccuracyThroughTenEpochs
 ]
 
@@ -85,6 +92,29 @@ TrainingMinimizingLossFunctionTest >> testFittingLogger [
 		train: model toFit: inputInBatches.
 
 	self assert: (stream contents subStrings: String crlf) size equals: 25
+]
+
+{ #category : 'Tests' }
+TrainingMinimizingLossFunctionTest >> testFittingLoggerToFile [
+
+	| model inputInBatches fileName |
+
+	model := self modelWithTwoOutputUnits.
+
+	inputInBatches :=
+		(SampleDatasetComputationAware on: tf applying: [:dataset | dataset inBatchesOf: 2])
+			bindSetsFrom: self trainingAndValidationDataset.
+
+	fileName := 'testFittingLoggerToFile.txt'.
+	[
+		self neuralNetworkTrainer
+			trackMetricWith: (NeuralNetworkFittingLogger toFileNamed: fileName);
+			stopTrainingWhen: (CompletedNumberOfEpochs after: 2);
+			train: model toFit: inputInBatches.
+
+		fileName asFileReference readStreamDo: [:stream |
+			self assert: (stream contents subStrings: String crlf) size equals: 25]]
+				ensure: [fileName asFileReference deleteIfAbsent: []]
 ]
 
 { #category : 'Accessing',

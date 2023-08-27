@@ -70,7 +70,7 @@ TrainingMinimizingLossFunctionTest >> modelWithTwoOutputUnits [
 					inputSize: 3;
 					weightInitializedToZero;
 					biasInitializedTo: #(0.2 0.8)];
-		buildApplyingToLogits: [:logits | logits argMaxOnRows]
+		buildApplyingToLogits: [:logits | logits]
 ]
 
 { #category : 'Accessing',
@@ -101,7 +101,7 @@ TrainingMinimizingLossFunctionTest >> testLogitsAfterOneEpoch [
 		assert: (
 			model logits computeWith: (
 				Dictionary new
-					at: 'input' put: self inputTensor;
+					at: 'dense/input' put: self inputTensor;
 					yourself))
 		isMatrixCloseTo: self expectedLogitsAfterOneEpoch
 ]

@@ -43,7 +43,11 @@ LossBuilder >> buildSparseCategoricalCrossEntropy [
 	| labels |
 
 	labels :=
-		InputTensor on: model currentComputation named: self targetInputName of: Int32DataType new.
+		InputTensor
+			on: model currentComputation
+			named: self targetInputName
+			of: Int32DataType new
+			shaped: TensorShape unknown.
 
 	^reduction value: (SparseCategoricalCrossEntropy of: model whenExpectedIs: labels)
 ]
@@ -81,7 +85,7 @@ LossBuilder >> reducedUsingMean [
   #vaVisibility : 'private' }
 LossBuilder >> targetInputName [
 
-	^'expected'
+	^'target'
 ]
 
 { #category : 'Configuring' }

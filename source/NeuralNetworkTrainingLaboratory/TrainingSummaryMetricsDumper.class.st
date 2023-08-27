@@ -9,16 +9,18 @@ TrainingSummaryMetricsDumper >> dumpMetricsIn: aTrainingSummary knownAs: aMetric
 
 	aMetricKeyCollection do: [:metricKey |
 		aStream
-			nextPutAll: metricKey;
+			nextPutAll: (TrainingStage new metricKeyNamed: metricKey);
+			tab; 
+			nextPutAll: (ValidationStage new metricKeyNamed: metricKey);
 			tab].
 	aStream cr.
 
 	1 to: aTrainingSummary epochsTrained do: [:i |
 		aMetricKeyCollection do: [:metricKey |
 			aStream
-				print: ((aTrainingSummary trainingMetricKnownAs: metricKey) at: i);
+				print: ((aTrainingSummary trainingMetricKnownAs: metricKey) at: i) asScaledDecimal;
 				tab;
-				print: ((aTrainingSummary validationMetricKnownAs: metricKey) at: i);
+				print: ((aTrainingSummary validationMetricKnownAs: metricKey) at: i) asScaledDecimal;
 				tab].
 		aStream cr]
 

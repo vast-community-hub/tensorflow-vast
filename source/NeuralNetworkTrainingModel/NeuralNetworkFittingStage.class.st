@@ -30,7 +30,13 @@ NeuralNetworkFittingStage >> shouldBeExecutedFor: aSampleDataset [
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Testing' }
+NeuralNetworkFittingStage >> wasMetricMeasuredDuringStage: aMetricName [
+
+	^aMetricName beginsWith: self description
+]
+
+{ #category : 'Testing' }
 NeuralNetworkFittingStage >> whenTrainDo: aTrainBlock whenValidationDo: aValidationBlock [
 
 	self subclassResponsibility

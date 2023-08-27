@@ -7,6 +7,14 @@ NeuralNetworkTrainingContext >> buildCategoricalPredictionAccuracy [
 
 	^CategoricalPredictionAccuracy
 		of: modelToTrain
+		whenExpectedIs: optimization lossToMinimize targetInput
+]
+
+{ #category : 'Building' }
+NeuralNetworkTrainingContext >> buildSparseCategoricalPredictionAccuracy [
+
+	^SparseCategoricalPredictionAccuracy
+		of: modelToTrain
 		whenExpectedIs: optimization lossToMinimize targetInputAsLabels
 ]
 

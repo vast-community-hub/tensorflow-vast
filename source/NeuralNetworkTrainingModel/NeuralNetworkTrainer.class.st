@@ -92,7 +92,10 @@ NeuralNetworkTrainer >> train: aModel doing: aTraining [
 
 	self assertReadyToStartTraining.
 
-	loss := lossBuilder value: (LossBuilder for: aModel logits).
+	aModel currentComputation
+		inScopeNamed: 'loss'
+		do: [loss := lossBuilder value: (LossBuilder for: aModel logits)].
+
 	context :=
 		NeuralNetworkTrainingContext
 			optimizing: aModel

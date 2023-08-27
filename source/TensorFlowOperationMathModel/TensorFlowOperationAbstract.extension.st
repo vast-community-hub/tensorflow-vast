@@ -113,6 +113,12 @@ TensorFlowOperationAbstract >> raisedTo: theNthPower [
 ]
 
 { #category : 'Operations' }
+TensorFlowOperationAbstract >> rank [
+
+	^self currentComputation newOperationOf: 'Rank' namePrefixed: 'rank' with: self
+]
+
+{ #category : 'Operations' }
 TensorFlowOperationAbstract >> reciprocal [
 
 	^Reciprocal of: self

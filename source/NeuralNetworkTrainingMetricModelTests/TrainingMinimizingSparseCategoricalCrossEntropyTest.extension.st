@@ -2,6 +2,12 @@ Extension {
 	#name : 'TrainingMinimizingSparseCategoricalCrossEntropyTest'
 }
 
+{ #category : 'Accessing' }
+TrainingMinimizingSparseCategoricalCrossEntropyTest >> accuracyTracker [
+
+	^SparseCategoricalPredictionAccuracyTracker new
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingSparseCategoricalCrossEntropyTest >> expectedAccuracyAfterOneEpoch [

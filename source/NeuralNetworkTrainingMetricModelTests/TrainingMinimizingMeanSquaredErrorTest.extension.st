@@ -2,6 +2,12 @@ Extension {
 	#name : 'TrainingMinimizingMeanSquaredErrorTest'
 }
 
+{ #category : 'Accessing' }
+TrainingMinimizingMeanSquaredErrorTest >> accuracyTracker [
+
+	^CategoricalPredictionAccuracyTracker new
+]
+
 { #category : 'Accessing',
   #vaVisibility : 'private' }
 TrainingMinimizingMeanSquaredErrorTest >> expectedAccuracyAfterOneEpoch [

@@ -14,18 +14,18 @@ CategoricalPredictionAccuracyTest >> testAccuracyBetweenTwo32BitIntegerTensor [
 
 	accuracy := CategoricalPredictionAccuracy of: x whenExpectedIs: y.
 
-	self assertOutputOf: accuracy isFloatScalarCloseTo: ((0 + 1 + 1 + 1)) / 4
+	self assertOutputOf: accuracy isFloatScalarCloseTo: 1
 ]
 
 { #category : 'Test' }
-CategoricalPredictionAccuracyTest >> testAccuracyBetweenTwoDifferentBitIntegerTensor [
+CategoricalPredictionAccuracyTest >> testAccuracyBetweenTwoFloatTensors [
 
-	| x y accuracy |
+	| prediction real accuracy |
 
-	x := tf constantWith: #((0 1 0 0 0) (0 0 1 0 0) (0 0 0 1 0) (0 0 0 0 1)) asInt32Tensor.
-	y := tf constantWith: #(0 2 3 4) asInt32Tensor.
+	prediction := tf constantWith: #((0.1 0.9 0.8) (0.05 0.95 0)) asFloatTensor.
+	real := tf constantWith: #((0 0 1) (0 1 0)) asFloatTensor.
 
-	accuracy := CategoricalPredictionAccuracy of: x argMaxOnRows whenExpectedIs: y.
+	accuracy := CategoricalPredictionAccuracy of: prediction whenExpectedIs: real.
 
-	self assertOutputOf: accuracy isFloatScalarCloseTo: ((0 + 1 + 1 + 1)) / 4
+	self assertOutputOf: accuracy isFloatScalarCloseTo: 0.5
 ]
