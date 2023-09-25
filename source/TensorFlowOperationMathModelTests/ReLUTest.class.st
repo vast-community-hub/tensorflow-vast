@@ -68,8 +68,8 @@ ReLUTest >> testOperationName [
 
 	neuron := tf variableNamed: 'positive' with: 5 asFloatTensor.
 
-	self assert: (ReLU activating: neuron) isNamedInGraphAs: 'Relu'.
-	self assert: (ReLU activating: neuron) isNamedInGraphAs: 'Relu_1'.
+	self assert: (ReLU activating: neuron) isNamedInGraphAs: 'activation'.
+	self assert: (ReLU activating: neuron) isNamedInGraphAs: 'activation_1'.
 	self assert: (ReLU named: 'output' activating: neuron) isNamedInGraphAs: 'output'.
 	self assert: (ReLU named: 'output' activating: neuron) isNamedInGraphAs: 'output_1'
 ]

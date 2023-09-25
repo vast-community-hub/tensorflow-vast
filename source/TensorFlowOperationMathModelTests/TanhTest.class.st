@@ -25,7 +25,7 @@ TanhTest >> testActivatingIntegerScalarFails [
 		assert: [input tanh]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: Value for attr ''T'' of int32 is not in the list of allowed values: bfloat16, half, float, double, complex64, complex128
-	; NodeDef: {{node Tanh}}; Op<name=Tanh; signature=x:T -> y:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_COMPLEX64, DT_COMPLEX128]>'
+	; NodeDef: {{node activation}}; Op<name=Tanh; signature=x:T -> y:T; attr=T:type,allowed=[DT_BFLOAT16, DT_HALF, DT_FLOAT, DT_DOUBLE, DT_COMPLEX64, DT_COMPLEX128]>'
 ]
 
 { #category : 'Test' }
@@ -35,8 +35,8 @@ TanhTest >> testOperationName [
 
 	input := tf variableNamed: 'input' with: 0.549306 asFloatTensor.
 
-	self assert: (Tanh activating: input) isNamedInGraphAs: 'Tanh'.
-	self assert: (Tanh activating: input) isNamedInGraphAs: 'Tanh_1'.
+	self assert: (Tanh activating: input) isNamedInGraphAs: 'activation'.
+	self assert: (Tanh activating: input) isNamedInGraphAs: 'activation_1'.
 	self assert: (Tanh named: 'output' activating: input) isNamedInGraphAs: 'output'.
 	self assert: (Tanh named: 'output' activating: input) isNamedInGraphAs: 'output_1'
 ]

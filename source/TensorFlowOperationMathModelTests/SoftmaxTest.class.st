@@ -14,7 +14,7 @@ SoftmaxTest >> testActivatingFloatScalarFails [
 	self
 		assert: [input softmax]
 		raisesExceptionWith:
-			'INVALID_ARGUMENT: Shape must be at least rank 1 but is rank 0 for ''{{node Softmax}} = Softmax[T=DT_FLOAT](input)'' with input shapes: [].'
+			'INVALID_ARGUMENT: Shape must be at least rank 1 but is rank 0 for ''{{node activation}} = Softmax[T=DT_FLOAT](input)'' with input shapes: [].'
 ]
 
 { #category : 'Test' }
@@ -38,7 +38,7 @@ SoftmaxTest >> testActivatingIntegerScalarFails [
 		assert: [input softmax]
 		raisesExceptionWith:
 			'INVALID_ARGUMENT: Value for attr ''T'' of int32 is not in the list of allowed values: half, bfloat16, float, double
-	; NodeDef: {{node Softmax}}; Op<name=Softmax; signature=logits:T -> softmax:T; attr=T:type,allowed=[DT_HALF, DT_BFLOAT16, DT_FLOAT, DT_DOUBLE]>'
+	; NodeDef: {{node activation}}; Op<name=Softmax; signature=logits:T -> softmax:T; attr=T:type,allowed=[DT_HALF, DT_BFLOAT16, DT_FLOAT, DT_DOUBLE]>'
 ]
 
 { #category : 'Test' }
@@ -48,8 +48,8 @@ SoftmaxTest >> testOperationName [
 
 	input := tf variableNamed: 'input' with: #(4 5 -1) asFloatTensor.
 
-	self assert: (Softmax activating: input) isNamedInGraphAs: 'Softmax'.
-	self assert: (Softmax activating: input) isNamedInGraphAs: 'Softmax_1'.
+	self assert: (Softmax activating: input) isNamedInGraphAs: 'activation'.
+	self assert: (Softmax activating: input) isNamedInGraphAs: 'activation_1'.
 	self assert: (Softmax named: 'output' activating: input) isNamedInGraphAs: 'output'.
 	self assert: (Softmax named: 'output' activating: input) isNamedInGraphAs: 'output_1'
 ]
