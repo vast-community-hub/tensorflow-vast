@@ -98,3 +98,11 @@ TensorDomain >> withSlicedShape [
 		of: self type
 		withShape: ( TensorShape withDimensionsSized: self shape dimensionSizes allButFirst )
 ]
+
+{ #category : 'Accessing' }
+TensorDomain >> withUnknowBatchDimension [
+
+	^TensorDomain
+		of: self type
+		withShape: self shape withUnknowBatchDimension
+]

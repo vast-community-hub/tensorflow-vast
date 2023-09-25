@@ -29,13 +29,18 @@ TensorShape class >> scalar [
 { #category : 'Instance Creation' }
 TensorShape class >> unknown [
 
-	^self withDimensionsSized: #(-1)
+	^self withDimensionsSized: { self unknownSize }
 ]
 
 { #category : 'Instance Creation' }
 TensorShape class >> unknownBatchSizeWith: aNumberOfFeatures [
 
-	^self matrixSized: -1 by: aNumberOfFeatures
+	^self matrixSized: self unknownSize by: aNumberOfFeatures
+]
+
+{ #category : 'Instance Creation' }
+TensorShape class >> unknownSize [
+	^-1
 ]
 
 { #category : 'Instance Creation' }
@@ -78,6 +83,12 @@ TensorShape >> asTensorShape [
 ]
 
 { #category : 'Accessing' }
+TensorShape >> batchDimension [
+	
+	^ self dimensionSizes first 
+]
+
+{ #category : 'Accessing' }
 TensorShape >> description [
 
 	self representsScalar ifTrue: [^'Scalar'].
@@ -101,8 +112,8 @@ TensorShape >> flattened [
 
 	self rank < 2 ifTrue: [^self].
 	self representsMatrix
-		ifTrue: [^self class vectorSized: dimensionSizes first * dimensionSizes second].
-	^self class matrixSized: dimensionSizes first by: dimensionSizes second * dimensionSizes third
+		ifTrue: [^self class vectorSized: self batchDimension * self numberOfFeatures].
+	^self class matrixSized: self batchDimension by: self nonBatchDimensionsSize
 ]
 
 { #category : 'Comparing' }
@@ -124,6 +135,18 @@ TensorShape >> isCompatibleWithNHWShapes [
 	"NHW shape is those with (number of images in the batch, height, width) shape "
 	
 	^self rank = 3
+]
+
+{ #category : 'Accessing' }
+TensorShape >> nonBatchDimensions [
+
+	^self dimensionSizes allButFirst
+]
+
+{ #category : 'Accessing' }
+TensorShape >> nonBatchDimensionsSize [
+
+	^self nonBatchDimensions inject: 1 into: [:prev :actual | prev * actual]
 ]
 
 { #category : 'Accessing' }
@@ -174,4 +197,14 @@ TensorShape >> size [
 TensorShape >> totalAmountOfElements [
 
 	^self dimensionSizes inject: 1 into: [ :prev :next | prev * next ]
+]
+
+{ #category : 'Accessing' }
+TensorShape >> withUnknowBatchDimension [
+
+	^self class withDimensionsSized: (
+		OrderedCollection new
+			add: self class unknownSize;
+			addAll: self dimensionSizes;
+			asArray)
 ]
